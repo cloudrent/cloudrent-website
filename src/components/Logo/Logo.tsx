@@ -21,7 +21,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('h-[85px] w-auto', className)}
-      src="/media/CloudRent-Hexagon.svg"
+      src="/images/CloudRent-Hexagon.svg"
     />
   )
 }
