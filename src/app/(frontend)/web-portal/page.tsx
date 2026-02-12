@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { LightboxImage } from '@/components/Lightbox'
 import {
   Monitor,
   ChevronDown,
@@ -59,6 +60,7 @@ interface FeatureSection {
   tagline: string
   description: string
   features: Feature[]
+  image?: string
 }
 
 interface HeroFeature {
@@ -91,6 +93,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Browse your entire fleet, beautifully presented',
     description:
       'Your customers see a professional, branded catalog of all your rental equipment. High-quality images, detailed descriptions, and clear pricing - all organized by category.',
+    image: '/images/mockups/equipment-rental-catalog-online.webp',
     features: [
       {
         icon: Grid,
@@ -131,6 +134,7 @@ const featureSections: FeatureSection[] = [
     tagline: "No more phone calls to check if it's available",
     description:
       "Customers select their hire dates and instantly see what's available. Live stock levels, clear availability indicators, and no double-bookings.",
+    image: '/images/mockups/real-time-equipment-availability-calendar.webp',
     features: [
       {
         icon: Calendar,
@@ -166,6 +170,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'From browse to booked in minutes',
     description:
       'A smooth e-commerce experience for equipment hire. Add to cart, select quantities, choose delivery options, and submit booking requests - all without picking up the phone.',
+    image: '/images/mockups/online-equipment-booking-system.webp',
     features: [
       {
         icon: ShoppingCart,
@@ -206,6 +211,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Know exactly where your equipment is',
     description:
       'Customers can track their orders from confirmation to delivery. See order status, estimated delivery times, and get notified at every step.',
+    image: '/images/mockups/equipment-delivery-tracking-portal.webp',
     features: [
       {
         icon: Eye,
@@ -246,6 +252,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'All your paperwork, digitally organized',
     description:
       "No more chasing invoices or waiting for statements. Customers access all their financial documents instantly - download PDFs, view payment history, and track what's due.",
+    image: '/images/mockups/online-invoice-statements-portal.webp',
     features: [
       {
         icon: Receipt,
@@ -286,6 +293,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Pay invoices anytime, from anywhere',
     description:
       'Integrated Stripe payments let customers pay invoices instantly with credit card or bank transfer. Secure, fast, and no more waiting for cheques to clear.',
+    image: '/images/mockups/online-payment-portal-hire.webp',
     features: [
       {
         icon: CreditCard,
@@ -326,6 +334,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Everything in one place',
     description:
       'A personalized dashboard showing active rentals, upcoming returns, outstanding invoices, and account details. Customers manage their entire relationship with you from one screen.',
+    image: '/images/mockups/customer-account-dashboard-rental.webp',
     features: [
       {
         icon: BarChart3,
@@ -366,6 +375,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Sign contracts without the paperwork',
     description:
       'Rental agreements sent electronically and signed online. Customers review terms, sign digitally, and receive their copy instantly - all legally compliant.',
+    image: '/images/mockups/digital-agreements-e-signature.webp',
     features: [
       {
         icon: FileSignature,
@@ -532,7 +542,7 @@ const FeatureSectionComponent: React.FC<{
 
         {/* Browser Mockup Side */}
         <div className="flex w-full flex-1 justify-center">
-          <div className="relative w-full max-w-md">
+          <div className="relative w-full max-w-xl">
             {/* Browser frame */}
             <div className="relative overflow-hidden rounded-xl border border-gray-700 bg-gray-900 shadow-2xl shadow-purple-900/50">
               {/* Browser header */}
@@ -550,15 +560,23 @@ const FeatureSectionComponent: React.FC<{
                 </div>
               </div>
 
-              {/* Screen content placeholder */}
-              <div className="flex aspect-[4/3] flex-col items-center justify-center bg-gradient-to-br from-purple-900/40 to-fuchsia-900/40 p-6">
-                <IconComponent className="mb-3 h-12 w-12 text-purple-400/60" />
-                <p className="text-center text-xs text-purple-300/60">
-                  {section.title}
-                  <br />
-                  <span className="text-purple-400/40">screenshot</span>
-                </p>
-              </div>
+              {/* Screen content */}
+              {section.image ? (
+                <LightboxImage
+                  src={section.image}
+                  alt={section.title}
+                  className="w-full"
+                />
+              ) : (
+                <div className="flex aspect-[4/3] flex-col items-center justify-center bg-gradient-to-br from-purple-900/40 to-fuchsia-900/40 p-6">
+                  <IconComponent className="mb-3 h-12 w-12 text-purple-400/60" />
+                  <p className="text-center text-xs text-purple-300/60">
+                    {section.title}
+                    <br />
+                    <span className="text-purple-400/40">screenshot</span>
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Decorative glow */}
@@ -621,7 +639,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
-              href="https://app.cloudrent.me/register"
+              href="/contact"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial
@@ -656,7 +674,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Link
-            href="https://app.cloudrent.me/register"
+            href="/contact"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
             Start Your Free 30-Day Trial
@@ -722,7 +740,7 @@ const HeroSection: React.FC = () => {
             {/* CTAs */}
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
               <Link
-                href="https://app.cloudrent.me/register"
+                href="/contact"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
@@ -757,17 +775,12 @@ const HeroSection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Screenshot placeholder */}
-                <div className="flex aspect-[16/10] flex-col items-center justify-center bg-gradient-to-br from-purple-900/30 to-fuchsia-900/30 p-8">
-                  <Monitor className="mb-4 h-16 w-16 text-purple-400/40" />
-                  <p className="text-center text-purple-300/60">
-                    Replace with
-                    <br />
-                    <span className="font-semibold text-purple-200/70">
-                      Customer Portal Screenshot
-                    </span>
-                  </p>
-                </div>
+                {/* Portal Screenshot */}
+                <LightboxImage
+                  src="/images/mockups/cloudrent-customer-portal-dashboard.webp"
+                  alt="CloudRent Customer Portal - Equipment hire made simple"
+                  className="w-full"
+                />
               </div>
 
               {/* Decorative glows */}

@@ -88,7 +88,7 @@ export const hero: Field = {
     {
       name: 'primaryButtonUrl',
       type: 'text',
-      defaultValue: 'https://app.cloudrent.me/register',
+      defaultValue: '/contact',
       admin: {
         condition: (_, { type } = {}) => type === 'cloudrent',
       },

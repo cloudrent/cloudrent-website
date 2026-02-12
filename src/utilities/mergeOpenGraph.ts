@@ -3,14 +3,18 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description:
+    'All-in-one rental management platform for Australian equipment hire businesses. Bookings, invoicing, SWMS, Xero integration. 30-day free trial.',
   images: [
     {
-      url: `${getServerSideURL()}/website-template-OG.webp`,
+      url: `${getServerSideURL()}/media/cloudrent-pro-og-image.webp`,
+      width: 1200,
+      height: 630,
+      alt: 'CloudRent Pro - Equipment Rental Management Software',
     },
   ],
-  siteName: 'Payload Website Template',
-  title: 'Payload Website Template',
+  siteName: 'CloudRent Pro',
+  title: 'CloudRent Pro - Equipment Rental Management Software',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

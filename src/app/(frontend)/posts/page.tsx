@@ -46,14 +46,14 @@ export default async function Page({ searchParams }: Args) {
           equals: category,
         },
       }
-    : {}
+    : undefined
 
   const posts = await payload.find({
     collection: 'posts',
     depth: 1,
     limit: 12,
     overrideAccess: false,
-    where: whereClause,
+    ...(whereClause && { where: whereClause }),
     select: {
       title: true,
       slug: true,

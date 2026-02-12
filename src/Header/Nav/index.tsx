@@ -35,7 +35,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = () => {
         <SearchIcon className="w-5" />
       </Link>
       <Link
-        href="https://app.cloudrent.me/register"
+        href="/contact"
         className="ml-2 rounded-lg bg-gradient-to-r from-purple-500 to-fuchsia-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400 hover:shadow-purple-500/40"
       >
         Start Free Trial

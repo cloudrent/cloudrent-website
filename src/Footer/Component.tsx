@@ -96,7 +96,7 @@ export async function Footer() {
   }
 
   return (
-    <footer className="mt-auto border-t border-[#881ba9]/20 bg-[#0a0a1a]">
+    <footer className="mt-auto border-t border-brand-purple/20 bg-[#0a0a1a]">
       <div className="container py-16">
         {/* Main Footer Content */}
         <div className="grid gap-12 lg:grid-cols-12">
@@ -106,21 +106,21 @@ export async function Footer() {
               <Logo className="h-[80px] w-auto" />
             </Link>
             {/* AI Badge */}
-            <div className="group mt-6 inline-flex cursor-pointer flex-col items-center rounded-lg px-4 py-3 transition-all duration-300 hover:scale-105 hover:bg-[#881ba9]/10 hover:shadow-[0_0_30px_rgba(136,27,169,0.3)]">
-              <div className="flex items-center gap-2 text-[#881ba9] transition-all duration-300 group-hover:text-[#a855c9]">
+            <div className="group mt-6 inline-flex cursor-pointer flex-col items-center rounded-lg px-4 py-3 transition-all duration-300 hover:scale-105 hover:bg-brand-purple/10 hover:shadow-[0_0_30px_rgba(136,27,169,0.3)]">
+              <div className="flex items-center gap-2 text-brand-purple transition-all duration-300 group-hover:text-[#a855c9]">
                 <svg className="h-8 w-8 transition-transform duration-500 group-hover:rotate-180 group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
                 </svg>
                 <span className="text-lg font-semibold transition-all duration-300 group-hover:tracking-wider">AI</span>
               </div>
-              <span className="mt-1 text-xs tracking-widest text-[#881ba9]/80 transition-all duration-300 group-hover:text-[#881ba9]">ARTIFICIAL INTELLIGENCE</span>
-              <span className="text-xs tracking-widest text-[#881ba9]/80 transition-all duration-300 group-hover:text-[#881ba9]">IN RENTALS</span>
+              <span className="mt-1 text-xs tracking-widest text-brand-purple/80 transition-all duration-300 group-hover:text-brand-purple">ARTIFICIAL INTELLIGENCE</span>
+              <span className="text-xs tracking-widest text-brand-purple/80 transition-all duration-300 group-hover:text-brand-purple">IN RENTALS</span>
             </div>
           </div>
 
           {/* Quick Menu */}
           <div className="lg:col-span-3">
-            <h4 className="mb-6 border-b border-[#881ba9]/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Quick Menu
             </h4>
             <ul className="space-y-1.5">
@@ -131,14 +131,14 @@ export async function Footer() {
                       href={link.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#881ba9] transition-colors hover:text-[#a855c9]"
+                      className="text-brand-purple transition-colors hover:text-[#a855c9]"
                     >
                       {link.label}
                     </a>
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-[#881ba9] transition-colors hover:text-[#a855c9]"
+                      className="text-brand-purple transition-colors hover:text-[#a855c9]"
                     >
                       {link.label}
                     </Link>
@@ -150,14 +150,14 @@ export async function Footer() {
 
           {/* Latest News */}
           <div className="lg:col-span-5">
-            <h4 className="mb-6 border-b border-[#881ba9]/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
+            <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Latest News
             </h4>
             {latestPost && (
               <Link href={`/posts/${latestPost.slug}`} className="group block">
                 <div className="flex gap-4">
                   {/* Thumbnail */}
-                  <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden rounded-lg bg-[#881ba9]/20">
+                  <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden rounded-lg bg-brand-purple/20">
                     {latestPost.heroImage && typeof latestPost.heroImage !== 'string' && (
                       <Media
                         fill
@@ -168,7 +168,7 @@ export async function Footer() {
                   </div>
                   {/* Content */}
                   <div className="flex-1">
-                    <h5 className="font-semibold leading-tight text-white transition-colors group-hover:text-[#881ba9]">
+                    <h5 className="font-semibold leading-tight text-white transition-colors group-hover:text-brand-purple">
                       {latestPost.title}
                     </h5>
                     {latestPost.publishedAt && (
@@ -188,7 +188,7 @@ export async function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-[#881ba9]/20 bg-[#050510]">
+      <div className="border-t border-brand-purple/20 bg-[#050510]">
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           {/* Copyright */}
           <p className="text-sm text-gray-400">
@@ -214,7 +214,7 @@ export async function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#881ba9] transition-colors hover:text-[#a855c9]"
+                className="text-brand-purple transition-colors hover:text-[#a855c9]"
                 aria-label={social.label}
               >
                 {social.icon}

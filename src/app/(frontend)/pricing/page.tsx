@@ -238,7 +238,7 @@ export default function PricingPage() {
       </div>
 
       {/* ═══════════════ FOUNDING CUSTOMER BANNER ═══════════════ */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-purple-600 via-fuchsia-500 to-purple-500 px-5 py-3 text-center">
+      <div className="relative overflow-hidden bg-gradient-to-r from-brand-purple-deep via-brand-purple to-fuchsia-500 px-5 py-3 text-center">
         <div
           className="absolute inset-0 opacity-[0.06]"
           style={{
@@ -335,7 +335,7 @@ export default function PricingPage() {
             </div>
 
             <Link
-              href="https://app.cloudrent.me/register"
+              href="/contact"
               className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-4 text-base font-extrabold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400"
             >
               Claim Your Founding Spot →
@@ -452,7 +452,7 @@ export default function PricingPage() {
                 {/* CTA button */}
                 <Link
                   href={
-                    tier.cta === 'Contact Sales' ? '/contact' : 'https://app.cloudrent.me/register'
+                    '/contact'
                   }
                   className={cn(
                     'block w-full cursor-pointer rounded-xl border-none py-3.5 text-center text-[15px] font-bold tracking-wide transition-all duration-200',
@@ -543,7 +543,7 @@ export default function PricingPage() {
       </div>
 
       {/* ═══════════════ COMPARISON TABLE ═══════════════ */}
-      <div className="relative border-t border-purple-500/20 bg-purple-950/50 px-5 py-20">
+      <div className="relative border-t border-purple-500/20 bg-purple-900/30 px-5 py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-10 text-center text-3xl font-bold text-white">Compare Plans</h2>
 
@@ -654,7 +654,7 @@ export default function PricingPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
-              href="https://app.cloudrent.me/register"
+              href="/contact"
               className="cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-9 py-4 text-base font-bold text-white shadow-xl shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial

@@ -45,7 +45,7 @@ export const Hero: Block = {
         {
           name: 'url',
           type: 'text',
-          defaultValue: 'https://app.cloudrent.me/register',
+          defaultValue: '/contact',
         },
       ],
     },

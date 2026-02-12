@@ -11,6 +11,7 @@ import RichText from '@/components/RichText'
 import type { Post } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
+import { PostCTA } from '@/components/PostCTA'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -64,6 +65,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="container max-w-4xl mx-auto pt-8">
         <RichText data={post.content} enableGutter={false} />
+
+        <PostCTA />
+
         {post.relatedPosts && post.relatedPosts.length > 0 && (
           <RelatedPosts
             className="mt-12"

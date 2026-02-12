@@ -1,8 +1,23 @@
 import React from 'react'
 import Link from 'next/link'
-import type { HeroBlock as HeroBlockType } from '@/payload-types'
 
-export const HeroBlock: React.FC<HeroBlockType> = ({
+interface HeroBlockProps {
+  badge?: string | null
+  headline?: string | null
+  subheadline?: string | null
+  description?: string | null
+  primaryCTA?: {
+    label?: string | null
+    url?: string | null
+  } | null
+  secondaryCTA?: {
+    label?: string | null
+    url?: string | null
+  } | null
+  trustSignals?: string | null
+}
+
+export const HeroBlock: React.FC<HeroBlockProps> = ({
   badge,
   headline,
   subheadline,
@@ -15,12 +30,12 @@ export const HeroBlock: React.FC<HeroBlockType> = ({
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-background">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#881ba9]/20 via-background to-background" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-purple/20 via-background to-background" />
         
         {/* Gradient Orbs */}
-        <div className="absolute w-96 h-96 bg-[#881ba9] rounded-full blur-3xl opacity-20 -top-48 -left-48 animate-pulse" />
+        <div className="absolute w-96 h-96 bg-brand-purple rounded-full blur-3xl opacity-20 -top-48 -left-48 animate-pulse" />
         <div className="absolute w-80 h-80 bg-blue-600 rounded-full blur-3xl opacity-20 top-1/4 right-0 animate-pulse" />
-        <div className="absolute w-64 h-64 bg-[#881ba9] rounded-full blur-3xl opacity-20 bottom-0 left-1/3 animate-pulse" />
+        <div className="absolute w-64 h-64 bg-brand-purple rounded-full blur-3xl opacity-20 bottom-0 left-1/3 animate-pulse" />
         
         {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
@@ -44,7 +59,7 @@ export const HeroBlock: React.FC<HeroBlockType> = ({
             <React.Fragment key={i}>
               {part}
               {i < arr.length - 1 && (
-                <span className="bg-gradient-to-r from-[#881ba9] via-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
                   hire business
                 </span>
               )}
@@ -78,7 +93,7 @@ export const HeroBlock: React.FC<HeroBlockType> = ({
           {primaryCTA?.label && primaryCTA?.url && (
             <Link
               href={primaryCTA.url}
-              className="group relative bg-gradient-to-r from-[#881ba9] to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
+              className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {primaryCTA.label}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
@@ -140,19 +141,19 @@ export default function ContactPage() {
                     </a>
                   </li>
                   <li>
-                    <a href="/pricing" className="text-purple-300 hover:text-white">
+                    <Link href="/pricing" className="text-purple-300 hover:text-white">
                       View Pricing Plans
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/demo" className="text-purple-300 hover:text-white">
+                    <Link href="/demo" className="text-purple-300 hover:text-white">
                       Book a Demo
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="/faq" className="text-purple-300 hover:text-white">
+                    <Link href="/faq" className="text-purple-300 hover:text-white">
                       Frequently Asked Questions
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

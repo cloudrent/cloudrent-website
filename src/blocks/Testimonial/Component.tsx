@@ -23,14 +23,14 @@ export const TestimonialBlock: React.FC<TestimonialBlockType> = ({
         <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 max-w-3xl mx-auto text-center hover:bg-white/10 transition-all duration-500">
           {quote && (
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 italic leading-relaxed">
-              "{quote}"
+              &ldquo;{quote}&rdquo;
             </p>
           )}
           
           <div className="flex items-center justify-center gap-4">
             {authorInitials && (
-              <div className="w-14 h-14 rounded-full bg-[#881ba9]/20 flex items-center justify-center">
-                <span className="text-[#881ba9] font-semibold text-lg">{authorInitials}</span>
+              <div className="w-14 h-14 rounded-full bg-brand-purple/20 flex items-center justify-center">
+                <span className="text-brand-purple font-semibold text-lg">{authorInitials}</span>
               </div>
             )}
             <div className="text-left">

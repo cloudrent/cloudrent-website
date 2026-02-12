@@ -14,8 +14,8 @@ export const FinalCtaBlock: React.FC<FinalCtaBlockType> = ({
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#881ba9]/10 to-transparent" />
-      <div className="absolute w-[600px] h-[600px] bg-[#881ba9] rounded-full blur-3xl opacity-10 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" />
+      <div className="absolute inset-0 bg-gradient-to-t from-brand-purple/10 to-transparent" />
+      <div className="absolute w-[600px] h-[600px] bg-brand-purple rounded-full blur-3xl opacity-10 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2" />
       
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {headline && (
@@ -34,7 +34,7 @@ export const FinalCtaBlock: React.FC<FinalCtaBlockType> = ({
           {primaryButtonLabel && primaryButtonUrl && (
             <Link
               href={primaryButtonUrl}
-              className="group relative bg-gradient-to-r from-[#881ba9] to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
+              className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {primaryButtonLabel}

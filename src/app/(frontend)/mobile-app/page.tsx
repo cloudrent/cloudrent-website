@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { LightboxImage } from '@/components/Lightbox'
 import type { Metadata } from 'next'
 import {
   Smartphone,
@@ -63,6 +64,7 @@ interface FeatureSection {
   tagline: string
   description: string
   features: Feature[]
+  image?: string
 }
 
 interface HeroFeature {
@@ -89,6 +91,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Native apps that work as hard as you do',
     description:
       'Purpose-built iOS and Android apps designed for hire businesses. Fast, reliable, and built to work in the real world - even when connectivity is patchy.',
+    image: '/images/mockups/equipment-rental-mobile-app-dashboard.webp',
     features: [
       {
         icon: Smartphone,
@@ -129,6 +132,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Every delivery, collection, and service call in your pocket',
     description:
       'See your entire workday at a glance. Get job details, navigate to sites, update status, and keep the office informed - all from your phone.',
+    image: '/images/mockups/rental-booking-calendar-mobile-app.webp',
     features: [
       {
         icon: ClipboardCheck,
@@ -169,6 +173,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Scan, search, and manage equipment on-site',
     description:
       'Instantly look up any piece of equipment by scanning its barcode or QR code. Check availability, view history, transfer assets, and document condition.',
+    image: '/images/mockups/equipment-availability-management-mobile-app.webp',
     features: [
       {
         icon: QrCode,
@@ -199,6 +204,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Paperless inspections with photo evidence',
     description:
       'Complete pre-delivery and return inspections on your phone. Custom checklists, photo documentation, digital signatures, and GPS timestamps - all stored securely in the cloud.',
+    image: '/images/mockups/digital-inspection-checklist-mobile-app.webp',
     features: [
       {
         icon: ClipboardCheck,
@@ -249,6 +255,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Instant damage assessment powered by AI',
     description:
       'Snap a photo of damage and let AI do the analysis. Get instant severity ratings, repair cost estimates, and automatically notify the office - all in seconds.',
+    image: '/images/mockups/ai-damage-detection-assessment-mobile-app.webp',
     features: [
       {
         icon: Camera,
@@ -289,6 +296,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Keep your team safe and compliant',
     description:
       'Access SWMS, complete Take 5 assessments, report incidents, and manage PPE - all from the field. Built for Australian WHS requirements.',
+    image: '/images/mockups/swms-safety-compliance-mobile-app.webp',
     features: [
       {
         icon: FileText,
@@ -329,6 +337,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Paperless contracts and proof of delivery',
     description:
       'Get rental agreements signed on the spot. Capture delivery confirmations, collection receipts, and customer ID - all legally compliant and instantly available.',
+    image: '/images/mockups/digital-signature-capture-rental-agreement.webp',
     features: [
       {
         icon: FileSignature,
@@ -369,6 +378,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'GPS-verified time tracking',
     description:
       'Clock in and out with automatic GPS verification. Track time per job, record breaks, and view your timesheet - all synced to the office for payroll.',
+    image: '/images/mockups/gps-timesheet-time-tracking-mobile-app.webp',
     features: [
       {
         icon: Timer,
@@ -404,6 +414,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Stay connected with your team',
     description:
       'In-app messaging, photo sharing, and voice notes keep everyone in sync. One-tap contact with customers when you need to call or text.',
+    image: '/images/mockups/customer-contact-communication-mobile-app.webp',
     features: [
       {
         icon: MessageSquare,
@@ -444,6 +455,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Work anywhere, even without signal',
     description:
       "Built for the Australian outback and underground car parks alike. Complete your work offline and let the app sync everything when you're back online.",
+    image: '/images/mockups/offline-gps-navigation-directions-mobile-app.webp',
     features: [
       {
         icon: ClipboardCheck,
@@ -484,6 +496,7 @@ const featureSections: FeatureSection[] = [
     tagline: 'Fast, stable, and built to last',
     description:
       'Optimized for real-world conditions. Fast loading, minimal battery drain, works in remote areas, and never loses your data - even if the app crashes.',
+    image: '/images/mockups/rental-revenue-analytics-reporting-mobile-app.webp',
     features: [
       {
         icon: Zap,
@@ -623,29 +636,43 @@ const FeatureSectionComponent: React.FC<{
         {/* Phone Mockup Side */}
         <div className="flex w-full flex-1 justify-center">
           <div className="relative w-64 md:w-72">
-            {/* Phone frame */}
-            <div className="relative rounded-[3rem] border border-gray-700 bg-gray-900 p-2 shadow-2xl shadow-purple-900/50">
-              {/* Screen */}
-              <div className="aspect-[9/19] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-purple-900/80 to-fuchsia-900/80">
-                {/* Notch */}
-                <div className="flex justify-center pt-2">
-                  <div className="h-6 w-24 rounded-full bg-black" />
+            {section.image ? (
+              <>
+                <LightboxImage
+                  src={section.image}
+                  alt={`${section.title} - CloudRent mobile app screenshot`}
+                  className="relative z-10 rounded-[2rem] shadow-2xl shadow-purple-900/50"
+                />
+                {/* Decorative glow */}
+                <div className="absolute -inset-4 -z-10 rounded-full bg-purple-500/20 blur-2xl" />
+              </>
+            ) : (
+              <>
+                {/* Phone frame placeholder */}
+                <div className="relative rounded-[3rem] border border-gray-700 bg-gray-900 p-2 shadow-2xl shadow-purple-900/50">
+                  {/* Screen */}
+                  <div className="aspect-[9/19] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-purple-900/80 to-fuchsia-900/80">
+                    {/* Notch */}
+                    <div className="flex justify-center pt-2">
+                      <div className="h-6 w-24 rounded-full bg-black" />
+                    </div>
+
+                    {/* Screen content placeholder */}
+                    <div className="-mt-6 flex h-full flex-col items-center justify-center p-6">
+                      <IconComponent className="mb-3 h-12 w-12 text-purple-400/60" />
+                      <p className="text-center text-xs text-purple-300/60">
+                        {section.title}
+                        <br />
+                        <span className="text-purple-400/40">screenshot</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Screen content placeholder */}
-                <div className="-mt-6 flex h-full flex-col items-center justify-center p-6">
-                  <IconComponent className="mb-3 h-12 w-12 text-purple-400/60" />
-                  <p className="text-center text-xs text-purple-300/60">
-                    {section.title}
-                    <br />
-                    <span className="text-purple-400/40">screenshot</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Decorative glow */}
-            <div className="absolute -inset-4 -z-10 rounded-full bg-purple-500/20 blur-2xl" />
+                {/* Decorative glow */}
+                <div className="absolute -inset-4 -z-10 rounded-full bg-purple-500/20 blur-2xl" />
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -715,7 +742,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
-              href="https://app.cloudrent.me/register"
+              href="/contact"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial
@@ -752,7 +779,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Link
-            href="https://app.cloudrent.me/register"
+            href="/contact"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
             Start Your Free 30-Day Trial
@@ -821,7 +848,7 @@ const HeroSection: React.FC = () => {
             {/* CTAs */}
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
               <Link
-                href="https://app.cloudrent.me/register"
+                href="/contact"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
@@ -836,21 +863,14 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Phone Mockups - Placeholder for the 3-phone image */}
+          {/* Phone Mockups */}
           <div className="relative flex-1">
-            <div className="relative mx-auto flex aspect-square w-full max-w-lg items-center justify-center">
-              {/* Placeholder for 3-phone mockup image */}
-              <div className="relative flex h-full w-full flex-col items-center justify-center rounded-3xl border border-purple-500/20 bg-gradient-to-br from-purple-900/30 to-fuchsia-900/30 p-8">
-                <Smartphone className="mb-4 h-20 w-20 text-purple-400/40" />
-                <p className="text-center text-purple-300/60">
-                  Replace with
-                  <br />
-                  <span className="font-semibold text-purple-200/70">3_Phones_GPS___Forms.webp</span>
-                </p>
-                <p className="mt-2 text-xs text-purple-400/40">
-                  (Your uploaded phone mockup image)
-                </p>
-              </div>
+            <div className="relative mx-auto w-full max-w-lg">
+              <LightboxImage
+                src="/images/mockups/cloudrent-mobile-app-rental-software-screenshots.webp"
+                alt="CloudRent mobile app showing GPS directions, rental calendar, and analytics features"
+                className="relative z-10 h-auto w-full"
+              />
 
               {/* Decorative glows */}
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-purple-500/30 blur-3xl" />

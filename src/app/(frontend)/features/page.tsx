@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, Fragment } from 'react'
+import Link from 'next/link'
+import { LightboxImage } from '@/components/Lightbox'
 import {
   Package,
   Smartphone,
@@ -60,6 +62,7 @@ interface Feature {
   highlights: Highlight[]
   details?: string[]
   subsections?: Subsection[]
+  image?: string
 }
 
 // ============================================
@@ -74,6 +77,7 @@ const features: Feature[] = [
     tagline: 'Complete control over your entire fleet',
     description:
       'Unlimited equipment items with detailed profiles, category organization, and serialized tracking. Manage everything from heavy machinery to consumables.',
+    image: '/images/mockups/equipment-inventory-management-rental-software.webp',
     highlights: [
       { icon: QrCode, text: 'Barcode/QR scanning for quick lookup' },
       { icon: MapPin, text: 'Multi-location asset tracking' },
@@ -96,6 +100,7 @@ const features: Feature[] = [
     tagline: 'Your team, organized and compliant',
     description:
       'Comprehensive staff profiles with license tracking, employment types, and location assignments. Never miss a license expiry again.',
+    image: '/images/mockups/staff-management-license-tracking-software.webp',
     highlights: [
       { icon: ClipboardCheck, text: 'License tracking with expiry alerts' },
       { icon: Calendar, text: 'Shift scheduling & timesheets' },
@@ -118,6 +123,7 @@ const features: Feature[] = [
     tagline: 'Streamlined deliveries and collections',
     description:
       'Unified job queue for all deliveries, collections, and service calls. Drag-and-drop assignment with instant push notifications to your team.',
+    image: '/images/mockups/logistics-dispatch-delivery-management-software.webp',
     highlights: [
       { icon: MapPin, text: 'Route optimization & navigation' },
       { icon: Bell, text: 'Push notifications to assigned staff' },
@@ -140,6 +146,7 @@ const features: Feature[] = [
     tagline: 'Instant, intelligent damage assessment',
     description:
       'Upload equipment photos for instant AI-powered damage analysis. Get confidence scores, severity ratings, and repair cost estimates in seconds.',
+    image: '/images/mockups/ai-damage-detection-equipment-rental-software.webp',
     highlights: [
       { icon: Zap, text: 'Instant AI photo analysis' },
       { icon: BarChart3, text: 'Confidence scoring (0-100%)' },
@@ -162,6 +169,7 @@ const features: Feature[] = [
     tagline: 'Industry-leading safety & compliance',
     description:
       'Complete safety management with SWMS, incident tracking, inspections, and the AlertVisionAI fatigue management camera system.',
+    image: '/images/mockups/safety-management-swms-compliance-software.webp',
     highlights: [
       { icon: Eye, text: 'AlertVisionAI fatigue monitoring' },
       { icon: ClipboardCheck, text: 'Digital SWMS with mobile signing' },
@@ -200,6 +208,7 @@ const features: Feature[] = [
     tagline: 'Know your customers, grow your business',
     description:
       'Complete customer database with rental history, credit management, and a self-service portal where customers can book equipment and pay invoices.',
+    image: '/images/mockups/customer-management-crm-rental-software.webp',
     highlights: [
       { icon: BarChart3, text: 'Lifetime value & analytics' },
       { icon: Building, text: 'Credit limits & payment terms' },
@@ -222,6 +231,7 @@ const features: Feature[] = [
     tagline: 'Paperless, legally compliant contracts',
     description:
       'Electronic signatures with a simple 3-step process. Mobile-optimized signing on any device with automatic PDF generation and email delivery.',
+    image: '/images/mockups/digital-signatures-rental-agreements-software.webp',
     highlights: [
       { icon: PenTool, text: 'Draw, type, or upload signatures' },
       { icon: Smartphone, text: 'Sign on any device' },
@@ -244,6 +254,7 @@ const features: Feature[] = [
     tagline: 'Get paid faster with less effort',
     description:
       'One-click invoice generation with automatic GST calculations. Stripe integration for card payments, payment links via email, and Xero sync.',
+    image: '/images/mockups/invoicing-payments-rental-billing-software.webp',
     highlights: [
       { icon: Zap, text: 'One-click invoice creation' },
       { icon: CreditCard, text: 'Stripe card payments' },
@@ -377,33 +388,45 @@ const FeatureCard = ({ feature, index }: { feature: Feature; index: number }) =>
           )}
         </div>
 
-        {/* Image Placeholder Side */}
+        {/* Image Side */}
         <div className="w-full flex-1">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/50 to-fuchsia-900/50 shadow-2xl shadow-purple-900/50">
-            {/* Decorative glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)]" />
-
-            {/* Browser-style header */}
-            <div className="absolute left-4 right-4 top-4 flex h-8 items-center gap-2 rounded-lg bg-purple-950/60 px-3">
-              <div className="h-3 w-3 rounded-full bg-red-400/80" />
-              <div className="h-3 w-3 rounded-full bg-yellow-400/80" />
-              <div className="h-3 w-3 rounded-full bg-green-400/80" />
+          {feature.image ? (
+            <div className="relative">
+              <LightboxImage
+                src={feature.image}
+                alt={`${feature.title} - CloudRent rental software screenshot`}
+                className="rounded-2xl shadow-2xl shadow-purple-900/50"
+              />
+              {/* Decorative glow */}
+              <div className="absolute -inset-4 -z-10 rounded-3xl bg-purple-500/20 blur-2xl" />
             </div>
+          ) : (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900/50 to-fuchsia-900/50 shadow-2xl shadow-purple-900/50">
+              {/* Decorative glow */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.15),transparent_70%)]" />
 
-            {/* Placeholder content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
-              <IconComponent className="mb-4 h-16 w-16 text-purple-400/50" />
-              <p className="text-center text-sm text-purple-300/60">
-                Screenshot placeholder for
-                <br />
-                <span className="font-semibold text-purple-200/70">{feature.title}</span>
-              </p>
-              <p className="mt-2 text-xs text-purple-400/40">Replace with actual product image</p>
+              {/* Browser-style header */}
+              <div className="absolute left-4 right-4 top-4 flex h-8 items-center gap-2 rounded-lg bg-purple-950/60 px-3">
+                <div className="h-3 w-3 rounded-full bg-red-400/80" />
+                <div className="h-3 w-3 rounded-full bg-yellow-400/80" />
+                <div className="h-3 w-3 rounded-full bg-green-400/80" />
+              </div>
+
+              {/* Placeholder content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+                <IconComponent className="mb-4 h-16 w-16 text-purple-400/50" />
+                <p className="text-center text-sm text-purple-300/60">
+                  Screenshot placeholder for
+                  <br />
+                  <span className="font-semibold text-purple-200/70">{feature.title}</span>
+                </p>
+                <p className="mt-2 text-xs text-purple-400/40">Replace with actual product image</p>
+              </div>
+
+              {/* Glass reflection */}
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
             </div>
-
-            {/* Glass reflection */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/5 to-transparent" />
-          </div>
+          )}
         </div>
       </div>
     </section>
@@ -421,12 +444,12 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
             <p className="text-purple-200">Start your 30-day free trial. No credit card required.</p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
-            <a
-              href="https://app.cloudrent.me/register"
+            <Link
+              href="/contact"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial
-            </a>
+            </Link>
             <button className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-purple-400/50 px-6 py-3 font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
               <Play className="h-4 w-4" /> Watch Demo
             </button>
@@ -452,13 +475,13 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
           more into one powerful platform.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href="https://app.cloudrent.me/register"
+          <Link
+            href="/contact"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
             Start Your Free 30-Day Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
           <button className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
             <Play className="h-5 w-5" /> Book a Demo
           </button>
@@ -526,13 +549,13 @@ const HeroSection = () => {
         </p>
 
         <div className="mb-16 flex flex-col justify-center gap-4 sm:flex-row">
-          <a
-            href="https://app.cloudrent.me/register"
+          <Link
+            href="/contact"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
             Start Your Free 30-Day Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </a>
+          </Link>
           <button className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
             <Play className="h-5 w-5" /> Watch Demo
           </button>

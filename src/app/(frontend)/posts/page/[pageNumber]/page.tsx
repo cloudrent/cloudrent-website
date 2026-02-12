@@ -55,7 +55,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
           equals: category,
         },
       }
-    : {}
+    : undefined
 
   const posts = await payload.find({
     collection: 'posts',
@@ -63,7 +63,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
     limit: 12,
     page: sanitizedPageNumber,
     overrideAccess: false,
-    where: whereClause,
+    ...(whereClause && { where: whereClause }),
     select: {
       title: true,
       slug: true,

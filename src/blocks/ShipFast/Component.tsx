@@ -13,16 +13,16 @@ export const ShipFastBlock: React.FC<ShipFastBlockType> = ({
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#881ba9]/5 to-transparent" />
-      <div className="absolute w-96 h-96 bg-[#881ba9] rounded-full blur-3xl opacity-10 top-0 right-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-purple/5 to-transparent" />
+      <div className="absolute w-96 h-96 bg-brand-purple rounded-full blur-3xl opacity-10 top-0 right-0" />
       
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
         {badge && (
-          <div className="inline-flex items-center gap-2 bg-[#881ba9]/10 border border-[#881ba9]/20 rounded-full px-4 py-2 mb-8">
-            <svg className="w-5 h-5 text-[#881ba9]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="inline-flex items-center gap-2 bg-brand-purple/10 border border-brand-purple/20 rounded-full px-4 py-2 mb-8">
+            <svg className="w-5 h-5 text-brand-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            <span className="text-[#881ba9] text-sm font-medium">{badge}</span>
+            <span className="text-brand-purple text-sm font-medium">{badge}</span>
           </div>
         )}
         
@@ -31,7 +31,7 @@ export const ShipFastBlock: React.FC<ShipFastBlockType> = ({
             {headline.includes('fast') ? (
               <>
                 {headline.split('fast')[0]}
-                <span className="text-[#881ba9]">fast</span>
+                <span className="text-brand-purple">fast</span>
                 {headline.split('fast')[1]}
               </>
             ) : (
@@ -68,7 +68,7 @@ export const ShipFastBlock: React.FC<ShipFastBlockType> = ({
         {ctaLabel && ctaUrl && (
           <Link
             href={ctaUrl}
-            className="mt-12 inline-flex items-center gap-2 border border-[#881ba9]/30 text-[#881ba9] hover:bg-[#881ba9]/10 px-6 py-3 rounded-xl transition-all"
+            className="mt-12 inline-flex items-center gap-2 border border-brand-purple/30 text-brand-purple hover:bg-brand-purple/10 px-6 py-3 rounded-xl transition-all"
           >
             {ctaLabel}
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

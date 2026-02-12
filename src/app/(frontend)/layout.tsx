@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="relative">
         {/* Global Background */}
         <div className="fixed inset-0 -z-10 bg-[#0a0a1a]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#881ba9]/20 via-[#0a0a1a] to-[#0a0a1a]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-purple/20 via-[#0a0a1a] to-[#0a0a1a]" />
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
         </div>
 
@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
-    creator: '@payloadcms',
+    creator: '@cloudrental',
+    site: '@cloudrental',
   },
 }

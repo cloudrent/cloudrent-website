@@ -83,7 +83,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             ))}
             <div className="mt-4 flex flex-col gap-3 px-4">
               <Link
-                href="https://app.cloudrent.me/register"
+                href="/contact"
                 className="rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 text-center font-semibold text-white shadow-lg shadow-purple-500/25"
                 onClick={() => setMobileMenuOpen(false)}
               >

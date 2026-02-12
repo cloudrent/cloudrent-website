@@ -1,10 +1,11 @@
 import { Users, Zap, Shield, Heart, Target, Award, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { LightboxImage } from '@/components/Lightbox'
 
 export const metadata = {
-  title: 'About CloudRent Pro | Australian Rental Management Software',
+  title: 'About Us | CloudRent Pro - Australian Equipment Rental Software',
   description:
-    'Learn about CloudRent Pro - the Australian-built rental management platform designed specifically for equipment hire businesses.',
+    'Built in Australia for Australian hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management with purpose-built software.',
 }
 
 const values = [
@@ -74,28 +75,48 @@ export default function AboutPage() {
         </section>
 
         {/* Story Section */}
-        <section className="mx-auto max-w-4xl px-4 pb-20">
+        <section className="mx-auto max-w-6xl px-4 pb-20">
           <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-8 md:p-12">
-            <h2 className="mb-6 text-2xl font-bold">Our Story</h2>
-            <div className="space-y-4 text-gray-300">
-              <p>
-                We started CloudRent after seeing firsthand the frustration of hire businesses struggling with
-                outdated software, disconnected spreadsheets, and manual processes that waste hours every day.
-              </p>
-              <p>
-                The existing solutions were either too expensive, too complex, or designed for industries that work
-                nothing like equipment rental. So we decided to build something better.
-              </p>
-              <p>
-                Today, CloudRent Pro is a complete platform that handles everything from equipment tracking and
-                reservations to invoicing, safety compliance, and mobile operations - all designed specifically for
-                how Australian hire businesses actually work.
-              </p>
-              <p>
-                We&apos;re not a massive corporation with layers of bureaucracy. We&apos;re a focused team that moves
-                fast, listens to customers, and ships features that matter. When you contact us, you&apos;re talking
-                to people who actually build the product.
-              </p>
+            <h2 className="mb-8 text-2xl font-bold">Our Story</h2>
+            <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
+              {/* Image */}
+              <div className="flex justify-center lg:w-1/3">
+                <div className="relative">
+                  <LightboxImage
+                    src="/media/ron-neville-founder-ceo-cloudrent.webp"
+                    alt="Ron Neville - Founder, CEO & Lead Developer of CloudRent"
+                    className="w-80 rounded-2xl md:w-[26rem]"
+                  />
+                  <p className="mt-3 text-center text-sm text-purple-300">Ron Neville, Founder, CEO & Lead Developer</p>
+                </div>
+              </div>
+              {/* Text */}
+              <div className="space-y-4 text-gray-300 lg:w-2/3">
+                <p>
+                  CloudRent&apos;s story began in the early 2000s when founder Ron Neville, a professional musician
+                  touring Australia&apos;s East Coast, needed a better way to manage his performance bookings. Unable
+                  to find software that fit his needs, he built his own - and fellow musicians quickly wanted it too.
+                </p>
+                <p>
+                  That hands-on problem-solving approach never changed. Today, Ron remains the lead developer of
+                  CloudRent Pro, personally writing code and building features based on direct feedback from
+                  customers. When you suggest a feature or report an issue, there&apos;s a good chance Ron is the one
+                  who&apos;ll build the fix.
+                </p>
+                <p>
+                  CloudRent Pro is purpose-built for Australian equipment hire businesses. We&apos;ve packed it with
+                  the features that actually matter: AI-powered damage detection, digital SWMS and safety compliance,
+                  real-time equipment tracking, native mobile apps for field staff, and seamless Xero integration.
+                  Everything is designed for how hire businesses actually work - not how software companies think they
+                  should work.
+                </p>
+                <p>
+                  We&apos;re not a faceless corporation. We&apos;re a focused team that ships fast, listens to
+                  customers, and builds what you need. No feature requests disappearing into a black hole. No waiting
+                  months for basic fixes. Just real software built by people who understand the rental industry
+                  inside and out.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -195,13 +216,13 @@ export default function AboutPage() {
               business needs to thrive.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <a
-                href="https://app.cloudrent.me/register"
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
                 <ArrowRight className="h-5 w-5" />
-              </a>
+              </Link>
               <Link
                 href="/demo"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-purple-400/50 px-8 py-4 font-semibold text-purple-100 transition-all hover:bg-purple-500/20"

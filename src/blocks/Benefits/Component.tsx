@@ -42,30 +42,17 @@ export const BenefitsBlock: React.FC<BenefitsBlockType> = ({
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#881ba9]/10 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-purple/10 via-transparent to-transparent" />
       
       <div className="relative z-10 max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          {headline && (
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {headline}
-            </h2>
-          )}
-          {subheadline && (
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {subheadline}
-            </p>
-          )}
-        </div>
-
         <div className="grid md:grid-cols-2 gap-6">
           {benefits?.map((benefit, index) => (
             <div
               key={index}
-              className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-[#881ba9]/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(136,27,169,0.15)]"
+              className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-brand-purple/30 transition-all duration-500 hover:shadow-[0_0_40px_rgba(136,27,169,0.15)]"
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#881ba9]/20 flex items-center justify-center text-[#881ba9] shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-brand-purple/20 flex items-center justify-center text-brand-purple shrink-0">
                   {icons[benefit.icon as keyof typeof icons] || icons.check}
                 </div>
                 <div>
