@@ -124,19 +124,30 @@ export default function HomePage() {
               </span>
             </Link>
 
-            <Link
-              href={heroContent.secondaryButtonUrl}
+            <button
+              onClick={() => setIsVideoOpen(true)}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all w-full sm:w-auto justify-center backdrop-blur-sm hover:bg-white/5"
             >
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                 <Play className="w-6 h-6" fill="currentColor" />
               </div>
               {heroContent.secondaryButtonLabel}
-            </Link>
+            </button>
           </div>
 
           {/* Trust Signals */}
-          <p className="text-muted-foreground text-sm">{heroContent.trustSignals}</p>
+          <p className="text-muted-foreground text-sm mb-16">{heroContent.trustSignals}</p>
+
+          {/* Device Mockup */}
+          <div className="relative mt-8">
+            <img
+              src="/images/cloudrent-rental-software-all-devices-mockup.webp"
+              alt="CloudRent Pro rental management software on desktop, laptop, tablet and mobile devices"
+              className="w-full max-w-5xl mx-auto"
+            />
+            {/* Decorative glow */}
+            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/20 via-transparent to-blue-500/20 blur-3xl" />
+          </div>
         </div>
       </section>
 
