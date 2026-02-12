@@ -182,7 +182,7 @@ export const CloudRentHero: React.FC<Page['hero']> = ({
         {/* Device Mockup */}
         <div className="relative">
           <img
-            src="/media/cloudrent-rental-software-all-devices-mockup.webp"
+            src="/images/cloudrent-rental-software-all-devices-mockup.webp"
             alt="CloudRent Pro rental management software on desktop, laptop, tablet and mobile devices"
             className="w-full max-w-5xl mx-auto"
           />

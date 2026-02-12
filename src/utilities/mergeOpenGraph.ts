@@ -7,7 +7,7 @@ const defaultOpenGraph: Metadata['openGraph'] = {
     'All-in-one rental management platform for Australian equipment hire businesses. Bookings, invoicing, SWMS, Xero integration. 30-day free trial.',
   images: [
     {
-      url: `${getServerSideURL()}/media/cloudrent-pro-og-image.webp`,
+      url: `${getServerSideURL()}/images/cloudrent-pro-og-image.webp`,
       width: 1200,
       height: 630,
       alt: 'CloudRent Pro - Equipment Rental Management Software',
