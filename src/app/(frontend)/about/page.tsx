@@ -83,7 +83,7 @@ export default function AboutPage() {
               <div className="flex justify-center lg:w-1/3">
                 <div className="relative">
                   <LightboxImage
-                    src="/media/ron-neville-founder-ceo-cloudrent.webp"
+                    src="/images/ron-neville-founder-ceo-cloudrent.webp"
                     alt="Ron Neville - Founder, CEO & Lead Developer of CloudRent"
                     className="w-80 rounded-2xl md:w-[26rem]"
                   />

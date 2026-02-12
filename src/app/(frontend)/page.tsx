@@ -276,7 +276,7 @@ export default function HomePage() {
               controls
               autoPlay
             >
-              <source src="/media/CloudRent-launch-Feb-2026.mp4" type="video/mp4" />
+              <source src="/images/CloudRent-launch-Feb-2026.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
