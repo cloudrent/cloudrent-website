@@ -13,15 +13,25 @@ export const Logo = (props: Props) => {
   const priority = priorityFromProps || 'low'
 
   return (
-    <img
-      alt="CloudRent Logo"
-      width={85}
-      height={85}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={clsx('h-[85px] w-auto', className)}
-      src="/images/CloudRent-Hexagon.svg"
-    />
+    <div className="relative">
+      {/* Animated glow effect */}
+      <div
+        className="absolute inset-0 rounded-full blur-xl opacity-60 animate-pulse"
+        style={{
+          background: 'radial-gradient(circle, rgba(136, 27, 169, 0.6) 0%, transparent 70%)',
+          transform: 'scale(1.2)',
+        }}
+      />
+      <img
+        alt="CloudRent Logo"
+        width={85}
+        height={85}
+        loading={loading}
+        fetchPriority={priority}
+        decoding="async"
+        className={clsx('h-[85px] w-auto relative z-10 transition-transform duration-300 hover:scale-105', className)}
+        src="/images/CloudRent-Hexagon.svg"
+      />
+    </div>
   )
 }
