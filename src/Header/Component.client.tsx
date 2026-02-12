@@ -59,11 +59,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
         {/* Mobile Menu Button */}
         <button
-          className="rounded-lg p-2 text-white transition-colors hover:bg-white/10 lg:hidden"
+          className="rounded-lg p-3 text-white transition-colors hover:bg-white/10 lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          {mobileMenuOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
         </button>
       </div>
 

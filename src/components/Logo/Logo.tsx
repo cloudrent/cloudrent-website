@@ -29,7 +29,7 @@ export const Logo = (props: Props) => {
         loading={loading}
         fetchPriority={priority}
         decoding="async"
-        className={clsx('h-[85px] w-auto relative z-10 transition-transform duration-300 hover:scale-105', className)}
+        className={clsx('h-[55px] lg:h-[85px] w-auto relative z-10 transition-transform duration-300 hover:scale-105', className)}
         src="/images/CloudRent-Hexagon.svg"
       />
     </div>
