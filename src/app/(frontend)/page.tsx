@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Play, X, CheckCircle, Zap, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } from 'lucide-react'
+import { LightboxImage } from '@/components/Lightbox'
 
 // Hero content
 const heroContent = {
@@ -140,7 +141,7 @@ export default function HomePage() {
 
           {/* Device Mockup */}
           <div className="relative mt-8">
-            <img
+            <LightboxImage
               src="/images/cloudrent-rental-software-all-devices-mockup.webp"
               alt="CloudRent Pro rental management software on desktop, laptop, tablet and mobile devices"
               className="w-full max-w-5xl mx-auto"
