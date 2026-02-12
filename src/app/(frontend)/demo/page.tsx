@@ -88,11 +88,9 @@ export default function DemoPage() {
 
             {/* Right - Booking Widget */}
             <div>
-              {/* Set demoMode={false} once booking API is deployed */}
               <BookingWidget
-                hostSlug="cloudrent"
-                eventSlug="demo"
-                demoMode
+                hostSlug="ron-neville-cloudrent"
+                eventSlug="1hour"
               />
             </div>
           </div>
