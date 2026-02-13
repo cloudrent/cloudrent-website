@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const CAL_API_KEY = process.env.CAL_API_KEY
-const CAL_API_URL = 'https://api.cal.com/v2'
+const CAL_API_URL = 'https://api.cal.com/v1'
 
 export async function GET(
   request: NextRequest,
@@ -21,13 +21,8 @@ export async function GET(
       if (matches) {
         const [, username, eventSlug] = matches
 
-        // Get event types for this user
-        const res = await fetch(`${CAL_API_URL}/event-types?username=${username}`, {
-          headers: {
-            'Authorization': `Bearer ${CAL_API_KEY}`,
-            'cal-api-version': '2024-08-13',
-          },
-        })
+        // Get event types for this user (v1 API uses apiKey query param)
+        const res = await fetch(`${CAL_API_URL}/event-types?apiKey=${CAL_API_KEY}`)
 
         if (!res.ok) {
           const error = await res.text()
@@ -36,7 +31,7 @@ export async function GET(
         }
 
         const data = await res.json()
-        const eventTypes = data.data || []
+        const eventTypes = data.event_types || []
         const eventType = eventTypes.find((e: any) => e.slug === eventSlug)
 
         if (!eventType) {
@@ -44,11 +39,13 @@ export async function GET(
         }
 
         return NextResponse.json({
-          host: { name: username.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) },
+          host: {
+            name: eventType.owner?.username?.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase()) || username
+          },
           eventType: {
             id: eventType.id,
             name: eventType.title,
-            durationMinutes: eventType.lengthInMinutes || eventType.length,
+            durationMinutes: eventType.length,
             slug: eventType.slug,
           }
         })
@@ -64,13 +61,7 @@ export async function GET(
       const timezone = searchParams.get('timezone') || 'Australia/Sydney'
 
       const res = await fetch(
-        `${CAL_API_URL}/slots/available?startTime=${startDate}T00:00:00Z&endTime=${endDate}T23:59:59Z&eventTypeId=${eventTypeId}&timeZone=${encodeURIComponent(timezone)}`,
-        {
-          headers: {
-            'Authorization': `Bearer ${CAL_API_KEY}`,
-            'cal-api-version': '2024-08-13',
-          },
-        }
+        `${CAL_API_URL}/slots?apiKey=${CAL_API_KEY}&startTime=${startDate}T00:00:00Z&endTime=${endDate}T23:59:59Z&eventTypeId=${eventTypeId}&timeZone=${encodeURIComponent(timezone)}`
       )
 
       if (!res.ok) {
@@ -80,7 +71,7 @@ export async function GET(
       }
 
       const data = await res.json()
-      const slotsData = data.data?.slots || {}
+      const slotsData = data.slots || {}
 
       // Transform Cal.com format to our format
       const dates: { date: string; hasAvailability: boolean; slotsCount: number }[] = []
@@ -129,25 +120,28 @@ export async function POST(
     if (pathStr === 'public/appointments') {
       const body = await request.json()
 
-      const res = await fetch(`${CAL_API_URL}/bookings`, {
+      // v1 API booking format
+      const res = await fetch(`${CAL_API_URL}/bookings?apiKey=${CAL_API_KEY}`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${CAL_API_KEY}`,
           'Content-Type': 'application/json',
-          'cal-api-version': '2024-08-13',
         },
         body: JSON.stringify({
           eventTypeId: Number(body.eventTypeId),
           start: body.startTime,
-          attendee: {
+          end: body.endTime,
+          responses: {
             name: body.inviteeName,
             email: body.inviteeEmail,
-            timeZone: body.inviteeTimezone || 'Australia/Sydney',
+            phone: body.inviteePhone || '',
+            company: body.inviteeCompany || '',
+            notes: body.intakeResponses?.message || '',
           },
+          timeZone: body.inviteeTimezone || 'Australia/Sydney',
+          language: 'en',
           metadata: {
             phone: body.inviteePhone,
             company: body.inviteeCompany,
-            message: body.intakeResponses?.message,
           },
         }),
       })
@@ -161,8 +155,7 @@ export async function POST(
         )
       }
 
-      const data = await res.json()
-      const booking = data.data
+      const booking = await res.json()
 
       return NextResponse.json({
         appointment: {
