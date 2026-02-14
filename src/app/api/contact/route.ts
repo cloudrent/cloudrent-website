@@ -2,6 +2,15 @@ import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
+  // Check for API key
+  if (!process.env.RESEND_API_KEY) {
+    console.error('RESEND_API_KEY is not configured')
+    return NextResponse.json(
+      { error: 'Email service not configured' },
+      { status: 500 }
+    )
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY)
 
   try {
@@ -85,7 +94,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Contact form error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
