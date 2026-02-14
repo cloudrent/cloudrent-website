@@ -29,9 +29,12 @@ export async function POST(request: Request) {
     const subjectText = subjectMap[subject] || subject
 
     // Send email to CloudRent team
+    // Use verified domain or Resend's default onboarding domain
+    const fromEmail = process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>'
+
     const { data, error } = await resend.emails.send({
-      from: 'CloudRent Contact Form <noreply@cloudrent.me>',
-      to: ['sales@cloudrent.me'],
+      from: fromEmail,
+      to: [process.env.CONTACT_EMAIL || 'sales@cloudrent.me'],
       replyTo: email,
       subject: `[Contact Form] ${subjectText} from ${name}`,
       html: `
@@ -49,16 +52,16 @@ export async function POST(request: Request) {
     })
 
     if (error) {
-      console.error('Resend error:', error)
+      console.error('Resend error:', JSON.stringify(error, null, 2))
       return NextResponse.json(
-        { error: 'Failed to send email' },
+        { error: 'Failed to send email', details: error.message },
         { status: 500 }
       )
     }
 
     // Send confirmation email to user
     await resend.emails.send({
-      from: 'CloudRent <noreply@cloudrent.me>',
+      from: fromEmail,
       to: [email],
       subject: 'Thanks for contacting CloudRent',
       html: `
