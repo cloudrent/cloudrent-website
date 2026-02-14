@@ -115,6 +115,7 @@ export default function HomePage() {
               src="/images/cloudrent-rental-software-all-devices-mockup.webp"
               alt="CloudRent Pro rental management software on desktop, laptop, tablet and mobile devices"
               className="w-full max-w-5xl mx-auto"
+              priority
             />
             {/* Decorative glow */}
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/20 via-transparent to-blue-500/20 blur-3xl" />

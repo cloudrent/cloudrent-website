@@ -2,14 +2,16 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { X } from 'lucide-react'
+import Image from 'next/image'
 
 interface LightboxImageProps {
   src: string
   alt: string
   className?: string
+  priority?: boolean
 }
 
-export function LightboxImage({ src, alt, className }: LightboxImageProps) {
+export function LightboxImage({ src, alt, className, priority = false }: LightboxImageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleClose = useCallback(() => {
@@ -35,11 +37,15 @@ export function LightboxImage({ src, alt, className }: LightboxImageProps) {
 
   return (
     <>
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={1200}
+        height={800}
         className={`cursor-zoom-in transition-transform hover:scale-[1.02] ${className || ''}`}
         onClick={() => setIsOpen(true)}
+        priority={priority}
+        quality={85}
       />
 
       {isOpen && (
