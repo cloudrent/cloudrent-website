@@ -5,20 +5,21 @@ import React from 'react'
 
 const roboto = Roboto({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '700'],
   variable: '--font-roboto',
+  display: 'swap',
 })
 
 const robotoCondensed = Roboto_Condensed({
   subsets: ['latin'],
-  weight: ['300', '400', '700'],
+  weight: ['700'],
   variable: '--font-roboto-condensed',
+  display: 'swap',
 })
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import './globals.css'
@@ -28,9 +29,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(roboto.variable, robotoCondensed.variable)} lang="en" suppressHydrationWarning>
+    <html className={cn(roboto.variable, robotoCondensed.variable)} lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <InitTheme />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('payload-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})()`,
+          }}
+        />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
