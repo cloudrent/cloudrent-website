@@ -6,6 +6,7 @@ import { Logo } from '@/components/Logo/Logo'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Media } from '@/components/Media'
+import { unstable_cache } from 'next/cache'
 
 // Quick Menu links
 const quickMenuLinks = [
@@ -66,22 +67,26 @@ const socialLinks = [
   },
 ]
 
-async function getLatestPost() {
-  const payload = await getPayload({ config: configPromise })
-  const posts = await payload.find({
-    collection: 'posts',
-    limit: 1,
-    sort: '-publishedAt',
-    depth: 1,
-    select: {
-      title: true,
-      slug: true,
-      heroImage: true,
-      publishedAt: true,
-    },
-  })
-  return posts.docs[0] || null
-}
+const getLatestPost = unstable_cache(
+  async () => {
+    const payload = await getPayload({ config: configPromise })
+    const posts = await payload.find({
+      collection: 'posts',
+      limit: 1,
+      sort: '-publishedAt',
+      depth: 1,
+      select: {
+        title: true,
+        slug: true,
+        heroImage: true,
+        publishedAt: true,
+      },
+    })
+    return posts.docs[0] || null
+  },
+  ['latest-post'],
+  { revalidate: 3600, tags: ['posts'] }
+)
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()

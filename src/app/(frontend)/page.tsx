@@ -4,6 +4,9 @@ import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } 
 import { LightboxImage } from '@/components/Lightbox'
 import { VideoModal } from '@/components/VideoModal'
 
+// Enable ISR - regenerate page every hour
+export const revalidate = 3600
+
 // Hero content
 const heroContent = {
   badge: 'Built in Australia for Australian hire businesses',

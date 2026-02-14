@@ -19,8 +19,10 @@ async function getGlobal(slug: Global, depth = 0) {
 
 /**
  * Returns a unstable_cache function mapped with the cache tag for the slug
+ * Cached for 1 hour by default, can be invalidated via tag
  */
 export const getCachedGlobal = (slug: Global, depth = 0) =>
   unstable_cache(async () => getGlobal(slug, depth), [slug], {
     tags: [`global_${slug}`],
+    revalidate: 3600, // 1 hour
   })
