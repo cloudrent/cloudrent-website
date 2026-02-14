@@ -1,11 +1,24 @@
 import React from 'react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } from 'lucide-react'
 import { LightboxImage } from '@/components/Lightbox'
 import { VideoModal } from '@/components/VideoModal'
 
 // Enable ISR - regenerate page every hour
 export const revalidate = 3600
+
+// SEO metadata
+export const metadata: Metadata = {
+  title: 'CloudRent Pro | Rental Management Software for Australian Hire Businesses',
+  description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
+  keywords: ['rental software', 'hire business', 'equipment rental', 'rental management', 'Australia', 'Xero integration'],
+  openGraph: {
+    title: 'CloudRent Pro | Rental Management Software',
+    description: 'Everything you need to manage your hire business. Complete rental management with invoicing, digital signatures, and Xero integration.',
+    type: 'website',
+  },
+}
 
 // Hero content
 const heroContent = {

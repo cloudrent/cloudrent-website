@@ -1,7 +1,15 @@
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SERVER_URL ||
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-  'https://example.com'
+// Ensure URL has https:// protocol
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SERVER_URL) {
+    return process.env.NEXT_PUBLIC_SERVER_URL
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  }
+  return 'https://www.cloudrent.me'
+}
+
+const SITE_URL = getBaseUrl()
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
