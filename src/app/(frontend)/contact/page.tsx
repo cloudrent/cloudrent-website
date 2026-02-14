@@ -16,16 +16,31 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
 
-    // TODO: Integrate with Payload form or email service
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
 
-    setSubmitted(true)
-    setIsSubmitting(false)
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setSubmitted(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (
@@ -291,6 +306,12 @@ export default function ContactPage() {
                         placeholder="Tell us about your hire business and how we can help..."
                       />
                     </div>
+
+                    {error && (
+                      <div className="rounded-xl border border-red-500/30 bg-red-500/20 p-4 text-red-200">
+                        {error}
+                      </div>
+                    )}
 
                     <button
                       type="submit"
