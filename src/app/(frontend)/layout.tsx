@@ -17,6 +17,7 @@ const robotoCondensed = Roboto_Condensed({
   display: 'swap',
 })
 import { AdminBar } from '@/components/AdminBar'
+import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={cn(roboto.variable, robotoCondensed.variable)} lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
+        <GoogleTagManager />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){var t=localStorage.getItem('payload-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})()`,
@@ -43,6 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body className="relative">
+        <GoogleTagManagerNoscript />
         {/* Global Background */}
         <div className="fixed inset-0 -z-10 bg-[#0a0a1a]">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-purple/20 via-[#0a0a1a] to-[#0a0a1a]" />
