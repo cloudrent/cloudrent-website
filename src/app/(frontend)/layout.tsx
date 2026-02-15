@@ -32,7 +32,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html className={cn(roboto.variable, robotoCondensed.variable)} lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
-        <GoogleTagManager />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){var t=localStorage.getItem('payload-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)})()`,
@@ -45,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body className="relative">
+        <GoogleTagManager />
         <GoogleTagManagerNoscript />
         {/* Global Background */}
         <div className="fixed inset-0 -z-10 bg-[#0a0a1a]">
