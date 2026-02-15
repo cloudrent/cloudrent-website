@@ -36,6 +36,16 @@ export default function ContactPage() {
       }
 
       setSubmitted(true)
+
+      // Track form submission in GTM
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'contact_form_submit',
+          form_subject: formData.subject,
+          form_has_company: !!formData.company,
+          form_has_phone: !!formData.phone,
+        })
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
