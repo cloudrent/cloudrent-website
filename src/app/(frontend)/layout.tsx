@@ -18,6 +18,7 @@ const robotoCondensed = Roboto_Condensed({
 })
 import { AdminBar } from '@/components/AdminBar'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
+import { LaunchPopup } from '@/components/LaunchPopup'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
@@ -60,6 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               }}
             />
           )}
+          <LaunchPopup />
           <Header />
           {children}
           <Footer />
