@@ -142,7 +142,7 @@ export default function FoundingPage() {
             Lock in <span className="font-bold text-white">every feature</span> of CloudRent Pro at{' '}
             <span className="font-bold text-amber-400">$85/user/mo</span> — forever.
             <br />
-            <span className="text-gray-400">That's $44/user/mo less than our standard Business plan.</span>
+            <span className="text-gray-400">That&apos;s $44/user/mo less than our standard Business plan.</span>
           </p>
 
           {/* Countdown */}
@@ -283,7 +283,7 @@ export default function FoundingPage() {
             ))}
           </div>
           <blockquote className="mb-6 text-xl italic text-gray-300 md:text-2xl">
-            "The Xero integration alone saves us hours every week. But what really sets CloudRent apart is how quickly they respond to feature requests. We asked for a specific report format and had it within days."
+            &ldquo;The Xero integration alone saves us hours every week. But what really sets CloudRent apart is how quickly they respond to feature requests. We asked for a specific report format and had it within days.&rdquo;
           </blockquote>
           <div className="flex items-center justify-center gap-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20">
@@ -345,7 +345,7 @@ export default function FoundingPage() {
           </div>
 
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-            Don't Miss Your Chance
+            Don&apos;t Miss Your Chance
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-gray-300">
             Once we hit 100 Founding Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
