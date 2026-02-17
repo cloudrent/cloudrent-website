@@ -148,7 +148,7 @@ export default function FoundingPage() {
           {/* Countdown */}
           <div className="mb-10">
             <p className="mb-4 text-sm font-medium uppercase tracking-wider text-purple-300">
-              Offer ends at launch
+              CloudRent Pro launches in
             </p>
             <div className="flex justify-center gap-3 sm:gap-4">
               {[
@@ -212,6 +212,27 @@ export default function FoundingPage() {
             </div>
             <p className="font-medium text-amber-400">Locked in forever</p>
           </div>
+        </div>
+
+        {/* Value Breakdown */}
+        <div className="mt-8 rounded-2xl border border-green-500/30 bg-green-500/10 p-6 text-center">
+          <p className="mb-4 text-lg font-semibold text-green-400">
+            Plus you get extras worth $49+/mo included:
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
+              Customer Portal ($49/mo value)
+            </span>
+            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
+              Xero/QuickBooks/MYOB Integration
+            </span>
+            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
+              Marketing Module
+            </span>
+          </div>
+          <p className="mt-4 text-2xl font-bold text-white">
+            Total value: <span className="text-green-400">$178+/mo</span> → You pay just <span className="text-amber-400">$85/user/mo</span>
+          </p>
         </div>
       </section>
 

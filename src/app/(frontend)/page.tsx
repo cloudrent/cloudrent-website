@@ -169,6 +169,99 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Platform Coverage Section */}
+      <section className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            We cover{' '}
+            <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
+              every area
+            </span>{' '}
+            of your world
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            From our fully cloud web app for the office, to our mobile app for the field, to your 24/7 customer portal — we&apos;ve got you covered.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {/* Web App */}
+          <Link
+            href="/features"
+            className="group relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-purple-500/30">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-3">Web App</h3>
+              <p className="text-muted-foreground mb-4">
+                Full-featured cloud platform for your office. Manage bookings, invoicing, customers, and more from any browser.
+              </p>
+              <span className="inline-flex items-center gap-2 text-purple-400 font-medium group-hover:text-purple-300">
+                Explore Features
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </div>
+          </Link>
+
+          {/* Mobile App */}
+          <Link
+            href="/mobile-app"
+            className="group relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-blue-500/30">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-3">Mobile App</h3>
+              <p className="text-muted-foreground mb-4">
+                Take CloudRent to the field. Offline sync, barcode scanning, digital signatures, and push notifications.
+              </p>
+              <span className="inline-flex items-center gap-2 text-blue-400 font-medium group-hover:text-blue-300">
+                Learn More
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </div>
+          </Link>
+
+          {/* Customer Portal */}
+          <Link
+            href="/web-portal"
+            className="group relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-8 text-center hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300 hover:-translate-y-2"
+          >
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="relative">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-emerald-500/30">
+                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-3">Customer Portal</h3>
+              <p className="text-muted-foreground mb-4">
+                24/7 self-service for your customers. Online bookings, rental history, invoices, and document downloads.
+              </p>
+              <span className="inline-flex items-center gap-2 text-emerald-400 font-medium group-hover:text-emerald-300">
+                Discover Portal
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* Speed Section */}
       <section className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24">
         <div className="text-center mb-16">
