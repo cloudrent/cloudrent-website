@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { X } from 'lucide-react'
 
@@ -29,11 +30,20 @@ function calculateTimeLeft(): TimeLeft {
   }
 }
 
+// Don't show popup on these pages
+const EXCLUDED_PATHS = ['/founding', '/pricing', '/contact']
+
 export function LaunchPopup() {
   const [isVisible, setIsVisible] = useState(false)
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft())
+  const pathname = usePathname()
 
   useEffect(() => {
+    // Don't show on excluded pages
+    if (EXCLUDED_PATHS.includes(pathname)) {
+      return
+    }
+
     // Check if already dismissed this session
     const dismissed = sessionStorage.getItem(STORAGE_KEY)
     if (!dismissed) {
@@ -49,7 +59,7 @@ export function LaunchPopup() {
       }, 1500)
       return () => clearTimeout(showTimer)
     }
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -79,12 +89,18 @@ export function LaunchPopup() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-[#0a0a1a] to-purple-900/40 shadow-[0_20px_60px_rgba(136,27,169,0.4)]">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4"
+      onClick={handleDismiss}
+    >
+      <div
+        className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-br from-[#0a0a1a] to-purple-900/40 shadow-[0_20px_60px_rgba(136,27,169,0.4)]"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Close button */}
         <button
           onClick={handleDismiss}
-          className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-gray-400 transition-colors hover:bg-white/20 hover:text-white"
+          className="absolute right-4 top-4 z-10 rounded-full bg-white/10 p-2 text-gray-400 transition-colors hover:bg-white/20 hover:text-white"
           aria-label="Close popup"
         >
           <X className="h-5 w-5" />
@@ -92,7 +108,7 @@ export function LaunchPopup() {
 
         {/* Pattern overlay */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="pointer-events-none absolute inset-0 opacity-5"
           style={{
             backgroundImage:
               'repeating-linear-gradient(45deg, white 0, white 1px, transparent 1px, transparent 12px)',
