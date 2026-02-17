@@ -334,12 +334,12 @@ export default function PricingPage() {
               ))}
             </div>
 
-            <Link
-              href="/contact"
+            <a
+              href="https://app.cloudrent.me/founder"
               className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-4 text-base font-extrabold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400"
             >
               Claim Your Founding Spot →
-            </Link>
+            </a>
 
             <p className="mb-0 mt-3.5 text-xs text-gray-500">
               Once spots fill up, this offer is gone. No exceptions.
@@ -450,10 +450,8 @@ export default function PricingPage() {
                 </div>
 
                 {/* CTA button */}
-                <Link
-                  href={
-                    '/contact'
-                  }
+                <a
+                  href={tier.cta === 'Start Free Trial' ? 'https://app.cloudrent.me/register' : '/contact'}
                   className={cn(
                     'block w-full cursor-pointer rounded-xl border-none py-3.5 text-center text-[15px] font-bold tracking-wide transition-all duration-200',
                     isHighlight
@@ -464,7 +462,7 @@ export default function PricingPage() {
                   )}
                 >
                   {tier.cta}
-                </Link>
+                </a>
 
                 {/* Divider */}
                 <div className="my-6 h-px bg-purple-500/20" />
@@ -653,12 +651,12 @@ export default function PricingPage() {
             Start your 30-day free trial today. No credit card required.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link
-              href="/contact"
+            <a
+              href="https://app.cloudrent.me/register"
               className="cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-9 py-4 text-base font-bold text-white shadow-xl shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial
-            </Link>
+            </a>
             <Link
               href="/demo"
               className="cursor-pointer rounded-xl border border-purple-400/50 bg-transparent px-9 py-4 text-base font-semibold text-purple-200 transition-all hover:bg-purple-500/20"

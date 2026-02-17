@@ -27,7 +27,7 @@ const heroContent = {
   subheadline: "If it's not here yet, we'll build it in weeks—not months.",
   description: 'Complete rental management software with invoicing, digital signatures, Xero integration, and AI-powered support. All in one place.',
   primaryButtonLabel: 'Start Your Free 30-Day Trial',
-  primaryButtonUrl: '/contact',
+  primaryButtonUrl: 'https://app.cloudrent.me/register',
   secondaryButtonLabel: 'Watch Demo',
   trustSignals: 'No credit card required • Free migration from spreadsheets • Cancel anytime',
 }
@@ -101,7 +101,7 @@ export default function HomePage() {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Link
+            <a
               href={heroContent.primaryButtonUrl}
               className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
             >
@@ -111,7 +111,7 @@ export default function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </span>
-            </Link>
+            </a>
 
             <VideoModal
               buttonLabel={heroContent.secondaryButtonLabel}
@@ -230,12 +230,12 @@ export default function HomePage() {
             Join Australian hire businesses already saving time with CloudRent Pro.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/contact"
+            <a
+              href="https://app.cloudrent.me/register"
               className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)]"
             >
               Start Your Free 30-Day Trial
-            </Link>
+            </a>
             <Link
               href="/demo"
               className="text-muted-foreground hover:text-foreground px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all"

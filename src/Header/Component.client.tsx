@@ -15,7 +15,7 @@ interface HeaderClientProps {
 }
 
 // Mobile nav links
-const mobileNavLinks = [
+const mobileNavLinks: { label: string; href: string; external?: boolean }[] = [
   { label: 'Features', href: '/features' },
   { label: 'Web Portal', href: '/web-portal' },
   { label: 'Mobile App', href: '/mobile-app' },
@@ -25,6 +25,7 @@ const mobileNavLinks = [
   { label: 'Contact', href: '/contact' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Book Demo', href: '/demo' },
+  { label: 'Login', href: 'https://app.cloudrent.me', external: true },
 ]
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
@@ -72,23 +73,34 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         <div className="border-t border-purple-500/20 pb-6 lg:hidden">
           <nav className="flex flex-col gap-1 pt-4">
             {mobileNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-lg px-4 py-3 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
+              link.external ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-lg px-4 py-3 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-lg px-4 py-3 text-gray-300 transition-colors hover:bg-white/10 hover:text-white"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <div className="mt-4 flex flex-col gap-3 px-4">
-              <Link
-                href="/contact"
+              <a
+                href="https://app.cloudrent.me/register"
                 className="rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 text-center font-semibold text-white shadow-lg shadow-purple-500/25"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Start Free Trial
-              </Link>
+              </a>
             </div>
           </nav>
         </div>

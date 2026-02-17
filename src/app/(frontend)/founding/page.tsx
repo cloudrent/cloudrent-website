@@ -93,8 +93,8 @@ const faqs = [
     a: "No contracts. You can cancel anytime. But remember — if you cancel, you can't get the Founding Customer rate back.",
   },
   {
-    q: 'Can I start with a free trial?',
-    a: "Yes. You get a full 30-day free trial with access to all features. No credit card required to start.",
+    q: 'How do I sign up?',
+    a: "Click 'Claim Your Founding Spot' and complete the registration. Your founding rate is locked in immediately upon signup.",
   },
   {
     q: "What if a feature I need isn't built yet?",
@@ -171,14 +171,14 @@ export default function FoundingPage() {
           </div>
 
           {/* CTA */}
-          <Link
-            href="/contact"
+          <a
+            href="https://app.cloudrent.me/founder"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400 hover:shadow-[0_8px_40px_rgba(251,191,36,0.5)]"
           >
             Claim Your Founding Spot
-          </Link>
+          </a>
           <p className="mt-4 text-sm text-gray-500">
-            30-day free trial • No credit card required • Cancel anytime
+            Limited spots available • Rate locked forever • Cancel anytime
           </p>
         </div>
       </section>
@@ -351,12 +351,12 @@ export default function FoundingPage() {
             Once we hit 100 Founding Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
           </p>
 
-          <Link
-            href="/contact"
+          <a
+            href="https://app.cloudrent.me/founder"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400"
           >
             Claim Your Founding Spot
-          </Link>
+          </a>
 
           <p className="mt-6 text-sm text-gray-500">
             Questions? Contact us at{' '}

@@ -47,7 +47,7 @@ export function LaunchPopup() {
     // Check if already dismissed this session
     const dismissed = sessionStorage.getItem(STORAGE_KEY)
     if (!dismissed) {
-      // Small delay before showing popup
+      // Wait 60 seconds before showing popup
       const showTimer = setTimeout(() => {
         setIsVisible(true)
         // Track popup view in GTM
@@ -56,7 +56,7 @@ export function LaunchPopup() {
             event: 'launch_popup_view',
           })
         }
-      }, 1500)
+      }, 60000)
       return () => clearTimeout(showTimer)
     }
   }, [pathname])
@@ -134,7 +134,7 @@ export function LaunchPopup() {
           {/* Countdown */}
           <div className="mb-6">
             <p className="mb-3 text-sm font-medium uppercase tracking-wider text-purple-300">
-              Launching in
+              CloudRent Pro launching in
             </p>
             <div className="flex justify-center gap-3">
               {[
@@ -169,17 +169,25 @@ export function LaunchPopup() {
           </div>
 
           {/* CTA */}
-          <Link
-            href="/contact"
+          <a
+            href="https://app.cloudrent.me/founder"
             onClick={handleCtaClick}
             className="inline-block w-full rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-4 text-base font-bold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400 sm:w-auto"
           >
             Claim Your Founding Spot
-          </Link>
+          </a>
 
           <p className="mt-4 text-xs text-gray-500">
             Only available to the first 100 customers. Once spots fill up, this offer is gone.
           </p>
+
+          <Link
+            href="/founding"
+            onClick={handleDismiss}
+            className="mt-2 inline-block text-sm text-purple-400 hover:text-purple-300"
+          >
+            Learn more about the Founding Customer Program →
+          </Link>
         </div>
       </div>
     </div>
