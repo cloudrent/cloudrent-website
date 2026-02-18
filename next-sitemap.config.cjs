@@ -21,8 +21,13 @@ module.exports = {
       {
         userAgent: '*',
         disallow: '/admin/*',
+        allow: '/',
       },
     ],
     additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
   },
+  // Additional paths to include in sitemap
+  additionalPaths: async () => [
+    { loc: '/founding', priority: 0.9, changefreq: 'daily' },
+  ],
 }

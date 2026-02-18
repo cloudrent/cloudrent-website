@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } from 'lucide-react'
 import { LightboxImage } from '@/components/Lightbox'
 import { VideoModal } from '@/components/VideoModal'
+import { SoftwareSchema } from '@/components/StructuredData'
 
 // Enable ISR - regenerate page every hour
 export const revalidate = 3600
@@ -66,6 +67,7 @@ const speedMetrics = [
 export default function HomePage() {
   return (
     <div className="min-h-screen">
+      <SoftwareSchema />
       {/* Hero Section */}
       <section className="relative min-h-[85vh] flex flex-col items-center justify-center pt-[100px]">
         <div className="relative z-10 max-w-6xl mx-auto px-6 text-center -mt-[50px]">

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Check, Clock, Shield, Zap, Users, Star, Gift, Lock } from 'lucide-react'
+import { FAQSchema } from '@/components/StructuredData'
 
 const LAUNCH_DATE = new Date('2026-02-23T00:00:00+10:00')
 
@@ -113,8 +114,15 @@ export default function FoundingPage() {
     return () => clearInterval(timer)
   }, [])
 
+  // Transform FAQs for schema
+  const faqSchemaData = faqs.map((faq) => ({
+    question: faq.q,
+    answer: faq.a,
+  }))
+
   return (
     <div className="min-h-screen text-white">
+      <FAQSchema faqs={faqSchemaData} />
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 pb-16 pt-12">
         {/* Extra glow effects */}
