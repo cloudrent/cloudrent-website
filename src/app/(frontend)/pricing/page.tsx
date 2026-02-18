@@ -334,12 +334,12 @@ export default function PricingPage() {
               ))}
             </div>
 
-            <a
-              href="https://app.cloudrent.me/founder"
+            <Link
+              href="/founding"
               className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-4 text-base font-extrabold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400"
             >
-              Claim Your Founding Spot →
-            </a>
+              See How Much You&apos;ll Save →
+            </Link>
 
             <p className="mb-0 mt-3.5 text-xs text-gray-500">
               Once spots fill up, this offer is gone. No exceptions.
