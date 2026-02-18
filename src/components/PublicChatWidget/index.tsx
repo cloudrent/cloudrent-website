@@ -136,6 +136,13 @@ export function PublicChatWidget() {
                     m.isStreaming ? { ...m, content: fullContent } : m
                   )
                 )
+              } else if (data.type === 'thinking') {
+                // Show searching indicator
+                setMessages(prev =>
+                  prev.map(m =>
+                    m.isStreaming ? { ...m, content: '🔍 Searching documentation...' } : m
+                  )
+                )
               } else if (data.type === 'done') {
                 if (data.remaining !== undefined) {
                   setMessagesRemaining(data.remaining)
