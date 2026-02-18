@@ -19,6 +19,7 @@ const robotoCondensed = Roboto_Condensed({
 import { AdminBar } from '@/components/AdminBar'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
 import { LaunchPopup } from '@/components/LaunchPopup'
+import { PublicChatWidget } from '@/components/PublicChatWidget'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
@@ -67,6 +68,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Header />
           {children}
           <Footer />
+          <PublicChatWidget />
         </Providers>
       </body>
     </html>
