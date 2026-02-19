@@ -36,6 +36,7 @@ export function VideoModal({ buttonLabel, videoSrc }: VideoModalProps) {
   }, [isOpen, close])
 
   const handleOpen = () => {
+    console.log('VideoModal: handleOpen called')
     setIsOpen(true)
     if (typeof window !== 'undefined' && window.dataLayer) {
       window.dataLayer.push({
@@ -49,7 +50,7 @@ export function VideoModal({ buttonLabel, videoSrc }: VideoModalProps) {
     <>
       <button
         onClick={handleOpen}
-        className="flex items-center gap-2 text-muted-foreground hover:text-foreground px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all w-full sm:w-auto justify-center backdrop-blur-sm hover:bg-white/5"
+        className="relative z-10 flex items-center gap-2 text-muted-foreground hover:text-foreground px-6 py-4 rounded-xl border border-white/10 hover:border-white/20 transition-all w-full sm:w-auto justify-center backdrop-blur-sm hover:bg-white/5"
       >
         <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
           <Play className="w-6 h-6" fill="currentColor" />
@@ -59,7 +60,7 @@ export function VideoModal({ buttonLabel, videoSrc }: VideoModalProps) {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
           onClick={close}
         >
           <button
