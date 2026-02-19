@@ -180,7 +180,7 @@ export default function FoundingPage() {
 
           {/* CTA */}
           <a
-            href="https://app.cloudrent.me/founder"
+            href="https://app.cloudrent.me/launch"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400 hover:shadow-[0_8px_40px_rgba(251,191,36,0.5)]"
           >
             Lock In Your Launch Price
@@ -206,7 +206,7 @@ export default function FoundingPage() {
             <p className="text-gray-500">Regular pricing after launch</p>
           </div>
 
-          {/* Founding Price */}
+          {/* Launch Price */}
           <div className="relative rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-purple-900/60 to-amber-900/30 p-8 text-center shadow-[0_0_40px_rgba(251,191,36,0.15)]">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-500 px-4 py-1 text-xs font-bold uppercase text-purple-900">
               Save $44/user/mo
@@ -381,7 +381,7 @@ export default function FoundingPage() {
           </p>
 
           <a
-            href="https://app.cloudrent.me/founder"
+            href="https://app.cloudrent.me/launch"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400"
           >
             Lock In Your Launch Price

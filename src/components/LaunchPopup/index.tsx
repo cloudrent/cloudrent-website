@@ -170,7 +170,7 @@ export function LaunchPopup() {
 
           {/* CTA */}
           <a
-            href="https://app.cloudrent.me/founder"
+            href="https://app.cloudrent.me/launch"
             onClick={handleCtaClick}
             className="inline-block w-full rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-4 text-base font-bold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400 sm:w-auto"
           >
