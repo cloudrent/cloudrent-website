@@ -86,9 +86,8 @@ const redirects = async () => {
     { source: '/spark-waitlist/', destination: '/contact', permanent: true },
 
     // Legal pages
-    { source: '/terms', destination: '/terms', permanent: true },
-    { source: '/privacy-policy', destination: '/privacy', permanent: true },
-    { source: '/privacy-policy/', destination: '/privacy', permanent: true },
+    { source: '/privacy-policy', destination: '/privacy/', permanent: true },
+    { source: '/privacy-policy/', destination: '/privacy/', permanent: true },
   ]
 
   const redirects = [internetExplorerRedirect, ...migrationRedirects]
