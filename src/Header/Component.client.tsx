@@ -47,7 +47,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
 
   return (
-    <header className="container relative z-50" {...(theme ? { 'data-theme': theme } : {})}>
+    <header className="container relative z-[60]" {...(theme ? { 'data-theme': theme } : {})}>
       <div className="flex items-center justify-between py-6">
         <Link href="/">
           <Logo loading="eager" priority="high" className="invert dark:invert-0" />
