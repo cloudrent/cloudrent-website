@@ -29,7 +29,7 @@ CloudRent Pro is rental management software designed specifically for Australian
 - Professional: $85/user/month - Full toolkit including Xero integration
 - Business: $129/user/month - Enterprise features with dedicated support
 
-### Founding Customer Program
+### CloudRent Pro Launch Offer
 
 Limited offer for first 100 customers: Get the full Business plan (every feature) locked in at $85/user/month forever. This rate never increases as long as you remain subscribed.
 
@@ -68,4 +68,4 @@ Sign up: https://app.cloudrent.me/founder
 - Book Demo: https://www.cloudrent.me/demo
 - Help Center: https://help.cloudrent.me
 - Start Free Trial: https://app.cloudrent.me/register
-- Founding Customer Signup: https://app.cloudrent.me/founder
+- Launch Offer Signup: https://app.cloudrent.me/founder

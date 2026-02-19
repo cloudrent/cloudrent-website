@@ -41,7 +41,15 @@
       "Bash(jq -r '\"\"Run '$i': Score=\"\" + \\(.categories.performance.score * 100 | tostring\\) + \"\", LCP=\"\" + .audits[\"\"largest-contentful-paint\"\"].displayValue + \"\", TTFB=\"\" + .audits[\"\"server-response-time\"\"].displayValue')",
       "Bash(done)",
       "Bash(do lighthouse https://www.cloudrent.me --output=json --output-path=/tmp/lh-final-$i.json --chrome-flags=\"--headless --no-sandbox\" --only-categories=performance cat /tmp/lh-final-$i.json)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Bash(find:*)",
+      "Bash(git restore:*)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_WBwh2J9krsCe@ep-curly-hat-a7cm5h2u-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require\" pnpm payload migrate:create:*)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_WBwh2J9krsCe@ep-curly-hat-a7cm5h2u-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require\" pnpm payload migrate:*)",
+      "Bash(DATABASE_URL=\"postgresql://neondb_owner:npg_WBwh2J9krsCe@ep-curly-hat-a7cm5h2u-pooler.ap-southeast-2.aws.neon.tech/neondb?sslmode=require\" echo:*)",
+      "Bash(node -e:*)",
+      "Bash(node add-api-key-columns.mjs:*)",
+      "Bash(npm run build:*)"
     ]
   }
 }

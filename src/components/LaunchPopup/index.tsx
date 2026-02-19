@@ -31,7 +31,7 @@ function calculateTimeLeft(): TimeLeft {
 }
 
 // Don't show popup on these pages
-const EXCLUDED_PATHS = ['/founding', '/pricing', '/contact']
+const EXCLUDED_PATHS = ['/launch', '/pricing', '/contact']
 
 export function LaunchPopup() {
   const [isVisible, setIsVisible] = useState(false)
@@ -124,7 +124,7 @@ export function LaunchPopup() {
 
           {/* Headline */}
           <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl">
-            Founding Customer Program
+            CloudRent Pro Launch Offer
           </h2>
           <p className="mb-6 text-gray-300">
             Lock in <span className="font-bold text-amber-400">every feature</span> at just{' '}
@@ -174,7 +174,7 @@ export function LaunchPopup() {
             onClick={handleCtaClick}
             className="inline-block w-full rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-4 text-base font-bold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400 sm:w-auto"
           >
-            Claim Your Founding Spot
+            Lock In Your Launch Price
           </a>
 
           <p className="mt-4 text-xs text-gray-500">
@@ -182,11 +182,11 @@ export function LaunchPopup() {
           </p>
 
           <Link
-            href="/founding"
+            href="/launch"
             onClick={handleDismiss}
             className="mt-2 inline-block text-sm text-purple-400 hover:text-purple-300"
           >
-            Learn more about the Founding Customer Program →
+            Learn more about the CloudRent Pro Launch Offer →
           </Link>
         </div>
       </div>

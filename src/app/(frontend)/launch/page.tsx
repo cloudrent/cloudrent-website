@@ -78,7 +78,7 @@ const benefits = [
 
 const faqs = [
   {
-    q: 'What exactly do I get as a Founding Customer?',
+    q: 'What exactly do I get as a Launch Customer?',
     a: 'You get the complete Business plan — every feature, every integration, every future update — locked in at $85/user/mo. This is normally $129/user/mo. Your rate never increases as long as you remain subscribed.',
   },
   {
@@ -87,19 +87,19 @@ const faqs = [
   },
   {
     q: 'What happens if I cancel and rejoin later?',
-    a: "If you cancel your subscription, you lose your Founding Customer status. If you rejoin later, you'll be on standard pricing ($129/user/mo for Business plan).",
+    a: "If you cancel your subscription, you lose your Launch Customer status. If you rejoin later, you'll be on standard pricing ($129/user/mo for Business plan).",
   },
   {
     q: 'Is there a contract or minimum commitment?',
-    a: "No contracts. You can cancel anytime. But remember — if you cancel, you can't get the Founding Customer rate back.",
+    a: "No contracts. You can cancel anytime. But remember — if you cancel, you can't get the launch price back.",
   },
   {
     q: 'How do I sign up?',
-    a: "Click 'Claim Your Founding Spot' and complete the registration. Your founding rate is locked in immediately upon signup.",
+    a: "Click 'Lock In Your Launch Price' and complete the registration. Your launch price is locked in immediately upon signup.",
   },
   {
     q: "What if a feature I need isn't built yet?",
-    a: "Tell us. Founding Customers get priority feature requests. We ship fast — most features are delivered in 2-4 weeks, not months.",
+    a: "Tell us. Launch Customers get priority feature requests. We ship fast — most features are delivered in 2-4 weeks, not months.",
   },
 ]
 
@@ -140,9 +140,9 @@ export default function FoundingPage() {
 
           {/* Headline */}
           <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
-            Become a{' '}
+            CloudRent Pro{' '}
             <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
-              Founding Customer
+              Launch Offer
             </span>
           </h1>
 
@@ -183,7 +183,7 @@ export default function FoundingPage() {
             href="https://app.cloudrent.me/founder"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400 hover:shadow-[0_8px_40px_rgba(251,191,36,0.5)]"
           >
-            Claim Your Founding Spot
+            Lock In Your Launch Price
           </a>
           <p className="mt-4 text-sm text-gray-500">
             Limited spots available • Rate locked forever • Cancel anytime
@@ -212,7 +212,7 @@ export default function FoundingPage() {
               Save $44/user/mo
             </div>
             <p className="mb-2 text-sm font-medium uppercase tracking-wider text-amber-400">
-              Founding Customer Price
+              Launch Customer Price
             </p>
             <div className="mb-4 flex items-baseline justify-center gap-1">
               <span className="text-5xl font-bold text-white">$85</span>
@@ -249,7 +249,7 @@ export default function FoundingPage() {
         <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
           Why Become a{' '}
           <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
-            Founding Customer
+            Launch Customer
           </span>
           ?
         </h2>
@@ -283,7 +283,7 @@ export default function FoundingPage() {
             </span>
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-center text-gray-400">
-            As a Founding Customer, you get access to every single feature — no restrictions, no upsells, no hidden costs.
+            As a Launch Customer, you get access to every single feature — no restrictions, no upsells, no hidden costs.
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -377,14 +377,14 @@ export default function FoundingPage() {
             Don&apos;t Miss Your Chance
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-gray-300">
-            Once we hit 100 Founding Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
+            Once we hit 100 Launch Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
           </p>
 
           <a
             href="https://app.cloudrent.me/founder"
             className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400"
           >
-            Claim Your Founding Spot
+            Lock In Your Launch Price
           </a>
 
           <p className="mt-6 text-sm text-gray-500">

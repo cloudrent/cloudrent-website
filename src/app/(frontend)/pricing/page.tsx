@@ -186,8 +186,8 @@ const faqs = [
     a: 'Prices shown are ex-GST. GST (10%) is added at checkout for Australian businesses.',
   },
   {
-    q: 'Do Founding Customers keep their pricing forever?',
-    a: "Yes — and once the spots are filled, this deal is gone permanently. Founding customers are locked in at $85/user/mo with every feature included for as long as they remain subscribed. Cancel and rejoin? You'll be on standard pricing. We won't be running this offer again.",
+    q: 'Do Launch Customers keep their pricing forever?',
+    a: "Yes — and once the spots are filled, this deal is gone permanently. Launch customers are locked in at $85/user/mo with every feature included for as long as they remain subscribed. Cancel and rejoin? You'll be on standard pricing. We won't be running this offer again.",
   },
 ]
 
@@ -237,7 +237,7 @@ export default function PricingPage() {
         <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-fuchsia-600/15 blur-[100px]" />
       </div>
 
-      {/* ═══════════════ FOUNDING CUSTOMER BANNER ═══════════════ */}
+      {/* ═══════════════ LAUNCH OFFER BANNER ═══════════════ */}
       <div className="relative overflow-hidden bg-gradient-to-r from-brand-purple-deep via-brand-purple to-fuchsia-500 px-5 py-3 text-center">
         <div
           className="absolute inset-0 opacity-[0.06]"
@@ -253,7 +253,7 @@ export default function PricingPage() {
             <StarIcon />
           </span>
           <span className="text-sm font-medium tracking-wide text-white">
-            Founding Customer Program —{' '}
+            CloudRent Pro Launch Offer —{' '}
             <strong className="text-amber-400">Spots are almost gone</strong> — Lock in every
             feature for just $85/user
           </span>
@@ -288,7 +288,7 @@ export default function PricingPage() {
         </div>
       </div>
 
-      {/* ═══════════════ FOUNDING CUSTOMER CALLOUT ═══════════════ */}
+      {/* ═══════════════ LAUNCH OFFER CALLOUT ═══════════════ */}
       <div className="relative mx-auto -mt-5 mb-10 max-w-4xl px-5">
         <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-900/60 to-fuchsia-900/60 p-9 shadow-[0_8px_32px_rgba(136,27,169,0.3)]">
           {/* Pattern */}
@@ -307,12 +307,12 @@ export default function PricingPage() {
             </div>
 
             <h3 className="mb-2.5 text-3xl font-black tracking-tight text-white">
-              Become a Founding Customer
+              CloudRent Pro Launch Offer
             </h3>
 
             <p className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-gray-300">
               We&apos;re only accepting a <strong className="text-amber-400">limited number</strong>{' '}
-              of founding customers who&apos;ll get the{' '}
+              of launch customers who&apos;ll get the{' '}
               <strong className="text-white">full Business plan</strong> — every feature, every
               integration, every future update — locked in at just{' '}
               <strong className="text-amber-400">$85/user/mo</strong> for as long as you stay
@@ -335,7 +335,7 @@ export default function PricingPage() {
             </div>
 
             <Link
-              href="/founding"
+              href="/launch"
               className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-4 text-base font-extrabold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400"
             >
               See How Much You&apos;ll Save →

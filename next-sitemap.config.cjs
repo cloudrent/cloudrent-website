@@ -28,6 +28,6 @@ module.exports = {
   },
   // Additional paths to include in sitemap
   additionalPaths: async () => [
-    { loc: '/founding', priority: 0.9, changefreq: 'daily' },
+    { loc: '/launch', priority: 0.9, changefreq: 'daily' },
   ],
 }

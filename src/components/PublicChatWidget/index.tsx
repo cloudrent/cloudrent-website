@@ -22,6 +22,64 @@ const QUICK_ACTIONS = [
 const SUPABASE_URL = 'https://bawidpmocsxudwpsppsz.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhd2lkcG1vY3N4dWR3cHNwcHN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzYwMjI2OTYsImV4cCI6MjA1MTU5ODY5Nn0.XJqjHWKFNkVfx-HW0W0cVDzlLnPJLjyE1cj4zrxsGOM'
 
+// Simple markdown renderer for bold and links
+function renderMarkdown(text: string, isUserMessage: boolean = false): React.ReactNode[] {
+  const elements: React.ReactNode[] = []
+  let key = 0
+
+  // Split by markdown patterns and process
+  // Handle **bold**, *italic*, and [text](url) links
+  const pattern = /(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g
+  const parts = text.split(pattern)
+
+  for (const part of parts) {
+    if (!part) continue
+
+    // Bold: **text**
+    if (part.startsWith('**') && part.endsWith('**')) {
+      elements.push(
+        <strong key={key++} className="font-semibold">
+          {part.slice(2, -2)}
+        </strong>
+      )
+    }
+    // Italic: *text*
+    else if (part.startsWith('*') && part.endsWith('*') && !part.startsWith('**')) {
+      elements.push(
+        <em key={key++}>
+          {part.slice(1, -1)}
+        </em>
+      )
+    }
+    // Link: [text](url)
+    else if (part.match(/^\[[^\]]+\]\([^)]+\)$/)) {
+      const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+      if (match) {
+        elements.push(
+          <a
+            key={key++}
+            href={match[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={isUserMessage
+              ? "underline hover:opacity-80"
+              : "text-brand-purple underline hover:text-brand-purple/80"
+            }
+          >
+            {match[1]}
+          </a>
+        )
+      }
+    }
+    // Plain text
+    else {
+      elements.push(<span key={key++}>{part}</span>)
+    }
+  }
+
+  return elements
+}
+
 export function PublicChatWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
@@ -328,7 +386,9 @@ export function PublicChatWidget() {
                       : 'bg-white border border-gray-200 text-gray-800'
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                  <div className="text-sm whitespace-pre-wrap">
+                    {renderMarkdown(message.content, message.role === 'user')}
+                  </div>
                   {message.isStreaming && (
                     <span className="inline-block w-2 h-4 bg-current opacity-50 animate-pulse ml-1" />
                   )}
