@@ -36,7 +36,7 @@ export function VideoModal({ buttonLabel, videoSrc }: VideoModalProps) {
   }, [isOpen, close])
 
   const handleOpen = () => {
-    console.log('VideoModal: handleOpen called')
+    alert('Watch Demo clicked!')
     setIsOpen(true)
     if (typeof window !== 'undefined' && window.dataLayer) {
       window.dataLayer.push({
