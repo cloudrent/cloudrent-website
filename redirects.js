@@ -21,7 +21,6 @@ const redirects = async () => {
     { source: '/cloudrent-platform/', destination: '/about', permanent: true },
     { source: '/create-your-quote', destination: '/contact', permanent: true },
     { source: '/create-your-quote/', destination: '/contact', permanent: true },
-    { source: '/contact/', destination: '/contact', permanent: true },
 
     // Features - redirect individual feature pages to main features page with anchors
     { source: '/ai-damage-detection-automation', destination: '/features#damage', permanent: true },
