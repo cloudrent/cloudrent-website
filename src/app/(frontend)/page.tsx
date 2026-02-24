@@ -2,9 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } from 'lucide-react'
-import { LightboxImage } from '@/components/Lightbox'
-import { VideoModal } from '@/components/VideoModal'
 import { SoftwareSchema } from '@/components/StructuredData'
+import { ImmersiveHero } from '@/heros/ImmersiveHero'
 
 // Enable ISR - regenerate page every hour
 export const revalidate = 3600
@@ -19,18 +18,6 @@ export const metadata: Metadata = {
     description: 'Everything you need to manage your hire business. Complete rental management with invoicing, digital signatures, and Xero integration.',
     type: 'website',
   },
-}
-
-// Hero content
-const heroContent = {
-  badge: 'Built in Australia for Australian hire businesses',
-  headline: 'Everything you need to manage your hire business.',
-  subheadline: "If it's not here yet, we'll build it in weeks—not months.",
-  description: 'Complete rental management software with invoicing, digital signatures, Xero integration, and AI-powered support. All in one place.',
-  primaryButtonLabel: 'Start Your Free 30-Day Trial',
-  primaryButtonUrl: 'https://app.cloudrent.me/register',
-  secondaryButtonLabel: 'Watch Demo',
-  trustSignals: 'No credit card required • Free migration from spreadsheets • Cancel anytime',
 }
 
 // Features
@@ -68,75 +55,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <SoftwareSchema />
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex flex-col items-center justify-center pt-[100px]">
-        <div className="relative z-10 max-w-6xl mx-auto px-6 text-center -mt-[50px]">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-            </span>
-            <span className="text-muted-foreground text-sm">{heroContent.badge}</span>
-          </div>
 
-          {/* Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight tracking-tight">
-            Everything you need to manage your{' '}
-            <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
-              hire business
-            </span>
-            .
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-xl sm:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto font-light">
-            If it&apos;s not here yet, we&apos;ll build it in{' '}
-            <span className="text-foreground font-medium">weeks</span>
-            —not months.
-          </p>
-
-          {/* Description */}
-          <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-            {heroContent.description}
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <a
-              href={heroContent.primaryButtonUrl}
-              className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] w-full sm:w-auto"
-            >
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                {heroContent.primaryButtonLabel}
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </a>
-
-            <VideoModal
-              buttonLabel={heroContent.secondaryButtonLabel}
-              videoSrc="/images/CloudRent-launch-Feb-2026.mp4"
-            />
-          </div>
-
-          {/* Trust Signals */}
-          <p className="text-muted-foreground text-sm mb-16">{heroContent.trustSignals}</p>
-
-          {/* Device Mockup */}
-          <div className="relative mt-8">
-            <LightboxImage
-              src="/images/cloudrent-rental-software-all-devices-mockup.webp"
-              alt="CloudRent Pro rental management software on desktop, laptop, tablet and mobile devices"
-              className="w-full max-w-5xl mx-auto"
-              priority
-            />
-            {/* Decorative glow */}
-            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-purple-500/20 via-transparent to-blue-500/20 blur-3xl" />
-          </div>
-        </div>
-      </section>
+      {/* Immersive Dashboard Hero */}
+      <ImmersiveHero />
 
       {/* Features Section */}
       <section className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24">
