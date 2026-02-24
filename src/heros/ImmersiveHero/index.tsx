@@ -59,7 +59,7 @@ export const ImmersiveHero: React.FC = () => {
   const [animationKey, setAnimationKey] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
   const [dashboardOpacity, setDashboardOpacity] = useState(0)
   const [isClient, setIsClient] = useState(false)
 
@@ -552,7 +552,7 @@ export const ImmersiveHero: React.FC = () => {
                 {/* App header */}
                 <div className="bg-brand-purple px-3 py-2">
                   <div className="text-white text-[10px] font-medium">Hi Sarah! 👋</div>
-                  <div className="text-white/70 text-[8px]">Here's what's on today</div>
+                  <div className="text-white/70 text-[8px]">Here&apos;s what&apos;s on today</div>
                 </div>
 
                 {/* Stats grid */}
@@ -573,7 +573,7 @@ export const ImmersiveHero: React.FC = () => {
                 {/* Revenue chart */}
                 <div className="px-2 pb-2">
                   <div className="bg-gray-50 rounded-lg p-2">
-                    <div className="text-[8px] text-gray-600 mb-1">Today's Revenue</div>
+                    <div className="text-[8px] text-gray-600 mb-1">Today&apos;s Revenue</div>
                     <div className="text-sm font-bold text-brand-purple">$4,280</div>
                     <div className="h-8 flex items-end justify-between gap-0.5 mt-1">
                       {[40, 65, 45, 80, 60, 90, 75].map((h, i) => (
