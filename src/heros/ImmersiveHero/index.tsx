@@ -35,7 +35,7 @@ import {
 } from 'lucide-react'
 
 // Animation phases
-type Phase = 'particles' | 'morphing' | 'dashboard' | 'features' | 'devices' | 'cta'
+type Phase = 'particles' | 'morphing' | 'dashboard' | 'features' | 'devices' | 'connections' | 'cta'
 
 // Particle for abstract visualization
 interface Particle {
@@ -47,6 +47,9 @@ interface Particle {
   size: number
   opacity: number
   color: string
+  shape: 'diamond' | 'hexagon' | 'square'
+  rotation: number
+  rotationSpeed: number
 }
 
 export const ImmersiveHero: React.FC = () => {
@@ -56,6 +59,7 @@ export const ImmersiveHero: React.FC = () => {
   const [showCTA, setShowCTA] = useState(false)
   const [timerSeconds, setTimerSeconds] = useState(0)
   const [signatureProgress, setSignatureProgress] = useState(0)
+  const [connectionProgress, setConnectionProgress] = useState(0)
   const [animationKey, setAnimationKey] = useState(0)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
@@ -71,6 +75,7 @@ export const ImmersiveHero: React.FC = () => {
     setShowCTA(false)
     setTimerSeconds(0)
     setSignatureProgress(0)
+    setConnectionProgress(0)
     setDashboardOpacity(0)
     setAnimationKey(prev => prev + 1)
   }
@@ -80,36 +85,80 @@ export const ImmersiveHero: React.FC = () => {
     setIsClient(true)
   }, [])
 
-  // Particle colors matching brand
+  // Particle colors matching brand - primarily purple for high-tech look
   const particleColors = [
-    'rgba(136, 27, 169, 0.8)',
-    'rgba(147, 51, 234, 0.7)',
-    'rgba(59, 130, 246, 0.6)',
-    'rgba(65, 171, 1, 0.5)',
+    'rgba(136, 27, 169, 0.9)',
+    'rgba(136, 27, 169, 0.7)',
+    'rgba(136, 27, 169, 0.5)',
+    'rgba(147, 51, 234, 0.6)',
   ]
 
-  // Initialize particles
+  const particleShapes: Array<'diamond' | 'hexagon' | 'square'> = ['diamond', 'hexagon', 'square']
+
+  // Initialize particles with technical shapes
   const initParticles = useCallback(() => {
     if (!canvasRef.current) return
     const canvas = canvasRef.current
     const particles: Particle[] = []
 
-    for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 60; i++) {
       particles.push({
         id: i,
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        size: Math.random() * 4 + 2,
-        opacity: Math.random() * 0.5 + 0.3,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        size: Math.random() * 6 + 3,
+        opacity: Math.random() * 0.4 + 0.2,
         color: particleColors[Math.floor(Math.random() * particleColors.length)],
+        shape: particleShapes[Math.floor(Math.random() * particleShapes.length)],
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.02,
       })
     }
     particlesRef.current = particles
   }, [])
 
-  // Animate particles
+  // Draw technical shapes
+  const drawShape = (ctx: CanvasRenderingContext2D, p: Particle) => {
+    ctx.save()
+    ctx.translate(p.x, p.y)
+    ctx.rotate(p.rotation)
+    ctx.fillStyle = p.color
+    ctx.strokeStyle = p.color.replace(/[\d.]+\)$/, '1)')
+    ctx.lineWidth = 0.5
+
+    if (p.shape === 'diamond') {
+      ctx.beginPath()
+      ctx.moveTo(0, -p.size)
+      ctx.lineTo(p.size * 0.7, 0)
+      ctx.lineTo(0, p.size)
+      ctx.lineTo(-p.size * 0.7, 0)
+      ctx.closePath()
+      ctx.fill()
+      ctx.stroke()
+    } else if (p.shape === 'hexagon') {
+      ctx.beginPath()
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i - Math.PI / 6
+        const x = Math.cos(angle) * p.size
+        const y = Math.sin(angle) * p.size
+        if (i === 0) ctx.moveTo(x, y)
+        else ctx.lineTo(x, y)
+      }
+      ctx.closePath()
+      ctx.fill()
+      ctx.stroke()
+    } else {
+      // Square
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size)
+      ctx.strokeRect(-p.size / 2, -p.size / 2, p.size, p.size)
+    }
+
+    ctx.restore()
+  }
+
+  // Animate particles with technical shapes
   const animateParticles = useCallback(() => {
     if (!canvasRef.current) return
     const canvas = canvasRef.current
@@ -118,32 +167,47 @@ export const ImmersiveHero: React.FC = () => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+    // Draw circuit-like connection lines
     particlesRef.current.forEach((p1, i) => {
       particlesRef.current.slice(i + 1).forEach(p2 => {
         const dx = p1.x - p2.x
         const dy = p1.y - p2.y
         const dist = Math.sqrt(dx * dx + dy * dy)
 
-        if (dist < 150) {
+        if (dist < 180) {
+          const alpha = 0.2 * (1 - dist / 180)
           ctx.beginPath()
-          ctx.strokeStyle = `rgba(136, 27, 169, ${0.15 * (1 - dist / 150)})`
+          ctx.strokeStyle = `rgba(136, 27, 169, ${alpha})`
           ctx.lineWidth = 1
+          // Draw angular connection (circuit-like)
+          const midX = (p1.x + p2.x) / 2
           ctx.moveTo(p1.x, p1.y)
+          ctx.lineTo(midX, p1.y)
+          ctx.lineTo(midX, p2.y)
           ctx.lineTo(p2.x, p2.y)
           ctx.stroke()
+
+          // Draw small node at connection point
+          if (dist < 100) {
+            ctx.beginPath()
+            ctx.fillStyle = `rgba(136, 27, 169, ${alpha * 2})`
+            ctx.arc(midX, (p1.y + p2.y) / 2, 2, 0, Math.PI * 2)
+            ctx.fill()
+          }
         }
       })
     })
 
+    // Draw and update particles
     particlesRef.current.forEach(p => {
-      ctx.beginPath()
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-      ctx.fillStyle = p.color
-      ctx.fill()
+      drawShape(ctx, p)
 
+      // Update position
       p.x += p.vx
       p.y += p.vy
+      p.rotation += p.rotationSpeed
 
+      // Bounce off edges
       if (p.x < 0 || p.x > canvas.width) p.vx *= -1
       if (p.y < 0 || p.y > canvas.height) p.vy *= -1
     })
@@ -206,6 +270,23 @@ export const ImmersiveHero: React.FC = () => {
     }
   }, [phase, deviceIndex, isClient])
 
+  // Connection flow animation - slowed down for better effect
+  useEffect(() => {
+    if (!isClient) return
+    if (phase === 'connections') {
+      const interval = setInterval(() => {
+        setConnectionProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(interval)
+            return 100
+          }
+          return prev + 1
+        })
+      }, 50)
+      return () => clearInterval(interval)
+    }
+  }, [phase, isClient])
+
   // Phase progression - depends on animationKey to allow replay
   useEffect(() => {
     if (!isClient) return
@@ -249,11 +330,17 @@ export const ImmersiveHero: React.FC = () => {
     timers.push(setTimeout(() => setDeviceIndex(2), 14500))  // Driver App
     timers.push(setTimeout(() => setDeviceIndex(3), 16500))  // Customer Portal
 
-    // Phase 5 -> 6: Devices to CTA (20s)
+    // Phase 5 -> 6: Devices to connections (18s - show circular gauge)
+    timers.push(setTimeout(() => {
+      setPhase('connections')
+      setConnectionProgress(0)
+    }, 18000))
+
+    // Phase 6 -> 7: Connections to CTA (26s - after slower animation completes)
     timers.push(setTimeout(() => {
       setPhase('cta')
       setShowCTA(true)
-    }, 20000))
+    }, 26000))
 
     return () => timers.forEach(clearTimeout)
   }, [isClient, animationKey])
@@ -269,16 +356,108 @@ export const ImmersiveHero: React.FC = () => {
   }
 
   return (
-    <section key={animationKey} className="relative min-h-screen w-full overflow-hidden bg-[#0a0a1a] -mt-[100px] pt-[100px]">
+    <section key={animationKey} className="relative min-h-screen w-full overflow-hidden bg-transparent -mt-[100px] pt-[100px]">
       {/* Extended background that goes behind header */}
-      <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-[#0a0a1a] z-0" />
+      <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-transparent z-0" />
 
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
 
-      {/* Animated gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+      {/* Technical background shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Hexagon grid - top left */}
+        <svg className="absolute top-[10%] left-[5%] w-64 h-64 opacity-20 animate-pulse" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="hexGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#881ba9" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#881ba9" stopOpacity="0.2" />
+            </linearGradient>
+          </defs>
+          <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="none" stroke="url(#hexGrad1)" strokeWidth="0.5" />
+          <polygon points="50,15 80,30 80,70 50,85 20,70 20,30" fill="none" stroke="#881ba9" strokeWidth="0.3" opacity="0.6" />
+          <polygon points="50,25 70,35 70,65 50,75 30,65 30,35" fill="none" stroke="#881ba9" strokeWidth="0.3" opacity="0.4" />
+          <circle cx="50" cy="5" r="2" fill="#881ba9" />
+          <circle cx="90" cy="25" r="2" fill="#881ba9" />
+          <circle cx="90" cy="75" r="2" fill="#881ba9" />
+          <circle cx="50" cy="95" r="2" fill="#881ba9" />
+          <circle cx="10" cy="75" r="2" fill="#881ba9" />
+          <circle cx="10" cy="25" r="2" fill="#881ba9" />
+        </svg>
+
+        {/* Circuit pattern - top right */}
+        <svg className="absolute top-[15%] right-[10%] w-80 h-80 opacity-15" viewBox="0 0 100 100" style={{ animationDelay: '0.5s' }}>
+          <defs>
+            <linearGradient id="circuitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#881ba9" stopOpacity="1" />
+              <stop offset="100%" stopColor="#881ba9" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          {/* Horizontal lines */}
+          <line x1="0" y1="20" x2="40" y2="20" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" />
+          <line x1="60" y1="20" x2="100" y2="20" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" style={{ animationDelay: '0.2s' }} />
+          <line x1="0" y1="50" x2="30" y2="50" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" style={{ animationDelay: '0.4s' }} />
+          <line x1="70" y1="50" x2="100" y2="50" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+          <line x1="0" y1="80" x2="45" y2="80" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" style={{ animationDelay: '0.8s' }} />
+          <line x1="55" y1="80" x2="100" y2="80" stroke="#881ba9" strokeWidth="0.5" className="animate-pulse" style={{ animationDelay: '1s' }} />
+          {/* Vertical connectors */}
+          <line x1="40" y1="20" x2="40" y2="50" stroke="#881ba9" strokeWidth="0.5" />
+          <line x1="60" y1="20" x2="60" y2="80" stroke="#881ba9" strokeWidth="0.5" />
+          <line x1="30" y1="50" x2="30" y2="80" stroke="#881ba9" strokeWidth="0.5" />
+          {/* Nodes */}
+          <circle cx="40" cy="20" r="3" fill="#881ba9" className="animate-pulse" />
+          <circle cx="60" cy="20" r="3" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.3s' }} />
+          <circle cx="30" cy="50" r="3" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+          <circle cx="70" cy="50" r="3" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
+          <circle cx="45" cy="80" r="3" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '1.2s' }} />
+          <circle cx="55" cy="80" r="3" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
+          {/* Center diamond */}
+          <polygon points="50,35 65,50 50,65 35,50" fill="none" stroke="url(#circuitGrad)" strokeWidth="1" />
+          <circle cx="50" cy="50" r="4" fill="#881ba9" opacity="0.8" />
+        </svg>
+
+        {/* Angular tech shape - bottom left */}
+        <svg className="absolute bottom-[20%] left-[8%] w-72 h-72 opacity-15 animate-pulse" viewBox="0 0 100 100" style={{ animationDelay: '1.5s' }}>
+          <defs>
+            <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#881ba9" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#881ba9" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#881ba9" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+          {/* Outer angular frame */}
+          <path d="M10,30 L30,10 L70,10 L90,30 L90,70 L70,90 L30,90 L10,70 Z" fill="none" stroke="url(#techGrad)" strokeWidth="0.5" />
+          <path d="M20,35 L35,20 L65,20 L80,35 L80,65 L65,80 L35,80 L20,65 Z" fill="none" stroke="#881ba9" strokeWidth="0.3" opacity="0.5" />
+          {/* Inner cross */}
+          <line x1="50" y1="20" x2="50" y2="80" stroke="#881ba9" strokeWidth="0.3" opacity="0.4" />
+          <line x1="20" y1="50" x2="80" y2="50" stroke="#881ba9" strokeWidth="0.3" opacity="0.4" />
+          {/* Corner accents */}
+          <circle cx="30" cy="10" r="2" fill="#881ba9" />
+          <circle cx="70" cy="10" r="2" fill="#881ba9" />
+          <circle cx="90" cy="30" r="2" fill="#881ba9" />
+          <circle cx="90" cy="70" r="2" fill="#881ba9" />
+          <circle cx="70" cy="90" r="2" fill="#881ba9" />
+          <circle cx="30" cy="90" r="2" fill="#881ba9" />
+          <circle cx="10" cy="70" r="2" fill="#881ba9" />
+          <circle cx="10" cy="30" r="2" fill="#881ba9" />
+        </svg>
+
+        {/* Data flow lines - bottom right */}
+        <svg className="absolute bottom-[15%] right-[5%] w-96 h-64 opacity-10" viewBox="0 0 150 100">
+          {/* Flowing data paths */}
+          <path d="M0,50 Q30,30 60,50 T120,50 T150,40" fill="none" stroke="#881ba9" strokeWidth="1" strokeDasharray="4,4" className="animate-pulse" />
+          <path d="M0,60 Q40,80 80,60 T150,70" fill="none" stroke="#881ba9" strokeWidth="0.5" strokeDasharray="2,2" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
+          <path d="M0,40 Q25,20 50,40 T100,35 T150,30" fill="none" stroke="#881ba9" strokeWidth="0.5" strokeDasharray="3,3" className="animate-pulse" style={{ animationDelay: '1s' }} />
+          {/* Data nodes */}
+          <circle cx="60" cy="50" r="3" fill="#881ba9" className="animate-pulse" />
+          <circle cx="120" cy="50" r="2" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.3s' }} />
+          <circle cx="80" cy="60" r="2" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.6s' }} />
+          <circle cx="100" cy="35" r="2" fill="#881ba9" className="animate-pulse" style={{ animationDelay: '0.9s' }} />
+        </svg>
+
+        {/* Subtle glow behind shapes */}
+        <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-[#881ba9]/10 blur-3xl" />
+        <div className="absolute bottom-[20%] right-[10%] w-72 h-72 bg-[#881ba9]/8 blur-3xl" />
+      </div>
 
       {/* Particle canvas */}
       <canvas
@@ -298,8 +477,8 @@ export const ImmersiveHero: React.FC = () => {
       >
         {/* Desktop Dashboard - Left/Center */}
         <div className={`absolute transition-all duration-1000 ${
-          phase === 'devices' ? 'left-[5%] top-[10%] scale-[0.65]' : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
-        }`}>
+          phase === 'devices' || phase === 'connections' || phase === 'cta' ? 'left-[5%] top-[10%] scale-[0.65]' : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
+        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : ''}`}>
           <div className="relative w-[900px] max-w-[90vw]">
             {/* Browser chrome */}
             <div className="bg-gray-900 rounded-t-xl border border-gray-700/50 p-3 flex items-center gap-2">
@@ -533,8 +712,8 @@ export const ImmersiveHero: React.FC = () => {
 
         {/* Mobile Admin App */}
         <div className={`absolute transition-all duration-700 ${
-          deviceIndex >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ right: '15%', top: '8%' }}>
+          deviceIndex >= 1 ? 'translate-y-0' : 'translate-y-12'
+        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : deviceIndex >= 1 ? 'opacity-100' : 'opacity-0'}`} style={{ right: '15%', top: '8%' }}>
           <div className="relative">
             {/* Phone frame */}
             <div className="w-[180px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-purple-900/40 border border-gray-700">
@@ -604,8 +783,8 @@ export const ImmersiveHero: React.FC = () => {
 
         {/* Driver App */}
         <div className={`absolute transition-all duration-700 ${
-          deviceIndex >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ right: '5%', top: '35%' }}>
+          deviceIndex >= 2 ? 'translate-y-0' : 'translate-y-12'
+        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : deviceIndex >= 2 ? 'opacity-100' : 'opacity-0'}`} style={{ right: '5%', top: '35%' }}>
           <div className="relative">
             {/* Phone frame */}
             <div className="w-[170px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-blue-900/40 border border-gray-700">
@@ -679,8 +858,8 @@ export const ImmersiveHero: React.FC = () => {
 
         {/* Customer Portal (24/7 Hire Shop) - Equipment Catalogue & Cart */}
         <div className={`absolute transition-all duration-700 ${
-          deviceIndex >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`} style={{ right: '20%', bottom: '8%' }}>
+          deviceIndex >= 3 ? 'translate-y-0' : 'translate-y-12'
+        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : deviceIndex >= 3 ? 'opacity-100' : 'opacity-0'}`} style={{ right: '20%', bottom: '8%' }}>
           <div className="relative">
             {/* Larger tablet/laptop frame for catalogue view */}
             <div className="w-[280px] bg-gray-900 rounded-[20px] p-2 shadow-2xl shadow-green-900/30 border border-gray-700">
@@ -834,14 +1013,196 @@ export const ImmersiveHero: React.FC = () => {
 
       </div>
 
+      {/* Connected Ecosystem Circular Gauge */}
+      <div className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-1000 ${
+        phase === 'connections' ? 'opacity-100' : 'opacity-0'
+      }`}>
+
+        {/* Header text above the circle */}
+        <div className="relative text-center mb-8 z-10 h-24 w-full max-w-3xl flex flex-col items-center justify-center">
+          {/* Loading state - while flow is running */}
+          <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-500 ${
+            connectionProgress < 100 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}>
+            <div className="flex items-center gap-3 mb-2">
+              {/* Spinning loader */}
+              <svg className="animate-spin h-8 w-8 text-[#881ba9]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <h2 className="text-3xl font-bold text-white">Building Your Ecosystem</h2>
+            </div>
+            <p className="text-lg text-white/60">Connecting all platforms...</p>
+          </div>
+
+          {/* Complete state - pulsing */}
+          <div className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${
+            connectionProgress >= 100 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+          }`}>
+            <h2 className="text-4xl font-bold text-white mb-2 animate-pulse">Ecosystem Complete</h2>
+            <p className="text-lg text-white/70 animate-pulse">All systems connected and synced</p>
+          </div>
+        </div>
+
+        <div className="relative w-[500px] h-[500px]">
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 500">
+            <defs>
+              {/* Glow filter */}
+              <filter id="gaugeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              {/* Gradient for progress arc */}
+              <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#881ba9" />
+                <stop offset="100%" stopColor="#c084fc" />
+              </linearGradient>
+            </defs>
+
+            {/* Background ring */}
+            <circle
+              cx="250"
+              cy="250"
+              r="180"
+              fill="none"
+              stroke="#881ba9"
+              strokeWidth="4"
+              opacity="0.2"
+            />
+
+            {/* Progress arc - starts from bottom (270deg), goes clockwise */}
+            <circle
+              cx="250"
+              cy="250"
+              r="180"
+              fill="none"
+              stroke="url(#progressGradient)"
+              strokeWidth="6"
+              strokeLinecap="round"
+              filter="url(#gaugeGlow)"
+              strokeDasharray={2 * Math.PI * 180}
+              strokeDashoffset={2 * Math.PI * 180 * (1 - connectionProgress / 100)}
+              transform="rotate(-90 250 250)"
+              className="transition-all duration-100"
+            />
+
+            {/* Data particles traveling along the arc */}
+            {connectionProgress < 100 && (
+              <circle
+                cx="250"
+                cy="70"
+                r="6"
+                fill="#881ba9"
+                filter="url(#gaugeGlow)"
+                transform={`rotate(${(connectionProgress / 100) * 360 - 90} 250 250)`}
+              >
+                <animate attributeName="opacity" values="1;0.5;1" dur="0.5s" repeatCount="indefinite" />
+              </circle>
+            )}
+          </svg>
+
+          {/* Node: Driver App (bottom - starting point) */}
+          <div className={`absolute left-1/2 -translate-x-1/2 bottom-0 transition-all duration-500 ${
+            connectionProgress >= 0 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+          }`}>
+            <div className={`flex flex-col items-center gap-2 ${connectionProgress >= 0 && connectionProgress < 25 ? 'animate-pulse' : ''}`}>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                connectionProgress >= 25 ? 'bg-[#881ba9] shadow-[0_0_30px_rgba(136,27,169,0.6)]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'
+              }`}>
+                <Truck size={28} className="text-white" />
+              </div>
+              <span className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= 25 ? 'text-white' : 'text-white/60'}`}>Driver App</span>
+              {connectionProgress >= 0 && connectionProgress < 25 && (
+                <span className="text-xs text-[#881ba9] animate-pulse">Connecting...</span>
+              )}
+            </div>
+          </div>
+
+          {/* Node: Mobile Admin (right) */}
+          <div className={`absolute right-0 top-1/2 -translate-y-1/2 transition-all duration-500 ${
+            connectionProgress >= 25 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+          }`}>
+            <div className={`flex flex-col items-center gap-2 ${connectionProgress >= 25 && connectionProgress < 50 ? 'animate-pulse' : ''}`}>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                connectionProgress >= 50 ? 'bg-[#881ba9] shadow-[0_0_30px_rgba(136,27,169,0.6)]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'
+              }`}>
+                <Smartphone size={28} className="text-white" />
+              </div>
+              <span className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= 50 ? 'text-white' : 'text-white/60'}`}>Mobile Admin</span>
+              {connectionProgress >= 25 && connectionProgress < 50 && (
+                <span className="text-xs text-[#881ba9] animate-pulse">Syncing...</span>
+              )}
+            </div>
+          </div>
+
+          {/* Node: Customer Portal (top) */}
+          <div className={`absolute left-1/2 -translate-x-1/2 top-0 transition-all duration-500 ${
+            connectionProgress >= 50 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+          }`}>
+            <div className={`flex flex-col items-center gap-2 ${connectionProgress >= 50 && connectionProgress < 75 ? 'animate-pulse' : ''}`}>
+              <span className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= 75 ? 'text-white' : 'text-white/60'}`}>Customer Portal</span>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                connectionProgress >= 75 ? 'bg-[#881ba9] shadow-[0_0_30px_rgba(136,27,169,0.6)]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'
+              }`}>
+                <Globe size={28} className="text-white" />
+              </div>
+              {connectionProgress >= 50 && connectionProgress < 75 && (
+                <span className="text-xs text-[#881ba9] animate-pulse">Linking...</span>
+              )}
+            </div>
+          </div>
+
+          {/* Node: Web Dashboard (left) */}
+          <div className={`absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-500 ${
+            connectionProgress >= 75 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+          }`}>
+            <div className={`flex flex-col items-center gap-2 ${connectionProgress >= 75 && connectionProgress < 100 ? 'animate-pulse' : ''}`}>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                connectionProgress >= 100 ? 'bg-[#881ba9] shadow-[0_0_30px_rgba(136,27,169,0.6)]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'
+              }`}>
+                <Monitor size={28} className="text-white" />
+              </div>
+              <span className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= 100 ? 'text-white' : 'text-white/60'}`}>Web Dashboard</span>
+              {connectionProgress >= 75 && connectionProgress < 100 && (
+                <span className="text-xs text-[#881ba9] animate-pulse">Completing...</span>
+              )}
+            </div>
+          </div>
+
+          {/* Center content */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {/* Progress percentage - shown while loading */}
+            <div className={`text-center transition-all duration-500 ${connectionProgress >= 100 ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}`}>
+              <div className="text-5xl font-bold text-white mb-1">{Math.round(connectionProgress)}%</div>
+              <div className="text-sm text-white/60">Establishing connections</div>
+            </div>
+
+            {/* Completion checkmark - centered in circle when done */}
+            <div className={`absolute transition-all duration-700 ${
+              connectionProgress >= 100 ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+            }`}>
+              <div className={`w-24 h-24 rounded-full bg-[#881ba9] flex items-center justify-center transition-all duration-500 ${
+                connectionProgress >= 100 ? 'shadow-[0_0_60px_rgba(136,27,169,0.8)]' : ''
+              }`}>
+                <CheckCircle size={48} className="text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* CTA Overlay */}
       <div
-        className={`absolute inset-0 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-all duration-1000 ${
+        className={`absolute inset-0 flex items-center justify-center bg-transparent transition-all duration-1000 ${
           showCTA ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
+        {/* Glassmorphism card */}
         <div
-          className={`text-center transform transition-all duration-700 ${
+          className={`text-center transform transition-all duration-700 bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl px-12 py-10 shadow-2xl ${
             showCTA ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
           }`}
         >
@@ -905,8 +1266,9 @@ export const ImmersiveHero: React.FC = () => {
             setPhase('cta')
             setShowCTA(true)
             setDashboardOpacity(1)
-            setFeatureIndex(4)
+            setFeatureIndex(8)
             setDeviceIndex(3)
+            setConnectionProgress(100)
           }}
           className="absolute bottom-8 right-8 text-white/40 hover:text-white/70 text-sm transition-colors flex items-center gap-2 z-20"
         >
