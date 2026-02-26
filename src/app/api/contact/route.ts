@@ -1,6 +1,67 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 
+// Spam detection utilities
+const BLOCKED_EMAIL_DOMAINS = [
+  'tempmail.com', 'throwaway.email', 'guerrillamail.com', 'mailinator.com',
+  'yopmail.com', 'fakeinbox.com', '10minutemail.com', 'trashmail.com',
+  'red.ujaen.es', // Known spam source
+]
+
+function isGibberish(text: string): boolean {
+  if (!text || text.length < 3) return false
+
+  // Check for excessive random characters (high consonant ratio, random case mixing)
+  const cleaned = text.replace(/[^a-zA-Z]/g, '')
+  if (cleaned.length < 5) return false
+
+  // Count consonant sequences (gibberish often has long consonant runs)
+  const consonantRuns = cleaned.match(/[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]{5,}/g)
+  if (consonantRuns && consonantRuns.length > 0) return true
+
+  // Check for random case mixing in a single word (LiKe ThIs)
+  const words = text.split(/\s+/)
+  for (const word of words) {
+    if (word.length > 4) {
+      const caseChanges = (word.match(/[a-z][A-Z]|[A-Z][a-z]/g) || []).length
+      if (caseChanges >= 3) return true
+    }
+  }
+
+  // Check ratio of uppercase letters (gibberish often has random caps)
+  const upperCount = (cleaned.match(/[A-Z]/g) || []).length
+  const ratio = upperCount / cleaned.length
+  if (ratio > 0.4 && ratio < 0.6 && cleaned.length > 10) return true
+
+  return false
+}
+
+function isSpamSubmission(data: { name: string; email: string; company?: string; message: string; website?: string }): { isSpam: boolean; reason?: string } {
+  // Honeypot check - if website field is filled, it's a bot
+  if (data.website) {
+    return { isSpam: true, reason: 'honeypot' }
+  }
+
+  // Check blocked email domains
+  const emailDomain = data.email.split('@')[1]?.toLowerCase()
+  if (emailDomain && BLOCKED_EMAIL_DOMAINS.includes(emailDomain)) {
+    return { isSpam: true, reason: 'blocked_domain' }
+  }
+
+  // Check for gibberish in name, company, or message
+  if (isGibberish(data.name)) {
+    return { isSpam: true, reason: 'gibberish_name' }
+  }
+  if (data.company && isGibberish(data.company)) {
+    return { isSpam: true, reason: 'gibberish_company' }
+  }
+  if (isGibberish(data.message)) {
+    return { isSpam: true, reason: 'gibberish_message' }
+  }
+
+  return { isSpam: false }
+}
+
 export async function POST(request: Request) {
   // Check for API key
   if (!process.env.RESEND_API_KEY) {
@@ -15,7 +76,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { name, email, company, phone, subject, message } = body
+    const { name, email, company, phone, subject, message, website } = body
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
@@ -23,6 +84,14 @@ export async function POST(request: Request) {
         { error: 'Missing required fields' },
         { status: 400 }
       )
+    }
+
+    // Spam detection
+    const spamCheck = isSpamSubmission({ name, email, company, message, website })
+    if (spamCheck.isSpam) {
+      console.log(`Blocked spam submission: ${spamCheck.reason} - ${email}`)
+      // Return success to not tip off the bot
+      return NextResponse.json({ success: true, id: 'blocked' })
     }
 
     // Map subject to readable text

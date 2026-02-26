@@ -13,6 +13,7 @@ export default function ContactPage() {
     phone: '',
     subject: '',
     message: '',
+    website: '', // Honeypot field - should remain empty
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -314,6 +315,20 @@ export default function ContactPage() {
                         onChange={handleChange}
                         className="w-full resize-none rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                         placeholder="Tell us about your hire business and how we can help..."
+                      />
+                    </div>
+
+                    {/* Honeypot field - hidden from humans, filled by bots */}
+                    <div className="absolute -left-[9999px] opacity-0" aria-hidden="true">
+                      <label htmlFor="website">Website</label>
+                      <input
+                        type="text"
+                        id="website"
+                        name="website"
+                        value={formData.website}
+                        onChange={handleChange}
+                        tabIndex={-1}
+                        autoComplete="off"
                       />
                     </div>
 
