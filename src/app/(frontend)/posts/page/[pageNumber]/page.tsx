@@ -63,6 +63,7 @@ export default async function Page({ params: paramsPromise, searchParams: search
     limit: 12,
     page: sanitizedPageNumber,
     overrideAccess: false,
+    sort: '-createdAt',
     ...(whereClause && { where: whereClause }),
     select: {
       title: true,

@@ -53,6 +53,7 @@ export default async function Page({ searchParams }: Args) {
     depth: 1,
     limit: 12,
     overrideAccess: false,
+    sort: '-createdAt',
     ...(whereClause && { where: whereClause }),
     select: {
       title: true,
