@@ -1,6 +1,32 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
 
+// Turnstile verification
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY
+  if (!secretKey) {
+    console.warn('TURNSTILE_SECRET_KEY not configured, skipping verification')
+    return true // Allow submission if Turnstile not configured
+  }
+
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+      }),
+    })
+
+    const data = await response.json()
+    return data.success === true
+  } catch (error) {
+    console.error('Turnstile verification error:', error)
+    return false
+  }
+}
+
 // Spam detection utilities
 const BLOCKED_EMAIL_DOMAINS = [
   'tempmail.com', 'throwaway.email', 'guerrillamail.com', 'mailinator.com',
@@ -76,7 +102,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json()
-    const { name, email, company, phone, subject, message, website } = body
+    const { name, email, company, phone, subject, message, website, turnstileToken } = body
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
@@ -84,6 +110,25 @@ export async function POST(request: Request) {
         { error: 'Missing required fields' },
         { status: 400 }
       )
+    }
+
+    // Verify Turnstile token (if configured)
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return NextResponse.json(
+          { error: 'Security verification required' },
+          { status: 400 }
+        )
+      }
+
+      const isValidToken = await verifyTurnstileToken(turnstileToken)
+      if (!isValidToken) {
+        console.log(`Blocked submission: invalid turnstile token - ${email}`)
+        return NextResponse.json(
+          { error: 'Security verification failed. Please try again.' },
+          { status: 400 }
+        )
+      }
     }
 
     // Spam detection

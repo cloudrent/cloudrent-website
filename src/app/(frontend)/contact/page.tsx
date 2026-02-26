@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from 'lucide-react'
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { cn } from '@/utilities/ui'
 
 export default function ContactPage() {
@@ -18,17 +19,26 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const turnstileRef = useRef<TurnstileInstance>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setError(null)
 
+    // Check for Turnstile token (only if Turnstile is configured)
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+      setError('Please complete the security check')
+      setIsSubmitting(false)
+      return
+    }
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, turnstileToken }),
       })
 
       if (!response.ok) {
@@ -49,6 +59,9 @@ export default function ContactPage() {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+      // Reset Turnstile on error so user can try again
+      turnstileRef.current?.reset()
+      setTurnstileToken(null)
     } finally {
       setIsSubmitting(false)
     }
@@ -331,6 +344,25 @@ export default function ContactPage() {
                         autoComplete="off"
                       />
                     </div>
+
+                    {/* Cloudflare Turnstile */}
+                    {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                      <div className="flex justify-center">
+                        <Turnstile
+                          ref={turnstileRef}
+                          siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                          onSuccess={setTurnstileToken}
+                          onError={() => {
+                            setTurnstileToken(null)
+                            setError('Security verification failed. Please try again.')
+                          }}
+                          onExpire={() => setTurnstileToken(null)}
+                          options={{
+                            theme: 'dark',
+                          }}
+                        />
+                      </div>
+                    )}
 
                     {error && (
                       <div className="rounded-xl border border-red-500/30 bg-red-500/20 p-4 text-red-200">
