@@ -638,12 +638,12 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="/contact"
+            <a
+              href="https://app.cloudrent.me/register"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
               Start Free Trial
-            </Link>
+            </a>
             <Link
               href="/demo"
               className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-purple-400/50 px-6 py-3 font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
@@ -673,13 +673,13 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
         </p>
 
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
-          <Link
-            href="/contact"
+          <a
+            href="https://app.cloudrent.me/register"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
             Start Your Free 30-Day Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </a>
           <Link
             href="/demo"
             className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
@@ -739,13 +739,13 @@ const HeroSection: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
-              <Link
-                href="/contact"
+              <a
+                href="https://app.cloudrent.me/register"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Link>
+              </a>
               <Link
                 href="/demo"
                 className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20"

@@ -77,12 +77,12 @@ export default function DemoPage() {
                 <p className="mb-4 text-sm text-gray-400">
                   Start your free 30-day trial and explore all features at your own pace.
                 </p>
-                <Link
-                  href="/contact"
+                <a
+                  href="https://app.cloudrent.me/register"
                   className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300"
                 >
                   Start Free Trial <ArrowRight className="h-4 w-4" />
-                </Link>
+                </a>
               </div>
             </div>
 

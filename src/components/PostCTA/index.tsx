@@ -21,13 +21,13 @@ export function PostCTA() {
             Book a Demo
           </Link>
 
-          <Link
-            href="/contact"
+          <a
+            href="https://app.cloudrent.me/register"
             className="group inline-flex items-center gap-2 rounded-lg border border-brand-purple px-6 py-3 font-semibold text-brand-purple transition-all hover:bg-brand-purple/10 hover:text-white"
           >
             <Rocket className="h-5 w-5" />
             Start 30-Day Free Trial
-          </Link>
+          </a>
         </div>
 
         <p className="mt-4 text-sm text-gray-500">

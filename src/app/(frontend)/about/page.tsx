@@ -216,13 +216,13 @@ export default function AboutPage() {
               business needs to thrive.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href="/contact"
+              <a
+                href="https://app.cloudrent.me/register"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
                 <ArrowRight className="h-5 w-5" />
-              </Link>
+              </a>
               <Link
                 href="/demo"
                 className="inline-flex items-center justify-center gap-2 rounded-xl border border-purple-400/50 px-8 py-4 font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
