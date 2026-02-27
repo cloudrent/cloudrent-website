@@ -90,14 +90,16 @@ export const plugins: Plugin[] = [
       },
     },
   }),
-  vercelBlobStorage({
-    enabled: true,
-    collections: {
-      media: {
-        prefix: 'media',
-      },
-    },
-    token: process.env.BLOB_READ_WRITE_TOKEN || '',
-    addRandomSuffix: false,
-  }),
+  // Vercel Blob storage - disabled because files are already migrated
+  // and URLs are stored directly in database. Re-enable for new uploads.
+  // vercelBlobStorage({
+  //   enabled: true,
+  //   collections: {
+  //     media: {
+  //       prefix: 'media',
+  //     },
+  //   },
+  //   token: process.env.BLOB_READ_WRITE_TOKEN || '',
+  //   addRandomSuffix: false,
+  // }),
 ]
