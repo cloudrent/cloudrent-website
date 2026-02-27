@@ -9,6 +9,9 @@ import {
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 
+// Vercel Blob storage base URL - extracted from token
+const BLOB_BASE_URL = 'https://ipjpelt6tqi5wdno.public.blob.vercel-storage.com/media'
+
 export const Media: CollectionConfig = {
   slug: 'media',
   folders: true,
@@ -17,6 +20,25 @@ export const Media: CollectionConfig = {
     delete: authenticated,
     read: anyone,
     update: authenticated,
+  },
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        // Transform URLs to use Vercel Blob storage
+        if (doc.filename && (!doc.url || doc.url.startsWith('/api/media/file/'))) {
+          doc.url = `${BLOB_BASE_URL}/${doc.filename}`
+        }
+        if (doc.sizes) {
+          for (const size of Object.keys(doc.sizes)) {
+            const sizeData = doc.sizes[size]
+            if (sizeData?.filename && (!sizeData.url || sizeData.url.startsWith('/api/media/file/'))) {
+              sizeData.url = `${BLOB_BASE_URL}/${sizeData.filename}`
+            }
+          }
+        }
+        return doc
+      },
+    ],
   },
   fields: [
     {
