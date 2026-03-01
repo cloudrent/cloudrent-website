@@ -1,9 +1,19 @@
+import type { Metadata } from 'next'
 import { FileText } from 'lucide-react'
 import Link from 'next/link'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Terms of Service | CloudRent Pro',
   description: 'Terms and conditions for using CloudRent Pro rental management software.',
+  alternates: {
+    canonical: 'https://www.cloudrent.me/terms/',
+  },
+  openGraph: mergeOpenGraph({
+    title: 'Terms of Service | CloudRent Pro',
+    description: 'Terms and conditions for using CloudRent Pro rental management software.',
+    url: '/terms/',
+  }),
 }
 
 export default function TermsPage() {

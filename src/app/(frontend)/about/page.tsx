@@ -1,11 +1,22 @@
+import type { Metadata } from 'next'
 import { Users, Zap, Shield, Heart, Target, Award, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { LightboxImage } from '@/components/Lightbox'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'About Us | CloudRent Pro - Australian Equipment Rental Software',
   description:
     'Built in Australia for Australian hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management with purpose-built software.',
+  alternates: {
+    canonical: 'https://www.cloudrent.me/about/',
+  },
+  openGraph: mergeOpenGraph({
+    title: 'About Us | CloudRent Pro - Australian Equipment Rental Software',
+    description:
+      'Built in Australia for Australian hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management with purpose-built software.',
+    url: '/about/',
+  }),
 }
 
 const values = [

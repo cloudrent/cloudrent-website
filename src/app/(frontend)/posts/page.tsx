@@ -1,6 +1,7 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { CategoryTabs } from '@/components/CategoryTabs'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
@@ -127,5 +128,14 @@ export function generateMetadata(): Metadata {
     title: 'Blog | CloudRent Pro - Equipment Rental Insights & Updates',
     description:
       'Tips, guides, and industry insights for equipment hire businesses. Learn how to grow your rental business with CloudRent Pro.',
+    alternates: {
+      canonical: 'https://www.cloudrent.me/posts/',
+    },
+    openGraph: mergeOpenGraph({
+      title: 'Blog | CloudRent Pro - Equipment Rental Insights & Updates',
+      description:
+        'Tips, guides, and industry insights for equipment hire businesses. Learn how to grow your rental business with CloudRent Pro.',
+      url: '/posts/',
+    }),
   }
 }

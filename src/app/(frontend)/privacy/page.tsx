@@ -1,9 +1,19 @@
+import type { Metadata } from 'next'
 import { Shield } from 'lucide-react'
 import Link from 'next/link'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Privacy Policy | CloudRent Pro',
   description: 'Learn how CloudRent Pro collects, uses, and protects your personal information.',
+  alternates: {
+    canonical: 'https://www.cloudrent.me/privacy/',
+  },
+  openGraph: mergeOpenGraph({
+    title: 'Privacy Policy | CloudRent Pro',
+    description: 'Learn how CloudRent Pro collects, uses, and protects your personal information.',
+    url: '/privacy/',
+  }),
 }
 
 export default function PrivacyPage() {

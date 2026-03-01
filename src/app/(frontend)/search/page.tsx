@@ -83,6 +83,14 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Search`,
+    title: 'Search | CloudRent Pro',
+    description: 'Search CloudRent Pro blog posts, features, and documentation.',
+    alternates: {
+      canonical: 'https://www.cloudrent.me/search/',
+    },
+    robots: {
+      index: false,
+      follow: true,
+    },
   }
 }

@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users } from 'lucide-react'
 import { SoftwareSchema } from '@/components/StructuredData'
 import { ImmersiveHero } from '@/heros/ImmersiveHero'
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 // Enable ISR - regenerate page every hour
 export const revalidate = 3600
@@ -13,11 +14,14 @@ export const metadata: Metadata = {
   title: 'CloudRent Pro | Rental Management Software for Australian Hire Businesses',
   description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
   keywords: ['rental software', 'hire business', 'equipment rental', 'rental management', 'Australia', 'Xero integration'],
-  openGraph: {
-    title: 'CloudRent Pro | Rental Management Software',
-    description: 'Everything you need to manage your hire business. Complete rental management with invoicing, digital signatures, and Xero integration.',
-    type: 'website',
+  alternates: {
+    canonical: 'https://www.cloudrent.me/',
   },
+  openGraph: mergeOpenGraph({
+    title: 'CloudRent Pro | Rental Management Software for Australian Hire Businesses',
+    description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
+    url: '/',
+  }),
 }
 
 // Features

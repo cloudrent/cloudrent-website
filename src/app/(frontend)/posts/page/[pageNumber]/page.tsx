@@ -138,6 +138,9 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
     title: `Blog - Page ${pageNumber} | CloudRent Pro`,
     description:
       'Tips, guides, and industry insights for equipment hire businesses. Learn how to grow your rental business with CloudRent Pro.',
+    alternates: {
+      canonical: `https://www.cloudrent.me/posts/page/${pageNumber}/`,
+    },
   }
 }
 

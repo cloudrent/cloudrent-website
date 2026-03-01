@@ -18,9 +18,11 @@ const defaultOpenGraph: Metadata['openGraph'] = {
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
+  const baseUrl = getServerSideURL()
   return {
     ...defaultOpenGraph,
     ...og,
     images: og?.images ? og.images : defaultOpenGraph.images,
+    url: og?.url ? `${baseUrl}${og.url}` : undefined,
   }
 }
