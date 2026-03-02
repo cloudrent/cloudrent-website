@@ -24,15 +24,20 @@ export const metadata: Metadata = {
 }
 
 async function getVideos() {
-  const payload = await getPayload({ config: configPromise })
+  try {
+    const payload = await getPayload({ config: configPromise })
 
-  const videos = await payload.find({
-    collection: 'videos',
-    limit: 100,
-    sort: 'order',
-  })
+    const videos = await payload.find({
+      collection: 'videos',
+      limit: 100,
+      sort: 'order',
+    })
 
-  return videos.docs
+    return videos.docs
+  } catch (error) {
+    console.error('Error fetching videos:', error)
+    return []
+  }
 }
 
 export default async function VideosPage() {
