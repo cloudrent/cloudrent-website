@@ -21,7 +21,7 @@ const categoryColors: Record<string, string> = {
 
 interface VideoCardProps {
   video: {
-    id: string
+    id: number | string
     title: string
     description?: string | null
     youtubeId: string
