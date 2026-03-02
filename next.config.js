@@ -8,13 +8,6 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Temporary: Skip type checking during build (Vercel internal error workaround)
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   trailingSlash: true,
   images: {
     remotePatterns: [
