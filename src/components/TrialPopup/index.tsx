@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
 
 const STORAGE_KEY = 'trial-popup-dismissed'
@@ -11,9 +11,25 @@ const EXCLUDED_PATHS = ['/launch', '/pricing', '/contact', '/register']
 
 export function TrialPopup() {
   const [isVisible, setIsVisible] = useState(false)
+  const [isClosing, setIsClosing] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
+
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
+    // Don't show on mobile
+    if (isMobile) {
+      return
+    }
+
     // Don't show on excluded pages
     if (EXCLUDED_PATHS.some(path => pathname.includes(path))) {
       return
@@ -22,7 +38,7 @@ export function TrialPopup() {
     // Check if already dismissed this session
     const dismissed = sessionStorage.getItem(STORAGE_KEY)
     if (!dismissed) {
-      // Wait 30 seconds before showing popup
+      // Wait 90 seconds (1.5 minutes) before showing popup
       const showTimer = setTimeout(() => {
         setIsVisible(true)
         // Track popup view in GTM
@@ -31,23 +47,39 @@ export function TrialPopup() {
             event: 'trial_popup_view',
           })
         }
-      }, 30000)
+      }, 90000)
       return () => clearTimeout(showTimer)
     }
-  }, [pathname])
+  }, [pathname, isMobile])
 
   const handleDismiss = () => {
-    setIsVisible(false)
+    setIsClosing(true)
     sessionStorage.setItem(STORAGE_KEY, 'true')
+
+    // Wait for animation to complete
+    setTimeout(() => {
+      setIsVisible(false)
+    }, 500)
   }
 
-  const handleCtaClick = () => {
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+
     if (typeof window !== 'undefined' && (window as any).dataLayer) {
       (window as any).dataLayer.push({
         event: 'trial_popup_cta_click',
       })
     }
-    handleDismiss()
+
+    // Start fade out animation
+    setIsClosing(true)
+    sessionStorage.setItem(STORAGE_KEY, 'true')
+
+    // Wait for animation to complete, then navigate
+    setTimeout(() => {
+      setIsVisible(false)
+      router.push('https://app.cloudrent.me/register')
+    }, 500)
   }
 
   if (!isVisible) {
@@ -56,11 +88,15 @@ export function TrialPopup() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 transition-opacity duration-500 ${
+        isClosing ? 'opacity-0' : 'opacity-100'
+      }`}
       onClick={handleDismiss}
     >
       <div
-        className="relative w-full max-w-5xl overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(136,27,169,0.5)]"
+        className={`relative w-full max-w-5xl overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(136,27,169,0.5)] transition-all duration-500 ${
+          isClosing ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -133,14 +169,97 @@ export function TrialPopup() {
               </a>
             </div>
 
-            {/* Right Section - Badge */}
-            <div className="flex-1 flex items-center justify-center p-8 z-10">
-              <div className="relative animate-shield-appear">
+            {/* Right Section - Monitor & Cards */}
+            <div className="flex-1 relative hidden lg:flex items-center justify-center p-8 z-10 min-h-[500px]">
+              {/* Feature Cards */}
+              <div className="absolute top-12 left-8 bg-gradient-to-r from-amber-400 to-amber-500 px-4 py-3 rounded-xl flex items-center gap-3 shadow-lg animate-float-feature z-10" style={{ animationDelay: '1s' }}>
+                <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center text-lg">⚙️</div>
+                <div className="text-sm font-bold text-gray-900 leading-tight">AI Damage<br/>Detection</div>
+              </div>
+
+              <div className="absolute top-12 right-8 bg-gradient-to-r from-amber-400 to-amber-500 px-4 py-3 rounded-xl flex items-center gap-3 shadow-lg animate-float-feature z-10" style={{ animationDelay: '1.1s' }}>
+                <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center text-lg">📝</div>
+                <div className="text-sm font-bold text-gray-900 leading-tight">Digital<br/>Signatures</div>
+              </div>
+
+              <div className="absolute bottom-16 left-12 bg-gradient-to-r from-[#881ba9] to-[#6d1587] px-4 py-3 rounded-xl flex items-center gap-3 shadow-lg animate-float-feature z-10" style={{ animationDelay: '1.2s' }}>
+                <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center text-lg">🕐</div>
+                <div className="text-sm font-bold text-white leading-tight">24/7<br/>Customer<br/>Portal</div>
+              </div>
+
+              <div className="absolute bottom-16 right-12 bg-gradient-to-r from-amber-400 to-amber-500 px-4 py-3 rounded-xl flex items-center gap-3 shadow-lg animate-float-feature z-10" style={{ animationDelay: '1.3s' }}>
+                <div className="w-9 h-9 bg-white/20 rounded-lg flex items-center justify-center text-xs font-bold">xero</div>
+                <div className="text-sm font-bold text-gray-900 leading-tight">Xero<br/>Integration</div>
+              </div>
+
+              {/* Monitor */}
+              <div className="relative animate-monitor-appear">
+                {/* Screen */}
+                <div className="bg-gradient-to-b from-[#2a1040] to-[#3d1a50] rounded-xl p-4 border-[3px] border-[#5a1680] shadow-[0_20px_60px_rgba(0,0,0,0.5),0_0_40px_rgba(136,27,169,0.3)] w-[320px]">
+                  <div className="bg-[#0f0a1f] rounded-lg p-4 space-y-3">
+                    {/* Dashboard Row 1 */}
+                    <div className="flex gap-3">
+                      <div className="flex-1 bg-gradient-to-br from-[#2a1040] to-[#3d1a50] rounded-md p-2 animate-card-appear" style={{ animationDelay: '1.2s' }}>
+                        <div className="text-[10px] text-[#c77ddb]">Location</div>
+                        <div className="w-8 h-8 bg-[#5a1680] rounded-full mt-2" />
+                      </div>
+                      <div className="flex-1 bg-gradient-to-br from-[#2a1040] to-[#3d1a50] rounded-md p-2 animate-card-appear" style={{ animationDelay: '1.3s' }}>
+                        <div className="text-[10px] text-[#c77ddb]">Bookings</div>
+                        <div className="flex items-end gap-1 h-10 mt-2">
+                          <div className="w-3 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm animate-bar-grow" style={{ height: '60%', animationDelay: '1.8s' }} />
+                          <div className="w-3 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm animate-bar-grow" style={{ height: '80%', animationDelay: '1.9s' }} />
+                          <div className="w-3 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm animate-bar-grow" style={{ height: '40%', animationDelay: '2s' }} />
+                          <div className="w-3 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm animate-bar-grow" style={{ height: '90%', animationDelay: '2.1s' }} />
+                          <div className="w-3 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm animate-bar-grow" style={{ height: '70%', animationDelay: '2.2s' }} />
+                        </div>
+                      </div>
+                      <div className="flex-1 bg-gradient-to-br from-[#2a1040] to-[#3d1a50] rounded-md p-2 animate-card-appear" style={{ animationDelay: '1.4s' }}>
+                        <div className="text-[10px] text-[#c77ddb]">Revenue</div>
+                        <div className="text-amber-400 font-bold text-sm mt-3">$12.4K</div>
+                      </div>
+                    </div>
+                    {/* Dashboard Row 2 */}
+                    <div className="flex gap-3">
+                      <div className="flex-[2] bg-gradient-to-br from-[#2a1040] to-[#3d1a50] rounded-md p-2 animate-card-appear" style={{ animationDelay: '1.5s' }}>
+                        <div className="text-[10px] text-[#c77ddb]">Progress</div>
+                        <div className="h-2 bg-[#5a1680] rounded-full mt-3 overflow-hidden">
+                          <div className="h-full w-[70%] bg-gradient-to-r from-[#881ba9] to-[#a832c7]" />
+                        </div>
+                      </div>
+                      <div className="flex-1 bg-gradient-to-br from-[#2a1040] to-[#3d1a50] rounded-md p-2 animate-card-appear" style={{ animationDelay: '1.6s' }}>
+                        <div className="text-[10px] text-[#c77ddb]">Revenues</div>
+                        <div className="flex items-end gap-1 h-8 mt-1">
+                          <div className="w-2 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm" style={{ height: '50%' }} />
+                          <div className="w-2 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm" style={{ height: '70%' }} />
+                          <div className="w-2 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm" style={{ height: '90%' }} />
+                          <div className="w-2 bg-gradient-to-t from-amber-500 to-amber-400 rounded-sm" style={{ height: '60%' }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* Stand */}
+                <div className="w-24 h-14 bg-gradient-to-b from-[#881ba9] to-[#6d1587] mx-auto" style={{ clipPath: 'polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%)' }} />
+                <div className="w-40 h-4 bg-gradient-to-b from-[#9b2cb8] to-[#881ba9] mx-auto rounded-b-lg" />
+              </div>
+
+              {/* Badge overlay */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 animate-shield-appear" style={{ marginTop: '20px' }}>
                 <img
                   src="/images/30-day-trial-badge.png"
                   alt="30 Day Free Trial - No Credit Card Required"
-                  className="w-64 lg:w-80 h-auto drop-shadow-[0_10px_30px_rgba(136,27,169,0.5)] animate-shield-float"
+                  className="w-48 h-auto drop-shadow-[0_10px_30px_rgba(136,27,169,0.5)] animate-shield-float"
                 />
+              </div>
+
+              {/* Integration Logos */}
+              <div className="absolute bottom-4 right-4 flex gap-3 animate-integrations">
+                <div className="w-10 h-10 bg-[#2ca01c] rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white text-xs font-bold">QB</span>
+                </div>
+                <div className="w-10 h-10 bg-[#881ba9] rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white text-[10px] font-bold">myob</span>
+                </div>
               </div>
             </div>
           </div>
@@ -207,6 +326,44 @@ export function TrialPopup() {
         }
         .animate-shield-float {
           animation: shield-float 6s ease-in-out infinite;
+        }
+        @keyframes float-feature {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bob {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+        .animate-float-feature {
+          opacity: 0;
+          animation: float-feature 0.6s ease-out forwards, bob 3s ease-in-out 1.6s infinite;
+        }
+        @keyframes monitor-appear {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-monitor-appear {
+          opacity: 0;
+          animation: monitor-appear 1s ease-out 0.3s forwards;
+        }
+        @keyframes card-appear {
+          from { opacity: 0; transform: scale(0.8); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-card-appear {
+          opacity: 0;
+          animation: card-appear 0.5s ease-out forwards;
+        }
+        @keyframes bar-grow {
+          from { height: 0; }
+        }
+        .animate-bar-grow {
+          animation: bar-grow 1s ease-out forwards;
+        }
+        .animate-integrations {
+          opacity: 0;
+          animation: fade-in 0.8s ease-out 2s forwards;
         }
       `}</style>
     </div>
