@@ -450,9 +450,12 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
             >
               Start Free Trial
             </a>
-            <button className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-purple-400/50 px-6 py-3 font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
+            <Link
+              href="/videos"
+              className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-purple-400/50 px-6 py-3 font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
+            >
               <Play className="h-4 w-4" /> Watch Demo
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -482,9 +485,12 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
             Start Your Free 30-Day Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
-          <button className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
-            <Play className="h-5 w-5" /> Book a Demo
-          </button>
+          <Link
+            href="/videos"
+            className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
+          >
+            <Play className="h-5 w-5" /> Watch Demo
+          </Link>
         </div>
         <p className="mt-6 text-sm text-purple-300/60">
           No credit card required • Free migration from spreadsheets • Cancel anytime
@@ -556,9 +562,12 @@ const HeroSection = () => {
             Start Your Free 30-Day Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
-          <button className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20">
+          <Link
+            href="/videos"
+            className="flex items-center justify-center gap-2 rounded-xl border-2 border-purple-400/50 px-8 py-4 text-lg font-semibold text-purple-100 transition-all hover:bg-purple-500/20"
+          >
             <Play className="h-5 w-5" /> Watch Demo
-          </button>
+          </Link>
         </div>
 
         <p className="text-sm text-purple-300/60">
