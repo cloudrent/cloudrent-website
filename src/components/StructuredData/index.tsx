@@ -34,7 +34,12 @@ export function StructuredData({ type, data, faqs }: StructuredDataProps) {
         address: {
           '@type': 'PostalAddress',
           addressLocality: 'Gold Coast',
+          addressRegion: 'Queensland',
           addressCountry: 'AU',
+        },
+        areaServed: {
+          '@type': 'Country',
+          name: 'Australia',
         },
         sameAs: [
           'https://help.cloudrent.me',
@@ -95,7 +100,14 @@ export function StructuredData({ type, data, faqs }: StructuredDataProps) {
           'Mobile app',
           'AI support agent',
         ],
-        screenshot: 'https://www.cloudrent.me/images/cloudrent-rental-software-all-devices-mockup.webp',
+        screenshot: 'https://www.cloudrent.me/images/cloudrent-rental-software-all-devices.webp',
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: '4.5',
+          ratingCount: '31',
+          bestRating: '5',
+          worstRating: '1',
+        },
         ...data,
       }
       break

@@ -19,6 +19,27 @@ export const metadata: Metadata = {
   }),
 }
 
+const leadership = [
+  {
+    name: 'Ron Neville',
+    role: 'Founder & Chief Executive Officer',
+    image: '/images/Ron-Neville-CEO.png',
+    bio: "With 18 years dedicated to developing software for the hire and rental industry, Ron's vision has driven CloudRent from a simple booking tool to a comprehensive cloud-based rental management platform. His hands-on development approach—personally writing code and building features—has resulted in over 300 licenses sold globally. Ron's deep understanding of the industry, forged through partnerships with leading rental companies worldwide, ensures CloudRent Pro solves real challenges that hire businesses face every day.",
+  },
+  {
+    name: 'Garth Kerr',
+    role: 'Chief Operations Officer',
+    image: '/images/Garth-Kerr-COO.png',
+    bio: "A lawyer and seasoned executive with over 25 years' experience as General Counsel and business leader for global publicly listed technology companies, including TechnologyOne Ltd, CSG Systems International Inc, and Intec Telecom Systems PLC. Garth brings extensive experience in customer engagement, negotiating and securing new business, leading global teams, and managing risk while supporting sustainable growth.",
+  },
+  {
+    name: 'Sam Girgis',
+    role: 'Global Sales Manager',
+    image: '/images/Sam_Girgis-Global-Sales-Manager.png',
+    bio: "With 25+ years of senior sales and marketing experience in the Australian IT industry across multinational technology vendors and distributors, Sam is passionate about emerging technologies and how they reshape the world. His proven track record in creating markets for technology products and solutions drives CloudRent's global expansion.",
+  },
+]
+
 const values = [
   {
     icon: Zap,
@@ -47,10 +68,10 @@ const values = [
 ]
 
 const stats = [
-  { value: '1000+', label: 'Equipment items managed daily' },
-  { value: '24hr', label: 'Average support response' },
+  { value: '18+', label: 'Years in hire & rental software' },
+  { value: '300+', label: 'Licenses sold globally' },
+  { value: '100,000+', label: 'Rentals processed' },
   { value: '99.9%', label: 'Platform uptime' },
-  { value: '30 days', label: 'Free trial, no credit card' },
 ]
 
 export default function AboutPage() {
@@ -85,8 +106,8 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Story Section */}
-        <section className="mx-auto max-w-6xl px-4 pb-20">
+        {/* Our Story Section */}
+        <section className="mx-auto max-w-6xl px-4 pb-16">
           <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-8 md:p-12">
             <h2 className="mb-8 text-2xl font-bold">Our Story</h2>
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
@@ -95,10 +116,9 @@ export default function AboutPage() {
                 <div className="relative">
                   <LightboxImage
                     src="/images/ron-neville-founder-ceo-cloudrent.webp"
-                    alt="Ron Neville - Founder, CEO & Lead Developer of CloudRent"
-                    className="w-80 rounded-2xl md:w-[26rem]"
+                    alt="Ron Neville - Founder & CEO of CloudRent, with guitar"
+                    className="w-80 rounded-2xl md:w-[22rem]"
                   />
-                  <p className="mt-3 text-center text-sm text-purple-300">Ron Neville, Founder, CEO & Lead Developer</p>
                 </div>
               </div>
               {/* Text */}
@@ -106,20 +126,13 @@ export default function AboutPage() {
                 <p>
                   CloudRent&apos;s story began in the early 2000s when founder Ron Neville, a professional musician
                   touring Australia&apos;s East Coast, needed a better way to manage his performance bookings. Unable
-                  to find software that fit his needs, he built his own - and fellow musicians quickly wanted it too.
+                  to find software that fit his needs, he built his own—and fellow musicians quickly wanted it too.
                 </p>
                 <p>
-                  That hands-on problem-solving approach never changed. Today, Ron remains the lead developer of
-                  CloudRent Pro, personally writing code and building features based on direct feedback from
-                  customers. When you suggest a feature or report an issue, there&apos;s a good chance Ron is the one
-                  who&apos;ll build the fix.
-                </p>
-                <p>
-                  CloudRent Pro is purpose-built for Australian equipment hire businesses. We&apos;ve packed it with
-                  the features that actually matter: AI-powered damage detection, digital SWMS and safety compliance,
-                  real-time equipment tracking, native mobile apps for field staff, and seamless Xero integration.
-                  Everything is designed for how hire businesses actually work - not how software companies think they
-                  should work.
+                  That hands-on problem-solving approach never changed. Today, CloudRent Pro is purpose-built for
+                  Australian equipment hire businesses, packed with features that actually matter: AI-powered damage
+                  detection, digital SWMS and safety compliance, real-time equipment tracking, native mobile apps
+                  for field staff, and seamless Xero integration.
                 </p>
                 <p>
                   We&apos;re not a faceless corporation. We&apos;re a focused team that ships fast, listens to
@@ -129,6 +142,31 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Leadership Team */}
+        <section className="mx-auto max-w-6xl px-4 pb-20">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold">Leadership Team</h2>
+            <p className="text-gray-400">The people driving CloudRent&apos;s vision forward</p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {leadership.map((person, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-6 text-center transition-colors hover:border-purple-500/40"
+              >
+                <img
+                  src={person.image}
+                  alt={person.name}
+                  className="mx-auto mb-4 h-32 w-32 rounded-full object-cover border-2 border-purple-500/30"
+                />
+                <h3 className="text-xl font-semibold text-white">{person.name}</h3>
+                <p className="mb-4 text-sm font-medium text-purple-400">{person.role}</p>
+                <p className="text-sm leading-relaxed text-gray-300">{person.bio}</p>
+              </div>
+            ))}
           </div>
         </section>
 

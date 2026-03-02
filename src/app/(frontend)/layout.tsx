@@ -1,24 +1,17 @@
 import type { Metadata } from 'next'
 import { cn } from '@/utilities/ui'
-import { Roboto, Roboto_Condensed } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import React from 'react'
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-roboto',
-  display: 'swap',
-})
-
-const robotoCondensed = Roboto_Condensed({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-roboto-condensed',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
   display: 'swap',
 })
 import { AdminBar } from '@/components/AdminBar'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
-import { LaunchPopup } from '@/components/LaunchPopup'
+import { TrialPopup } from '@/components/TrialPopup'
 import { PublicChatWidget } from '@/components/PublicChatWidget'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { Footer } from '@/Footer/Component'
@@ -33,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(roboto.variable, robotoCondensed.variable)} lang="en" data-theme="dark" suppressHydrationWarning>
+    <html className={inter.variable} lang="en" data-theme="dark" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -64,7 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               }}
             />
           )}
-          <LaunchPopup />
+          <TrialPopup />
           <Header />
           {children}
           <Footer />
