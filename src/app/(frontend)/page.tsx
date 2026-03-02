@@ -153,7 +153,7 @@ export default function HomePage() {
         {/* All Devices Screenshot */}
         <div className="mt-16">
           <LightboxImage
-            src="/images/cloudrent-rental-software-all-devices.webp"
+            src="https://ipjpelt6tqi5wdno.public.blob.vercel-storage.com/cloudrent-rental-software-all-devices.webp"
             alt="CloudRent Pro rental software running on desktop, laptop, tablet and mobile devices"
             className="w-full rounded-2xl shadow-2xl shadow-purple-900/20"
           />
