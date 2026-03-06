@@ -10,7 +10,10 @@ export async function GET(request: NextRequest) {
   const code = request.nextUrl.searchParams.get('code')
   const error = request.nextUrl.searchParams.get('error')
 
-  const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+  // Use production URL for redirect
+  const baseUrl = process.env.NODE_ENV === 'production'
+    ? 'https://www.cloudrent.me'
+    : (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000')
   const adminUrl = `${baseUrl}/admin/globals/booking-settings`
 
   if (error) {
