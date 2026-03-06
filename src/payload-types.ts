@@ -73,6 +73,7 @@ export interface Config {
     categories: Category;
     users: User;
     videos: Video;
+    bookings: Booking;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -96,6 +97,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
+    bookings: BookingsSelect<false> | BookingsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -114,10 +116,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    'booking-settings': BookingSetting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    'booking-settings': BookingSettingsSelect<false> | BookingSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -910,6 +914,49 @@ export interface Video {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bookings".
+ */
+export interface Booking {
+  id: number;
+  date: string;
+  /**
+   * Format: HH:MM (e.g., 09:00)
+   */
+  startTime: string;
+  /**
+   * Format: HH:MM (e.g., 09:30)
+   */
+  endTime: string;
+  /**
+   * Duration in minutes
+   */
+  duration?: number | null;
+  timezone?: string | null;
+  guestName: string;
+  guestEmail: string;
+  guestPhone?: string | null;
+  guestCompany?: string | null;
+  /**
+   * What the guest wants to discuss
+   */
+  message?: string | null;
+  status: 'pending' | 'confirmed' | 'cancelled' | 'completed' | 'no_show';
+  cancellationReason?: string | null;
+  /**
+   * Google Calendar event ID
+   */
+  googleEventId?: string | null;
+  /**
+   * Google Meet URL
+   */
+  meetingUrl?: string | null;
+  source?: ('website' | 'manual') | null;
+  ipAddress?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1121,6 +1168,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'videos';
         value: number | Video;
+      } | null)
+    | ({
+        relationTo: 'bookings';
+        value: number | Booking;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1593,6 +1644,30 @@ export interface VideosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "bookings_select".
+ */
+export interface BookingsSelect<T extends boolean = true> {
+  date?: T;
+  startTime?: T;
+  endTime?: T;
+  duration?: T;
+  timezone?: T;
+  guestName?: T;
+  guestEmail?: T;
+  guestPhone?: T;
+  guestCompany?: T;
+  message?: T;
+  status?: T;
+  cancellationReason?: T;
+  googleEventId?: T;
+  meetingUrl?: T;
+  source?: T;
+  ipAddress?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -1926,6 +2001,114 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings".
+ */
+export interface BookingSetting {
+  id: number;
+  eventName: string;
+  hostName: string;
+  /**
+   * Description shown on booking widget
+   */
+  eventDescription?: string | null;
+  /**
+   * Email for calendar invites and notifications
+   */
+  hostEmail: string;
+  availability: {
+    timezone:
+      | 'Australia/Sydney'
+      | 'Australia/Melbourne'
+      | 'Australia/Brisbane'
+      | 'Australia/Perth'
+      | 'Australia/Adelaide'
+      | 'Europe/London'
+      | 'America/New_York';
+    /**
+     * Meeting duration in minutes
+     */
+    slotDuration?: number | null;
+    /**
+     * Buffer before meetings (minutes)
+     */
+    bufferBefore?: number | null;
+    /**
+     * Buffer after meetings (minutes)
+     */
+    bufferAfter?: number | null;
+    /**
+     * Maximum bookings per day (0 = unlimited)
+     */
+    maxBookingsPerDay?: number | null;
+    /**
+     * How far in advance can people book (days)
+     */
+    advanceBookingDays?: number | null;
+    /**
+     * Minimum notice required (hours)
+     */
+    minimumNotice?: number | null;
+  };
+  schedule?: {
+    monday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    tuesday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    wednesday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    thursday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    friday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    saturday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+    sunday?: {
+      enabled?: boolean | null;
+      startTime?: string | null;
+      endTime?: string | null;
+    };
+  };
+  googleCalendar?: {
+    /**
+     * Whether Google Calendar is connected
+     */
+    connected?: boolean | null;
+    /**
+     * Connected Google account email
+     */
+    connectedEmail?: string | null;
+    /**
+     * Calendar ID to use (default: primary)
+     */
+    calendarId?: string | null;
+  };
+  notifications?: {
+    sendHostNotification?: boolean | null;
+    sendGuestConfirmation?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1965,6 +2148,96 @@ export interface FooterSelect<T extends boolean = true> {
               label?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "booking-settings_select".
+ */
+export interface BookingSettingsSelect<T extends boolean = true> {
+  eventName?: T;
+  hostName?: T;
+  eventDescription?: T;
+  hostEmail?: T;
+  availability?:
+    | T
+    | {
+        timezone?: T;
+        slotDuration?: T;
+        bufferBefore?: T;
+        bufferAfter?: T;
+        maxBookingsPerDay?: T;
+        advanceBookingDays?: T;
+        minimumNotice?: T;
+      };
+  schedule?:
+    | T
+    | {
+        monday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        tuesday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        wednesday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        thursday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        friday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        saturday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+        sunday?:
+          | T
+          | {
+              enabled?: T;
+              startTime?: T;
+              endTime?: T;
+            };
+      };
+  googleCalendar?:
+    | T
+    | {
+        connected?: T;
+        connectedEmail?: T;
+        calendarId?: T;
+      };
+  notifications?:
+    | T
+    | {
+        sendHostNotification?: T;
+        sendGuestConfirmation?: T;
       };
   updatedAt?: T;
   createdAt?: T;

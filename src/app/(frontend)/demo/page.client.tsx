@@ -1,23 +1,9 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { Play, Users, Clock, CheckCircle, ArrowRight } from 'lucide-react'
+import { BookingWidget } from '@/components/Booking/BookingWidget'
 
 export default function DemoPageClient() {
-  const calendarRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Load Kartra calendar script after component mounts
-    const script = document.createElement('script')
-    script.src = 'https://app.kartra.com/js/build/front/embed/calendar.js'
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-      // Cleanup on unmount
-      document.body.removeChild(script)
-    }
-  }, [])
   const benefits = [
     'See CloudRent Pro in action with your own use cases',
     'Get answers to your specific questions',
@@ -99,16 +85,9 @@ export default function DemoPageClient() {
               </div>
             </div>
 
-            {/* Right - Kartra Calendar */}
-            <div className="rounded-2xl border border-purple-500/20 bg-white/5 p-4 min-h-[500px]">
-              <div
-                ref={calendarRef}
-                className="js_kt_asset_embed js_kartra_trackable_object"
-                data-kt-type="calendar"
-                data-kt-embed="inline"
-                data-kt-value="PiyGlSjXF1a4"
-                data-kt-owner="8g854Eak"
-              />
+            {/* Right - Booking Widget */}
+            <div>
+              <BookingWidget />
             </div>
           </div>
         </section>

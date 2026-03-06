@@ -16,68 +16,23 @@ interface DateSummary {
 }
 
 interface BookingWidgetProps {
-  hostSlug?: string
-  eventSlug?: string
-  apiBaseUrl?: string
   className?: string
-  demoMode?: boolean
 }
 
-// Generate demo availability data
-function generateDemoData(viewMonth: Date) {
-  const year = viewMonth.getFullYear()
-  const month = viewMonth.getMonth()
-  const daysInMonth = new Date(year, month + 1, 0).getDate()
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-
-  const dates: DateSummary[] = []
-  const slots: TimeSlot[] = []
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const date = new Date(year, month, day)
-    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-    const dayOfWeek = date.getDay()
-
-    // Available Mon-Fri, not in the past
-    const isWeekday = dayOfWeek >= 1 && dayOfWeek <= 5
-    const isFuture = date >= today
-
-    if (isWeekday && isFuture) {
-      dates.push({ date: dateStr, hasAvailability: true, slotsCount: 4 })
-
-      // Add time slots: 9am, 10am, 2pm, 3pm
-      const times = ['09:00', '10:00', '14:00', '15:00']
-      times.forEach((time) => {
-        const startTime = `${dateStr}T${time}:00`
-        const [h, m] = time.split(':').map(Number)
-        const endTime = `${dateStr}T${String(h).padStart(2, '0')}:30:00`
-        slots.push({ startTime, endTime, available: true })
-      })
-    } else {
-      dates.push({ date: dateStr, hasAvailability: false, slotsCount: 0 })
-    }
-  }
-
-  return { dates, slots }
-}
-
-export function BookingWidget({
-  hostSlug = 'cloudrent',
-  eventSlug = 'demo',
-  apiBaseUrl = '',  // Uses local proxy by default
-  className,
-  demoMode = false,
-}: BookingWidgetProps) {
+export function BookingWidget({ className }: BookingWidgetProps) {
   const [step, setStep] = useState<'date' | 'time' | 'details' | 'confirm'>('date')
-  const [loading, setLoading] = useState(!demoMode)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Data
-  const [host, setHost] = useState<any>(demoMode ? { name: 'CloudRent Team' } : null)
-  const [eventType, setEventType] = useState<any>(
-    demoMode ? { id: 'demo', name: 'Product Demo', durationMinutes: 30 } : null
-  )
+  // Settings from API
+  const [settings, setSettings] = useState<{
+    eventName: string
+    hostName: string
+    slotDuration: number
+    timezone: string
+  } | null>(null)
+
+  // Availability data
   const [dates, setDates] = useState<DateSummary[]>([])
   const [slots, setSlots] = useState<TimeSlot[]>([])
 
@@ -95,28 +50,31 @@ export function BookingWidget({
   })
 
   const [submitting, setSubmitting] = useState(false)
-  const [appointment, setAppointment] = useState<any>(null)
+  const [appointment, setAppointment] = useState<{
+    booking: { id: string; meetingUrl?: string }
+    calendarLinks?: { google: string }
+  } | null>(null)
 
-  // Get current month dates
+  // Current view month
   const [viewMonth, setViewMonth] = useState(() => {
     const now = new Date()
     return new Date(now.getFullYear(), now.getMonth(), 1)
   })
 
-  // Load host and event type
+  // Load booking settings
   useEffect(() => {
-    if (demoMode) return
-
-    async function loadEventType() {
+    async function loadSettings() {
       try {
         setLoading(true)
-        const res = await fetch(
-          `${apiBaseUrl}/api/booking/public/host/${hostSlug}/event/${eventSlug}`
-        )
-        if (!res.ok) throw new Error('Failed to load booking details')
+        const res = await fetch('/api/booking/settings')
+        if (!res.ok) throw new Error('Failed to load booking settings')
         const data = await res.json()
-        setHost(data.host)
-        setEventType(data.eventType)
+        setSettings({
+          eventName: data.eventName || 'Product Demo',
+          hostName: data.hostName || 'CloudRent Team',
+          slotDuration: data.slotDuration || 30,
+          timezone: data.timezone || 'Australia/Sydney',
+        })
       } catch (err) {
         setError('Unable to load booking calendar. Please try again later.')
         console.error(err)
@@ -124,19 +82,12 @@ export function BookingWidget({
         setLoading(false)
       }
     }
-    loadEventType()
-  }, [hostSlug, eventSlug, apiBaseUrl, demoMode])
+    loadSettings()
+  }, [])
 
   // Load availability when month changes
   useEffect(() => {
-    if (!eventType?.id) return
-
-    if (demoMode) {
-      const demoData = generateDemoData(viewMonth)
-      setDates(demoData.dates)
-      setSlots(demoData.slots)
-      return
-    }
+    if (!settings) return
 
     async function loadAvailability() {
       const startDate = viewMonth.toISOString().split('T')[0]
@@ -145,8 +96,9 @@ export function BookingWidget({
         .split('T')[0]
 
       try {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
         const res = await fetch(
-          `${apiBaseUrl}/api/booking/public/slots/${eventType.id}?startDate=${startDate}&endDate=${endDate}&timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`
+          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(timezone)}`
         )
         if (!res.ok) throw new Error('Failed to load availability')
         const data = await res.json()
@@ -157,7 +109,7 @@ export function BookingWidget({
       }
     }
     loadAvailability()
-  }, [eventType?.id, viewMonth, apiBaseUrl, demoMode])
+  }, [settings, viewMonth])
 
   // Get available slots for selected date
   const slotsForDate = selectedDate
@@ -229,53 +181,43 @@ export function BookingWidget({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedSlot || !eventType?.id) return
+    if (!selectedSlot || !selectedDate) return
 
     setSubmitting(true)
-
-    if (demoMode) {
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      setAppointment({
-        appointment: {
-          id: 'demo-123',
-          meetingUrl: 'https://meet.google.com/demo-meeting',
-        },
-        calendarLinks: {
-          google: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventType.name)}&dates=${selectedSlot.startTime.replace(/[-:]/g, '')}/${selectedSlot.endTime.replace(/[-:]/g, '')}`,
-        },
-      })
-      setStep('confirm')
-      setSubmitting(false)
-      return
-    }
+    setError(null)
 
     try {
-      const res = await fetch(`${apiBaseUrl}/api/booking/public/appointments`, {
+      // Extract time from ISO string (e.g., "2024-03-15T09:00:00.000Z" -> "09:00")
+      const startTime = selectedSlot.startTime.includes('T')
+        ? selectedSlot.startTime.split('T')[1].slice(0, 5)
+        : selectedSlot.startTime
+
+      const res = await fetch('/api/booking/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          eventTypeId: eventType.id,
-          startTime: selectedSlot.startTime,
-          inviteeName: formData.name,
-          inviteeEmail: formData.email,
-          inviteePhone: formData.phone,
-          inviteeCompany: formData.company,
-          inviteeTimezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          intakeResponses: formData.message ? { message: formData.message } : undefined,
+          date: selectedDate,
+          startTime,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          company: formData.company,
+          message: formData.message,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         }),
       })
 
+      const data = await res.json()
+
       if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.error || 'Failed to create appointment')
+        throw new Error(data.error || 'Failed to create booking')
       }
 
-      const data = await res.json()
       setAppointment(data)
       setStep('confirm')
-    } catch (err: any) {
-      setError(err.message || 'Failed to book appointment')
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to book appointment'
+      setError(errorMessage)
     } finally {
       setSubmitting(false)
     }
@@ -291,7 +233,7 @@ export function BookingWidget({
     )
   }
 
-  if (error && !eventType) {
+  if (error && !settings) {
     return (
       <div className={cn('rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 p-8', className)}>
         <p className="text-center text-red-400">{error}</p>
@@ -304,18 +246,11 @@ export function BookingWidget({
       {/* Header */}
       <div className="border-b border-brand-purple/20 bg-brand-purple/10 px-6 py-4">
         <div className="flex items-center gap-4">
-          {host?.avatarUrl && (
-            <img
-              src={host.avatarUrl}
-              alt={host.name}
-              className="h-12 w-12 rounded-full"
-            />
-          )}
           <div>
-            <h3 className="font-semibold text-white">{eventType?.name || 'Book a Demo'}</h3>
+            <h3 className="font-semibold text-white">{settings?.eventName || 'Book a Demo'}</h3>
             <p className="text-sm text-gray-400">
-              {eventType?.durationMinutes || 30} min
-              {host?.name && ` with ${host.name}`}
+              {settings?.slotDuration || 30} min
+              {settings?.hostName && ` with ${settings.hostName}`}
             </p>
           </div>
         </div>
@@ -506,16 +441,16 @@ export function BookingWidget({
             </p>
 
             <div className="rounded-lg bg-brand-purple/10 p-4 text-left">
-              <p className="font-medium text-white">{eventType?.name}</p>
+              <p className="font-medium text-white">{settings?.eventName}</p>
               <p className="text-sm text-gray-400">
                 {formatDate(selectedDate!)}
               </p>
               <p className="text-sm text-gray-400">
                 {formatTime(selectedSlot!.startTime)} - {formatTime(selectedSlot!.endTime)}
               </p>
-              {appointment.appointment?.meetingUrl && (
+              {appointment.booking?.meetingUrl && (
                 <a
-                  href={appointment.appointment.meetingUrl}
+                  href={appointment.booking.meetingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-2 inline-block text-sm text-brand-purple hover:text-[#a855c9]"
