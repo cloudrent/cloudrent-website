@@ -2015,6 +2015,10 @@ export interface BookingSetting {
    * Email for calendar invites and notifications
    */
   hostEmail: string;
+  /**
+   * Meeting link for bookings (Teams, Zoom, etc.). Leave empty to use Google Meet.
+   */
+  meetingLink?: string | null;
   availability: {
     timezone:
       | 'Australia/Sydney'
@@ -2162,6 +2166,7 @@ export interface BookingSettingsSelect<T extends boolean = true> {
   hostName?: T;
   eventDescription?: T;
   hostEmail?: T;
+  meetingLink?: T;
   availability?:
     | T
     | {

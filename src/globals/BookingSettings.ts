@@ -64,6 +64,13 @@ export const BookingSettings: GlobalConfig = {
       required: true,
       admin: { description: 'Email for calendar invites and notifications' },
     },
+    {
+      name: 'meetingLink',
+      type: 'text',
+      admin: {
+        description: 'Meeting link for bookings (Teams, Zoom, etc.). Leave empty to use Google Meet.',
+      },
+    },
 
     // Availability Settings
     {

@@ -74,9 +74,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create Google Calendar event
+    // Use custom meeting link if configured, otherwise use Google Meet
     let googleEventId: string | null = null
-    let meetingUrl: string | null = null
+    let meetingUrl: string | null = settings.meetingLink || null
+    const useGoogleMeet = !settings.meetingLink // Only create Google Meet if no custom link
 
     if (settings.googleCalendar?.connected) {
       const hostTimezone = settings.availability?.timezone || 'Australia/Sydney'
@@ -85,18 +86,22 @@ export async function POST(request: NextRequest) {
 
       const calendarResult = await createCalendarEvent({
         summary: `${settings.eventName || 'Demo'} with ${name}`,
-        description: `Company: ${company || 'N/A'}\nPhone: ${phone || 'N/A'}\nMessage: ${message || 'N/A'}`,
+        description: `Company: ${company || 'N/A'}\nPhone: ${phone || 'N/A'}\nMessage: ${message || 'N/A'}\nMeeting: ${meetingUrl || 'Google Meet (see calendar invite)'}`,
         startTime: startDateTime,
         endTime: endDateTime,
         attendeeEmail: email,
         attendeeName: name,
         hostEmail: settings.hostEmail || '',
         timezone: hostTimezone,
+        createGoogleMeet: useGoogleMeet,
       })
 
       if (calendarResult) {
         googleEventId = calendarResult.eventId
-        meetingUrl = calendarResult.meetingUrl
+        // Only use Google Meet URL if no custom meeting link
+        if (useGoogleMeet && calendarResult.meetingUrl) {
+          meetingUrl = calendarResult.meetingUrl
+        }
       }
     }
 

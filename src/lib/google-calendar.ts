@@ -102,7 +102,7 @@ export async function getBusyTimes(
 }
 
 /**
- * Create a calendar event with Google Meet
+ * Create a calendar event, optionally with Google Meet
  */
 export async function createCalendarEvent(params: {
   summary: string
@@ -113,6 +113,7 @@ export async function createCalendarEvent(params: {
   attendeeName: string
   hostEmail: string
   timezone: string
+  createGoogleMeet?: boolean
 }): Promise<{ eventId: string; meetingUrl: string } | null> {
   const calendar = await getCalendarClient()
   if (!calendar) return null
@@ -120,7 +121,7 @@ export async function createCalendarEvent(params: {
   try {
     const event = await calendar.events.insert({
       calendarId: 'primary',
-      conferenceDataVersion: 1,
+      conferenceDataVersion: params.createGoogleMeet ? 1 : 0,
       sendUpdates: 'all', // Send email invites to attendees
       requestBody: {
         summary: params.summary,
@@ -137,12 +138,14 @@ export async function createCalendarEvent(params: {
           { email: params.attendeeEmail, displayName: params.attendeeName },
           { email: params.hostEmail, organizer: true },
         ],
-        conferenceData: {
-          createRequest: {
-            requestId: `booking-${Date.now()}-${Math.random().toString(36).substring(7)}`,
-            conferenceSolutionKey: { type: 'hangoutsMeet' },
+        ...(params.createGoogleMeet && {
+          conferenceData: {
+            createRequest: {
+              requestId: `booking-${Date.now()}-${Math.random().toString(36).substring(7)}`,
+              conferenceSolutionKey: { type: 'hangoutsMeet' },
+            },
           },
-        },
+        }),
         reminders: {
           useDefault: false,
           overrides: [
