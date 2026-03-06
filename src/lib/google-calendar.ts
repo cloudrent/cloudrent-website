@@ -11,7 +11,11 @@ const SCOPES = [
 export function getOAuth2Client() {
   const clientId = process.env.GOOGLE_CLIENT_ID
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET
-  const redirectUri = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}/api/booking/google/callback`
+  // Use production URL for OAuth redirect
+  const baseUrl = process.env.NODE_ENV === 'production'
+    ? 'https://www.cloudrent.me'
+    : (process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000')
+  const redirectUri = `${baseUrl}/api/booking/google/callback`
 
   if (!clientId || !clientSecret) {
     throw new Error('Google OAuth credentials not configured')
