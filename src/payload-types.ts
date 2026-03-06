@@ -950,6 +950,14 @@ export interface Booking {
    * Google Meet URL
    */
   meetingUrl?: string | null;
+  /**
+   * 24-hour reminder sent
+   */
+  reminder24hSent?: boolean | null;
+  /**
+   * 1-hour reminder sent
+   */
+  reminder1hSent?: boolean | null;
   source?: ('website' | 'manual') | null;
   ipAddress?: string | null;
   updatedAt: string;
@@ -1661,6 +1669,8 @@ export interface BookingsSelect<T extends boolean = true> {
   cancellationReason?: T;
   googleEventId?: T;
   meetingUrl?: T;
+  reminder24hSent?: T;
+  reminder1hSent?: T;
   source?: T;
   ipAddress?: T;
   updatedAt?: T;

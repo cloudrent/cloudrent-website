@@ -150,6 +150,28 @@ export const Bookings: CollectionConfig = {
       },
     },
 
+    // Reminder Tracking
+    {
+      name: 'reminder24hSent',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        readOnly: true,
+        description: '24-hour reminder sent',
+        position: 'sidebar',
+      },
+    },
+    {
+      name: 'reminder1hSent',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        readOnly: true,
+        description: '1-hour reminder sent',
+        position: 'sidebar',
+      },
+    },
+
     // Metadata
     {
       name: 'source',
