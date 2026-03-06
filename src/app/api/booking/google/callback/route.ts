@@ -72,6 +72,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${adminUrl}?success=connected&token=${encodeURIComponent(tokens.refresh_token || '')}`)
   } catch (err) {
     console.error('Google OAuth callback error:', err)
-    return NextResponse.redirect(`${adminUrl}?error=oauth_failed`)
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+    return NextResponse.redirect(`${adminUrl}?error=oauth_failed&details=${encodeURIComponent(errorMessage)}`)
   }
 }
