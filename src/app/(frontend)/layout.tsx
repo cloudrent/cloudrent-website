@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { cn } from '@/utilities/ui'
 import { Inter } from 'next/font/google'
 import React from 'react'
 
@@ -21,6 +20,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+import { Analytics } from '@vercel/analytics/next'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -63,6 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
           <PublicChatWidget />
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
