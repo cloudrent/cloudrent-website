@@ -1,8 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import Script from 'next/script'
 import { Play, Users, Clock, CheckCircle, ArrowRight } from 'lucide-react'
-import { BookingWidget } from '@/components/Booking/BookingWidget'
 
 export default function DemoPageClient() {
   const benefits = [
@@ -86,11 +85,18 @@ export default function DemoPageClient() {
               </div>
             </div>
 
-            {/* Right - Booking Widget */}
-            <div>
-              <BookingWidget
-                hostSlug="ron-neville-cloudrent"
-                eventSlug="1hour"
+            {/* Right - Kartra Calendar */}
+            <div className="rounded-2xl border border-purple-500/20 bg-white/5 p-4 min-h-[500px]">
+              <div
+                className="js_kt_asset_embed js_kartra_trackable_object"
+                data-kt-type="calendar"
+                data-kt-embed="inline"
+                data-kt-value="PiyGlSjXF1a4"
+                data-kt-owner="8g854Eak"
+              />
+              <Script
+                src="https://app.kartra.com/js/build/front/embed/calendar.js"
+                strategy="lazyOnload"
               />
             </div>
           </div>
