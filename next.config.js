@@ -22,7 +22,7 @@ const nextConfig = {
       // Vercel Blob storage for media uploads
       {
         protocol: 'https',
-        hostname: '*.public.blob.vercel-storage.com',
+        hostname: 'ipjpelt6tqi5wdno.public.blob.vercel-storage.com',
       },
     ],
     // Image optimization settings

@@ -15,6 +15,16 @@ export const Videos: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'featured', 'publishedAt'],
   },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        if (data?.youtubeId) {
+          data.youtubeId = data.youtubeId.trim()
+        }
+        return data
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',

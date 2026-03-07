@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Check, Clock, Shield, Zap, Users, Star, Gift, Lock } from 'lucide-react'
 import { FAQSchema } from '@/components/StructuredData'
 
-const LAUNCH_DATE = new Date('2026-02-23T00:00:00+10:00')
+const LAUNCH_DATE = new Date('2026-04-01T00:00:00+10:00')
 
 interface TimeLeft {
   days: number
@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     q: 'How long does this offer last?',
-    a: "Until we reach 100 customers or February 23rd, 2026 — whichever comes first. Once spots are filled, this offer is permanently closed. We won't be running it again.",
+    a: "Until we reach 100 customers or March 31st, 2026 — whichever comes first. Sign up in March to lock in your launch price. Once spots are filled, this offer is permanently closed.",
   },
   {
     q: 'What happens if I cancel and rejoin later?',
@@ -155,7 +155,7 @@ export default function LaunchPageClient() {
           {/* Countdown */}
           <div className="mb-10">
             <p className="mb-4 text-sm font-medium uppercase tracking-wider text-purple-300">
-              CloudRent Pro launches in
+              March offer ends in
             </p>
             <div className="flex justify-center gap-3 sm:gap-4">
               {[
@@ -185,7 +185,7 @@ export default function LaunchPageClient() {
             Lock In Your Launch Price
           </a>
           <p className="mt-4 text-sm text-gray-500">
-            Limited spots available • Rate locked forever • Cancel anytime
+            Sign up in March • Rate locked forever • Cancel anytime
           </p>
         </div>
       </section>

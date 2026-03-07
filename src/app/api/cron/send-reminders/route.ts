@@ -177,7 +177,7 @@ function getReminderEmail(params: {
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background-color: #f4f4f5;">
   <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <div style="background: linear-gradient(135deg, ${isOneHour ? '#059669' : '#7c3aed'} 0%, ${isOneHour ? '#10b981' : '#a855f7'} 100%); color: white; padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
+    <div style="background: linear-gradient(135deg, ${isOneHour ? '#059669' : '#881ba9'} 0%, ${isOneHour ? '#10b981' : '#a83cc9'} 100%); color: white; padding: 32px; border-radius: 12px 12px 0 0; text-align: center;">
       <h1 style="margin: 0; font-size: 28px;">${headerText}</h1>
     </div>
     <div style="background: white; padding: 32px; border-radius: 0 0 12px 12px;">
@@ -188,10 +188,10 @@ function getReminderEmail(params: {
         <p style="margin: 8px 0; color: #374151;"><strong>Date:</strong> ${params.date}</p>
         <p style="margin: 8px 0; color: #374151;"><strong>Time:</strong> ${params.time} (${params.timezone})</p>
         <p style="margin: 8px 0; color: #374151;"><strong>Duration:</strong> ${params.duration} minutes</p>
-        ${params.meetingUrl ? `<p style="margin: 8px 0; color: #374151;"><strong>Meeting Link:</strong> <a href="${params.meetingUrl}" style="color: #7c3aed;">${params.meetingUrl}</a></p>` : ''}
+        ${params.meetingUrl ? `<p style="margin: 8px 0; color: #374151;"><strong>Meeting Link:</strong> <a href="${params.meetingUrl}" style="color: #881ba9;">${params.meetingUrl}</a></p>` : ''}
       </div>
 
-      ${params.meetingUrl ? `<p style="text-align: center;"><a href="${params.meetingUrl}" style="display: inline-block; background: ${isOneHour ? '#059669' : '#7c3aed'}; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">Join Meeting</a></p>` : ''}
+      ${params.meetingUrl ? `<p style="text-align: center;"><a href="${params.meetingUrl}" style="display: inline-block; background: ${isOneHour ? '#059669' : '#881ba9'}; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600;">Join Meeting</a></p>` : ''}
 
       <p style="font-size: 14px; color: #6b7280; margin-top: 24px;">Need to reschedule or cancel? Simply reply to this email and we'll help you out.</p>
 

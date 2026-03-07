@@ -470,7 +470,7 @@ export const ImmersiveHero: React.FC = () => {
 
       {/* Main Content Container */}
       <div
-        className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${
+        className={`absolute inset-x-0 top-[100px] bottom-0 flex items-center justify-center transition-all duration-1000 ${
           phase === 'particles' ? 'opacity-0 scale-95' : ''
         }`}
         style={{ opacity: dashboardOpacity }}
@@ -713,7 +713,7 @@ export const ImmersiveHero: React.FC = () => {
         {/* Mobile Admin App */}
         <div className={`absolute transition-all duration-700 ${
           deviceIndex >= 1 ? 'translate-y-0' : 'translate-y-12'
-        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : deviceIndex >= 1 ? 'opacity-100' : 'opacity-0'}`} style={{ right: '15%', top: '8%' }}>
+        } ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : deviceIndex >= 1 ? 'opacity-100' : 'opacity-0'}`} style={{ right: 'calc(15% + 200px)', top: '8%' }}>
           <div className="relative">
             {/* Phone frame */}
             <div className="w-[180px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-purple-900/40 border border-gray-700">

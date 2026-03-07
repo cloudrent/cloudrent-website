@@ -6,7 +6,7 @@ import { getPayload } from 'payload'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { VideoCard, FeaturedVideoCard } from './VideoCard'
 
-export const revalidate = 3600
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Videos | CloudRent Pro - Tutorials, Demos & More',
