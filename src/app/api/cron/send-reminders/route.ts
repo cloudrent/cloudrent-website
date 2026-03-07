@@ -80,6 +80,7 @@ export async function GET(request: NextRequest) {
           await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: booking.guestEmail as string,
+            replyTo: settings.hostEmail || undefined,
             subject: `Reminder: ${settings.eventName || 'Demo'} Tomorrow`,
             html: getReminderEmail({
               guestName: booking.guestName as string,
@@ -112,6 +113,7 @@ export async function GET(request: NextRequest) {
           await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: booking.guestEmail as string,
+            replyTo: settings.hostEmail || undefined,
             subject: `Starting Soon: ${settings.eventName || 'Demo'} in 1 Hour`,
             html: getReminderEmail({
               guestName: booking.guestName as string,

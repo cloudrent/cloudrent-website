@@ -141,6 +141,7 @@ export async function POST(request: NextRequest) {
           await resend.emails.send({
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: email,
+            replyTo: settings.hostEmail || undefined,
             subject: `Booking Confirmed: ${settings.eventName || 'Demo'} on ${formattedDate}`,
             html: getGuestConfirmationEmail({
               guestName: name,
