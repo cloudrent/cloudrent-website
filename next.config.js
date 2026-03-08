@@ -24,6 +24,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'ipjpelt6tqi5wdno.public.blob.vercel-storage.com',
       },
+      // YouTube thumbnails
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+      },
     ],
     // Image optimization settings
     formats: ['image/avif', 'image/webp'],

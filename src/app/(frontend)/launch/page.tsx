@@ -4,7 +4,7 @@ import LaunchPageClient from './LaunchPageClient'
 export const metadata: Metadata = {
   title: 'Launch Offer: $85/user/mo Forever | CloudRent Pro',
   description:
-    'Be one of our first 100 Launch Customers and lock in the complete CloudRent Pro Business plan at $85/user/mo forever. Save $44/user/mo compared to standard pricing.',
+    'Be one of our first 100 Launch Customers and lock in CloudRent Pro at $85/user/mo forever. Save $44/user/mo vs standard pricing.',
   alternates: {
     canonical: 'https://www.cloudrent.me/launch/',
   },

@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users, Shield, Star, Phone, Award, ArrowRight, Zap } from 'lucide-react'
 import { SoftwareSchema } from '@/components/StructuredData'
@@ -13,14 +14,14 @@ export const revalidate = 3600
 // SEO metadata
 export const metadata: Metadata = {
   title: 'CloudRent Pro – Rental Management Software Australia',
-  description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
+  description: 'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
   keywords: ['rental software', 'hire business', 'equipment rental', 'rental management', 'Australia', 'Xero integration'],
   alternates: {
     canonical: 'https://www.cloudrent.me/',
   },
   openGraph: mergeOpenGraph({
     title: 'CloudRent Pro – Rental Management Software Australia',
-    description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
+    description: 'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
     url: '/',
   }),
 }
@@ -318,11 +319,13 @@ export default function HomePage() {
               </p>
               <div className="flex items-center gap-4 mt-auto pt-4 border-t border-white/10">
                 {testimonial.image ? (
-                  <img
+                  <Image
                     src={testimonial.image}
                     alt={testimonial.author}
+                    width={72}
+                    height={72}
                     className="rounded-full object-cover border-2 border-brand-purple/30"
-                    style={{ width: '72px', height: '72px' }}
+                    loading="lazy"
                   />
                 ) : (
                   <div className="rounded-full bg-brand-purple/20 flex items-center justify-center" style={{ width: '72px', height: '72px' }}>

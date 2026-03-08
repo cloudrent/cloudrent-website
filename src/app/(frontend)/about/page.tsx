@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Users, Zap, Shield, Heart, Target, Award, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { LightboxImage } from '@/components/Lightbox'
@@ -7,14 +8,14 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 export const metadata: Metadata = {
   title: 'About CloudRent Pro – Australian Rental Software',
   description:
-    'Built in Australia for Australian hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management with purpose-built software.',
+    'Built in Australia for hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management.',
   alternates: {
     canonical: 'https://www.cloudrent.me/about/',
   },
   openGraph: mergeOpenGraph({
     title: 'About CloudRent Pro – Australian Rental Software',
     description:
-      'Built in Australia for Australian hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management with purpose-built software.',
+      'Built in Australia for hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management.',
     url: '/about/',
   }),
 }
@@ -157,10 +158,13 @@ export default function AboutPage() {
                 key={i}
                 className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-6 text-center transition-colors hover:border-purple-500/40"
               >
-                <img
+                <Image
                   src={person.image}
                   alt={person.name}
+                  width={128}
+                  height={128}
                   className="mx-auto mb-4 h-32 w-32 rounded-full object-cover border-2 border-purple-500/30"
+                  loading="lazy"
                 />
                 <h3 className="text-xl font-semibold text-white">{person.name}</h3>
                 <p className="mb-4 text-sm font-medium text-purple-400">{person.role}</p>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Play, Clock, X } from 'lucide-react'
 
 const categoryLabels: Record<string, string> = {
@@ -41,10 +42,13 @@ export function VideoCard({ video }: VideoCardProps) {
       >
         {/* Thumbnail with play overlay */}
         <div className="relative aspect-video">
-          <img
+          <Image
             src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
             alt={video.title}
+            width={480}
+            height={360}
             className="h-full w-full object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
             <div className="flex h-16 w-16 items-center justify-center rounded-full shadow-lg" style={{ backgroundColor: '#881ba9', boxShadow: '0 10px 15px -3px rgba(136, 27, 169, 0.5)' }}>
@@ -91,10 +95,13 @@ export function FeaturedVideoCard({ video }: VideoCardProps) {
       >
         {/* Thumbnail with play overlay */}
         <div className="relative aspect-video">
-          <img
+          <Image
             src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
             alt={video.title}
+            width={480}
+            height={360}
             className="h-full w-full object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
             <div className="flex h-20 w-20 items-center justify-center rounded-full shadow-lg" style={{ backgroundColor: '#881ba9', boxShadow: '0 10px 15px -3px rgba(136, 27, 169, 0.5)' }}>

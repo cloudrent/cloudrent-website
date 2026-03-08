@@ -5,13 +5,13 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export const metadata: Metadata = {
   title: 'Terms of Service | CloudRent Pro',
-  description: 'Terms and conditions for using CloudRent Pro rental management software.',
+  description: 'Read the terms and conditions for using CloudRent Pro rental management software. Covers usage rights, billing, data handling, and service agreements.',
   alternates: {
     canonical: 'https://www.cloudrent.me/terms/',
   },
   openGraph: mergeOpenGraph({
     title: 'Terms of Service | CloudRent Pro',
-    description: 'Terms and conditions for using CloudRent Pro rental management software.',
+    description: 'Read the terms and conditions for using CloudRent Pro rental management software. Covers usage rights, billing, data handling, and service agreements.',
     url: '/terms/',
   }),
 }

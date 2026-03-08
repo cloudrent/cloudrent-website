@@ -5,13 +5,13 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | CloudRent Pro',
-  description: 'Learn how CloudRent Pro collects, uses, and protects your personal information.',
+  description: 'Learn how CloudRent Pro collects, uses, and protects your personal information. Our privacy policy covers data security, cookies, and your rights.',
   alternates: {
     canonical: 'https://www.cloudrent.me/privacy/',
   },
   openGraph: mergeOpenGraph({
     title: 'Privacy Policy | CloudRent Pro',
-    description: 'Learn how CloudRent Pro collects, uses, and protects your personal information.',
+    description: 'Learn how CloudRent Pro collects, uses, and protects your personal information. Our privacy policy covers data security, cookies, and your rights.',
     url: '/privacy/',
   }),
 }
