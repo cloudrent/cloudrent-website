@@ -12,14 +12,14 @@ export const revalidate = 3600
 
 // SEO metadata
 export const metadata: Metadata = {
-  title: 'CloudRent Pro | Rental Management Software for Australian Hire Businesses',
+  title: 'CloudRent Pro – Rental Management Software Australia',
   description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
   keywords: ['rental software', 'hire business', 'equipment rental', 'rental management', 'Australia', 'Xero integration'],
   alternates: {
     canonical: 'https://www.cloudrent.me/',
   },
   openGraph: mergeOpenGraph({
-    title: 'CloudRent Pro | Rental Management Software for Australian Hire Businesses',
+    title: 'CloudRent Pro – Rental Management Software Australia',
     description: 'Complete rental management software with real-time availability, invoicing, digital signatures, Xero integration, and AI-powered support. Built in Australia for hire businesses.',
     url: '/',
   }),

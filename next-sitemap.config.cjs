@@ -15,19 +15,50 @@ const SITE_URL = getBaseUrl()
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/posts/*'],
+  // Exclude dynamic routes that are handled by separate sitemaps or shouldn't be indexed
+  exclude: [
+    '/posts-sitemap.xml',
+    '/pages-sitemap.xml',
+    '/admin/*',
+    '/api/*',
+    '/posts/*',      // Handled by posts-sitemap.xml
+    '/posts/page/*', // Pagination
+    '/search',       // Search results page
+    '/ie-incompatible.html',
+    '/_next/*',
+    '/help/*',       // Help center (separate subdomain)
+  ],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        disallow: '/admin/*',
+        disallow: ['/admin/*', '/api/*', '/search', '/_next/*'],
         allow: '/',
       },
     ],
-    additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
+    additionalSitemaps: [
+      `${SITE_URL}/pages-sitemap.xml`,
+      `${SITE_URL}/posts-sitemap.xml`,
+    ],
   },
-  // Additional paths to include in sitemap
-  additionalPaths: async () => [
-    { loc: '/launch', priority: 0.9, changefreq: 'daily' },
-  ],
+  // Static pages to include in sitemap
+  additionalPaths: async () => {
+    const staticPages = [
+      { loc: '/', priority: 1.0, changefreq: 'weekly' },
+      { loc: '/features', priority: 0.9, changefreq: 'weekly' },
+      { loc: '/pricing', priority: 0.9, changefreq: 'weekly' },
+      { loc: '/demo', priority: 0.9, changefreq: 'weekly' },
+      { loc: '/contact', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/about', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/mobile-app', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/web-portal', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/faq', priority: 0.7, changefreq: 'monthly' },
+      { loc: '/posts', priority: 0.7, changefreq: 'daily' },
+      { loc: '/videos', priority: 0.6, changefreq: 'weekly' },
+      { loc: '/launch', priority: 0.9, changefreq: 'daily' },
+      { loc: '/privacy', priority: 0.3, changefreq: 'yearly' },
+      { loc: '/terms', priority: 0.3, changefreq: 'yearly' },
+    ]
+    return staticPages
+  },
 }

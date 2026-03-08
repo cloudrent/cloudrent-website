@@ -1223,12 +1223,12 @@ export const ImmersiveHero: React.FC = () => {
             ))}
           </div>
 
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
             One platform.<br />
             <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
               Every device.
             </span>
-          </h2>
+          </h1>
           <p className="text-xl text-white/60 mb-8 max-w-xl mx-auto">
             Manage your entire hire business from anywhere — office, field, or on the road.
           </p>
