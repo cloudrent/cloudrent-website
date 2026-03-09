@@ -31,6 +31,15 @@ export async function generateStaticParams() {
   }))
 }
 
+// Sanitize HTTP links to HTTPS for internal domains (server-side for SEO)
+function sanitizeInternalLinks(content: string): string {
+  return content
+    .replace(/http:\/\/cloudrent\.me/g, 'https://www.cloudrent.me')
+    .replace(/http:\/\/www\.cloudrent\.me/g, 'https://www.cloudrent.me')
+    .replace(/http:\/\/app\.cloudrent\.me/g, 'https://app.cloudrent.me')
+    .replace(/http:\/\/docs\.cloudrent\.me/g, 'https://docs.cloudrent.me')
+}
+
 // Helper to get YouTube embed URL
 function getYouTubeEmbedUrl(url: string): string | null {
   const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)
@@ -146,7 +155,7 @@ export default async function ArticlePage({ params }: Props) {
         )}
 
         {/* Content */}
-        <ArticleContent content={doc.content} />
+        <ArticleContent content={sanitizeInternalLinks(doc.content)} />
 
         {/* Tags */}
         {doc.tags && doc.tags.length > 0 && (
