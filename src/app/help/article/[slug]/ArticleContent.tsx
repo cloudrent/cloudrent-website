@@ -6,9 +6,18 @@ interface ArticleContentProps {
   content: string
 }
 
+// Sanitize HTTP links to HTTPS for internal domains
+function sanitizeInternalLinks(content: string): string {
+  return content
+    .replace(/http:\/\/cloudrent\.me/g, 'https://www.cloudrent.me')
+    .replace(/http:\/\/www\.cloudrent\.me/g, 'https://www.cloudrent.me')
+    .replace(/http:\/\/app\.cloudrent\.me/g, 'https://app.cloudrent.me')
+    .replace(/http:\/\/docs\.cloudrent\.me/g, 'https://docs.cloudrent.me')
+}
+
 // Simple markdown to HTML conversion
 function markdownToHtml(markdown: string): string {
-  let html = markdown
+  let html = sanitizeInternalLinks(markdown)
 
   // Escape HTML in code blocks first
   html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
