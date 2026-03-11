@@ -35,6 +35,7 @@ export const CategoryTabs: React.FC<CategoryTabsProps> = ({ categories }) => {
         <Link
           key={category.id}
           href={`/posts?category=${category.slug}`}
+          rel="nofollow"
           className={cn(
             'rounded-full px-4 py-2 text-sm font-medium transition-all',
             activeCategory === category.slug

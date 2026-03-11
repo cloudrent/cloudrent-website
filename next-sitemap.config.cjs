@@ -26,6 +26,9 @@ module.exports = {
     '/search',       // Search results page
     '/ie-incompatible.html',
     '/_next/*',
+    '/blog',         // Redirects to /posts
+    '/blog/*',       // Redirects to /posts
+    '/help',         // Help center (separate subdomain)
     '/help/*',       // Help center (separate subdomain)
   ],
   robotsTxtOptions: {
