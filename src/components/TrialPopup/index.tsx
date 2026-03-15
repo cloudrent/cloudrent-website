@@ -248,7 +248,7 @@ export function TrialPopup() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 animate-shield-appear" style={{ marginTop: '20px' }}>
                 <Image
                   src="/images/30-day-trial-badge.png"
-                  alt="30 Day Free Trial - No Credit Card Required"
+                  alt="30 Day $1 Trial"
                   width={192}
                   height={192}
                   className="w-48 h-auto drop-shadow-[0_10px_30px_rgba(136,27,169,0.5)] animate-shield-float"

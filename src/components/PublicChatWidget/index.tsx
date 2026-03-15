@@ -16,7 +16,7 @@ const QUICK_ACTIONS = [
   { id: 'what-is-cloudrent', label: 'What is CloudRent Pro?' },
   { id: 'pricing', label: 'Pricing' },
   { id: 'features', label: 'Features' },
-  { id: 'free-trial', label: 'Free trial' },
+  { id: 'free-trial', label: '$1 trial' },
 ]
 
 const SUPABASE_URL = 'https://bawidpmocsxudwpsppsz.supabase.co'
@@ -245,7 +245,7 @@ export function PublicChatWidget() {
       'what-is-cloudrent': 'What is CloudRent Pro and who is it for?',
       'pricing': 'What does CloudRent Pro cost?',
       'features': 'What features does CloudRent Pro have?',
-      'free-trial': 'Tell me about the free trial',
+      'free-trial': 'Tell me about the $1 trial',
     }
     const prompt = prompts[actionId]
     if (prompt) sendMessage(prompt)
@@ -366,7 +366,7 @@ export function PublicChatWidget() {
                 href="https://app.cloudrent.me/register"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-brand-purple text-white text-sm font-medium rounded-lg hover:bg-brand-purple/90 transition-colors"
               >
-                Start Free Trial
+                Start $1 Trial
               </Link>
             </div>
           </div>
@@ -428,7 +428,7 @@ export function PublicChatWidget() {
               href="https://app.cloudrent.me/register"
               className="inline-block mt-2 px-4 py-2 bg-brand-purple text-white text-sm font-medium rounded-lg hover:bg-brand-purple/90 transition-colors"
             >
-              Start Your Free Trial
+              Start Your $1 Trial
             </Link>
           </div>
         )}

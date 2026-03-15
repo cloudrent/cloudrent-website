@@ -4,7 +4,7 @@ import { getServerSideURL } from './getURL'
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
   description:
-    'All-in-one rental management platform for Australian equipment hire businesses. Bookings, invoicing, SWMS, Xero integration. 30-day free trial.',
+    'All-in-one rental management platform for Australian equipment hire businesses. Bookings, invoicing, SWMS, Xero integration. $1 trial available.',
   images: [
     {
       url: `${getServerSideURL()}/images/cloudrent-pro-og-image.webp`,

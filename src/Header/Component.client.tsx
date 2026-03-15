@@ -83,7 +83,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
               className="rounded-lg px-4 py-1.5 text-sm font-semibold text-white transition-all"
               style={{ backgroundColor: '#881ba9' }}
             >
-              Start Free Trial
+              Start $1 Trial
             </a>
           </div>
         </div>
@@ -143,7 +143,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
                 style={{ backgroundColor: '#881ba9' }}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Start Free Trial
+                Start $1 Trial
               </a>
             </div>
           </nav>

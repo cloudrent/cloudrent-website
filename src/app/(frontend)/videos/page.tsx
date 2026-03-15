@@ -122,14 +122,14 @@ export default async function VideosPage() {
           <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-900/60 to-fuchsia-900/60 p-8 text-center md:p-12">
             <h2 className="mb-4 text-3xl font-bold text-white">Ready to get started?</h2>
             <p className="mx-auto mb-8 max-w-xl text-gray-300">
-              Start your 30-day free trial today. No credit card required.
+              Start your $1 trial today and experience the full platform.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <a
                 href="https://app.cloudrent.me/register"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
-                Start Free Trial
+                Start $1 Trial
               </a>
               <Link
                 href="/demo"

@@ -74,13 +74,13 @@ export default function DemoPageClient() {
               <div className="rounded-2xl border border-purple-500/20 bg-purple-950/50 p-6">
                 <h3 className="mb-2 font-semibold text-white">Prefer to explore on your own?</h3>
                 <p className="mb-4 text-sm text-gray-400">
-                  Start your free 30-day trial and explore all features at your own pace.
+                  Start your $1 trial and explore all features at your own pace.
                 </p>
                 <a
                   href="https://app.cloudrent.me/register"
                   className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300"
                 >
-                  Start Free Trial <ArrowRight className="h-4 w-4" />
+                  Start $1 Trial <ArrowRight className="h-4 w-4" />
                 </a>
               </div>
             </div>

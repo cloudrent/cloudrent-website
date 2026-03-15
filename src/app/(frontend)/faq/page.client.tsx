@@ -21,9 +21,9 @@ const faqs: FAQItem[] = [
   },
   {
     category: 'Getting Started',
-    question: 'How do I start my free trial?',
+    question: 'How do I start my $1 trial?',
     answer:
-      'Simply click "Start Free Trial" on our website and create an account. No credit card is required. You\'ll get full access to all features for 30 days. Your data is preserved when you upgrade to a paid plan.',
+      'Simply click "Start $1 Trial" on our website and create an account. For just $1, you\'ll get full access to all features for 30 days. Your data is preserved when you upgrade to a paid plan.',
   },
   {
     category: 'Getting Started',

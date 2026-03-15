@@ -260,7 +260,7 @@ const HeroSection: React.FC = () => {
                 href="https://app.cloudrent.me/register"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
-                Start Free Trial
+                Start $1 Trial
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
               <Link
@@ -751,7 +751,7 @@ const CTASection: React.FC = () => {
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground">
           Join Australian hire businesses protecting their assets with AI-powered damage
-          detection. Start your free trial today.
+          detection. Start your $1 trial today.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -759,7 +759,7 @@ const CTASection: React.FC = () => {
             href="https://app.cloudrent.me/register"
             className="group relative flex items-center gap-2 rounded-xl bg-gradient-to-r from-brand-purple to-purple-500 px-8 py-4 text-lg font-semibold text-white transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)]"
           >
-            Start Free 30-Day Trial
+            Start Your $1 Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
           <Link
@@ -774,7 +774,7 @@ const CTASection: React.FC = () => {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
           <span className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-green-400" />
-            No credit card required
+            Just $1 to start
           </span>
           <span className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 text-green-400" />

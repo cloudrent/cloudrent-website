@@ -389,7 +389,7 @@ export default function HomePage() {
               href="https://app.cloudrent.me/register"
               className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] flex items-center gap-2"
             >
-              Start Free 30-Day Trial
+              Start Your $1 Trial
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
             <Link
@@ -404,7 +404,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-green-400" />
-              No credit card required
+              Just $1 to start
             </span>
             <span className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-green-400" />

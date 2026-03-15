@@ -634,7 +634,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
               Ready to empower your customers?
             </h3>
             <p className="text-purple-200">
-              Start your 30-day free trial. Full portal access included.
+              Start your $1 trial. Full portal access included.
             </p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
@@ -642,7 +642,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
               href="https://app.cloudrent.me/register"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
-              Start Free Trial
+              Start $1 Trial
             </a>
             <Link
               href="/demo"
@@ -677,7 +677,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
             href="https://app.cloudrent.me/register"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
-            Start Your Free 30-Day Trial
+            Start Your $1 Trial
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
           <Link
@@ -688,7 +688,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
           </Link>
         </div>
         <p className="mt-6 text-sm text-purple-300/60">
-          No credit card required • Branded to your business • Cancel anytime
+          Just $1 to start • Branded to your business • Cancel anytime
         </p>
       </div>
     </section>
@@ -743,7 +743,7 @@ const HeroSection: React.FC = () => {
                 href="https://app.cloudrent.me/register"
                 className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
-                Start Free Trial
+                Start $1 Trial
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
               <Link

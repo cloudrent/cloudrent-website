@@ -26,12 +26,12 @@ export function PostCTA() {
             className="group inline-flex items-center gap-2 rounded-lg border border-brand-purple px-6 py-3 font-semibold text-brand-purple transition-all hover:bg-brand-purple/10 hover:text-white"
           >
             <Rocket className="h-5 w-5" />
-            Start 30-Day Free Trial
+            Start $1 Trial
           </a>
         </div>
 
         <p className="mt-4 text-sm text-gray-500">
-          No credit card required. Cancel anytime.
+          Just $1 to start. Cancel anytime.
         </p>
       </div>
     </div>

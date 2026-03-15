@@ -83,7 +83,7 @@ const tiers: Tier[] = [
       { text: 'Stocktakes & asset tracking', included: false },
       { text: 'Marketing & bulk email', included: false },
     ],
-    cta: 'Start Free Trial',
+    cta: 'Start $1 Trial',
     popular: false,
   },
   {
@@ -103,7 +103,7 @@ const tiers: Tier[] = [
       { text: 'Priority email support', included: true },
       { text: 'Marketing & bulk email', included: false },
     ],
-    cta: 'Start Free Trial',
+    cta: 'Start $1 Trial',
     popular: true,
   },
   {
@@ -648,14 +648,14 @@ export default function PricingPageClient() {
             Ready to run your hire business smarter?
           </h2>
           <p className="mb-8 leading-relaxed text-gray-300">
-            Start your 30-day free trial today. No credit card required.
+            Start your $1 trial today and experience the full platform.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
               href="https://app.cloudrent.me/register"
               className="cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-9 py-4 text-base font-bold text-white shadow-xl shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
-              Start Free Trial
+              Start $1 Trial
             </a>
             <Link
               href="/demo"
@@ -669,7 +669,7 @@ export default function PricingPageClient() {
 
       {/* ═══════════════ FOOTER NOTE ═══════════════ */}
       <div className="border-t border-purple-500/10 bg-[#050510] py-6 text-center text-[15px] text-gray-500">
-        All prices in AUD, ex-GST. 30-day free trial on all plans. Cancel anytime.
+        All prices in AUD, ex-GST. $1 trial on all plans. Cancel anytime.
       </div>
     </div>
   )

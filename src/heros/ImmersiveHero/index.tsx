@@ -1239,7 +1239,7 @@ export const ImmersiveHero: React.FC = () => {
               className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-medium transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] animate-glow-pulse"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
-                Start Your Free 30-Day Trial
+                Start Your $1 Trial
                 <ChevronRight size={20} />
               </span>
             </Link>
