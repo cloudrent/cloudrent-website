@@ -59,7 +59,16 @@
       "Bash(vercel:*)",
       "Bash(sips --help:*)",
       "Bash(sips:*)",
-      "Bash(npx vercel logs:*)"
+      "Bash(npx vercel logs:*)",
+      "Bash(git ls-files:*)",
+      "Bash(CloudRent Pro Rental Software\" \\(43 chars\\)\n- Launch: \"Launch Offer: $85/user/mo Forever)",
+      "Bash(CloudRent Pro\" \\(49 chars\\)\n\nH1 tag fixes:\n- Added H1 to homepage \\(ImmersiveHero component\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(openssl rand:*)",
+      "Bash(links to HTTP\" issue.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(pip3 install:*)",
+      "Bash(unzip:*)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== Sheet $i ===\")"
     ]
   }
 }

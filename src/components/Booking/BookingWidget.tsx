@@ -98,7 +98,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
       try {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
         const res = await fetch(
-          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(timezone)}`
+          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(timezone)}`,
         )
         if (!res.ok) throw new Error('Failed to load availability')
         const data = await res.json()
@@ -151,11 +151,11 @@ export function BookingWidget({ className }: BookingWidgetProps) {
             isPast && 'text-gray-600 cursor-not-allowed',
             !isPast && !hasAvailability && 'text-gray-500 cursor-not-allowed',
             !isPast && hasAvailability && 'text-white hover:bg-brand-purple/20 cursor-pointer',
-            isSelected && 'bg-brand-purple text-white hover:bg-brand-purple'
+            isSelected && 'bg-brand-purple text-white hover:bg-brand-purple',
           )}
         >
           {day}
-        </button>
+        </button>,
       )
     }
 
@@ -242,7 +242,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
   }
 
   return (
-    <div className={cn('rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 overflow-hidden', className)}>
+    <div
+      className={cn(
+        'rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 overflow-hidden',
+        className,
+      )}
+    >
       {/* Header */}
       <div className="border-b border-brand-purple/20 bg-brand-purple/10 px-6 py-4">
         <div className="flex items-center gap-4">
@@ -262,22 +267,36 @@ export function BookingWidget({ className }: BookingWidgetProps) {
           <div>
             <div className="mb-4 flex items-center justify-between">
               <button
-                onClick={() => setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))}
+                onClick={() =>
+                  setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))
+                }
                 className="rounded-lg p-2 text-gray-400 hover:bg-white/10 hover:text-white"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
                 </svg>
               </button>
               <h4 className="font-medium text-white">
                 {viewMonth.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' })}
               </h4>
               <button
-                onClick={() => setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))}
+                onClick={() =>
+                  setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))
+                }
                 className="rounded-lg p-2 text-gray-400 hover:bg-white/10 hover:text-white"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </button>
             </div>
@@ -292,9 +311,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               <div>Sat</div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 justify-items-center">
-              {renderCalendar()}
-            </div>
+            <div className="grid grid-cols-7 gap-1 justify-items-center">{renderCalendar()}</div>
           </div>
         )}
 
@@ -308,7 +325,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               className="mb-4 flex items-center gap-2 text-sm text-brand-purple hover:text-[#a855c9]"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Back to calendar
             </button>
@@ -343,7 +365,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               className="mb-4 flex items-center gap-2 text-sm text-brand-purple hover:text-[#a855c9]"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
               Back to times
             </button>
@@ -385,9 +412,10 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               </div>
 
               <div>
-                <label className="mb-1 block text-sm text-gray-400">Phone</label>
+                <label className="mb-1 block text-sm text-gray-400">Phone *</label>
                 <input
                   type="tel"
+                  required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
@@ -406,7 +434,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
               <div>
                 <label className="mb-1 block text-sm text-gray-400">
-                  What would you like to discuss?
+                  Any specific areas of interest?
                 </label>
                 <textarea
                   value={formData.message}
@@ -430,8 +458,18 @@ export function BookingWidget({ className }: BookingWidgetProps) {
         {step === 'confirm' && appointment && (
           <div className="text-center">
             <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20">
-              <svg className="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="h-8 w-8 text-green-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
             </div>
 
@@ -442,9 +480,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
             <div className="rounded-lg bg-brand-purple/10 p-4 text-left">
               <p className="font-medium text-white">{settings?.eventName}</p>
-              <p className="text-sm text-gray-400">
-                {formatDate(selectedDate!)}
-              </p>
+              <p className="text-sm text-gray-400">{formatDate(selectedDate!)}</p>
               <p className="text-sm text-gray-400">
                 {formatTime(selectedSlot!.startTime)} - {formatTime(selectedSlot!.endTime)}
               </p>
