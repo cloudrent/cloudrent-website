@@ -28,18 +28,7 @@ interface VideoCardProps {
     youtubeId: string
     category: string
     duration?: string | null
-    thumbnail?: {
-      url?: string | null
-      alt?: string | null
-    } | null
   }
-}
-
-function getThumbnailUrl(video: VideoCardProps['video']): string {
-  if (video.thumbnail?.url) {
-    return video.thumbnail.url
-  }
-  return `https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`
 }
 
 export function VideoCard({ video }: VideoCardProps) {
@@ -54,10 +43,10 @@ export function VideoCard({ video }: VideoCardProps) {
         {/* Thumbnail with play overlay */}
         <div className="relative aspect-video">
           <Image
-            src={getThumbnailUrl(video)}
-            alt={video.thumbnail?.alt || video.title}
-            width={video.thumbnail?.url ? 1920 : 480}
-            height={video.thumbnail?.url ? 1080 : 360}
+            src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+            alt={video.title}
+            width={480}
+            height={360}
             className="h-full w-full object-cover"
             loading="lazy"
           />
@@ -107,10 +96,10 @@ export function FeaturedVideoCard({ video }: VideoCardProps) {
         {/* Thumbnail with play overlay */}
         <div className="relative aspect-video">
           <Image
-            src={getThumbnailUrl(video)}
-            alt={video.thumbnail?.alt || video.title}
-            width={video.thumbnail?.url ? 1920 : 480}
-            height={video.thumbnail?.url ? 1080 : 360}
+            src={`https://img.youtube.com/vi/${video.youtubeId}/hqdefault.jpg`}
+            alt={video.title}
+            width={480}
+            height={360}
             className="h-full w-full object-cover"
             loading="lazy"
           />

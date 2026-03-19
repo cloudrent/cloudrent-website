@@ -44,14 +44,6 @@ export const Videos: CollectionConfig = {
       },
     },
     {
-      name: 'thumbnail',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        description: 'Custom thumbnail image (recommended: 1920x1080). Falls back to YouTube thumbnail if not set.',
-      },
-    },
-    {
       name: 'category',
       type: 'select',
       options: [
