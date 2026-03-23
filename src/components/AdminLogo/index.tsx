@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AdminLogo: React.FC = () => {
+const AdminLogo: React.FC = () => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
       <img
@@ -20,3 +20,5 @@ export const AdminLogo: React.FC = () => {
     </div>
   )
 }
+
+export default AdminLogo

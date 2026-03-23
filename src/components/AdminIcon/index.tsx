@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const AdminIcon: React.FC = () => {
+const AdminIcon: React.FC = () => {
   return (
     <img
       src="/favicon-32x32.png"
@@ -9,3 +9,5 @@ export const AdminIcon: React.FC = () => {
     />
   )
 }
+
+export default AdminIcon
