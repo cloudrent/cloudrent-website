@@ -351,12 +351,24 @@ export const ImmersiveHero: React.FC = () => {
         {/* Extended background that goes behind header */}
         <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-[#0a0a1a] z-0" />
         <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
+        {/* SEO H1 - visible during SSR */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white text-center px-4">
+            Rental Management Software<br />
+            <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
+              for Australian Hire Businesses
+            </span>
+          </h1>
+        </div>
       </section>
     )
   }
 
   return (
     <section key={animationKey} className="relative min-h-screen w-full overflow-hidden bg-transparent -mt-[100px] pt-[100px]">
+      {/* SEO H1 - visually hidden but accessible to screen readers and search engines */}
+      <h1 className="sr-only">Rental Management Software for Australian Hire Businesses</h1>
+
       {/* Extended background that goes behind header */}
       <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-transparent z-0" />
 
@@ -1223,12 +1235,12 @@ export const ImmersiveHero: React.FC = () => {
             ))}
           </div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-4">
             One platform.<br />
             <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
               Every device.
             </span>
-          </h1>
+          </h2>
           <p className="text-xl text-white/60 mb-8 max-w-xl mx-auto">
             Manage your entire hire business from anywhere — office, field, or on the road.
           </p>

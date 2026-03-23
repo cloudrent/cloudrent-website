@@ -21,7 +21,9 @@
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --no-experimental-strip-types\" pnpm exec playwright test --config=playwright.config.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
     "migrate:media": "tsx scripts/migrate-media-to-blob.ts",
-    "migrate:media:dry": "tsx scripts/migrate-media-to-blob.ts --dry-run"
+    "migrate:media:dry": "tsx scripts/migrate-media-to-blob.ts --dry-run",
+    "compress:images": "tsx scripts/compress-blob-images.ts",
+    "compress:images:dry": "tsx scripts/compress-blob-images.ts --dry-run"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.4.2",

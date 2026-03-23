@@ -78,11 +78,12 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
   // NOTE: this is used by the browser to determine which image to download at different screen sizes
+  // Cap at 1920w to avoid requesting oversized images that exceed Vercel's Image Optimization limits
   const sizes = sizeFromProps
     ? sizeFromProps
     : Object.entries(breakpoints)
-        .map(([, value]) => `(max-width: ${value}px) ${value * 2}w`)
-        .join(', ')
+        .map(([, value]) => `(max-width: ${value}px) ${Math.min(value, 1920)}px`)
+        .join(', ') + ', 1920px'
 
   return (
     <picture className={cn(pictureClassName)}>
