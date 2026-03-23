@@ -2,7 +2,22 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import type { Metadata } from 'next'
-import { CheckCircle, FileSignature, CreditCard, RefreshCw, Clock, Bug, Users, Shield, Star, Phone, Award, ArrowRight, Zap } from 'lucide-react'
+import {
+  CheckCircle,
+  FileSignature,
+  CreditCard,
+  RefreshCw,
+  Clock,
+  Bug,
+  Users,
+  Shield,
+  Star,
+  Phone,
+  Award,
+  ArrowRight,
+  Zap,
+  ChevronRight,
+} from 'lucide-react'
 import { SoftwareSchema } from '@/components/StructuredData'
 import { ImmersiveHero } from '@/heros/ImmersiveHero'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -14,39 +29,57 @@ export const revalidate = 3600
 // SEO metadata
 export const metadata: Metadata = {
   title: 'CloudRent Pro – Rental Management Software Australia',
-  description: 'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
-  keywords: ['rental software', 'hire business', 'equipment rental', 'rental management', 'Australia', 'Xero integration'],
+  description:
+    'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
+  keywords: [
+    'rental software',
+    'hire business',
+    'equipment rental',
+    'rental management',
+    'Australia',
+    'Xero integration',
+  ],
   alternates: {
     canonical: 'https://www.cloudrent.me/',
   },
   openGraph: mergeOpenGraph({
     title: 'CloudRent Pro – Rental Management Software Australia',
-    description: 'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
+    description:
+      'Rental management software with real-time availability, invoicing, digital signatures, and Xero integration. Built in Australia for hire businesses.',
     url: '/',
   }),
 }
+
+// Countdown — deadline March 31 2026 11:59pm AEST (UTC+10) = April 1 2026 13:59:59 UTC
+// This is a server component so we calculate time-to-deadline as a static snapshot
+// The client CountdownBadge component handles live ticking
+const DEADLINE_UTC = new Date('2026-04-01T13:59:59Z')
 
 // Features
 const features = [
   {
     icon: CheckCircle,
     title: 'Real-Time Availability',
-    description: 'See what\'s available instantly. Prevent double-bookings with live stock updates across all locations.',
+    description:
+      "See what's available instantly. Prevent double-bookings with live stock updates across all locations.",
   },
   {
     icon: CreditCard,
     title: 'One-Click Invoicing',
-    description: 'Generate professional invoices in seconds. Accept payments via Stripe, track overdue accounts automatically.',
+    description:
+      'Generate professional invoices in seconds. Accept payments via Stripe, track overdue accounts automatically.',
   },
   {
     icon: FileSignature,
     title: 'Digital Signatures',
-    description: 'Rental agreements, delivery dockets, SWMS—all signed electronically. Legally compliant and paperless.',
+    description:
+      'Rental agreements, delivery dockets, SWMS—all signed electronically. Legally compliant and paperless.',
   },
   {
     icon: RefreshCw,
     title: 'Xero Integration',
-    description: 'Two-way sync with Xero. Invoices, payments, and contacts flow automatically. No double entry.',
+    description:
+      'Two-way sync with Xero. Invoices, payments, and contacts flow automatically. No double entry.',
   },
 ]
 
@@ -68,21 +101,24 @@ const socialProofStats = [
 // Customer testimonials
 const testimonials = [
   {
-    quote: "Finally, a rental software system that uses the latest technology so we can access our database from anywhere on mobile and desktop. CloudRent is much more than just an invoicing and logistics tool - it simplifies deliveries and collections for us with its easy-to-navigate interface! I love how Xero accounting integrates with CloudRent.",
+    quote:
+      'Finally, a rental software system that uses the latest technology so we can access our database from anywhere on mobile and desktop. CloudRent is much more than just an invoicing and logistics tool - it simplifies deliveries and collections for us with its easy-to-navigate interface! I love how Xero accounting integrates with CloudRent.',
     author: 'Cameron Drake-Brockman',
     company: 'HireRite Temporary Fence',
     image: '/images/testimonials/Cam.png',
     initials: 'CD',
   },
   {
-    quote: "Consolidated joined CloudRent so that we could consolidate our business needs in all aspects of management in the civil, mining and transportation sectors. CloudRent is understanding our needs and building an onboarding, training and safety management system to manage workflow, maintenance and job details.",
+    quote:
+      'Consolidated joined CloudRent so that we could consolidate our business needs in all aspects of management in the civil, mining and transportation sectors. CloudRent is understanding our needs and building an onboarding, training and safety management system to manage workflow, maintenance and job details.',
     author: 'Theo Tsorvas',
     company: 'Consolidated Group',
     image: '/images/testimonials/Theo.png',
     initials: 'TT',
   },
   {
-    quote: "Sub rentals and inventory management has always been an issue in other software we have used. The guys at CloudRent are always there for you. When my team needs support, they're quick to help with any issue promptly! We have been adding input to the latest version and believe it's the best rental software on the market!",
+    quote:
+      "Sub rentals and inventory management has always been an issue in other software we have used. The guys at CloudRent are always there for you. When my team needs support, they're quick to help with any issue promptly! We have been adding input to the latest version and believe it's the best rental software on the market!",
     author: 'David Duncalfe',
     company: 'Excel Events',
     image: '/images/testimonials/David.png',
@@ -98,6 +134,15 @@ const trustBadges = [
 ]
 
 export default function HomePage() {
+  // Pre-calculate for server render — client component handles live ticking
+  const now = Date.now()
+  const diff = Math.max(0, DEADLINE_UTC.getTime() - now)
+  const ssrDays = Math.floor(diff / 86400000)
+  const ssrHours = Math.floor((diff % 86400000) / 3600000)
+  const ssrMinutes = Math.floor((diff % 3600000) / 60000)
+  const ssrSeconds = Math.floor((diff % 60000) / 1000)
+  const expired = diff <= 0
+
   return (
     <div className="min-h-screen">
       <SoftwareSchema />
@@ -129,7 +174,8 @@ export default function HomePage() {
             </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Not another generic tool. CloudRent Pro is designed specifically for Australian equipment hire businesses.
+            Not another generic tool. CloudRent Pro is designed specifically for Australian
+            equipment hire businesses.
           </p>
         </div>
 
@@ -172,7 +218,8 @@ export default function HomePage() {
             of your world
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            From our fully cloud web app for the office, to our mobile app for the field, to your 24/7 customer portal — we&apos;ve got you covered.
+            From our fully cloud web app for the office, to our mobile app for the field, to your
+            24/7 customer portal — we&apos;ve got you covered.
           </p>
         </div>
 
@@ -185,18 +232,39 @@ export default function HomePage() {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-purple-500/30">
-                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">Web App</h3>
               <p className="text-muted-foreground mb-4">
-                Full-featured cloud platform for your office. Manage bookings, invoicing, customers, and more from any browser.
+                Full-featured cloud platform for your office. Manage bookings, invoicing, customers,
+                and more from any browser.
               </p>
               <span className="inline-flex items-center gap-2 text-purple-400 font-medium group-hover:text-purple-300">
                 Explore Features
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </span>
             </div>
@@ -210,18 +278,39 @@ export default function HomePage() {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-blue-500/30">
-                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">Mobile App</h3>
               <p className="text-muted-foreground mb-4">
-                Take CloudRent to the field. Offline sync, barcode scanning, digital signatures, and push notifications.
+                Take CloudRent to the field. Offline sync, barcode scanning, digital signatures, and
+                push notifications.
               </p>
               <span className="inline-flex items-center gap-2 text-blue-400 font-medium group-hover:text-blue-300">
                 Learn More
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </span>
             </div>
@@ -235,18 +324,39 @@ export default function HomePage() {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
               <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center mb-6 mx-auto shadow-lg shadow-emerald-500/30">
-                <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-3">Customer Portal</h3>
               <p className="text-muted-foreground mb-4">
-                24/7 self-service for your customers. Online bookings, rental history, invoices, and document downloads.
+                24/7 self-service for your customers. Online bookings, rental history, invoices, and
+                document downloads.
               </p>
               <span className="inline-flex items-center gap-2 text-emerald-400 font-medium group-hover:text-emerald-300">
                 Discover Portal
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </span>
             </div>
@@ -292,7 +402,9 @@ export default function HomePage() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-2 mb-4">
             <Star className="w-4 h-4 text-green-400 fill-green-400" />
-            <span className="text-green-400 text-sm font-medium">Trusted by hire businesses across Australia</span>
+            <span className="text-green-400 text-sm font-medium">
+              Trusted by hire businesses across Australia
+            </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground">
             What our{' '}
@@ -308,7 +420,6 @@ export default function HomePage() {
               key={index}
               className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all duration-300 flex flex-col"
             >
-              {/* Stars */}
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
@@ -328,8 +439,13 @@ export default function HomePage() {
                     loading="lazy"
                   />
                 ) : (
-                  <div className="rounded-full bg-brand-purple/20 flex items-center justify-center" style={{ width: '72px', height: '72px' }}>
-                    <span className="text-brand-purple font-semibold text-xl">{testimonial.initials}</span>
+                  <div
+                    className="rounded-full bg-brand-purple/20 flex items-center justify-center"
+                    style={{ width: '72px', height: '72px' }}
+                  >
+                    <span className="text-brand-purple font-semibold text-xl">
+                      {testimonial.initials}
+                    </span>
                   </div>
                 )}
                 <div>
@@ -368,29 +484,96 @@ export default function HomePage() {
       {/* Final CTA Section */}
       <section className="relative z-10 w-full max-w-4xl mx-auto px-6 py-24">
         <div className="backdrop-blur-xl bg-gradient-to-r from-brand-purple/20 to-purple-500/20 border border-brand-purple/30 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-          {/* Launch badge */}
-          <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-4 py-2 mb-6">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          {/* Launch badge — prominent pulse dot */}
+          <div className="inline-flex items-center gap-3 bg-green-500/20 border border-green-500/30 rounded-full px-5 py-2.5 mb-6">
+            <span className="relative flex h-5 w-5 flex-shrink-0">
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                style={{ animationDuration: '1.2s' }}
+              />
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"
+                style={{ animationDuration: '1.2s', animationDelay: '0.4s' }}
+              />
+              <span
+                className="relative inline-flex rounded-full h-5 w-5 bg-green-500"
+                style={{ boxShadow: '0 0 10px rgba(74,222,128,0.9)' }}
+              />
             </span>
-            <span className="text-green-400 text-sm font-medium">Launch Pricing - Limited Time</span>
+            <span className="text-green-400 text-sm font-medium">
+              Launch Pricing — Limited Time
+            </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          {/* Pricing callout */}
+          <div className="inline-flex items-center gap-3 mb-6 bg-white/5 border border-white/10 rounded-xl px-5 py-3">
+            <div className="text-2xl font-bold text-white">
+              $85<span className="text-base text-white/50 font-normal">/user/mo</span>
+            </div>
+            <div className="w-px h-6 bg-white/15" />
+            <div className="text-left">
+              <div className="text-xs text-white/50 line-through">$129/user/mo standard</div>
+              <div className="text-xs text-green-400 font-medium">
+                Every module included · Forever
+              </div>
+            </div>
+          </div>
+
+          {/* Countdown */}
+          {!expired && (
+            <div className="flex flex-col items-center mb-8">
+              <div className="text-[11px] font-semibold text-white/40 uppercase tracking-[0.14em] mb-3">
+                March offer ends in
+              </div>
+              <div className="flex items-stretch gap-2">
+                {[
+                  { val: ssrDays, lbl: 'Days' },
+                  { val: ssrHours, lbl: 'Hours' },
+                  { val: ssrMinutes, lbl: 'Mins' },
+                  { val: ssrSeconds, lbl: 'Secs' },
+                ].map((unit, i) => (
+                  <div key={i} className="flex flex-col items-center gap-1">
+                    <div
+                      className="bg-white/[0.07] border border-white/[0.12] rounded-xl flex items-center justify-center"
+                      style={{ width: 64, height: 64 }}
+                      data-countdown-unit={unit.lbl.toLowerCase()}
+                    >
+                      <span className="text-2xl font-bold text-white tabular-nums leading-none">
+                        {String(unit.val).padStart(2, '0')}
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-white/40 uppercase tracking-wider">
+                      {unit.lbl}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
             Stop losing time on spreadsheets
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join Australian hire businesses who&apos;ve already made the switch. Get started in under 10 minutes.
+            Join Australian hire businesses who&apos;ve already made the switch. Get started in
+            under 10 minutes.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-5">
             <a
               href="https://app.cloudrent.me/register"
-              className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] flex items-center gap-2"
+              className="group relative bg-gradient-to-r from-brand-purple to-purple-500 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all hover:shadow-[0_0_40px_rgba(136,27,169,0.5)] hover:-translate-y-0.5 flex items-center gap-3"
             >
-              Start Your $1 Trial
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <div className="flex flex-col items-start">
+                <span className="font-bold text-base leading-tight">
+                  Start for $1 — 30 days full access
+                </span>
+                <span className="text-white/55 text-[11px] font-normal">
+                  Every feature included · No surprises
+                </span>
+              </div>
+              <ChevronRight className="w-5 h-5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
             </a>
             <Link
               href="/demo"
@@ -401,7 +584,17 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-sm text-muted-foreground">
+          {/* Cancel promise */}
+          <div className="inline-flex items-start gap-3 bg-brand-purple/08 border border-brand-purple/20 rounded-xl px-5 py-3.5 mb-6 text-left max-w-md mx-auto">
+            <Shield className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-white/50 leading-relaxed">
+              Three days before your trial ends, we&apos;ll email you a{' '}
+              <strong className="text-white/75 font-medium">one-click cancellation link</strong> —
+              no phone calls, no forms, no questions asked.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-green-400" />
               Just $1 to start
