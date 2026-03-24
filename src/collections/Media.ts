@@ -60,8 +60,6 @@ export const Media: CollectionConfig = {
     // Using Vercel Blob storage via plugin - no staticDir needed
     adminThumbnail: 'thumbnail',
     focalPoint: true,
-    // Limit file size to 4MB to stay within Vercel Image Optimization limits
-    fileSizeLimit: 4 * 1024 * 1024,
     imageSizes: [
       {
         name: 'thumbnail',
