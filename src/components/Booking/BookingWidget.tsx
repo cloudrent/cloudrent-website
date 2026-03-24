@@ -87,6 +87,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
     calendarLinks?: { google: string }
   } | null>(null)
 
+  // Phone validation state
+  const [phoneValidation, setPhoneValidation] = useState<{
+    status: 'idle' | 'validating' | 'valid' | 'invalid'
+    error?: string
+  }>({ status: 'idle' })
+
   // Current view month
   const [viewMonth, setViewMonth] = useState(() => {
     const now = new Date()
@@ -149,6 +155,43 @@ export function BookingWidget({ className }: BookingWidgetProps) {
     setSelectedSlot(null)
     setStep('date')
   }
+
+  // Debounced phone validation
+  useEffect(() => {
+    const phone = formData.phone.trim()
+
+    // Reset if empty or too short
+    if (!phone || phone.length < 8) {
+      setPhoneValidation({ status: 'idle' })
+      return
+    }
+
+    // Set validating state
+    setPhoneValidation({ status: 'validating' })
+
+    // Debounce the API call
+    const timeoutId = setTimeout(async () => {
+      try {
+        const res = await fetch('/api/booking/validate-phone', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone }),
+        })
+        const data = await res.json()
+
+        if (data.valid) {
+          setPhoneValidation({ status: 'valid' })
+        } else {
+          setPhoneValidation({ status: 'invalid', error: data.error || 'Invalid phone number' })
+        }
+      } catch {
+        // On error, don't block - let server validate on submit
+        setPhoneValidation({ status: 'idle' })
+      }
+    }, 800) // Wait 800ms after user stops typing
+
+    return () => clearTimeout(timeoutId)
+  }, [formData.phone])
 
   // Get available slots for selected date
   const slotsForDate = selectedDate
@@ -483,13 +526,39 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
               <div>
                 <label className="mb-1 block text-sm text-gray-400">Phone *</label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
-                />
+                <div className="relative">
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className={cn(
+                      "w-full rounded-lg border bg-[#1a1a2e] px-4 py-2 pr-10 text-white placeholder:text-gray-500 focus:outline-none",
+                      phoneValidation.status === 'valid' && "border-green-500",
+                      phoneValidation.status === 'invalid' && "border-red-500",
+                      phoneValidation.status !== 'valid' && phoneValidation.status !== 'invalid' && "border-brand-purple/30 focus:border-brand-purple"
+                    )}
+                  />
+                  {/* Validation indicator */}
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    {phoneValidation.status === 'validating' && (
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-brand-purple border-t-transparent" />
+                    )}
+                    {phoneValidation.status === 'valid' && (
+                      <svg className="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                    {phoneValidation.status === 'invalid' && (
+                      <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+                {phoneValidation.status === 'invalid' && phoneValidation.error && (
+                  <p className="mt-1 text-xs text-red-400">{phoneValidation.error}</p>
+                )}
               </div>
 
               <div>
@@ -516,8 +585,8 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
               <button
                 type="submit"
-                disabled={submitting}
-                className="w-full rounded-lg bg-brand-purple px-4 py-3 font-semibold text-white transition-all hover:bg-[#a855c9] disabled:opacity-50"
+                disabled={submitting || phoneValidation.status === 'invalid' || phoneValidation.status === 'validating'}
+                className="w-full rounded-lg bg-brand-purple px-4 py-3 font-semibold text-white transition-all hover:bg-[#a855c9] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitting ? 'Booking...' : 'Confirm Booking'}
               </button>
