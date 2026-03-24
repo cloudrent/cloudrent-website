@@ -226,7 +226,7 @@ export default function ContactPageClient() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                          className="w-full rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                           placeholder="John Smith"
                         />
                       </div>
@@ -244,7 +244,7 @@ export default function ContactPageClient() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                          className="w-full rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                           placeholder="john@company.com.au"
                         />
                       </div>
@@ -264,7 +264,7 @@ export default function ContactPageClient() {
                           name="company"
                           value={formData.company}
                           onChange={handleChange}
-                          className="w-full rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                          className="w-full rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                           placeholder="Acme Hire Co"
                         />
                       </div>
@@ -281,7 +281,7 @@ export default function ContactPageClient() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                          className="w-full rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                           placeholder="0400 000 000"
                         />
                       </div>
@@ -300,7 +300,7 @@ export default function ContactPageClient() {
                         required
                         value={formData.subject}
                         onChange={handleChange}
-                        className="w-full rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                        className="w-full rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                       >
                         <option value="">Select a topic...</option>
                         <option value="demo">Book a Demo</option>
@@ -326,7 +326,7 @@ export default function ContactPageClient() {
                         rows={5}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full resize-none rounded-xl border border-purple-500/30 bg-white/90 px-4 py-3 text-gray-900 placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                        className="w-full resize-none rounded-xl border border-purple-500/30 bg-[#1a1a2e] px-4 py-3 text-white placeholder-gray-500 transition-colors focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                         placeholder="Tell us about your hire business and how we can help..."
                       />
                     </div>
