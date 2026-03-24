@@ -24,10 +24,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const categories = await getCategories()
-  return categories.map((category) => ({
-    slug: category.slug,
-  }))
+  try {
+    const categories = await getCategories()
+    return categories.map((category) => ({
+      slug: category.slug,
+    }))
+  } catch (error) {
+    // Database may not be available during build - pages will be generated on-demand
+    console.warn('generateStaticParams: Could not fetch categories, will generate on-demand')
+    return []
+  }
 }
 
 export default async function CategoryPage({ params }: Props) {

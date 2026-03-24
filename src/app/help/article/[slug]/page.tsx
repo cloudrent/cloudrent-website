@@ -25,10 +25,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const docs = await getPublishedDocs()
-  return docs.map((doc) => ({
-    slug: doc.slug,
-  }))
+  try {
+    const docs = await getPublishedDocs()
+    return docs.map((doc) => ({
+      slug: doc.slug,
+    }))
+  } catch (error) {
+    // Database may not be available during build - pages will be generated on-demand
+    console.warn('generateStaticParams: Could not fetch articles, will generate on-demand')
+    return []
+  }
 }
 
 // Sanitize HTTP links to HTTPS for internal domains (server-side for SEO)
