@@ -19,6 +19,31 @@ interface BookingWidgetProps {
   className?: string
 }
 
+// Common timezones grouped by region
+const TIMEZONES = [
+  { value: 'Pacific/Auckland', label: 'Auckland (NZST)' },
+  { value: 'Australia/Sydney', label: 'Sydney (AEST)' },
+  { value: 'Australia/Melbourne', label: 'Melbourne (AEST)' },
+  { value: 'Australia/Brisbane', label: 'Brisbane (AEST)' },
+  { value: 'Australia/Perth', label: 'Perth (AWST)' },
+  { value: 'Australia/Adelaide', label: 'Adelaide (ACST)' },
+  { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
+  { value: 'Asia/Singapore', label: 'Singapore (SGT)' },
+  { value: 'Asia/Hong_Kong', label: 'Hong Kong (HKT)' },
+  { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
+  { value: 'Asia/Kolkata', label: 'Mumbai (IST)' },
+  { value: 'Asia/Dubai', label: 'Dubai (GST)' },
+  { value: 'Europe/London', label: 'London (GMT/BST)' },
+  { value: 'Europe/Paris', label: 'Paris (CET)' },
+  { value: 'Europe/Berlin', label: 'Berlin (CET)' },
+  { value: 'America/New_York', label: 'New York (EST)' },
+  { value: 'America/Chicago', label: 'Chicago (CST)' },
+  { value: 'America/Denver', label: 'Denver (MST)' },
+  { value: 'America/Los_Angeles', label: 'Los Angeles (PST)' },
+  { value: 'America/Toronto', label: 'Toronto (EST)' },
+  { value: 'America/Vancouver', label: 'Vancouver (PST)' },
+]
+
 export function BookingWidget({ className }: BookingWidgetProps) {
   const [step, setStep] = useState<'date' | 'time' | 'details' | 'confirm'>('date')
   const [loading, setLoading] = useState(true)
@@ -39,6 +64,13 @@ export function BookingWidget({ className }: BookingWidgetProps) {
   // Selections
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
+  const [selectedTimezone, setSelectedTimezone] = useState<string>(() => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone
+    } catch {
+      return 'Australia/Sydney'
+    }
+  })
 
   // Form data
   const [formData, setFormData] = useState({
@@ -85,7 +117,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
     loadSettings()
   }, [])
 
-  // Load availability when month changes
+  // Load availability when month or timezone changes
   useEffect(() => {
     if (!settings) return
 
@@ -96,9 +128,8 @@ export function BookingWidget({ className }: BookingWidgetProps) {
         .split('T')[0]
 
       try {
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
         const res = await fetch(
-          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(timezone)}`,
+          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(selectedTimezone)}`,
         )
         if (!res.ok) throw new Error('Failed to load availability')
         const data = await res.json()
@@ -109,7 +140,15 @@ export function BookingWidget({ className }: BookingWidgetProps) {
       }
     }
     loadAvailability()
-  }, [settings, viewMonth])
+  }, [settings, viewMonth, selectedTimezone])
+
+  // Reset selections when timezone changes
+  const handleTimezoneChange = (newTimezone: string) => {
+    setSelectedTimezone(newTimezone)
+    setSelectedDate(null)
+    setSelectedSlot(null)
+    setStep('date')
+  }
 
   // Get available slots for selected date
   const slotsForDate = selectedDate
@@ -203,7 +242,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
           phone: formData.phone,
           company: formData.company,
           message: formData.message,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          timezone: selectedTimezone,
         }),
       })
 
@@ -265,6 +304,31 @@ export function BookingWidget({ className }: BookingWidgetProps) {
       <div className="p-6">
         {step === 'date' && (
           <div>
+            {/* Timezone selector */}
+            <div className="mb-4">
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs text-gray-400">
+                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Timezone
+              </label>
+              <select
+                value={selectedTimezone}
+                onChange={(e) => handleTimezoneChange(e.target.value)}
+                className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-3 py-2 text-sm text-white focus:border-brand-purple focus:outline-none"
+              >
+                {TIMEZONES.map((tz) => (
+                  <option key={tz.value} value={tz.value}>
+                    {tz.label}
+                  </option>
+                ))}
+                {/* Add user's timezone if not in list */}
+                {!TIMEZONES.some((tz) => tz.value === selectedTimezone) && (
+                  <option value={selectedTimezone}>{selectedTimezone}</option>
+                )}
+              </select>
+            </div>
+
             <div className="mb-4 flex items-center justify-between">
               <button
                 onClick={() =>
@@ -335,7 +399,10 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               Back to calendar
             </button>
 
-            <h4 className="mb-4 font-medium text-white">{formatDate(selectedDate)}</h4>
+            <h4 className="mb-1 font-medium text-white">{formatDate(selectedDate)}</h4>
+            <p className="mb-4 text-xs text-gray-400">
+              Times shown in {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
+            </p>
 
             <div className="grid gap-2 max-h-64 overflow-y-auto">
               {slotsForDate.length === 0 ? (
@@ -379,6 +446,9 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               <p className="font-medium text-white">{formatDate(selectedDate!)}</p>
               <p className="text-sm text-gray-400">
                 {formatTime(selectedSlot.startTime)} - {formatTime(selectedSlot.endTime)}
+              </p>
+              <p className="text-xs text-gray-500 mt-1">
+                {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
               </p>
             </div>
 
@@ -484,6 +554,9 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               <p className="text-sm text-gray-400">
                 {formatTime(selectedSlot!.startTime)} - {formatTime(selectedSlot!.endTime)}
               </p>
+              <p className="text-xs text-gray-500 mt-1">
+                {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
+              </p>
               {appointment.booking?.meetingUrl && (
                 <a
                   href={appointment.booking.meetingUrl}
@@ -491,7 +564,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   rel="noopener noreferrer"
                   className="mt-2 inline-block text-sm text-brand-purple hover:text-[#a855c9]"
                 >
-                  Join Google Meet
+                  Join Meeting
                 </a>
               )}
             </div>

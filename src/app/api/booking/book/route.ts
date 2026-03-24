@@ -335,7 +335,7 @@ function getHostNotificationEmail(params: {
         <p style="margin: 8px 0; color: #374151;"><strong>Date:</strong> ${params.date}</p>
         <p style="margin: 8px 0; color: #374151;"><strong>Time:</strong> ${params.time}</p>
         <p style="margin: 8px 0; color: #374151;"><strong>Duration:</strong> ${params.duration} minutes</p>
-        ${params.meetingUrl ? `<p style="margin: 8px 0; color: #374151;"><strong>Meeting:</strong> <a href="${params.meetingUrl}" style="color: #059669;">Join Google Meet</a></p>` : ''}
+        ${params.meetingUrl ? `<p style="margin: 8px 0; color: #374151;"><strong>Meeting:</strong> <a href="${params.meetingUrl}" style="color: #059669;">Join Meeting</a></p>` : ''}
       </div>
 
       <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 24px 0;">
