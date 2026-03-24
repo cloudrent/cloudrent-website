@@ -39,7 +39,13 @@ import {
 const DEADLINE = new Date('2026-04-01T13:59:59Z')
 
 function useCountdown() {
-  const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, expired: false })
+  const [t, setT] = useState<{
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+    expired: boolean
+  } | null>(null)
 
   useEffect(() => {
     const calc = () => {
@@ -87,7 +93,14 @@ interface Particle {
 
 // ─── ABOVE FOLD ───────────────────────────────────────────────────────────────
 function AboveFold() {
-  const { days, hours, minutes, seconds, expired } = useCountdown()
+  const countdown = useCountdown()
+  const { days, hours, minutes, seconds, expired } = countdown ?? {
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    expired: false,
+  }
 
   return (
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent -mt-[160px] pt-[160px]">
@@ -148,7 +161,7 @@ function AboveFold() {
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-5 text-center -mt-16">
         {/* Eyebrow — live countdown */}
-        {!expired && (
+        {countdown && !expired && (
           <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 mb-7">
             <span className="relative flex w-4 h-4 flex-shrink-0">
               <span
