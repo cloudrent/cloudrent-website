@@ -31,9 +31,23 @@ async function getVideos() {
       collection: 'videos',
       limit: 100,
       sort: 'order',
+      depth: 1, // Populate thumbnail relation
     })
 
-    return videos.docs
+    // Transform to match VideoCard props
+    return videos.docs.map((video) => ({
+      id: video.id,
+      title: video.title,
+      description: video.description,
+      youtubeId: video.youtubeId,
+      category: video.category,
+      duration: video.duration,
+      featured: video.featured,
+      thumbnail:
+        video.thumbnail && typeof video.thumbnail === 'object'
+          ? { url: video.thumbnail.url, alt: video.thumbnail.alt }
+          : null,
+    }))
   } catch (error) {
     console.error('Error fetching videos:', error)
     return []

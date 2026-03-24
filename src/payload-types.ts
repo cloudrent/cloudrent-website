@@ -895,6 +895,10 @@ export interface Video {
    * The YouTube video ID (e.g., "dQw4w9WgXcQ" from youtube.com/watch?v=dQw4w9WgXcQ)
    */
   youtubeId: string;
+  /**
+   * Custom thumbnail image (recommended: 1920x1080). Falls back to YouTube thumbnail if not set.
+   */
+  thumbnail?: (number | null) | Media;
   category: 'demo' | 'tutorial' | 'feature' | 'customer' | 'webinar';
   /**
    * Video duration (e.g., "5:30")
@@ -1642,6 +1646,7 @@ export interface VideosSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   youtubeId?: T;
+  thumbnail?: T;
   category?: T;
   duration?: T;
   featured?: T;

@@ -28,15 +28,48 @@ import {
   Globe,
   Home,
   ShoppingCart,
-  CreditCard,
-  Download,
   ChevronRight,
   RotateCcw,
   Shield,
   Phone,
 } from 'lucide-react'
 
-type Phase = 'particles' | 'morphing' | 'dashboard' | 'features' | 'devices' | 'connections' | 'cta'
+// ─── COUNTDOWN ────────────────────────────────────────────────────────────────
+// Deadline: March 31 2026 23:59:59 AEST = April 1 2026 13:59:59 UTC
+const DEADLINE = new Date('2026-04-01T13:59:59Z')
+
+function useCountdown() {
+  const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0, expired: false })
+
+  useEffect(() => {
+    const calc = () => {
+      const diff = Math.max(0, DEADLINE.getTime() - Date.now())
+      return {
+        days: Math.floor(diff / 86400000),
+        hours: Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+        expired: diff <= 0,
+      }
+    }
+    setT(calc()) // set correct value immediately on mount
+    const id = setInterval(() => setT(calc()), 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  return t
+}
+
+// ─── TYPES ────────────────────────────────────────────────────────────────────
+type Phase =
+  | 'idle'
+  | 'particles'
+  | 'morphing'
+  | 'dashboard'
+  | 'features'
+  | 'devices'
+  | 'connections'
+  | 'complete'
 
 interface Particle {
   id: number
@@ -52,88 +85,241 @@ interface Particle {
   rotationSpeed: number
 }
 
-// Countdown deadline: March 31 2026 23:59:59 AEST = April 1 2026 13:59:59 UTC
-const DEADLINE = new Date('2026-04-01T13:59:59Z')
+// ─── ABOVE FOLD ───────────────────────────────────────────────────────────────
+function AboveFold() {
+  const { days, hours, minutes, seconds, expired } = useCountdown()
 
-function useCountdown() {
-  const calc = () => {
-    const diff = Math.max(0, DEADLINE.getTime() - Date.now())
-    return {
-      days: Math.floor(diff / 86400000),
-      hours: Math.floor((diff % 86400000) / 3600000),
-      minutes: Math.floor((diff % 3600000) / 60000),
-      seconds: Math.floor((diff % 60000) / 1000),
-      expired: diff <= 0,
-    }
-  }
-  const [t, setT] = useState(calc)
-  useEffect(() => {
-    const id = setInterval(() => setT(calc()), 1000)
-    return () => clearInterval(id)
-  }, [])
-  return t
+  return (
+    <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent -mt-[160px] pt-[160px]">
+      {/* SEO h1 */}
+      <h1 className="sr-only">Rental Management Software for Australian Hire Businesses</h1>
+
+      {/* Ambient glow */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at 50% 0%, rgba(136,27,169,0.18) 0%, transparent 65%)',
+        }}
+      />
+
+      {/* Subtle background shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        <svg className="absolute top-[8%] left-[4%] w-56 h-56 animate-pulse" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#881ba9" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#881ba9" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+          <polygon
+            points="50,5 90,25 90,75 50,95 10,75 10,25"
+            fill="none"
+            stroke="url(#hg1)"
+            strokeWidth="0.5"
+          />
+          <polygon
+            points="50,18 80,32 80,68 50,82 20,68 20,32"
+            fill="none"
+            stroke="#881ba9"
+            strokeWidth="0.3"
+            opacity="0.5"
+          />
+        </svg>
+        <svg
+          className="absolute bottom-[12%] right-[6%] w-64 h-48 opacity-60"
+          viewBox="0 0 150 100"
+        >
+          <path
+            d="M0,50 Q30,30 60,50 T120,50 T150,40"
+            fill="none"
+            stroke="#881ba9"
+            strokeWidth="1"
+            strokeDasharray="4,4"
+            className="animate-pulse"
+          />
+          <circle cx="60" cy="50" r="3" fill="#881ba9" className="animate-pulse" />
+          <circle cx="120" cy="50" r="2" fill="#881ba9" className="animate-pulse" />
+        </svg>
+        <div className="absolute top-[8%] left-[4%] w-56 h-56 bg-[#881ba9]/08 blur-3xl" />
+        <div className="absolute bottom-[15%] right-[8%] w-64 h-64 bg-[#881ba9]/06 blur-3xl" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-3xl mx-auto px-5 text-center -mt-16">
+        {/* Eyebrow — live countdown */}
+        {!expired && (
+          <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 mb-7">
+            <span className="relative flex w-4 h-4 flex-shrink-0">
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+                style={{ animationDuration: '1.2s' }}
+              />
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"
+                style={{ animationDuration: '1.2s', animationDelay: '0.4s' }}
+              />
+              <span
+                className="relative inline-flex rounded-full w-4 h-4 bg-green-500"
+                style={{ boxShadow: '0 0 8px rgba(74,222,128,0.8)' }}
+              />
+            </span>
+            <span className="text-green-400 text-xs font-medium">
+              Launch offer · $85/user/month locked for life ·{' '}
+              <strong className="text-white tabular-nums">
+                {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m{' '}
+                {String(seconds).padStart(2, '0')}s
+              </strong>
+            </span>
+          </div>
+        )}
+
+        {/* Headline */}
+        <p
+          className="font-bold text-white leading-[1.08] mb-5"
+          style={{ fontSize: 'clamp(38px, 5.5vw, 60px)', letterSpacing: '-1.5px' }}
+        >
+          Your hire business.
+          <br />
+          <span
+            style={{
+              background: 'linear-gradient(90deg,#c084fc 0%,#818cf8 50%,#881ba9 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            One platform. Every device.
+          </span>
+        </p>
+
+        {/* Subhead */}
+        <p
+          className="text-white/55 leading-relaxed mb-8 mx-auto"
+          style={{ fontSize: 17, maxWidth: 560, fontWeight: 300 }}
+        >
+          Connect your <strong className="text-white/85 font-medium">office</strong>,{' '}
+          <strong className="text-white/85 font-medium">field crew</strong>,{' '}
+          <strong className="text-white/85 font-medium">drivers</strong> and{' '}
+          <strong className="text-white/85 font-medium">customers</strong> in real time — with{' '}
+          <strong className="text-white/85 font-medium">AI damage detection</strong>,{' '}
+          <strong className="text-white/85 font-medium">digital signatures</strong> and{' '}
+          <strong className="text-white/85 font-medium">live availability</strong> built in.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap gap-3 justify-center mb-5">
+          <Link
+            href="https://app.cloudrent.me/register"
+            className="flex items-center gap-3 text-white rounded-xl px-7 py-3.5 font-medium text-sm relative overflow-hidden transition-all hover:-translate-y-0.5 group"
+            style={{ background: '#881ba9', boxShadow: '0 4px 24px rgba(136,27,169,0.45)' }}
+          >
+            <div
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(135deg,rgba(255,255,255,0.12) 0%,transparent 50%)',
+              }}
+            />
+            <div className="relative z-10 flex flex-col items-start">
+              <span className="font-bold text-[15px] leading-tight">
+                Start for $1 — 30 days full access
+              </span>
+              <span className="text-white/55 text-[11px] font-normal">
+                Every feature included · No surprises
+              </span>
+            </div>
+            <ChevronRight className="w-4 h-4 relative z-10 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+          <Link
+            href="/demo"
+            className="flex items-center gap-2 text-white/55 hover:text-white border border-white/12 hover:border-white/25 rounded-xl px-5 py-3.5 text-sm transition-all"
+            style={{ background: 'rgba(255,255,255,0.03)' }}
+          >
+            <Phone className="w-4 h-4" />
+            Book a demo
+          </Link>
+        </div>
+
+        {/* Cancel promise */}
+        <div
+          className="inline-flex items-start gap-2.5 rounded-xl px-4 py-3 mb-4 text-left max-w-[460px]"
+          style={{ background: 'rgba(136,27,169,0.07)', border: '1px solid rgba(136,27,169,0.18)' }}
+        >
+          <Shield className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-white/45 leading-relaxed">
+            Three days before your trial ends, we&apos;ll email you a{' '}
+            <strong className="text-white/75 font-medium">one-click cancellation link</strong> — no
+            calls, no forms, no questions asked.
+          </p>
+        </div>
+
+        {/* Trust chips */}
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/30">
+          {['Free data migration', 'Australian support', 'Cancel anytime'].map((chip, i) => (
+            <div key={i} className="flex items-center gap-1.5">
+              <CheckCircle className="w-3 h-3 text-green-500" />
+              {chip}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/25 animate-bounce">
+        <span className="text-xs tracking-wider uppercase">See it in action</span>
+        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          />
+        </svg>
+      </div>
+    </section>
+  )
 }
 
-export const ImmersiveHero: React.FC = () => {
-  const [phase, setPhase] = useState<Phase>('particles')
+// ─── ANIMATION SECTION ────────────────────────────────────────────────────────
+function AnimationSection() {
+  const [phase, setPhase] = useState<Phase>('idle')
   const [featureIndex, setFeatureIndex] = useState(-1)
   const [deviceIndex, setDeviceIndex] = useState(-1)
-  const [showCTA, setShowCTA] = useState(false)
   const [timerSeconds, setTimerSeconds] = useState(0)
   const [signatureProgress, setSignatureProgress] = useState(0)
   const [connectionProgress, setConnectionProgress] = useState(0)
   const [animationKey, setAnimationKey] = useState(0)
   const [dashboardOpacity, setDashboardOpacity] = useState(0)
-  const [isClient, setIsClient] = useState(false)
+  const [hasStarted, setHasStarted] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
   const animationFrameRef = useRef<number | undefined>(undefined)
-  const { days, hours, minutes, seconds, expired } = useCountdown()
-
-  const replayAnimation = () => {
-    setPhase('particles')
-    setFeatureIndex(-1)
-    setDeviceIndex(-1)
-    setShowCTA(false)
-    setTimerSeconds(0)
-    setSignatureProgress(0)
-    setConnectionProgress(0)
-    setDashboardOpacity(0)
-    setAnimationKey((prev) => prev + 1)
-  }
-
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  const sectionRef = useRef<HTMLDivElement>(null)
 
   const particleColors = [
-    'rgba(136, 27, 169, 0.9)',
-    'rgba(136, 27, 169, 0.7)',
-    'rgba(136, 27, 169, 0.5)',
-    'rgba(147, 51, 234, 0.6)',
+    'rgba(136,27,169,0.9)',
+    'rgba(136,27,169,0.7)',
+    'rgba(136,27,169,0.5)',
+    'rgba(147,51,234,0.6)',
   ]
   const particleShapes: Array<'diamond' | 'hexagon' | 'square'> = ['diamond', 'hexagon', 'square']
 
   const initParticles = useCallback(() => {
     if (!canvasRef.current) return
     const canvas = canvasRef.current
-    const particles: Particle[] = []
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        id: i,
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5,
-        size: Math.random() * 6 + 3,
-        opacity: Math.random() * 0.4 + 0.2,
-        color: particleColors[Math.floor(Math.random() * particleColors.length)],
-        shape: particleShapes[Math.floor(Math.random() * particleShapes.length)],
-        rotation: Math.random() * Math.PI * 2,
-        rotationSpeed: (Math.random() - 0.5) * 0.02,
-      })
-    }
-    particlesRef.current = particles
+    particlesRef.current = Array.from({ length: 60 }, (_, i) => ({
+      id: i,
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
+      size: Math.random() * 6 + 3,
+      opacity: Math.random() * 0.4 + 0.2,
+      color: particleColors[Math.floor(Math.random() * particleColors.length)],
+      shape: particleShapes[Math.floor(Math.random() * particleShapes.length)],
+      rotation: Math.random() * Math.PI * 2,
+      rotationSpeed: (Math.random() - 0.5) * 0.02,
+    }))
   }, [])
 
   const drawShape = (ctx: CanvasRenderingContext2D, p: Particle) => {
@@ -155,9 +341,9 @@ export const ImmersiveHero: React.FC = () => {
     } else if (p.shape === 'hexagon') {
       ctx.beginPath()
       for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i - Math.PI / 6
-        if (i === 0) ctx.moveTo(Math.cos(angle) * p.size, Math.sin(angle) * p.size)
-        else ctx.lineTo(Math.cos(angle) * p.size, Math.sin(angle) * p.size)
+        const a = (Math.PI / 3) * i - Math.PI / 6
+        if (i === 0) ctx.moveTo(Math.cos(a) * p.size, Math.sin(a) * p.size)
+        else ctx.lineTo(Math.cos(a) * p.size, Math.sin(a) * p.size)
       }
       ctx.closePath()
       ctx.fill()
@@ -177,14 +363,14 @@ export const ImmersiveHero: React.FC = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     particlesRef.current.forEach((p1, i) => {
       particlesRef.current.slice(i + 1).forEach((p2) => {
-        const dx = p1.x - p2.x
-        const dy = p1.y - p2.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
+        const dx = p1.x - p2.x,
+          dy = p1.y - p2.y,
+          dist = Math.sqrt(dx * dx + dy * dy)
         if (dist < 180) {
-          const alpha = 0.2 * (1 - dist / 180)
-          const midX = (p1.x + p2.x) / 2
+          const alpha = 0.2 * (1 - dist / 180),
+            midX = (p1.x + p2.x) / 2
           ctx.beginPath()
-          ctx.strokeStyle = `rgba(136, 27, 169, ${alpha})`
+          ctx.strokeStyle = `rgba(136,27,169,${alpha})`
           ctx.lineWidth = 1
           ctx.moveTo(p1.x, p1.y)
           ctx.lineTo(midX, p1.y)
@@ -193,7 +379,7 @@ export const ImmersiveHero: React.FC = () => {
           ctx.stroke()
           if (dist < 100) {
             ctx.beginPath()
-            ctx.fillStyle = `rgba(136, 27, 169, ${alpha * 2})`
+            ctx.fillStyle = `rgba(136,27,169,${alpha * 2})`
             ctx.arc(midX, (p1.y + p2.y) / 2, 2, 0, Math.PI * 2)
             ctx.fill()
           }
@@ -212,151 +398,158 @@ export const ImmersiveHero: React.FC = () => {
       animationFrameRef.current = requestAnimationFrame(animateParticles)
   }, [phase])
 
+  // ── INTERSECTION OBSERVER — trigger on scroll ─────────────────────────────
   useEffect(() => {
-    if (!isClient) return
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasStarted) {
+          setHasStarted(true)
+          setPhase('particles')
+        }
+      },
+      { threshold: 0.15 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [hasStarted])
+
+  // Canvas resize
+  useEffect(() => {
+    if (phase === 'idle') return
     const handleResize = () => {
       if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth
-        canvasRef.current.height = window.innerHeight
+        canvasRef.current.height =
+          canvasRef.current.parentElement?.clientHeight || window.innerHeight
         initParticles()
       }
     }
     handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
-  }, [initParticles, isClient, animationKey])
+  }, [initParticles, phase, animationKey])
 
+  // Particle animation loop
   useEffect(() => {
-    if (!isClient) return
     if (phase === 'particles') animateParticles()
     return () => {
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current)
     }
-  }, [phase, animateParticles, isClient, animationKey])
+  }, [phase, animateParticles, animationKey])
 
+  // Driver timer
   useEffect(() => {
-    if (!isClient) return
     if (phase === 'devices' && deviceIndex >= 1) {
-      const t = setInterval(() => setTimerSeconds((prev) => (prev + 1) % 60), 1000)
+      const t = setInterval(() => setTimerSeconds((p) => (p + 1) % 60), 1000)
       return () => clearInterval(t)
     }
-  }, [phase, deviceIndex, isClient])
+  }, [phase, deviceIndex])
 
+  // Signature animation
   useEffect(() => {
-    if (!isClient) return
     if (phase === 'devices' && deviceIndex >= 2) {
-      const t = setInterval(() => setSignatureProgress((prev) => Math.min(prev + 2, 100)), 50)
+      const t = setInterval(() => setSignatureProgress((p) => Math.min(p + 2, 100)), 50)
       return () => clearInterval(t)
     }
-  }, [phase, deviceIndex, isClient])
+  }, [phase, deviceIndex])
 
+  // Connection progress
   useEffect(() => {
-    if (!isClient) return
     if (phase === 'connections') {
       const t = setInterval(
         () =>
-          setConnectionProgress((prev) => {
-            if (prev >= 100) {
+          setConnectionProgress((p) => {
+            if (p >= 100) {
               clearInterval(t)
               return 100
             }
-            return prev + 1
+            return p + 1
           }),
         50,
       )
       return () => clearInterval(t)
     }
-  }, [phase, isClient])
+  }, [phase])
 
-  // ── COMPRESSED 4-SECOND TIMELINE ─────────────────────────────────────────
-  // Animation races through all phases as ambient backdrop.
-  // Headline + CTA are always visible from frame zero via the permanent overlay.
+  // ── FULL TIMELINE — fires once when animation starts, keyed on animationKey ─
+  // IMPORTANT: phase must NOT be in the dep array — if it were, React's cleanup
+  // would cancel all pending timers every time phase changes, killing the animation.
   useEffect(() => {
-    if (!isClient) return
+    if (!hasStarted) return
     const timers: NodeJS.Timeout[] = []
 
     timers.push(
       setTimeout(() => {
         setPhase('morphing')
-        setDashboardOpacity(0.3)
-      }, 500),
+        setDashboardOpacity(0.6)
+      }, 400),
     )
     timers.push(
       setTimeout(() => {
         setPhase('dashboard')
-        setDashboardOpacity(0.7)
-      }, 1000),
+        setDashboardOpacity(1)
+        setFeatureIndex(0)
+      }, 800),
     )
     timers.push(
       setTimeout(() => {
         setPhase('features')
-        setFeatureIndex(0)
-      }, 1500),
+        setFeatureIndex(1)
+      }, 1200),
     )
-    ;[1700, 1900, 2100, 2300, 2500, 2700, 2900, 3100].forEach((delay, idx) =>
-      timers.push(setTimeout(() => setFeatureIndex(idx + 1), delay)),
+    ;[1600, 2000, 2400, 2800, 3200, 3600, 4000, 4400].forEach((d, i) =>
+      timers.push(setTimeout(() => setFeatureIndex(i + 2), d)),
     )
     timers.push(
       setTimeout(() => {
         setPhase('devices')
         setDeviceIndex(0)
-      }, 3200),
+      }, 5000),
     )
-    timers.push(setTimeout(() => setDeviceIndex(1), 3400))
-    timers.push(setTimeout(() => setDeviceIndex(2), 3600))
-    timers.push(setTimeout(() => setDeviceIndex(3), 3800))
+    timers.push(setTimeout(() => setDeviceIndex(1), 6500))
+    timers.push(setTimeout(() => setDeviceIndex(2), 8500))
+    timers.push(setTimeout(() => setDeviceIndex(3), 10500))
     timers.push(
       setTimeout(() => {
         setPhase('connections')
         setConnectionProgress(0)
-      }, 4000),
+      }, 12000),
     )
-    // Arrive at CTA — particles have become atmosphere by now
-    timers.push(
-      setTimeout(() => {
-        setPhase('cta')
-        setShowCTA(true)
-      }, 5500),
-    )
+    timers.push(setTimeout(() => setPhase('complete'), 20000))
 
     return () => timers.forEach(clearTimeout)
-  }, [isClient, animationKey])
+  }, [hasStarted, animationKey]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  if (!isClient) {
-    return (
-      <section className="relative min-h-screen w-full overflow-hidden bg-[#0a0a1a] -mt-[100px] pt-[100px]">
-        <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-[#0a0a1a] z-0" />
-        <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white text-center px-4">
-            Rental Management Software
-            <br />
-            <span className="bg-gradient-to-r from-brand-purple via-purple-400 to-blue-400 bg-clip-text text-transparent">
-              for Australian Hire Businesses
-            </span>
-          </h1>
-        </div>
-      </section>
-    )
+  const replayAnimation = () => {
+    setPhase('particles')
+    setFeatureIndex(-1)
+    setDeviceIndex(-1)
+    setTimerSeconds(0)
+    setSignatureProgress(0)
+    setConnectionProgress(0)
+    setDashboardOpacity(0)
+    setHasStarted(false)
+    setAnimationKey((p) => p + 1)
+    // Re-trigger hasStarted on next tick so the timeline useEffect fires again
+    setTimeout(() => setHasStarted(true), 50)
   }
 
   return (
     <section
-      key={animationKey}
-      className="relative min-h-screen w-full overflow-hidden bg-transparent -mt-[100px] pt-[100px]"
+      ref={sectionRef}
+      className="relative w-full overflow-hidden bg-transparent"
+      style={{ minHeight: '100vh' }}
     >
-      <h1 className="sr-only">Rental Management Software for Australian Hire Businesses</h1>
-      <div className="absolute -top-[100px] left-0 right-0 h-[200px] bg-transparent z-0" />
-      <div className="absolute inset-0 bg-gradient-radial from-purple-900/20 via-transparent to-transparent" />
-
-      {/* Technical background shapes */}
+      {/* Background shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <svg
           className="absolute top-[10%] left-[5%] w-64 h-64 opacity-20 animate-pulse"
           viewBox="0 0 100 100"
         >
           <defs>
-            <linearGradient id="hexGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="hexGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#881ba9" stopOpacity="0.8" />
               <stop offset="100%" stopColor="#881ba9" stopOpacity="0.2" />
             </linearGradient>
@@ -364,7 +557,7 @@ export const ImmersiveHero: React.FC = () => {
           <polygon
             points="50,5 90,25 90,75 50,95 10,75 10,25"
             fill="none"
-            stroke="url(#hexGrad1)"
+            stroke="url(#hexGrad2)"
             strokeWidth="0.5"
           />
           <polygon
@@ -373,13 +566,6 @@ export const ImmersiveHero: React.FC = () => {
             stroke="#881ba9"
             strokeWidth="0.3"
             opacity="0.6"
-          />
-          <polygon
-            points="50,25 70,35 70,65 50,75 30,65 30,35"
-            fill="none"
-            stroke="#881ba9"
-            strokeWidth="0.3"
-            opacity="0.4"
           />
           {[
             ['50', '5'],
@@ -433,12 +619,11 @@ export const ImmersiveHero: React.FC = () => {
           <line x1="60" y1="20" x2="60" y2="80" stroke="#881ba9" strokeWidth="0.5" />
           <circle cx="40" cy="20" r="3" fill="#881ba9" className="animate-pulse" />
           <circle cx="60" cy="20" r="3" fill="#881ba9" className="animate-pulse" />
-          <circle cx="30" cy="50" r="3" fill="#881ba9" className="animate-pulse" />
           <polygon points="50,35 65,50 50,65 35,50" fill="none" stroke="#881ba9" strokeWidth="1" />
           <circle cx="50" cy="50" r="4" fill="#881ba9" opacity="0.8" />
         </svg>
         <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-[#881ba9]/10 blur-3xl" />
-        <div className="absolute bottom-[20%] right-[10%] w-72 h-72 bg-[#881ba9]/8 blur-3xl" />
+        <div className="absolute bottom-[20%] right-[10%] w-72 h-72 bg-[#881ba9]/08 blur-3xl" />
       </div>
 
       {/* Particle canvas */}
@@ -449,151 +634,37 @@ export const ImmersiveHero: React.FC = () => {
         }`}
       />
 
-      {/* ── PERMANENT ABOVE-FOLD OVERLAY ─────────────────────────────────────
-           Always visible from frame zero. Sits above the animation backdrop.
-           This is the headline, subhead, and CTA — no waiting required.        */}
-      <div className="absolute inset-x-0 top-0 bottom-0 flex flex-col items-center justify-center z-50 pointer-events-none px-4">
-        <div className="text-center max-w-3xl pointer-events-auto">
-          {/* Eyebrow badge */}
-          {!expired && (
-            <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 mb-7">
-              <span className="relative flex w-4 h-4 flex-shrink-0">
-                <span
-                  className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-                  style={{ animationDuration: '1.2s' }}
-                />
-                <span
-                  className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"
-                  style={{ animationDuration: '1.2s', animationDelay: '0.4s' }}
-                />
-                <span
-                  className="relative inline-flex rounded-full w-4 h-4 bg-green-500"
-                  style={{ boxShadow: '0 0 8px rgba(74,222,128,0.8)' }}
-                />
-              </span>
-              <span className="text-green-400 text-xs font-medium">
-                Launch offer · $85/user/month locked for life ·{' '}
-                <strong className="text-white">
-                  {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m{' '}
-                  {String(seconds).padStart(2, '0')}s
-                </strong>
-              </span>
+      {/* Idle state — subtle prompt before scroll triggers */}
+      {phase === 'idle' && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-3 text-white/20">
+              {[Monitor, Smartphone, Truck, Globe].map((Icon, i) => (
+                <div
+                  key={i}
+                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center"
+                >
+                  <Icon size={18} className="text-white/20" />
+                </div>
+              ))}
             </div>
-          )}
-
-          {/* Headline */}
-          <h2
-            className="font-bold text-white leading-[1.08] tracking-tight mb-5"
-            style={{
-              fontSize: 'clamp(38px, 5.5vw, 60px)',
-              letterSpacing: '-1.5px',
-              textShadow: '0 2px 40px rgba(0,0,0,0.8)',
-            }}
-          >
-            Your hire business.
-            <br />
-            <span
-              style={{
-                background: 'linear-gradient(90deg, #c084fc 0%, #818cf8 50%, #67e8f9 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              One platform. Every device.
-            </span>
-          </h2>
-
-          {/* Subhead */}
-          <p
-            className="text-white/60 leading-relaxed mb-8 mx-auto"
-            style={{
-              fontSize: 17,
-              maxWidth: 540,
-              fontWeight: 300,
-              textShadow: '0 1px 20px rgba(0,0,0,0.9)',
-            }}
-          >
-            Connect your <strong className="text-white/85 font-medium">office</strong>,{' '}
-            <strong className="text-white/85 font-medium">field crew</strong>,{' '}
-            <strong className="text-white/85 font-medium">drivers</strong> and{' '}
-            <strong className="text-white/85 font-medium">customers</strong> in real time — with AI
-            damage detection, digital signatures and live availability built in.
-          </p>
-
-          {/* CTA buttons */}
-          <div className="flex flex-wrap gap-3 justify-center mb-5">
-            <Link
-              href="https://app.cloudrent.me/register"
-              className="flex items-center gap-3 text-white rounded-xl px-7 py-3.5 font-medium text-sm relative overflow-hidden transition-all hover:-translate-y-0.5"
-              style={{ background: '#881ba9', boxShadow: '0 4px 24px rgba(136,27,169,0.5)' }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%)',
-                }}
-              />
-              <div className="relative z-10 flex flex-col items-start">
-                <span className="font-bold text-[15px]">Start for $1 — 30 days full access</span>
-                <span className="text-white/55 text-[11px] font-normal">
-                  Every feature · No surprises
-                </span>
-              </div>
-              <ChevronRight className="w-4 h-4 relative z-10 flex-shrink-0" />
-            </Link>
-
-            <Link
-              href="/demo"
-              className="flex items-center gap-2 text-white/60 hover:text-white border border-white/15 hover:border-white/30 rounded-xl px-5 py-3.5 text-sm transition-all"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
-            >
-              <Phone className="w-4 h-4" />
-              Book a demo
-            </Link>
-          </div>
-
-          {/* Cancel promise */}
-          <div
-            className="inline-flex items-start gap-2.5 rounded-xl px-4 py-3 text-left max-w-[440px]"
-            style={{
-              background: 'rgba(136,27,169,0.08)',
-              border: '1px solid rgba(136,27,169,0.2)',
-            }}
-          >
-            <Shield className="w-4 h-4 text-purple-400 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-white/45 leading-relaxed">
-              Three days before your trial ends, we&apos;ll email you a{' '}
-              <strong className="text-white/75 font-medium">one-click cancellation link</strong> —
-              no calls, no forms, no questions asked.
-            </p>
-          </div>
-
-          {/* Trust chips */}
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mt-4 text-xs text-white/30">
-            {['Free data migration', 'Australian support', 'Cancel anytime'].map((chip, i) => (
-              <div key={i} className="flex items-center gap-1.5">
-                <CheckCircle className="w-3 h-3 text-green-500" />
-                {chip}
-              </div>
-            ))}
+            <p className="text-white/20 text-sm mt-3">Scroll to see the platform in action</p>
           </div>
         </div>
-      </div>
-      {/* ── END PERMANENT OVERLAY ──────────────────────────────────────────── */}
+      )}
 
-      {/* Animation backdrop — dashboard, devices, connections play behind the overlay */}
+      {/* Main content */}
       <div
-        className="absolute inset-x-0 top-[100px] bottom-0 flex items-center justify-center transition-all duration-1000"
-        style={{ opacity: dashboardOpacity * 0.5 }}
+        className="absolute inset-x-0 top-0 bottom-0 flex items-center justify-center transition-opacity duration-300"
+        style={{ opacity: dashboardOpacity }}
       >
         {/* Desktop Dashboard */}
         <div
           className={`absolute transition-all duration-1000 ${
-            phase === 'devices' || phase === 'connections' || phase === 'cta'
+            phase === 'devices' || phase === 'connections' || phase === 'complete'
               ? 'left-[5%] top-[10%] scale-[0.65]'
               : 'left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'
-          }`}
+          } ${phase === 'connections' || phase === 'complete' ? 'opacity-30' : ''}`}
         >
           <div className="relative w-[900px] max-w-[90vw]">
             <div className="bg-gray-900 rounded-t-xl border border-gray-700/50 p-3 flex items-center gap-2">
@@ -734,250 +805,408 @@ export const ImmersiveHero: React.FC = () => {
                 </div>
               </div>
             </div>
+            {/* Feature badges RIGHT */}
+            <div
+              className={`absolute -right-64 top-12 space-y-3 transition-all duration-500 ${phase === 'features' ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {[
+                {
+                  icon: Package,
+                  label: 'Real-time Availability',
+                  desc: 'Live stock updates',
+                  color: '#41AB01',
+                },
+                {
+                  icon: FileText,
+                  label: 'One-click Invoicing',
+                  desc: 'Generate in seconds',
+                  color: '#165DCF',
+                },
+                {
+                  icon: DollarSign,
+                  label: 'Payment Tracking',
+                  desc: 'Stripe & bank transfers',
+                  color: '#41AB01',
+                },
+                {
+                  icon: PenTool,
+                  label: 'Digital Signatures',
+                  desc: 'Legally compliant',
+                  color: '#881BA9',
+                },
+              ].map((feature, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center gap-3 bg-gray-900/90 backdrop-blur-sm rounded-xl pl-3 pr-5 py-3 border border-gray-700/50 transform transition-all duration-500 ${featureIndex >= i + 1 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}
+                  style={{ transitionDelay: `${i * 100}ms` }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${feature.color}20` }}
+                  >
+                    <feature.icon size={20} style={{ color: feature.color }} />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-medium">{feature.label}</div>
+                    <div className="text-gray-400 text-xs">{feature.desc}</div>
+                  </div>
+                  <CheckCircle size={16} className="text-green-500 ml-2" />
+                </div>
+              ))}
+            </div>
+            {/* Feature badges LEFT */}
+            <div
+              className={`absolute -left-64 top-12 space-y-3 transition-all duration-500 ${phase === 'features' ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {[
+                {
+                  icon: BarChart3,
+                  label: 'Xero Integration',
+                  desc: 'Two-way sync',
+                  color: '#13B5EA',
+                },
+                {
+                  icon: Zap,
+                  label: 'AI-Powered Support',
+                  desc: '24/7 assistance',
+                  color: '#881BA9',
+                },
+                {
+                  icon: Smartphone,
+                  label: 'Offline Mobile',
+                  desc: 'Works anywhere',
+                  color: '#F97316',
+                },
+                {
+                  icon: Bell,
+                  label: 'Smart Notifications',
+                  desc: 'Never miss a beat',
+                  color: '#B91421',
+                },
+              ].map((feature, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center gap-3 bg-gray-900/90 backdrop-blur-sm rounded-xl pl-3 pr-5 py-3 border border-gray-700/50 transform transition-all duration-500 ${featureIndex >= i + 5 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'}`}
+                  style={{ transitionDelay: `${i * 100}ms` }}
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${feature.color}20` }}
+                  >
+                    <feature.icon size={20} style={{ color: feature.color }} />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-medium">{feature.label}</div>
+                    <div className="text-gray-400 text-xs">{feature.desc}</div>
+                  </div>
+                  <CheckCircle size={16} className="text-green-500 ml-2" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Mobile Admin */}
         <div
-          className={`absolute transition-all duration-700 ${deviceIndex >= 1 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+          className={`absolute transition-all duration-700 ${deviceIndex >= 1 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} ${phase === 'connections' || phase === 'complete' ? 'opacity-30' : ''}`}
           style={{ right: 'calc(15% + 200px)', top: '8%' }}
         >
-          <div className="w-[180px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-purple-900/40 border border-gray-700">
-            <div className="bg-white rounded-[20px] overflow-hidden">
-              <div className="bg-brand-purple px-3 py-1.5 flex justify-between items-center">
-                <span className="text-white text-[8px]">9:41</span>
-                <div className="flex gap-1">
-                  <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
-                  <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
-                </div>
-              </div>
-              <div className="bg-brand-purple px-3 py-2">
-                <div className="text-white text-[10px] font-medium">Hi Sarah! 👋</div>
-                <div className="text-white/70 text-[8px]">Here&apos;s what&apos;s on today</div>
-              </div>
-              <div className="p-2 grid grid-cols-2 gap-1.5">
-                {[
-                  { value: '3', label: 'Overdue', color: 'bg-red-500' },
-                  { value: '7', label: 'Services', color: 'bg-blue-500' },
-                  { value: '5', label: 'Pickups', color: 'bg-green-500' },
-                  { value: '8', label: 'Deliveries', color: 'bg-orange-500' },
-                ].map((stat, i) => (
-                  <div key={i} className={`${stat.color} rounded-lg p-2 text-white text-center`}>
-                    <div className="text-lg font-bold">{stat.value}</div>
-                    <div className="text-[7px] opacity-80">{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-              <div className="px-2 pb-2">
-                <div className="bg-gray-50 rounded-lg p-2">
-                  <div className="text-[8px] text-gray-600 mb-1">Today&apos;s Revenue</div>
-                  <div className="text-sm font-bold text-brand-purple">$4,280</div>
-                  <div className="h-8 flex items-end justify-between gap-0.5 mt-1">
-                    {[40, 65, 45, 80, 60, 90, 75].map((h, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 bg-brand-purple/60 rounded-t"
-                        style={{ height: `${h}%` }}
-                      />
-                    ))}
+          <div className="relative">
+            <div className="w-[180px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-purple-900/40 border border-gray-700">
+              <div className="bg-white rounded-[20px] overflow-hidden">
+                <div className="bg-brand-purple px-3 py-1.5 flex justify-between items-center">
+                  <span className="text-white text-[8px]">9:41</span>
+                  <div className="flex gap-1">
+                    <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
+                    <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
                   </div>
                 </div>
-              </div>
-              <div className="bg-white border-t border-gray-100 px-2 py-1.5 flex justify-around">
-                {[Home, Calendar, Package, Settings].map((Icon, i) => (
-                  <div
-                    key={i}
-                    className={`p-1.5 rounded-lg ${i === 0 ? 'bg-brand-purple/10' : ''}`}
-                  >
-                    <Icon size={14} className={i === 0 ? 'text-brand-purple' : 'text-gray-400'} />
+                <div className="bg-brand-purple px-3 py-2">
+                  <div className="text-white text-[10px] font-medium">Hi Sarah! 👋</div>
+                  <div className="text-white/70 text-[8px]">Here&apos;s what&apos;s on today</div>
+                </div>
+                <div className="p-2 grid grid-cols-2 gap-1.5">
+                  {[
+                    { value: '3', label: 'Overdue', color: 'bg-red-500' },
+                    { value: '7', label: 'Services', color: 'bg-blue-500' },
+                    { value: '5', label: 'Pickups', color: 'bg-green-500' },
+                    { value: '8', label: 'Deliveries', color: 'bg-orange-500' },
+                  ].map((stat, i) => (
+                    <div key={i} className={`${stat.color} rounded-lg p-2 text-white text-center`}>
+                      <div className="text-lg font-bold">{stat.value}</div>
+                      <div className="text-[7px] opacity-80">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-2 pb-2">
+                  <div className="bg-gray-50 rounded-lg p-2">
+                    <div className="text-[8px] text-gray-600 mb-1">Today&apos;s Revenue</div>
+                    <div className="text-sm font-bold text-brand-purple">$4,280</div>
+                    <div className="h-8 flex items-end justify-between gap-0.5 mt-1">
+                      {[40, 65, 45, 80, 60, 90, 75].map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 bg-brand-purple/60 rounded-t"
+                          style={{ height: `${h}%` }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                ))}
+                </div>
+                <div className="bg-white border-t border-gray-100 px-2 py-1.5 flex justify-around">
+                  {[Home, Calendar, Package, Settings].map((Icon, i) => (
+                    <div
+                      key={i}
+                      className={`p-1.5 rounded-lg ${i === 0 ? 'bg-brand-purple/10' : ''}`}
+                    >
+                      <Icon size={14} className={i === 0 ? 'text-brand-purple' : 'text-gray-400'} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
-            <Smartphone size={14} className="text-blue-400" />
-            <span className="text-white text-xs font-medium">Mobile Admin</span>
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
+              <Smartphone size={14} className="text-blue-400" />
+              <span className="text-white text-xs font-medium">Mobile Admin</span>
+            </div>
           </div>
         </div>
 
         {/* Driver App */}
         <div
-          className={`absolute transition-all duration-700 ${deviceIndex >= 2 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+          className={`absolute transition-all duration-700 ${deviceIndex >= 2 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} ${phase === 'connections' || phase === 'complete' ? 'opacity-30' : ''}`}
           style={{ right: '5%', top: '35%' }}
         >
-          <div className="w-[170px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-blue-900/40 border border-gray-700">
-            <div className="bg-white rounded-[20px] overflow-hidden">
-              <div className="bg-gray-900 px-3 py-1.5 flex justify-between items-center">
-                <span className="text-white text-[8px]">9:41</span>
-                <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
-              </div>
-              <div className="bg-orange-500 px-3 py-2">
-                <div className="flex items-center gap-1 mb-1">
-                  <Truck size={10} className="text-white" />
-                  <span className="text-white text-[9px] font-medium">DELIVERY IN PROGRESS</span>
+          <div className="relative">
+            <div className="w-[170px] bg-gray-900 rounded-[28px] p-2 shadow-2xl shadow-blue-900/40 border border-gray-700">
+              <div className="bg-white rounded-[20px] overflow-hidden">
+                <div className="bg-gray-900 px-3 py-1.5 flex justify-between items-center">
+                  <span className="text-white text-[8px]">9:41</span>
+                  <div className="w-3 h-1.5 bg-white/60 rounded-sm" />
                 </div>
-                <div className="text-white text-[11px] font-bold">ABC Construction</div>
-                <div className="text-white/80 text-[8px] flex items-center gap-1">
-                  <MapPin size={8} />
-                  123 Builder St, Sydney
-                </div>
-              </div>
-              <div className="p-3 text-center bg-gray-50">
-                <div className="text-[8px] text-gray-500 mb-1">TIME ON JOB</div>
-                <div className="text-2xl font-bold text-gray-900 font-mono">
-                  00:{timerSeconds.toString().padStart(2, '0')}:47
-                </div>
-                <div className="flex justify-center gap-2 mt-2">
-                  <button className="bg-orange-500 text-white px-3 py-1 rounded-full text-[8px] flex items-center gap-1">
-                    <Pause size={8} /> Pause
-                  </button>
-                  <button className="bg-green-500 text-white px-3 py-1 rounded-full text-[8px] flex items-center gap-1">
-                    <CheckCircle size={8} /> Complete
-                  </button>
-                </div>
-              </div>
-              <div className="px-3 py-2">
-                <div className="text-[8px] text-gray-500 mb-1">ITEMS TO DELIVER</div>
-                {['Excavator 5T', 'Safety Kit', 'Fuel Can'].map((item, i) => (
-                  <div
-                    key={i}
-                    className="flex items-center gap-2 py-1 border-b border-gray-100 last:border-0"
-                  >
-                    <CheckCircle size={10} className="text-green-500" />
-                    <span className="text-[9px] text-gray-700">{item}</span>
+                <div className="bg-orange-500 px-3 py-2">
+                  <div className="flex items-center gap-1 mb-1">
+                    <Truck size={10} className="text-white" />
+                    <span className="text-white text-[9px] font-medium">DELIVERY IN PROGRESS</span>
                   </div>
-                ))}
-              </div>
-              <div className="px-3 pb-3">
-                <button className="w-full bg-brand-purple text-white py-2 rounded-lg text-[9px] font-medium flex items-center justify-center gap-1">
-                  <PenTool size={10} />
-                  Capture Signature
-                </button>
+                  <div className="text-white text-[11px] font-bold">ABC Construction</div>
+                  <div className="text-white/80 text-[8px] flex items-center gap-1">
+                    <MapPin size={8} />
+                    123 Builder St, Sydney
+                  </div>
+                </div>
+                <div className="p-3 text-center bg-gray-50">
+                  <div className="text-[8px] text-gray-500 mb-1">TIME ON JOB</div>
+                  <div className="text-2xl font-bold text-gray-900 font-mono">
+                    00:{timerSeconds.toString().padStart(2, '0')}:47
+                  </div>
+                  <div className="flex justify-center gap-2 mt-2">
+                    <button className="bg-orange-500 text-white px-3 py-1 rounded-full text-[8px] flex items-center gap-1">
+                      <Pause size={8} /> Pause
+                    </button>
+                    <button className="bg-green-500 text-white px-3 py-1 rounded-full text-[8px] flex items-center gap-1">
+                      <CheckCircle size={8} /> Complete
+                    </button>
+                  </div>
+                </div>
+                <div className="px-3 py-2">
+                  <div className="text-[8px] text-gray-500 mb-1">ITEMS TO DELIVER</div>
+                  {['Excavator 5T', 'Safety Kit', 'Fuel Can'].map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 py-1 border-b border-gray-100 last:border-0"
+                    >
+                      <CheckCircle size={10} className="text-green-500" />
+                      <span className="text-[9px] text-gray-700">{item}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-3 pb-3">
+                  <button className="w-full bg-brand-purple text-white py-2 rounded-lg text-[9px] font-medium flex items-center justify-center gap-1">
+                    <PenTool size={10} />
+                    Capture Signature
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
-            <Truck size={14} className="text-orange-400" />
-            <span className="text-white text-xs font-medium">Driver App</span>
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
+              <Truck size={14} className="text-orange-400" />
+              <span className="text-white text-xs font-medium">Driver App</span>
+            </div>
           </div>
         </div>
 
         {/* Customer Portal */}
         <div
-          className={`absolute transition-all duration-700 ${deviceIndex >= 3 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'}`}
+          className={`absolute transition-all duration-700 ${deviceIndex >= 3 ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'} ${phase === 'connections' || phase === 'complete' ? 'opacity-30' : ''}`}
           style={{ right: '20%', bottom: '8%' }}
         >
-          <div className="w-[280px] bg-gray-900 rounded-[20px] p-2 shadow-2xl shadow-green-900/30 border border-gray-700">
-            <div className="bg-white rounded-[14px] overflow-hidden">
-              <div className="bg-gray-100 px-2 py-1 flex items-center gap-2">
-                <div className="flex gap-0.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
-                  <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                </div>
-                <div className="flex-1 bg-white rounded px-2 py-0.5 text-[7px] text-gray-500 flex items-center gap-1">
-                  <Globe size={8} />
-                  hire.abcconstruction.com.au
-                </div>
-                <div className="relative">
-                  <ShoppingCart size={10} className="text-gray-600" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full text-[6px] text-white flex items-center justify-center font-bold">
-                    2
-                  </span>
-                </div>
-              </div>
-              <div className="bg-gradient-to-r from-green-600 to-emerald-500 px-3 py-2">
-                <div className="flex items-center justify-between mb-1">
-                  <div className="text-white text-[10px] font-bold">Equipment Catalogue</div>
-                  <div className="text-white/80 text-[7px]">24/7 Online Hire</div>
-                </div>
-                <div className="bg-white/20 rounded-lg px-2 py-1 flex items-center gap-1">
-                  <Search size={8} className="text-white/60" />
-                  <span className="text-white/60 text-[7px]">Search equipment...</span>
-                </div>
-              </div>
-              <div className="px-2 pt-2 flex gap-1">
-                {['All', 'Excavators', 'Trucks', 'Tools'].map((cat, i) => (
-                  <div
-                    key={i}
-                    className={`px-2 py-0.5 rounded-full text-[7px] font-medium ${i === 1 ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600'}`}
-                  >
-                    {cat}
+          <div className="relative">
+            <div className="w-[280px] bg-gray-900 rounded-[20px] p-2 shadow-2xl shadow-green-900/30 border border-gray-700">
+              <div className="bg-white rounded-[14px] overflow-hidden">
+                <div className="bg-gray-100 px-2 py-1 flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
                   </div>
-                ))}
-              </div>
-              <div className="p-2 grid grid-cols-2 gap-1.5">
-                {[
-                  { name: 'Mini Excavator 1.7T', price: '$185', avail: true, img: '🚜' },
-                  { name: 'Excavator 5T', price: '$320', avail: true, img: '🏗️' },
-                  { name: 'Skid Steer Loader', price: '$275', avail: false, img: '🚧' },
-                  { name: 'Plate Compactor', price: '$85', avail: true, img: '⚙️' },
-                ].map((item, i) => (
-                  <div key={i} className="bg-gray-50 rounded-lg p-1.5 border border-gray-100">
-                    <div className="text-center text-lg mb-0.5">{item.img}</div>
-                    <div className="text-[7px] font-medium text-gray-800 truncate">{item.name}</div>
-                    <div className="flex items-center justify-between mt-0.5">
-                      <span className="text-[8px] font-bold text-green-600">
-                        {item.price}
-                        <span className="text-[6px] text-gray-400">/day</span>
-                      </span>
-                      <span
-                        className={`text-[6px] px-1 py-0.5 rounded ${item.avail ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}
-                      >
-                        {item.avail ? '✓ Available' : 'Booked'}
-                      </span>
+                  <div className="flex-1 bg-white rounded px-2 py-0.5 text-[7px] text-gray-500 flex items-center gap-1">
+                    <Globe size={8} />
+                    hire.abcconstruction.com.au
+                  </div>
+                  <div className="relative">
+                    <ShoppingCart size={10} className="text-gray-600" />
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full text-[6px] text-white flex items-center justify-center font-bold">
+                      2
+                    </span>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-green-600 to-emerald-500 px-3 py-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="text-white text-[10px] font-bold">Equipment Catalogue</div>
+                    <div className="text-white/80 text-[7px]">24/7 Online Hire</div>
+                  </div>
+                  <div className="bg-white/20 rounded-lg px-2 py-1 flex items-center gap-1">
+                    <Search size={8} className="text-white/60" />
+                    <span className="text-white/60 text-[7px]">Search equipment...</span>
+                  </div>
+                </div>
+                <div className="px-2 pt-2 flex gap-1">
+                  {['All', 'Excavators', 'Trucks', 'Tools'].map((cat, i) => (
+                    <div
+                      key={i}
+                      className={`px-2 py-0.5 rounded-full text-[7px] font-medium ${i === 1 ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-600'}`}
+                    >
+                      {cat}
                     </div>
-                    {item.avail && (
-                      <button className="w-full mt-1 bg-green-500 text-white text-[6px] py-0.5 rounded font-medium flex items-center justify-center gap-0.5">
-                        <ShoppingCart size={6} /> Add to Cart
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className="bg-gray-900 px-3 py-2 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <ShoppingCart size={12} className="text-green-400" />
-                  <div>
-                    <div className="text-white text-[8px] font-medium">2 items in cart</div>
-                    <div className="text-gray-400 text-[7px]">5 Mar - 12 Mar 2026</div>
-                  </div>
+                  ))}
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="text-right">
-                    <div className="text-green-400 text-[10px] font-bold">$505/day</div>
-                    <div className="text-gray-400 text-[6px]">$3,535 total</div>
+                <div className="p-2 grid grid-cols-2 gap-1.5">
+                  {[
+                    { name: 'Mini Excavator 1.7T', price: '$185', avail: true, img: '🚜' },
+                    { name: 'Excavator 5T', price: '$320', avail: true, img: '🏗️' },
+                    { name: 'Skid Steer Loader', price: '$275', avail: false, img: '🚧' },
+                    { name: 'Plate Compactor', price: '$85', avail: true, img: '⚙️' },
+                  ].map((item, i) => (
+                    <div key={i} className="bg-gray-50 rounded-lg p-1.5 border border-gray-100">
+                      <div className="text-center text-lg mb-0.5">{item.img}</div>
+                      <div className="text-[7px] font-medium text-gray-800 truncate">
+                        {item.name}
+                      </div>
+                      <div className="flex items-center justify-between mt-0.5">
+                        <span className="text-[8px] font-bold text-green-600">
+                          {item.price}
+                          <span className="text-[6px] text-gray-400">/day</span>
+                        </span>
+                        <span
+                          className={`text-[6px] px-1 py-0.5 rounded ${item.avail ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'}`}
+                        >
+                          {item.avail ? '✓ Available' : 'Booked'}
+                        </span>
+                      </div>
+                      {item.avail && (
+                        <button className="w-full mt-1 bg-green-500 text-white text-[6px] py-0.5 rounded font-medium flex items-center justify-center gap-0.5">
+                          <ShoppingCart size={6} /> Add to Cart
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-gray-900 px-3 py-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart size={12} className="text-green-400" />
+                    <div>
+                      <div className="text-white text-[8px] font-medium">2 items in cart</div>
+                      <div className="text-gray-400 text-[7px]">5 Mar - 12 Mar 2026</div>
+                    </div>
                   </div>
-                  <button className="bg-green-500 text-white px-2 py-1 rounded text-[7px] font-bold">
-                    Checkout
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <div className="text-right">
+                      <div className="text-green-400 text-[10px] font-bold">$505/day</div>
+                      <div className="text-gray-400 text-[6px]">$3,535 total</div>
+                    </div>
+                    <button className="bg-green-500 text-white px-2 py-1 rounded text-[7px] font-bold">
+                      Checkout
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
-            <Globe size={14} className="text-green-400" />
-            <span className="text-white text-xs font-medium">24/7 Customer Portal</span>
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap">
+              <Globe size={14} className="text-green-400" />
+              <span className="text-white text-xs font-medium">24/7 Customer Portal</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Connections gauge — backdrop only, fades in */}
+      {/* Connections gauge */}
       <div
-        className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-1000 ${phase === 'connections' || phase === 'cta' ? 'opacity-30' : 'opacity-0'}`}
+        className={`absolute inset-0 flex flex-col items-center justify-center pointer-events-none transition-opacity duration-1000 ${phase === 'connections' || phase === 'complete' ? 'opacity-100' : 'opacity-0'}`}
       >
+        <div className="relative text-center mb-14 z-10 h-28 w-full max-w-3xl flex flex-col items-center justify-center">
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-500 ${connectionProgress < 100 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <svg
+                className="animate-spin h-8 w-8 text-[#881ba9]"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              <h2 className="text-3xl font-bold text-white">Building Your Ecosystem</h2>
+            </div>
+            <p className="text-lg text-white/60">Connecting all platforms...</p>
+          </div>
+          <div
+            className={`absolute inset-0 flex flex-col items-center justify-center transition-all duration-700 ${connectionProgress >= 100 ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}
+          >
+            <p className="text-base text-white/45 uppercase tracking-[0.18em] font-medium mb-3">
+              Ecosystem Complete
+            </p>
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-3 text-center leading-tight">
+              Your office. Your field team.
+              <br />
+              <span
+                style={{
+                  background: 'linear-gradient(90deg,#c084fc 0%,#9731CB 50%,#881ba9 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                Your drivers. Your customers.
+              </span>
+            </h2>
+            <p className="text-white/55 text-lg font-light">All in one place. Finally.</p>
+          </div>
+        </div>
         <div className="relative w-[500px] h-[500px]">
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 500 500">
             <defs>
-              <filter id="gaugeGlow2" x="-50%" y="-50%" width="200%" height="200%">
+              <filter id="gGlow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="6" result="coloredBlur" />
                 <feMerge>
                   <feMergeNode in="coloredBlur" />
                   <feMergeNode in="SourceGraphic" />
                 </feMerge>
               </filter>
-              <linearGradient id="progressGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="pGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#881ba9" />
                 <stop offset="100%" stopColor="#c084fc" />
               </linearGradient>
@@ -996,73 +1225,144 @@ export const ImmersiveHero: React.FC = () => {
               cy="250"
               r="180"
               fill="none"
-              stroke="url(#progressGradient2)"
+              stroke="url(#pGrad)"
               strokeWidth="6"
               strokeLinecap="round"
-              filter="url(#gaugeGlow2)"
+              filter="url(#gGlow)"
               strokeDasharray={2 * Math.PI * 180}
               strokeDashoffset={2 * Math.PI * 180 * (1 - connectionProgress / 100)}
               transform="rotate(-90 250 250)"
               className="transition-all duration-100"
             />
+            {connectionProgress < 100 && (
+              <circle
+                cx="250"
+                cy="70"
+                r="6"
+                fill="#881ba9"
+                filter="url(#gGlow)"
+                transform={`rotate(${(connectionProgress / 100) * 360 - 90} 250 250)`}
+              >
+                <animate
+                  attributeName="opacity"
+                  values="1;0.5;1"
+                  dur="0.5s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            )}
           </svg>
           {[
-            { label: 'Driver App', bottom: 0, left: '50%', xOff: '-50%', Icon: Truck },
-            { label: 'Mobile Admin', right: 0, top: '50%', yOff: '-50%', Icon: Smartphone },
-            { label: 'Customer Portal', top: 0, left: '50%', xOff: '-50%', Icon: Globe },
-            { label: 'Web Dashboard', left: 0, top: '50%', yOff: '-50%', Icon: Monitor },
+            {
+              label: 'Driver App',
+              style: { bottom: 0, left: '50%', transform: 'translateX(-50%)' },
+              Icon: Truck,
+              threshold: 0,
+              labelAbove: false,
+            },
+            {
+              label: 'Mobile Admin',
+              style: { right: 0, top: '50%', transform: 'translateY(-50%)' },
+              Icon: Smartphone,
+              threshold: 25,
+              labelAbove: false,
+            },
+            {
+              label: 'Customer Portal',
+              style: { top: 0, left: '50%', transform: 'translateX(-50%)' },
+              Icon: Globe,
+              threshold: 50,
+              labelAbove: true,
+            },
+            {
+              label: 'Web Dashboard',
+              style: { left: 0, top: '50%', transform: 'translateY(-50%)' },
+              Icon: Monitor,
+              threshold: 75,
+              labelAbove: false,
+            },
           ].map((node, i) => (
             <div
               key={i}
-              className={`absolute flex flex-col items-center gap-2 transition-all duration-500 ${connectionProgress >= i * 25 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
-              style={node as React.CSSProperties}
+              className={`absolute flex flex-col items-center gap-2 transition-all duration-500 ${connectionProgress >= node.threshold ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}
+              style={node.style as React.CSSProperties}
             >
+              {node.labelAbove && (
+                <span
+                  className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= node.threshold + 25 ? 'text-white' : 'text-white/60'}`}
+                >
+                  {node.label}
+                </span>
+              )}
               <div
-                className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${connectionProgress >= (i + 1) * 25 ? 'bg-[#881ba9]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'}`}
+                className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-500 ${connectionProgress >= node.threshold + 25 ? 'bg-[#881ba9] shadow-[0_0_30px_rgba(136,27,169,0.6)]' : 'bg-[#881ba9]/30 border-2 border-[#881ba9]/50'}`}
               >
                 <node.Icon size={28} className="text-white" />
               </div>
-              <span className="text-sm font-medium text-white/60">{node.label}</span>
+              {!node.labelAbove && (
+                <span
+                  className={`text-sm font-medium transition-colors duration-500 ${connectionProgress >= node.threshold + 25 ? 'text-white' : 'text-white/60'}`}
+                >
+                  {node.label}
+                </span>
+              )}
             </div>
           ))}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
+            <div
+              className={`text-center transition-all duration-500 ${connectionProgress >= 100 ? 'opacity-0 scale-75' : 'opacity-100 scale-100'}`}
+            >
               <div className="text-5xl font-bold text-white mb-1 tabular-nums">
                 {Math.round(connectionProgress)}%
               </div>
-              <div className="text-sm text-white/60">Connecting...</div>
+              <div className="text-sm text-white/60">Establishing connections</div>
+            </div>
+            <div
+              className={`absolute transition-all duration-700 ${connectionProgress >= 100 ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+            >
+              <div className="w-24 h-24 rounded-full bg-[#881ba9] flex items-center justify-center shadow-[0_0_60px_rgba(136,27,169,0.8)]">
+                <CheckCircle size={48} className="text-white" />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Replay button — shown after animation completes, bottom centre */}
-      <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center z-40">
-        <button
-          onClick={replayAnimation}
-          className="flex items-center gap-2 text-white/30 hover:text-white/60 text-sm transition-colors group"
-        >
-          <RotateCcw
-            size={14}
-            className="group-hover:rotate-[-360deg] transition-transform duration-500"
-          />
-          Replay animation
-        </button>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 right-8 text-white/30 animate-bounce z-40">
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </div>
+      {/* Replay — shown when complete */}
+      {phase === 'complete' && (
+        <div className="absolute bottom-8 left-0 right-0 flex items-center justify-center gap-8 z-20">
+          <button
+            onClick={replayAnimation}
+            className="flex items-center gap-2 text-white/35 hover:text-white/70 text-sm transition-colors group"
+          >
+            <RotateCcw
+              size={14}
+              className="group-hover:rotate-[-360deg] transition-transform duration-500"
+            />
+            Replay animation
+          </button>
+          <div className="text-white/30 animate-bounce">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
+
+// ─── EXPORT ───────────────────────────────────────────────────────────────────
+export const ImmersiveHero: React.FC = () => (
+  <>
+    <AboveFold />
+    <AnimationSection />
+  </>
+)
 
 export default ImmersiveHero
