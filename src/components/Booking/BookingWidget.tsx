@@ -466,7 +466,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
                 />
               </div>
 
@@ -477,7 +477,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
                 />
               </div>
 
@@ -488,7 +488,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
                 />
               </div>
 
@@ -498,7 +498,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   type="text"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
                 />
               </div>
 
@@ -510,7 +510,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={3}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-white/90 px-4 py-2 text-gray-900 placeholder:text-gray-500 focus:border-brand-purple focus:outline-none resize-none"
+                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none resize-none"
                 />
               </div>
 
