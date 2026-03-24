@@ -60,6 +60,60 @@ const DAY_NAMES = [
 ] as const
 
 /**
+ * Create a Date object for a specific time in a specific timezone
+ * This properly handles the timezone offset so 09:00 Brisbane = 09:00 Brisbane, not 09:00 UTC
+ */
+function createDateInTimezone(dateStr: string, timeStr: string, timezone: string): Date {
+  // Create a date string that includes timezone info
+  // Format: "2026-03-30T09:00:00" in the context of Brisbane
+  const dateTimeStr = `${dateStr}T${timeStr}:00`
+
+  // Create a formatter that outputs in the target timezone
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  })
+
+  // Get the current offset for this timezone by comparing a known date
+  // We need to find what UTC time corresponds to the local time in the target timezone
+
+  // Start with a guess - interpret as UTC
+  const naiveDate = new Date(dateTimeStr + 'Z')
+
+  // Format this UTC time as it would appear in the target timezone
+  const parts = formatter.formatToParts(naiveDate)
+  const getPart = (type: string) => parts.find(p => p.type === type)?.value || ''
+
+  const tzYear = getPart('year')
+  const tzMonth = getPart('month')
+  const tzDay = getPart('day')
+  const tzHour = getPart('hour')
+  const tzMinute = getPart('minute')
+
+  // Calculate the difference between what we wanted and what we got
+  const [wantYear, wantMonth, wantDay] = dateStr.split('-').map(Number)
+  const [wantHour, wantMinute] = timeStr.split(':').map(Number)
+
+  const gotDate = new Date(Date.UTC(
+    parseInt(tzYear), parseInt(tzMonth) - 1, parseInt(tzDay),
+    parseInt(tzHour), parseInt(tzMinute), 0
+  ))
+  const wantDate = new Date(Date.UTC(wantYear, wantMonth - 1, wantDay, wantHour, wantMinute, 0))
+
+  // The offset is how much we need to adjust
+  const offsetMs = gotDate.getTime() - wantDate.getTime()
+
+  // Apply the offset to get the correct UTC time
+  return new Date(naiveDate.getTime() - offsetMs)
+}
+
+/**
  * Calculate available slots for a date range
  */
 export function calculateAvailableSlots(params: {
@@ -200,8 +254,9 @@ function generateDaySlots(params: {
     const startTimeStr = `${String(slotStartHour).padStart(2, '0')}:${String(slotStartMin).padStart(2, '0')}`
     const endTimeStr = `${String(slotEndHour).padStart(2, '0')}:${String(slotEndMin).padStart(2, '0')}`
 
-    const startDateTime = new Date(`${date}T${startTimeStr}:00`)
-    const endDateTime = new Date(`${date}T${endTimeStr}:00`)
+    // Create timezone-aware dates - the schedule times are in the host's timezone
+    const startDateTime = createDateInTimezone(date, startTimeStr, params.timezone)
+    const endDateTime = createDateInTimezone(date, endTimeStr, params.timezone)
 
     // Check if slot is after minimum notice
     const isAfterMinNotice = startDateTime >= earliestBookingTime
