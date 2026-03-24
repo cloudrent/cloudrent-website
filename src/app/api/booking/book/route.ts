@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { createCalendarEvent } from '@/lib/google-calendar'
 import { Resend } from 'resend'
 import { formatDate, formatTime } from '@/lib/booking/calculate-slots'
+import { validatePhoneNumber } from '@/lib/phone-validation'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,6 +45,17 @@ export async function POST(request: NextRequest) {
     // Basic spam detection - check for gibberish
     if (isGibberish(name) || (company && isGibberish(company))) {
       return NextResponse.json({ success: true, booking: { id: 'blocked' } })
+    }
+
+    // Phone number validation (if provided)
+    if (phone) {
+      const phoneValidation = await validatePhoneNumber(phone)
+      if (!phoneValidation.valid) {
+        return NextResponse.json(
+          { error: phoneValidation.error || 'Invalid phone number. Please enter a valid phone number.' },
+          { status: 400 }
+        )
+      }
     }
 
     const payload = await getPayload({ config: configPromise })
