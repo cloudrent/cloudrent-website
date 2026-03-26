@@ -1,15 +1,6 @@
-// Ensure URL has https:// protocol
-const getBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_SERVER_URL) {
-    return process.env.NEXT_PUBLIC_SERVER_URL
-  }
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  }
-  return 'https://www.cloudrent.me'
-}
-
-const SITE_URL = getBaseUrl()
+// Always use production URL for sitemap and robots.txt
+// This ensures correct URLs regardless of local development environment
+const SITE_URL = 'https://www.cloudrent.me'
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
