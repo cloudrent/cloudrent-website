@@ -51,7 +51,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <>
       {/* Top Utility Bar */}
-      <div className="hidden lg:block border-b border-white/10 bg-black/20">
+      <div className="hidden lg:block border-b border-white/10 bg-black/20 relative z-[60]">
         <div className="container flex items-center justify-between py-2">
           {/* Left - Phone & tagline */}
           <div className="flex items-center gap-6 text-sm">
