@@ -293,6 +293,71 @@ function AboveFold() {
   )
 }
 
+// ─── MOBILE DEVICES SECTION ───────────────────────────────────────────────────
+function MobileDevicesSection() {
+  return (
+    <section className="relative w-full py-16 px-4 lg:hidden">
+      <div className="text-center mb-10">
+        <p className="text-white/40 text-xs uppercase tracking-widest mb-2">One Platform</p>
+        <h2 className="text-2xl font-bold text-white mb-3">
+          Every part of your business.{' '}
+          <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            Connected.
+          </span>
+        </h2>
+      </div>
+
+      <div className="space-y-4 max-w-sm mx-auto">
+        {[
+          {
+            icon: Monitor,
+            title: 'Web Dashboard',
+            desc: 'Office command centre for bookings, invoicing & reports',
+            color: 'from-purple-500 to-fuchsia-500',
+          },
+          {
+            icon: Smartphone,
+            title: 'Mobile Admin',
+            desc: 'Full control on the go, works offline',
+            color: 'from-blue-500 to-cyan-500',
+          },
+          {
+            icon: Truck,
+            title: 'Driver App',
+            desc: 'Field crew deliveries, pickups & digital signatures',
+            color: 'from-orange-500 to-amber-500',
+          },
+          {
+            icon: Globe,
+            title: 'Customer Portal',
+            desc: '24/7 self-service bookings for your customers',
+            color: 'from-emerald-500 to-teal-500',
+          },
+        ].map((platform, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-2xl p-4"
+          >
+            <div
+              className={`w-14 h-14 rounded-xl bg-gradient-to-br ${platform.color} flex items-center justify-center flex-shrink-0`}
+            >
+              <platform.icon className="w-7 h-7 text-white" />
+            </div>
+            <div>
+              <h3 className="text-white font-semibold">{platform.title}</h3>
+              <p className="text-white/50 text-sm">{platform.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="text-center mt-10">
+        <p className="text-white/40 text-sm">All synced in real-time</p>
+      </div>
+    </section>
+  )
+}
+
 // ─── ANIMATION SECTION ────────────────────────────────────────────────────────
 function AnimationSection() {
   const [phase, setPhase] = useState<Phase>('idle')
@@ -552,7 +617,7 @@ function AnimationSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-transparent"
+      className="relative w-full overflow-hidden bg-transparent hidden lg:block"
       style={{ minHeight: '100vh' }}
     >
       {/* Background shapes */}
@@ -1374,6 +1439,7 @@ function AnimationSection() {
 export const ImmersiveHero: React.FC = () => (
   <>
     <AboveFold />
+    <MobileDevicesSection />
     <AnimationSection />
   </>
 )
