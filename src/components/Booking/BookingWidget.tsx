@@ -297,6 +297,18 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
       setAppointment(data)
       setStep('confirm')
+
+      // Fire Google Ads conversion tracking
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'demo_requested',
+          conversion_type: 'CloudRent Pro - Demo Requested',
+          value: 25.00,
+          currency: 'AUD',
+          user_email: formData.email,
+          company: formData.company,
+        })
+      }
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to book appointment'
       setError(errorMessage)
