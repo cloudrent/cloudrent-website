@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Check, Clock, Shield, Zap, Users, Star, Gift, Lock } from 'lucide-react'
 import { FAQSchema } from '@/components/StructuredData'
 
-const LAUNCH_DATE = new Date('2026-05-01T00:00:00+10:00')
+const LAUNCH_DATE = new Date('2026-04-01T00:00:00+10:00')
 
 interface TimeLeft {
   days: number
@@ -56,20 +56,17 @@ const benefits = [
   {
     icon: Lock,
     title: 'Price Locked Forever',
-    description:
-      "Your $85/user/mo rate is locked in for as long as you're subscribed. No surprise increases, ever.",
+    description: "Your $85/user/mo rate is locked in for as long as you're subscribed. No surprise increases, ever.",
   },
   {
     icon: Zap,
     title: 'Every Feature Included',
-    description:
-      'Get the full Business plan with all modules, integrations, and future updates at no extra cost.',
+    description: 'Get the full Business plan with all modules, integrations, and future updates at no extra cost.',
   },
   {
     icon: Users,
     title: 'Priority Onboarding',
-    description:
-      'Skip the queue. Our team will personally help you migrate and get set up within days.',
+    description: 'Skip the queue. Our team will personally help you migrate and get set up within days.',
   },
   {
     icon: Star,
@@ -85,7 +82,7 @@ const faqs = [
   },
   {
     q: 'How long does this offer last?',
-    a: 'Until we reach 100 customers or April 30st, 2026 — whichever comes first. Sign up in April to lock in your launch price. Once spots are filled, this offer is permanently closed.',
+    a: "Until we reach 100 customers or March 31st, 2026 — whichever comes first. Sign up in March to lock in your launch price. Once spots are filled, this offer is permanently closed.",
   },
   {
     q: 'What happens if I cancel and rejoin later?',
@@ -101,7 +98,7 @@ const faqs = [
   },
   {
     q: "What if a feature I need isn't built yet?",
-    a: 'Tell us. Launch Customers get priority feature requests. We ship fast — most features are delivered in 2-4 weeks, not months.',
+    a: "Tell us. Launch Customers get priority feature requests. We ship fast — most features are delivered in 2-4 weeks, not months.",
   },
 ]
 
@@ -152,15 +149,13 @@ export default function LaunchPageClient() {
             Lock in <span className="font-bold text-white">every feature</span> of CloudRent Pro at{' '}
             <span className="font-bold text-amber-400">$85/user/mo</span> — forever.
             <br />
-            <span className="text-gray-400">
-              That&apos;s $44/user/mo less than our standard Business plan.
-            </span>
+            <span className="text-gray-400">That&apos;s $44/user/mo less than our standard Business plan.</span>
           </p>
 
           {/* Countdown */}
           <div className="mb-10">
             <p className="mb-4 text-sm font-medium uppercase tracking-wider text-purple-300">
-              April offer ends in
+              March offer ends in
             </p>
             <div className="flex justify-center gap-3 sm:gap-4">
               {[
@@ -190,7 +185,7 @@ export default function LaunchPageClient() {
             Lock In Your Launch Price
           </a>
           <p className="mt-4 text-sm text-gray-500">
-            Sign up in April • Rate locked forever • Cancel anytime
+            Sign up in March • Rate locked forever • Cancel anytime
           </p>
         </div>
       </section>
@@ -243,8 +238,7 @@ export default function LaunchPageClient() {
             </span>
           </div>
           <p className="mt-4 text-2xl font-bold text-white">
-            Total value: <span className="text-green-400">$178+/mo</span> → You pay just{' '}
-            <span className="text-amber-400">$85/user/mo</span>
+            Total value: <span className="text-green-400">$178+/mo</span> → You pay just <span className="text-amber-400">$85/user/mo</span>
           </p>
         </div>
       </section>
@@ -288,8 +282,7 @@ export default function LaunchPageClient() {
             </span>
           </h2>
           <p className="mx-auto mb-10 max-w-2xl text-center text-gray-400">
-            As a Launch Customer, you get access to every single feature — no restrictions, no
-            upsells, no hidden costs.
+            As a Launch Customer, you get access to every single feature — no restrictions, no upsells, no hidden costs.
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -318,9 +311,7 @@ export default function LaunchPageClient() {
             ))}
           </div>
           <blockquote className="mb-6 text-xl italic text-gray-300 md:text-2xl">
-            &ldquo;The Xero integration alone saves us hours every week. But what really sets
-            CloudRent apart is how quickly they respond to feature requests. We asked for a specific
-            report format and had it within days.&rdquo;
+            &ldquo;The Xero integration alone saves us hours every week. But what really sets CloudRent apart is how quickly they respond to feature requests. We asked for a specific report format and had it within days.&rdquo;
           </blockquote>
           <div className="flex items-center justify-center gap-4">
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20">
@@ -328,9 +319,7 @@ export default function LaunchPageClient() {
             </div>
             <div className="text-left">
               <p className="font-semibold text-white">Michael Harrison</p>
-              <p className="text-sm text-gray-400">
-                Operations Manager, Hunter Valley Equipment Hire
-              </p>
+              <p className="text-sm text-gray-400">Operations Manager, Hunter Valley Equipment Hire</p>
             </div>
           </div>
         </div>
@@ -383,10 +372,11 @@ export default function LaunchPageClient() {
             Only available to the first 100 customers
           </div>
 
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">Don&apos;t Miss Your Chance</h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+            Don&apos;t Miss Your Chance
+          </h2>
           <p className="mx-auto mb-8 max-w-xl text-gray-300">
-            Once we hit 100 Launch Customers, this offer closes permanently. Lock in your rate today
-            and join the businesses shaping the future of CloudRent Pro.
+            Once we hit 100 Launch Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
           </p>
 
           <a
