@@ -1,10 +1,23 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Check, Clock, Shield, Zap, Users, Star, Gift, Lock } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  Check,
+  Shield,
+  Zap,
+  Users,
+  Star,
+  MessageSquare,
+  ChevronRight,
+  Sparkles,
+} from 'lucide-react'
 import { FAQSchema } from '@/components/StructuredData'
 
 const LAUNCH_DATE = new Date('2026-05-01T00:00:00+10:00')
+const SPOTS_CLAIMED = 42
+const TOTAL_SPOTS = 100
 
 interface TimeLeft {
   days: number
@@ -26,79 +39,65 @@ function calculateTimeLeft(): TimeLeft {
   }
 }
 
-const allFeatures = [
-  'Equipment catalog & management',
-  'Reservations & calendar',
-  'Customer management',
-  'Invoicing & PDF contracts',
-  'Digital signatures',
-  'All staff roles (unlimited)',
-  'Xero accounting integration',
-  'SWMS & safety documentation',
-  'Stocktakes & asset management',
-  'Inspection forms & checklists',
-  'Tiered pricing engine',
-  'Email integration (Gmail / Outlook)',
-  'Advanced reporting',
-  'Marketing system & bulk email',
-  'Damage detection module',
-  'GPS & telematics tracking',
-  'AI-powered support agent',
-  'Advanced analytics dashboard',
-  'Roster & time clock',
-  'Staff chat system',
-  'Custom integrations',
-  'Dedicated account manager',
-  'Phone & live chat support',
-]
-
 const benefits = [
   {
-    icon: Lock,
-    title: 'Price Locked Forever',
-    description: "Your $85/user/mo rate is locked in for as long as you're subscribed. No surprise increases, ever.",
+    icon: Shield,
+    title: 'Never Pay More',
+    description: 'Your price is locked permanently — no future increases',
   },
   {
     icon: Zap,
-    title: 'Every Feature Included',
-    description: 'Get the full Business plan with all modules, integrations, and future updates at no extra cost.',
+    title: 'Everything Included',
+    description: 'All modules, integrations, and future updates',
   },
   {
     icon: Users,
     title: 'Priority Onboarding',
-    description: 'Skip the queue. Our team will personally help you migrate and get set up within days.',
+    description: 'Get set up faster with direct support from our team',
+  },
+  {
+    icon: MessageSquare,
+    title: 'Direct Access',
+    description: 'Work directly with the people building the product',
   },
   {
     icon: Star,
-    title: 'Shape the Product',
-    description: 'Direct line to our developers. Your feature requests get priority consideration.',
+    title: 'Influence the Platform',
+    description: 'Your feedback helps shape what gets built next',
   },
+]
+
+const includedFeatures = [
+  'Customer Portal',
+  'Xero/QuickBooks Integration',
+  'Marketing Tools',
+  'AI Features',
 ]
 
 const faqs = [
   {
-    q: 'What exactly do I get as a Launch Customer?',
-    a: 'You get the complete Business plan — every feature, every integration, every future update — locked in at $85/user/mo. This is normally $129/user/mo. Your rate never increases as long as you remain subscribed.',
+    q: 'Is this suitable for small and multi-location rental businesses?',
+    a: 'Yes. CloudRent Pro is designed to scale with your business. Whether you have one location or many, the system adapts to your needs. Small businesses love the simplicity, while larger operations benefit from multi-location inventory management and consolidated reporting.',
   },
   {
-    q: 'How long does this offer last?',
-    a: "Until we reach 100 customers or April 30th, 2026 — whichever comes first. Sign up in April to lock in your launch price. Once spots are filled, this offer is permanently closed.",
+    q: 'Can we manage safety and compliance in the same system?',
+    a: 'Absolutely. CloudRent Pro includes SWMS documentation, inspection checklists, digital signatures, and compliance tracking all in one place. No more juggling separate systems for safety management.',
   },
   {
-    q: 'What happens if I cancel and rejoin later?',
-    a: "If you cancel your subscription, you lose your Launch Customer status. If you rejoin later, you'll be on standard pricing ($129/user/mo for Business plan).",
+    q: 'Does it work on mobile?',
+    a: 'Yes. Our mobile app works on iOS and Android with full offline sync. Your team can manage deliveries, capture signatures, scan barcodes, and update jobs from anywhere — even without internet.',
   },
   {
-    q: 'Is there a contract or minimum commitment?',
-    a: "No contracts. You can cancel anytime. But remember — if you cancel, you can't get the launch price back.",
+    q: 'Can customers book and pay online?',
+    a: 'Yes. The included Customer Portal lets your customers check availability, make bookings, view invoices, and pay online 24/7. It integrates seamlessly with your main system.',
   },
   {
-    q: 'How do I sign up?',
-    a: "Click 'Lock In Your Launch Price' and complete the registration. Your launch price is locked in immediately upon signup.",
+    q: 'Is this built for Australian businesses?',
+    a: "100%. CloudRent Pro is built on the Gold Coast by Australians, for Australian businesses. We understand local tax requirements, integrate with Xero, and provide support in your timezone.",
   },
   {
-    q: "What if a feature I need isn't built yet?",
-    a: "Tell us. Launch Customers get priority feature requests. We ship fast — most features are delivered in 2-4 weeks, not months.",
+    q: 'How quickly can we get started?',
+    a: "Most businesses are up and running within days, not weeks. We offer free data migration and priority onboarding for Launch Partners. You'll have a dedicated team member to guide you through setup.",
   },
 ]
 
@@ -113,221 +112,266 @@ export default function LaunchPageClient() {
     return () => clearInterval(timer)
   }, [])
 
-  // Transform FAQs for schema
   const faqSchemaData = faqs.map((faq) => ({
     question: faq.q,
     answer: faq.a,
   }))
 
+  const progressPercentage = (SPOTS_CLAIMED / TOTAL_SPOTS) * 100
+
   return (
     <div className="min-h-screen text-white">
       <FAQSchema faqs={faqSchemaData} />
-      {/* Hero Section */}
-      <section className="relative overflow-hidden px-4 pb-16 pt-12">
-        {/* Extra glow effects */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-purple-600/30 blur-[150px]" />
-          <div className="absolute right-0 top-1/4 h-80 w-80 rounded-full bg-amber-500/20 blur-[100px]" />
-        </div>
 
+      {/* Hero Section */}
+      <section className="relative overflow-hidden px-4 pb-8 pt-12">
         <div className="relative mx-auto max-w-4xl text-center">
           {/* Badge */}
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/20 px-5 py-2 text-sm font-bold uppercase tracking-wider text-amber-400">
-            <Gift className="h-4 w-4" />
-            Limited to First 100 Customers
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-5 py-2 text-sm font-semibold uppercase tracking-wider text-amber-400">
+            <Sparkles className="h-4 w-4" />
+            Limited Launch Offer
           </div>
 
           {/* Headline */}
-          <h1 className="mb-6 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
-            CloudRent Pro{' '}
-            <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
-              Launch Offer
+          <h1 className="mb-4 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+            Join the First 100 Launch Partners
+            <br />
+            <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+              on CloudRent Pro
             </span>
           </h1>
+        </div>
+      </section>
 
-          <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-300">
-            Lock in <span className="font-bold text-white">every feature</span> of CloudRent Pro at{' '}
-            <span className="font-bold text-amber-400">$85/user/mo</span> — forever.
-            <br />
-            <span className="text-gray-400">That&apos;s $44/user/mo less than our standard Business plan.</span>
-          </p>
-
-          {/* Countdown */}
-          <div className="mb-10">
-            <p className="mb-4 text-sm font-medium uppercase tracking-wider text-purple-300">
-              April offer ends in
-            </p>
-            <div className="flex justify-center gap-3 sm:gap-4">
-              {[
-                { value: timeLeft.days, label: 'Days' },
-                { value: timeLeft.hours, label: 'Hours' },
-                { value: timeLeft.minutes, label: 'Mins' },
-                { value: timeLeft.seconds, label: 'Secs' },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex flex-col items-center rounded-2xl border border-purple-500/30 bg-purple-900/50 px-4 py-4 sm:px-6"
-                >
-                  <span className="text-3xl font-bold tabular-nums text-white sm:text-4xl">
-                    {String(item.value).padStart(2, '0')}
-                  </span>
-                  <span className="text-xs text-purple-300 sm:text-sm">{item.label}</span>
+      {/* Main Card Section */}
+      <section className="relative mx-auto max-w-5xl px-4 py-8">
+        <div className="rounded-3xl border border-purple-500/20 bg-gradient-to-b from-purple-900/40 to-purple-900/20 p-8 md:p-12">
+          <div className="grid items-center gap-8 md:grid-cols-2">
+            {/* Launch Partner Card Image */}
+            <div className="flex justify-center">
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-purple-500/20 to-amber-500/20 blur-2xl" />
+                <div className="relative rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900 to-purple-950 p-8 shadow-2xl">
+                  <div className="mb-4 flex justify-center">
+                    <div className="rounded-xl bg-gradient-to-br from-purple-500 to-fuchsia-600 p-4">
+                      <Image
+                        src="/images/logo-icon.svg"
+                        alt="CloudRent"
+                        width={48}
+                        height={48}
+                        className="h-12 w-12"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-xs font-medium uppercase tracking-wider text-purple-400">
+                      Launch Partner
+                    </p>
+                    <p className="mt-2 text-lg font-bold text-white">Your Name Here</p>
+                    <p className="mt-1 text-sm text-gray-400">No. 001 / 100</p>
+                    <div className="mt-4 rounded-lg bg-amber-500/20 px-4 py-2">
+                      <p className="text-xs text-amber-300">Price Locked — Forever</p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Text Content */}
+            <div>
+              <p className="mb-4 text-gray-400">
+                We&apos;ve been helping hire businesses since 2017.
+                <br />
+                CloudRent Pro is our next evolution — rebuilt from the ground up based on real-world
+                operations.
+              </p>
+              <p className="mb-4 font-semibold text-amber-400">
+                Now we&apos;re opening it to a small group of launch partners.
+              </p>
+              <h2 className="mb-4 text-2xl font-bold text-white md:text-3xl">
+                Run your entire hire business on one system — without the chaos.
+              </h2>
+              <p className="text-gray-300">
+                Lock in full access for{' '}
+                <span className="font-bold text-amber-400">$85/user/month</span> — forever
+              </p>
+            </div>
+          </div>
+
+          {/* Price Comparison */}
+          <div className="mt-12 grid gap-4 md:grid-cols-2">
+            {/* Standard Price */}
+            <div className="rounded-xl border border-gray-700 bg-gray-900/50 p-6 text-center">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wider text-gray-500">
+                Standard Price
+              </p>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-3xl font-bold text-gray-500 line-through">$129</span>
+                <span className="text-gray-600">/user/mo</span>
+              </div>
+              <p className="mt-2 text-sm text-gray-500">Regular pricing after launch</p>
+            </div>
+
+            {/* Launch Price */}
+            <div className="relative rounded-xl border-2 border-green-500/50 bg-gradient-to-br from-green-900/30 to-green-900/10 p-6 text-center">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-green-500 px-3 py-1 text-xs font-bold uppercase text-black">
+                Save $44/user/mo — Forever
+              </div>
+              <p className="mb-2 text-xs font-medium uppercase tracking-wider text-green-400">
+                Launch Partner Price
+              </p>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-4xl font-bold text-white">$85</span>
+                <span className="text-gray-400">/user/mo</span>
+              </div>
+              <p className="mt-2 text-sm text-green-400">Locked in for life</p>
+            </div>
+          </div>
+
+          {/* Everything Included */}
+          <div className="mt-8 text-center">
+            <p className="mb-4 text-sm text-gray-400">
+              Everything included — no add-ons, no surprises
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {includedFeatures.map((feature) => (
+                <span
+                  key={feature}
+                  className="rounded-full border border-gray-600 bg-gray-800/50 px-4 py-1.5 text-sm text-gray-300"
+                >
+                  {feature}
+                </span>
               ))}
             </div>
+            <p className="mt-4 text-sm text-gray-400">
+              → Total value: <span className="font-semibold text-green-400">$178+/mo</span> — you
+              pay just <span className="font-semibold text-amber-400">$85</span>
+            </p>
           </div>
-
-          {/* CTA */}
-          <a
-            href="https://app.cloudrent.me/launch"
-            className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400 hover:shadow-[0_8px_40px_rgba(251,191,36,0.5)]"
-          >
-            Lock In Your Launch Price
-          </a>
-          <p className="mt-4 text-sm text-gray-500">
-            Sign up in April • Rate locked forever • Cancel anytime
-          </p>
         </div>
       </section>
 
-      {/* Price Comparison */}
-      <section className="relative mx-auto max-w-4xl px-4 py-16">
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Regular Price */}
-          <div className="rounded-2xl border border-gray-700 bg-gray-900/50 p-8 text-center">
-            <p className="mb-2 text-sm font-medium uppercase tracking-wider text-gray-500">
-              Standard Business Plan
-            </p>
-            <div className="mb-4 flex items-baseline justify-center gap-1">
-              <span className="text-4xl font-bold text-gray-500 line-through">$129</span>
-              <span className="text-gray-600">/user/mo</span>
-            </div>
-            <p className="text-gray-500">Regular pricing after launch</p>
-          </div>
-
-          {/* Launch Price */}
-          <div className="relative rounded-2xl border-2 border-amber-500/50 bg-gradient-to-br from-purple-900/60 to-amber-900/30 p-8 text-center shadow-[0_0_40px_rgba(251,191,36,0.15)]">
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-500 px-4 py-1 text-xs font-bold uppercase text-purple-900">
-              Save $44/user/mo
-            </div>
-            <p className="mb-2 text-sm font-medium uppercase tracking-wider text-amber-400">
-              Launch Customer Price
-            </p>
-            <div className="mb-4 flex items-baseline justify-center gap-1">
-              <span className="text-5xl font-bold text-white">$85</span>
-              <span className="text-gray-400">/user/mo</span>
-            </div>
-            <p className="font-medium text-amber-400">Locked in forever</p>
-          </div>
-        </div>
-
-        {/* Value Breakdown */}
-        <div className="mt-8 rounded-2xl border border-green-500/30 bg-green-500/10 p-6 text-center">
-          <p className="mb-4 text-lg font-semibold text-green-400">
-            Plus you get extras worth $49+/mo included:
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 text-sm">
-            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
-              Customer Portal ($49/mo value)
-            </span>
-            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
-              Xero/QuickBooks/MYOB Integration
-            </span>
-            <span className="rounded-full border border-green-500/30 bg-green-500/20 px-4 py-2 text-green-300">
-              Marketing Module
-            </span>
-          </div>
-          <p className="mt-4 text-2xl font-bold text-white">
-            Total value: <span className="text-green-400">$178+/mo</span> → You pay just <span className="text-amber-400">$85/user/mo</span>
-          </p>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="relative mx-auto max-w-5xl px-4 py-16">
-        <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
-          Why Become a{' '}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent">
-            Launch Customer
-          </span>
-          ?
-        </h2>
-
-        <div className="grid gap-6 sm:grid-cols-2">
+      {/* Benefits Section */}
+      <section className="relative mx-auto max-w-5xl px-4 py-12">
+        <p className="mb-8 text-center text-sm font-medium uppercase tracking-wider text-gray-500">
+          As a Launch Partner, you get:
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {benefits.map((benefit) => {
             const Icon = benefit.icon
             return (
               <div
                 key={benefit.title}
-                className="rounded-2xl border border-purple-500/20 bg-purple-900/30 p-6 transition-all hover:border-purple-500/40 hover:bg-purple-900/50"
+                className="rounded-xl border border-purple-500/20 bg-purple-900/20 p-5 text-center transition-all hover:border-purple-500/40"
               >
-                <div className="mb-4 inline-flex rounded-xl bg-amber-500/20 p-3">
-                  <Icon className="h-6 w-6 text-amber-400" />
+                <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20">
+                  <Icon className="h-6 w-6 text-purple-400" />
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-white">{benefit.title}</h3>
-                <p className="text-gray-400">{benefit.description}</p>
+                <h3 className="mb-1 text-sm font-bold text-white">{benefit.title}</h3>
+                <p className="text-xs text-gray-400">{benefit.description}</p>
               </div>
             )
           })}
         </div>
       </section>
 
-      {/* All Features */}
-      <section className="relative mx-auto max-w-5xl px-4 py-16">
-        <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-8 md:p-12">
-          <h2 className="mb-8 text-center text-3xl font-bold">
-            Everything in the{' '}
-            <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-              Business Plan
-            </span>
-          </h2>
-          <p className="mx-auto mb-10 max-w-2xl text-center text-gray-400">
-            As a Launch Customer, you get access to every single feature — no restrictions, no upsells, no hidden costs.
-          </p>
+      {/* Progress & Countdown Section */}
+      <section className="relative mx-auto max-w-3xl px-4 py-12">
+        <div className="rounded-2xl border border-purple-500/20 bg-gradient-to-b from-purple-900/40 to-purple-900/20 p-8 text-center">
+          {/* Progress Bar */}
+          <div className="mb-6">
+            <p className="mb-3 text-sm font-medium text-amber-400">
+              <span className="font-bold">{SPOTS_CLAIMED}</span> of {TOTAL_SPOTS} launch partner
+              spots claimed
+            </p>
+            <div className="mx-auto h-3 max-w-md overflow-hidden rounded-full bg-gray-800">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+            <p className="mt-3 text-xs text-gray-500">
+              This offer won&apos;t be available once all 100 spots are filled.
+            </p>
+          </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {allFeatures.map((feature) => (
-              <div key={feature} className="flex items-center gap-3">
-                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-green-500/20">
-                  <Check className="h-4 w-4 text-green-400" />
-                </div>
-                <span className="text-gray-300">{feature}</span>
+          {/* Countdown */}
+          <p className="mb-4 text-xs font-medium uppercase tracking-wider text-gray-500">
+            Offer Closes In
+          </p>
+          <div className="flex justify-center gap-3">
+            {[
+              { value: timeLeft.days, label: 'Days' },
+              { value: timeLeft.hours, label: 'Hrs' },
+              { value: timeLeft.minutes, label: 'Min' },
+              { value: timeLeft.seconds, label: 'Sec' },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex flex-col items-center rounded-xl border border-gray-700 bg-gray-900/80 px-4 py-3"
+              >
+                <span className="text-2xl font-bold tabular-nums text-white">
+                  {String(item.value).padStart(2, '0')}
+                </span>
+                <span className="text-xs text-gray-500">{item.label}</span>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <p className="mt-8 text-center text-sm text-gray-500">
-            Plus every future feature and update — included at no extra cost.
+      {/* Final CTA Section */}
+      <section className="relative mx-auto max-w-3xl px-4 py-12">
+        <div className="rounded-2xl border border-purple-500/30 bg-gradient-to-b from-purple-900/60 to-purple-900/30 p-8 text-center md:p-12">
+          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
+            This Is Your Chance to Run Your Business Properly
+          </h2>
+          <p className="mb-2 text-gray-400">Stop juggling systems. Stop fixing mistakes.</p>
+          <p className="mb-4 text-gray-400">
+            Start running your operations with full control, visibility, and confidence.
+          </p>
+          <p className="mb-8 font-semibold text-white">
+            Once the first 100 launch partners are in, this offer disappears —<br />
+            permanently.
+          </p>
+
+          <a
+            href="https://app.cloudrent.me/launch"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-8 py-4 text-lg font-bold text-black shadow-[0_8px_30px_rgba(251,191,36,0.3)] transition-all hover:from-amber-300 hover:to-amber-400 hover:shadow-[0_8px_40px_rgba(251,191,36,0.4)]"
+          >
+            Lock in Launch Partner Pricing
+            <ChevronRight className="h-5 w-5" />
+          </a>
+
+          {/* Trust Badges */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-400">
+            <span className="flex items-center gap-1.5">
+              <Check className="h-4 w-4 text-green-400" />
+              30-day money-back guarantee
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Check className="h-4 w-4 text-green-400" />
+              Cancel anytime
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Check className="h-4 w-4 text-green-400" />
+              Free data migration
+            </span>
+          </div>
+
+          <p className="mt-6 text-sm text-gray-500">
+            Questions?{' '}
+            <Link href="/demo" className="text-purple-400 hover:text-purple-300">
+              Talk to our team →
+            </Link>
           </p>
         </div>
       </section>
 
-      {/* Social Proof / Trust */}
-      <section className="relative mx-auto max-w-4xl px-4 py-16">
-        <div className="rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-900/40 to-fuchsia-900/40 p-8 text-center md:p-12">
-          <div className="mb-6 flex justify-center gap-1 text-amber-400">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} className="h-6 w-6 fill-current" />
-            ))}
-          </div>
-          <blockquote className="mb-6 text-xl italic text-gray-300 md:text-2xl">
-            &ldquo;The Xero integration alone saves us hours every week. But what really sets CloudRent apart is how quickly they respond to feature requests. We asked for a specific report format and had it within days.&rdquo;
-          </blockquote>
-          <div className="flex items-center justify-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20">
-              <span className="text-lg font-semibold text-purple-400">MH</span>
-            </div>
-            <div className="text-left">
-              <p className="font-semibold text-white">Michael Harrison</p>
-              <p className="text-sm text-gray-400">Operations Manager, Hunter Valley Equipment Hire</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
+      {/* FAQ Section */}
       <section className="relative mx-auto max-w-3xl px-4 py-16">
-        <h2 className="mb-10 text-center text-3xl font-bold">Frequently Asked Questions</h2>
+        <h2 className="mb-4 text-center text-3xl font-bold">Frequently Asked Questions</h2>
+        <p className="mb-10 text-center text-gray-400">Got questions? We&apos;ve got answers.</p>
 
         <div className="space-y-3">
           {faqs.map((faq, i) => (
@@ -336,25 +380,23 @@ export default function LaunchPageClient() {
               className={`overflow-hidden rounded-xl border transition-colors ${
                 openFaq === i
                   ? 'border-purple-500/50 bg-purple-900/40'
-                  : 'border-purple-500/20 bg-purple-900/20'
+                  : 'border-gray-700 bg-gray-900/50'
               }`}
             >
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="flex w-full items-center justify-between p-5 text-left"
               >
-                <span className="pr-4 font-semibold text-white">{faq.q}</span>
-                <span
-                  className={`shrink-0 text-xl text-purple-400 transition-transform ${
-                    openFaq === i ? 'rotate-45' : ''
+                <span className="pr-4 font-medium text-white">{faq.q}</span>
+                <ChevronRight
+                  className={`h-5 w-5 shrink-0 text-gray-400 transition-transform ${
+                    openFaq === i ? 'rotate-90' : ''
                   }`}
-                >
-                  +
-                </span>
+                />
               </button>
               <div
                 className={`overflow-hidden transition-all duration-300 ${
-                  openFaq === i ? 'max-h-52' : 'max-h-0'
+                  openFaq === i ? 'max-h-60' : 'max-h-0'
                 }`}
               >
                 <p className="px-5 pb-5 text-gray-400">{faq.a}</p>
@@ -362,37 +404,23 @@ export default function LaunchPageClient() {
             </div>
           ))}
         </div>
+
+        <p className="mt-8 text-center text-gray-500">
+          Still have questions?{' '}
+          <Link href="/demo" className="text-purple-400 hover:text-purple-300">
+            Book a 20-minute demo with our team →
+          </Link>
+        </p>
       </section>
 
-      {/* Final CTA */}
-      <section className="relative mx-auto max-w-4xl px-4 py-16">
-        <div className="overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-r from-purple-900/60 to-amber-900/40 p-8 text-center shadow-[0_8px_40px_rgba(251,191,36,0.2)] md:p-12">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-red-300">
-            <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-red-500" />
-            Only available to the first 100 customers
-          </div>
-
-          <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-            Don&apos;t Miss Your Chance
-          </h2>
-          <p className="mx-auto mb-8 max-w-xl text-gray-300">
-            Once we hit 100 Launch Customers, this offer closes permanently. Lock in your rate today and join the businesses shaping the future of CloudRent Pro.
-          </p>
-
-          <a
-            href="https://app.cloudrent.me/launch"
-            className="inline-block rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-5 text-lg font-bold text-purple-900 shadow-[0_8px_30px_rgba(251,191,36,0.4)] transition-all hover:from-amber-300 hover:to-amber-400"
-          >
-            Lock In Your Launch Price
-          </a>
-
-          <p className="mt-6 text-sm text-gray-500">
-            Questions? Contact us at{' '}
-            <a href="mailto:sales@cloudrent.me" className="text-purple-400 hover:text-purple-300">
-              sales@cloudrent.me
-            </a>
-          </p>
-        </div>
+      {/* Footer Note */}
+      <section className="border-t border-gray-800 py-8 text-center">
+        <p className="text-sm text-gray-400">
+          <span className="mr-1">🇦🇺</span> Proudly Australian <span className="ml-1">🇦🇺</span>
+        </p>
+        <p className="mt-1 text-xs text-gray-500">
+          Built on the Gold Coast, supporting businesses nationwide
+        </p>
       </section>
     </div>
   )
