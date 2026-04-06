@@ -318,7 +318,6 @@ const faqItems = [
 export default function HomePageClient() {
   const { days, hours, minutes, seconds, expired } = useCountdown()
   const [showFlyouts, setShowFlyouts] = useState(false)
-  const [videoOpen, setVideoOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   useEffect(() => {
@@ -336,11 +335,6 @@ export default function HomePageClient() {
         }
       `}</style>
 
-      <VideoModal
-        isOpen={videoOpen}
-        onClose={() => setVideoOpen(false)}
-        videoSrc="/videos/cloudrent-demo.mp4"
-      />
 
       {/* ═══════════════════════════════════════════════════════════════════════
           COUNTDOWN BANNER
@@ -418,13 +412,13 @@ export default function HomePageClient() {
                   <ChevronRight className="relative z-10 h-4 w-4 flex-shrink-0 transition-transform group-hover:translate-x-0.5" />
                 </a>
 
-                <button
-                  onClick={() => setVideoOpen(true)}
+                <Link
+                  href="/videos"
                   className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.06] px-5 py-4 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:bg-white/[0.10] hover:text-white"
                 >
                   <Play className="h-4 w-4" />
                   Watch 2-min demo
-                </button>
+                </Link>
               </div>
 
               {/* Trust chips */}
