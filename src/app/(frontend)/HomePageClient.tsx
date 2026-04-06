@@ -1109,6 +1109,17 @@ export default function HomePageClient() {
                   ))}
                 </div>
               </div>
+
+              {/* Safety Module Screenshot */}
+              <div className="mt-10">
+                <Image
+                  src="/images/cloudrent-safety-module.webp"
+                  alt="CloudRent Pro Safety & Compliance Module"
+                  width={1200}
+                  height={800}
+                  className="w-full rounded-xl shadow-2xl shadow-black/50"
+                />
+              </div>
             </div>
 
             {/* Hazard stripes - bottom */}
@@ -1168,8 +1179,257 @@ export default function HomePageClient() {
           {/* Subheading */}
           <p className="mb-8 text-center text-sm text-white/60">Hover to explore each platform</p>
 
-          {/* Platform Cards */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* Platform Cards with Mini Mockups - Desktop */}
+          <div className="relative hidden lg:block">
+            {/* Curved connector SVG */}
+            <svg
+              className="pointer-events-none absolute inset-x-0 bottom-0 w-full"
+              style={{ height: 80, bottom: -40 }}
+              viewBox="0 0 1000 80"
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#9731CB" />
+                  <stop offset="50%" stopColor="#c084fc" />
+                  <stop offset="100%" stopColor="#9731CB" />
+                </linearGradient>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+              {/* Curved path connecting all 4 cards */}
+              <path
+                d="M 125 0 Q 125 60, 250 60 Q 375 60, 375 0 M 375 0 Q 375 70, 500 70 Q 625 70, 625 0 M 625 0 Q 625 60, 750 60 Q 875 60, 875 0"
+                fill="none"
+                stroke="url(#connectorGradient)"
+                strokeWidth="2"
+                filter="url(#glow)"
+                opacity="0.8"
+              />
+              {/* Pulsing dots at connection points */}
+              {[125, 375, 625, 875].map((x, i) => (
+                <circle
+                  key={i}
+                  cx={x}
+                  cy={0}
+                  r="4"
+                  fill="#9731CB"
+                  filter="url(#glow)"
+                  className="animate-pulse"
+                />
+              ))}
+            </svg>
+
+            <div className="grid grid-cols-4 gap-3">
+              {/* Web Dashboard Card */}
+              <div className="group flex flex-col items-center gap-4 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#110a1a] to-[#0a0a14] px-4 py-5 transition-all duration-500 hover:-translate-y-2 hover:border-purple-500/30 hover:shadow-[0_0_50px_rgba(136,27,169,0.2)]">
+                <div className="flex w-full items-center gap-2">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-purple-500/25 bg-[#2d0a42]">
+                    <Monitor className="h-4 w-4 text-purple-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold leading-tight text-white">Web dashboard</div>
+                    <div className="text-[12px] text-white/60">Office command centre</div>
+                  </div>
+                </div>
+                {/* Mini mockup */}
+                <div className="w-full overflow-hidden rounded-xl border border-white/[0.06] bg-[#111827] text-[9px]">
+                  <div className="flex justify-between bg-purple-600 px-2.5 py-1.5">
+                    <span className="text-white/60">app.cloudrent.me</span>
+                    <span className="text-white/70">9:41 AM</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-px bg-white/[0.04] p-px">
+                    {[
+                      { val: '47', lbl: 'Active', c: 'text-purple-400' },
+                      { val: '$124K', lbl: 'Revenue', c: 'text-green-400' },
+                      { val: '234', lbl: 'Equip', c: 'text-blue-400' },
+                      { val: '189', lbl: 'Custs', c: 'text-orange-400' },
+                    ].map((s, i) => (
+                      <div key={i} className="bg-[#0f172a] p-1.5 text-center">
+                        <div className={`text-[11px] font-bold tabular-nums ${s.c}`}>{s.val}</div>
+                        <div className="text-white/25">{s.lbl}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-2">
+                    <div className="mb-1.5 text-white/25">Revenue (7 days)</div>
+                    <div className="flex h-8 items-end gap-0.5">
+                      {[55, 40, 75, 50, 90, 65, 85].map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex-1 rounded-t-sm bg-gradient-to-t from-purple-600 to-purple-400"
+                          style={{ height: `${h}%` }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Admin Card */}
+              <div className="group flex flex-col items-center gap-4 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#080e1a] to-[#0a0a14] px-4 py-5 transition-all duration-500 hover:-translate-y-2 hover:border-blue-500/30 hover:shadow-[0_0_50px_rgba(96,165,250,0.15)]">
+                <div className="flex w-full items-center gap-2">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-blue-500/25 bg-[#0c1e42]">
+                    <Smartphone className="h-4 w-4 text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold leading-tight text-white">Mobile admin</div>
+                    <div className="text-[12px] text-white/60">On the go, online or off</div>
+                  </div>
+                </div>
+                {/* Mini phone mockup */}
+                <div className="w-[108px] overflow-hidden rounded-[20px] border-2 border-white/10 bg-[#1a1a2e]">
+                  <div className="flex justify-between bg-[#0f0f1a] px-2.5 py-1.5 text-[7px] text-white/30">
+                    <span>9:41</span>
+                    <span>⚡87%</span>
+                  </div>
+                  <div className="bg-purple-600 px-2.5 py-1.5">
+                    <div className="text-[9px] font-medium text-white">Hi Sarah 👋</div>
+                    <div className="text-[7px] text-white/55">8 jobs today</div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-px bg-[#111827] p-0.5">
+                    {[
+                      { v: '3', l: 'Overdue', c: 'bg-red-600' },
+                      { v: '7', l: 'Services', c: 'bg-blue-600' },
+                      { v: '5', l: 'Pickups', c: 'bg-green-600' },
+                      { v: '8', l: 'Deliveries', c: 'bg-orange-500' },
+                    ].map((s, i) => (
+                      <div key={i} className={`${s.c} rounded-lg p-1.5 text-center text-white`}>
+                        <div className="text-sm font-bold">{s.v}</div>
+                        <div className="text-[6px] opacity-70">{s.l}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mx-1.5 mb-1.5 mt-1 rounded-lg bg-[#0f172a] p-1.5">
+                    <div className="mb-0.5 text-[6px] text-white/25">Today&apos;s revenue</div>
+                    <div className="text-[11px] font-bold tabular-nums text-purple-400">$4,650</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Driver App Card */}
+              <div className="group flex flex-col items-center gap-4 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#110c07] to-[#0a0a14] px-4 py-5 transition-all duration-500 hover:-translate-y-2 hover:border-orange-500/30 hover:shadow-[0_0_50px_rgba(251,146,60,0.15)]">
+                <div className="flex w-full items-center gap-2">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-orange-500/25 bg-[#2d1408]">
+                    <Truck className="h-4 w-4 text-orange-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold leading-tight text-white">Driver app</div>
+                    <div className="text-[12px] text-white/60">Field team connected</div>
+                  </div>
+                </div>
+                {/* Mini driver app mockup */}
+                <div className="w-[108px] overflow-hidden rounded-[20px] border-2 border-white/10 bg-[#1a1208]">
+                  <div className="flex justify-between bg-[#0a0906] px-2.5 py-1.5 text-[7px] text-white/30">
+                    <span>9:41</span>
+                    <span>📶</span>
+                  </div>
+                  <div className="bg-orange-500 px-2 py-1.5">
+                    <div className="mb-0.5 flex items-center gap-1">
+                      <Truck className="h-2 w-2 text-white" />
+                      <span className="text-[7px] font-semibold uppercase tracking-wide text-white">
+                        In progress
+                      </span>
+                    </div>
+                    <div className="truncate text-[10px] font-bold text-white">ABC Construction</div>
+                    <div className="mt-0.5 flex items-center gap-0.5 text-[6px] text-white/70">
+                      <MapPin className="h-1.5 w-1.5" />
+                      123 Builder St
+                    </div>
+                  </div>
+                  <div className="bg-[#111] px-1.5 py-2 text-center">
+                    <div className="mb-0.5 text-[6px] uppercase text-white/25">Time on job</div>
+                    <div className="font-mono text-base font-bold tabular-nums text-white">
+                      00:152:34
+                    </div>
+                    <div className="mt-1.5 flex justify-center gap-1">
+                      <div className="flex items-center gap-0.5 rounded-full bg-orange-500 px-1.5 py-0.5 text-[6px] text-white">
+                        Pause
+                      </div>
+                      <div className="flex items-center gap-0.5 rounded-full bg-green-600 px-1.5 py-0.5 text-[6px] text-white">
+                        ✓ Done
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-[#0d0d0d] px-2 py-1.5">
+                    <div className="mb-1 text-[6px] uppercase text-white/25">Items to deliver</div>
+                    {['Excavator 5T', 'Safety Kit', 'Fuel Can'].map((item, i) => (
+                      <div key={i} className="flex items-center gap-1 py-0.5 text-[8px] text-white/45">
+                        <CheckCircle className="h-2 w-2 flex-shrink-0 text-green-500" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Customer Portal Card */}
+              <div className="group flex flex-col items-center gap-4 rounded-2xl border border-white/[0.06] bg-gradient-to-b from-[#07110d] to-[#0a0a14] px-4 py-5 transition-all duration-500 hover:-translate-y-2 hover:border-green-500/30 hover:shadow-[0_0_50px_rgba(52,211,153,0.15)]">
+                <div className="flex w-full items-center gap-2">
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl border border-green-500/25 bg-[#04241a]">
+                    <Globe className="h-4 w-4 text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold leading-tight text-white">
+                      24/7 customer portal
+                    </div>
+                    <div className="text-[12px] text-white/60">Your customers, always served</div>
+                  </div>
+                </div>
+                {/* Mini portal mockup */}
+                <div className="w-full overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d1f17] text-[8px]">
+                  <div className="flex items-center gap-1.5 bg-[#111827] px-2 py-1">
+                    <div className="flex gap-0.5">
+                      <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                    </div>
+                    <div className="flex flex-1 items-center gap-1 truncate rounded bg-[#0f172a] px-1.5 py-0.5 text-[6px] text-white/25">
+                      <Globe className="h-1.5 w-1.5 flex-shrink-0" />
+                      hire.abcconstruction.com.au
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-r from-green-700 to-emerald-600 px-2 py-1.5">
+                    <div className="mb-0.5 text-[8px] font-bold text-white">Equipment Catalogue</div>
+                    <div className="flex items-center gap-1 rounded bg-white/20 px-1.5 py-0.5 text-[6px] text-white/55">
+                      Search equipment...
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1 p-1.5">
+                    {[
+                      { name: 'Mini Excavator 1.7T', price: '$185', avail: true },
+                      { name: 'Excavator 5T', price: '$320', avail: true },
+                      { name: 'Skid Steer', price: '$275', avail: false },
+                      { name: 'Plate Compactor', price: '$85', avail: true },
+                    ].map((item, i) => (
+                      <div key={i} className="rounded-lg border border-white/[0.04] bg-[#111f17] p-1">
+                        <div className="mb-0.5 truncate text-[6px] text-white/70">{item.name}</div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[7px] font-bold text-green-400">
+                            {item.price}
+                            <span className="text-[5px] text-white/20">/d</span>
+                          </span>
+                          <span
+                            className={`rounded px-1 py-0.5 text-[5px] ${item.avail ? 'bg-green-500/15 text-green-400' : 'bg-red-500/15 text-red-400'}`}
+                          >
+                            {item.avail ? '✓ Avail' : 'Booked'}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile stacked version */}
+          <div className="space-y-3 lg:hidden">
             {[
               {
                 icon: Monitor,
@@ -1177,7 +1437,6 @@ export default function HomePageClient() {
                 desc: 'Office command centre for bookings, invoicing & reports',
                 color: 'from-purple-500 to-fuchsia-500',
                 border: 'border-purple-500/20',
-                features: platformFeatures.dashboard,
               },
               {
                 icon: Smartphone,
@@ -1185,7 +1444,6 @@ export default function HomePageClient() {
                 desc: 'Full control on the go, works offline',
                 color: 'from-blue-500 to-cyan-500',
                 border: 'border-blue-500/20',
-                features: platformFeatures.mobile,
               },
               {
                 icon: Truck,
@@ -1193,7 +1451,6 @@ export default function HomePageClient() {
                 desc: 'Field crew deliveries, pickups & digital signatures',
                 color: 'from-orange-500 to-amber-500',
                 border: 'border-orange-500/20',
-                features: platformFeatures.driver,
               },
               {
                 icon: Globe,
@@ -1201,34 +1458,27 @@ export default function HomePageClient() {
                 desc: '24/7 self-service bookings for your customers',
                 color: 'from-emerald-500 to-teal-500',
                 border: 'border-emerald-500/20',
-                features: platformFeatures.portal,
               },
             ].map((platform, i) => (
               <div
                 key={i}
-                className={`group rounded-2xl border bg-white/[0.02] p-6 transition-all hover:-translate-y-1 hover:bg-white/[0.05] ${platform.border}`}
+                className={`flex items-center gap-4 rounded-2xl border bg-white/[0.03] p-4 ${platform.border}`}
               >
                 <div
-                  className={`mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${platform.color}`}
+                  className={`flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${platform.color}`}
                 >
-                  <platform.icon className="h-7 w-7 text-white" />
+                  <platform.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="mb-1 text-lg font-bold text-white">{platform.title}</h3>
-                <p className="mb-4 text-sm text-white/50">{platform.desc}</p>
-                <div className="space-y-2">
-                  {platform.features.slice(0, 3).map((feature, j) => (
-                    <div key={j} className="flex items-center gap-2 text-xs text-white/60">
-                      <feature.icon className="h-3.5 w-3.5 text-purple-400" />
-                      {feature.text}
-                    </div>
-                  ))}
+                <div>
+                  <h3 className="text-sm font-semibold text-white">{platform.title}</h3>
+                  <p className="text-xs text-white/40">{platform.desc}</p>
                 </div>
               </div>
             ))}
           </div>
 
           {/* Bottom connector line */}
-          <div className="mt-8 flex items-center justify-center">
+          <div className="mt-12 flex items-center justify-center">
             <div className="flex items-center gap-2 text-xs text-white/60">
               <div className="h-px w-8 bg-gradient-to-r from-transparent to-white/60" />
               <span>All synced in real-time</span>
