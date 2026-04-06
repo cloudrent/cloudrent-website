@@ -1,0 +1,923 @@
+'use client'
+
+import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import {
+  Phone,
+  Play,
+  CheckCircle,
+  ChevronRight,
+  X,
+  CalendarX2,
+  PhoneCall,
+  Flame,
+  Receipt,
+  ClipboardList,
+  EyeOff,
+  AlertTriangle,
+  Monitor,
+  Smartphone,
+  Truck,
+  Globe,
+  Shield,
+  Star,
+  BarChart3,
+  Users,
+  FileText,
+  Calendar,
+  Camera,
+  Mic,
+  Bell,
+  Route,
+  Timer,
+  MapPin,
+  PenTool,
+  ShoppingCart,
+  CreditCard,
+  Download,
+  MessageSquare,
+  Clock,
+  Wifi,
+  Zap,
+} from 'lucide-react'
+
+// ─── COUNTDOWN HOOK ───────────────────────────────────────────────────────────
+const DEADLINE = new Date('2026-05-01T13:59:59Z')
+
+interface TimeLeft {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+  expired: boolean
+}
+
+function useCountdown(): TimeLeft {
+  const calc = (): TimeLeft => {
+    const diff = DEADLINE.getTime() - Date.now()
+    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true }
+    return {
+      days: Math.floor(diff / 86400000),
+      hours: Math.floor((diff % 86400000) / 3600000),
+      minutes: Math.floor((diff % 3600000) / 60000),
+      seconds: Math.floor((diff % 60000) / 1000),
+      expired: false,
+    }
+  }
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calc)
+  useEffect(() => {
+    const t = setInterval(() => setTimeLeft(calc()), 1000)
+    return () => clearInterval(t)
+  }, [])
+  return timeLeft
+}
+
+// ─── VIDEO MODAL ──────────────────────────────────────────────────────────────
+
+function VideoModal({
+  isOpen,
+  onClose,
+  videoSrc,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  videoSrc: string
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen, onClose])
+
+  useEffect(() => {
+    if (!isOpen && videoRef.current) videoRef.current.pause()
+  }, [isOpen])
+
+  if (!isOpen) return null
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+      onClick={onClose}
+    >
+      <button
+        className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
+        onClick={onClose}
+      >
+        <X className="h-6 w-6 text-white" />
+      </button>
+      <div className="relative aspect-video w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+        <video ref={videoRef} className="h-full w-full rounded-xl" controls autoPlay>
+          <source src={videoSrc} type="video/mp4" />
+        </video>
+      </div>
+      <p className="absolute bottom-4 text-sm text-white/70">Click anywhere or press Esc to close</p>
+    </div>
+  )
+}
+
+// ─── FLOATING FLYOUT CARDS ────────────────────────────────────────────────────
+
+function FlyoutCard({
+  className,
+  children,
+  animationDelay = 0,
+  visible = true,
+  fadeInDelay = 0,
+}: {
+  className?: string
+  children: React.ReactNode
+  animationDelay?: number
+  visible?: boolean
+  fadeInDelay?: number
+}) {
+  return (
+    <div
+      className={`
+        absolute z-50 min-w-[200px] max-w-[220px] rounded-2xl
+        border border-purple-500/40 bg-[#0e0f14]/95
+        p-4 backdrop-blur-xl
+        shadow-[0_0_30px_rgba(136,27,169,0.2),0_20px_50px_rgba(0,0,0,0.5)]
+        transition-opacity duration-1000 ease-out
+        ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}
+        ${className}
+      `}
+      style={{
+        animation: visible ? `float 4s ease-in-out infinite` : 'none',
+        animationDelay: `${animationDelay}s`,
+        transitionDelay: `${fadeInDelay}s`,
+      }}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-50"
+        style={{
+          background: 'linear-gradient(135deg, rgba(136,27,169,0.1) 0%, transparent 50%)',
+        }}
+      />
+      <div className="relative z-10">{children}</div>
+    </div>
+  )
+}
+
+// ─── PROBLEM CARDS DATA ───────────────────────────────────────────────────────
+
+const problemCards = [
+  {
+    icon: CalendarX2,
+    title: 'Double Bookings',
+    subtitle: 'Double bookings that cost you revenue — and credibility',
+    description:
+      "The same piece of equipment gets promised twice. Now you're scrambling, calling customers back, refunding jobs, and damaging trust.",
+  },
+  {
+    icon: PhoneCall,
+    title: 'Constant Phone Calls',
+    subtitle: "Your phone never stops — and nothing gets done",
+    description:
+      "Staff call for updates. Customers chase availability. You're stuck answering questions all day instead of actually running the business.",
+  },
+  {
+    icon: Flame,
+    title: 'Dispatch Chaos',
+    subtitle: 'Every day starts in chaos — and only gets worse',
+    description:
+      'Whiteboards, last-minute changes, missing details. Drivers leave without the right info — and jobs go wrong before they even begin.',
+  },
+  {
+    icon: Receipt,
+    title: 'Delayed Invoices',
+    subtitle: "You've done the work — but you're still not getting paid",
+    description:
+      'Jobs are complete, but invoices sit in a pile. Days pass. Cash flow slows. Revenue delayed is growth delayed.',
+  },
+  {
+    icon: ClipboardList,
+    title: 'Scattered Safety Records',
+    subtitle: 'When something goes wrong — you have nothing to prove',
+    description:
+      "Safety docs are everywhere: emails, paper, notebooks. When an incident happens, you're scrambling to piece it together.",
+  },
+  {
+    icon: EyeOff,
+    title: 'No Business Visibility',
+    subtitle: "You're running your business blind",
+    description:
+      "You don't know where equipment is, which jobs are late, or who hasn't paid. Problems surface too late.",
+  },
+]
+
+// ─── PLATFORM FEATURES DATA ───────────────────────────────────────────────────
+
+const platformFeatures = {
+  dashboard: [
+    { icon: BarChart3, text: 'Real-time analytics & reports' },
+    { icon: FileText, text: 'Bulk invoice generation' },
+    { icon: Users, text: 'Customer CRM & history' },
+    { icon: Calendar, text: 'Equipment timeline view' },
+    { icon: Shield, text: 'Role-based access control' },
+  ],
+  mobile: [
+    { icon: Wifi, text: 'Works offline — syncs on reconnect' },
+    { icon: Bell, text: 'Push notifications for jobs' },
+    { icon: Camera, text: 'Photo uploads with GPS tags' },
+    { icon: Mic, text: 'Voice notes for quick updates' },
+    { icon: Clock, text: 'Staff clock in/out tracking' },
+  ],
+  driver: [
+    { icon: Route, text: 'Optimized delivery routes' },
+    { icon: PenTool, text: 'Digital proof of delivery' },
+    { icon: CheckCircle, text: 'Checklist workflows' },
+    { icon: Timer, text: 'Job time tracking' },
+    { icon: MapPin, text: 'Live GPS location' },
+  ],
+  portal: [
+    { icon: ShoppingCart, text: 'Online equipment booking' },
+    { icon: CreditCard, text: 'Self-service payments' },
+    { icon: Download, text: 'Invoice & document access' },
+    { icon: MessageSquare, text: 'Quote requests' },
+    { icon: Clock, text: 'Available 24/7' },
+  ],
+}
+
+// ─── TESTIMONIALS DATA ────────────────────────────────────────────────────────
+
+const testimonials = [
+  {
+    quote:
+      'Finally, a rental software system that uses the latest technology so we can access our database from anywhere. CloudRent is much more than just an invoicing tool — it simplifies deliveries and collections with its easy-to-navigate interface!',
+    author: 'Cameron Drake-Brockman',
+    company: 'HireRite Temporary Fence',
+    image: '/images/testimonials/Cam.png',
+    initials: 'CD',
+  },
+  {
+    quote:
+      'CloudRent is understanding our needs and building an onboarding, training and safety management system to manage workflow, maintenance and job details across civil, mining and transportation.',
+    author: 'Theo Tsorvas',
+    company: 'Consolidated Group',
+    image: '/images/testimonials/Theo.png',
+    initials: 'TT',
+  },
+  {
+    quote:
+      "Sub rentals and inventory management has always been an issue in other software. The guys at CloudRent are always there for you — they're quick to help with any issue promptly!",
+    author: 'David Duncalfe',
+    company: 'Excel Events',
+    image: '/images/testimonials/David.png',
+    initials: 'DD',
+  },
+]
+
+// ─── FAQ DATA ─────────────────────────────────────────────────────────────────
+
+const faqItems = [
+  {
+    question: 'Is this suitable for small and multi-location rental businesses?',
+    answer:
+      'Absolutely. CloudRent Pro scales from single-operator businesses to multi-depot enterprises. Our pricing is per-user, so you only pay for what you need.',
+  },
+  {
+    question: 'Can we manage safety and compliance in the same system?',
+    answer:
+      'Yes — safety is built in. You get digital SWMS, incident reporting, license tracking with expiry alerts, pre-start checklists, and a full audit trail.',
+  },
+  {
+    question: 'Does it work on mobile?',
+    answer:
+      'CloudRent Pro includes native mobile apps for iOS and Android. Your team can manage jobs, capture signatures, and access everything — even offline.',
+  },
+  {
+    question: 'Can customers book and pay online?',
+    answer:
+      'Yes. Your branded customer portal lets customers browse equipment, check availability, make bookings, and pay online — 24/7.',
+  },
+  {
+    question: 'Is this built for Australian businesses?',
+    answer:
+      '100%. CloudRent Pro is built and hosted in Australia. We handle GST correctly, integrate with Xero, and our support team is Gold Coast-based.',
+  },
+  {
+    question: 'How quickly can we get started?',
+    answer:
+      'Most businesses are up and running within a day. We offer free data migration and our onboarding team will help you configure everything.',
+  },
+]
+
+// ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
+
+export default function HomePageClient() {
+  const { days, hours, minutes, seconds, expired } = useCountdown()
+  const [showFlyouts, setShowFlyouts] = useState(false)
+  const [videoOpen, setVideoOpen] = useState(false)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowFlyouts(true), 3000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  return (
+    <div className="min-h-screen">
+      {/* CSS for animations */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+      `}</style>
+
+      <VideoModal
+        isOpen={videoOpen}
+        onClose={() => setVideoOpen(false)}
+        videoSrc="/videos/cloudrent-demo.mp4"
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          COUNTDOWN BANNER
+      ═══════════════════════════════════════════════════════════════════════ */}
+      {!expired && (
+        <div className="relative z-40 border-b border-green-500/20 bg-green-500/5 py-3">
+          <div className="mx-auto flex max-w-7xl items-center justify-center px-5">
+            <div className="inline-flex items-center gap-3 rounded-full border border-green-500/25 bg-green-500/10 px-5 py-2 backdrop-blur-sm">
+              <span className="relative flex h-4 w-4 flex-shrink-0">
+                <span
+                  className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"
+                  style={{ animationDuration: '2s' }}
+                />
+                <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500 shadow-[0_0_15px_rgba(74,222,128,1)]" />
+              </span>
+              <span className="text-sm text-green-100">
+                <strong className="text-white">$85/user/month locked for life</strong>
+                <span className="text-green-300/80"> · All Modules</span>
+                <span className="text-green-300/60"> · Closes in </span>
+                <span className="font-bold tabular-nums text-white">
+                  {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m{' '}
+                  {String(seconds).padStart(2, '0')}s
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          HERO SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden pb-8 pt-12">
+        {/* Ambient glow */}
+        <div
+          className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[1200px] -translate-x-1/2"
+          style={{
+            background: 'radial-gradient(ellipse at 50% 20%, rgba(136,27,169,0.15) 0%, transparent 60%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-5">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
+            {/* Left Column - Headlines */}
+            <div className="text-left">
+              <h1 className="mb-6 text-4xl font-black leading-[0.95] tracking-tight text-white md:text-5xl lg:text-6xl">
+                Still Juggling Multiple Systems?{' '}
+                <span className="block bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                  Run Your Entire Hire Business in One Platform — Not Five.
+                </span>
+              </h1>
+
+              <p className="mb-4 text-xl font-medium text-white/70 md:text-2xl">
+                No more missed jobs. No more double handling. No more chaos.
+              </p>
+
+              <p className="mb-8 max-w-lg text-lg leading-snug text-white/55">
+                Manage bookings, dispatch, invoicing, and safety — all in one system built for hire
+                businesses.
+              </p>
+
+              {/* CTAs */}
+              <div className="mb-8 flex flex-wrap gap-3">
+                <a
+                  href="https://app.cloudrent.me/register"
+                  className="group relative flex items-center gap-3 overflow-hidden rounded-xl bg-purple-600 px-7 py-4 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(136,27,169,0.45)]"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                  <div className="relative z-10 flex flex-col items-start">
+                    <span className="text-[15px] font-bold">Start Your $1 Trial</span>
+                    <span className="text-[11px] font-normal text-white/55">
+                      Full access · No setup · Cancel anytime
+                    </span>
+                  </div>
+                  <ChevronRight className="relative z-10 h-4 w-4 flex-shrink-0 transition-transform group-hover:translate-x-0.5" />
+                </a>
+
+                <button
+                  onClick={() => setVideoOpen(true)}
+                  className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.06] px-5 py-4 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:bg-white/[0.10] hover:text-white"
+                >
+                  <Play className="h-4 w-4" />
+                  Watch 2-min demo
+                </button>
+              </div>
+
+              {/* Trust chips */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/35">
+                {['Full access', 'No setup', 'Cancel anytime'].map((chip, i) => (
+                  <div key={i} className="flex items-center gap-1.5">
+                    <CheckCircle className="h-3 w-3 text-green-500/70" />
+                    {chip}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column - Dashboard + Flyouts */}
+            <div className="relative overflow-visible lg:pl-4">
+              <div className="relative lg:my-10 lg:origin-center lg:scale-[1.15]">
+                {/* Dashboard glow */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-60"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at center, rgba(136,27,169,0.2) 0%, transparent 70%)',
+                    transform: 'scale(1.1)',
+                    filter: 'blur(40px)',
+                  }}
+                />
+
+                {/* Dashboard Image */}
+                <Image
+                  src="/images/cloudrent-pro-dashboard-imacs-dark.webp"
+                  alt="CloudRent Pro Dashboard"
+                  width={2503}
+                  height={1906}
+                  priority
+                  className="relative z-10 w-full rounded-xl shadow-2xl shadow-black/50"
+                />
+
+                {/* Flyout: Today's Revenue */}
+                <FlyoutCard
+                  className="left-[0%] -top-[5%] hidden lg:-left-[8%] lg:block"
+                  animationDelay={0}
+                  visible={showFlyouts}
+                  fadeInDelay={0}
+                >
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/20">
+                      <span className="text-sm">💰</span>
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      Today&apos;s Revenue
+                    </span>
+                  </div>
+                  <div className="text-3xl font-black text-white">$1,550</div>
+                  <div className="mb-2 text-xs text-white/40">Across 7 active rentals</div>
+                  <div className="inline-flex items-center gap-1 rounded-full bg-green-500/15 px-2 py-1 text-[10px] font-bold text-green-400">
+                    ↑ 18% vs last week
+                  </div>
+                </FlyoutCard>
+
+                {/* Flyout: Maintenance Alert */}
+                <FlyoutCard
+                  className="-bottom-[6%] left-[6%] hidden lg:left-[0%] lg:block"
+                  animationDelay={0.8}
+                  visible={showFlyouts}
+                  fadeInDelay={0.3}
+                >
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/20">
+                      <span className="text-sm">🔧</span>
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      Maintenance Alert
+                    </span>
+                  </div>
+                  <div className="mb-0.5 text-sm font-bold text-white">Service Due in 3 Days</div>
+                  <div className="mb-2 text-xs text-white/40">20T Excavator · 250 hrs</div>
+                  <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-1 text-[10px] font-bold text-amber-400">
+                    ⚠ Schedule now
+                  </div>
+                </FlyoutCard>
+
+                {/* Flyout: AI Damage Detection */}
+                <FlyoutCard
+                  className="-right-[5%] -top-[16%] hidden lg:-right-[12%] lg:block"
+                  animationDelay={0.4}
+                  visible={showFlyouts}
+                  fadeInDelay={0.6}
+                >
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20">
+                      <span className="text-sm">🔍</span>
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      AI Damage Detection
+                    </span>
+                  </div>
+                  <div className="mb-1 text-sm font-bold text-white">Scratch · Right Side Panel</div>
+                  <div className="mb-1 text-xs text-white/40">
+                    Est. repair: <span className="text-white/70">$50</span>
+                  </div>
+                  <div className="mb-2 flex items-center justify-between text-xs">
+                    <span className="text-white/40">AI Confidence</span>
+                    <span className="font-bold text-purple-400">92%</span>
+                  </div>
+                  <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-1 text-[10px] font-bold text-amber-400">
+                    MODERATE severity
+                  </div>
+                </FlyoutCard>
+
+                {/* Flyout: Safety Compliance */}
+                <FlyoutCard
+                  className="-bottom-[2%] -right-[3%] hidden lg:-right-[10%] lg:block"
+                  animationDelay={1.2}
+                  visible={showFlyouts}
+                  fadeInDelay={0.9}
+                >
+                  <div className="mb-2 flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500/20">
+                      <span className="text-sm">🛡️</span>
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
+                      Safety Compliance
+                    </span>
+                  </div>
+                  <div className="text-3xl font-black text-white">100%</div>
+                  <div className="mb-2 text-xs text-white/40">SWMS signed · 5 active jobs</div>
+                  <div className="inline-flex items-center gap-1 rounded-full bg-green-500/15 px-2 py-1 text-[10px] font-bold text-green-400">
+                    ✓ Audit ready
+                  </div>
+                </FlyoutCard>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Logo Strip */}
+        <div className="relative z-10 mt-12 border-t border-white/[0.05] bg-black/20 py-8">
+          <div className="mx-auto max-w-7xl px-5">
+            <p className="mb-6 text-center text-sm text-white/40">
+              Trusted by hire & rental businesses across Australia
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
+              {[
+                { src: '/images/logos/Sydney-metro-scafs.png', alt: 'Sydney Metro Scaffolds' },
+                { src: '/images/logos/Safe-hire.png', alt: 'Safe Hire' },
+                { src: '/images/logos/Excel-events.png', alt: 'Excel Event Equipment Hire' },
+                { src: '/images/logos/Red-star-fence.png', alt: 'Red Star Fence' },
+                { src: '/images/logos/Micro-rentals.png', alt: 'Micro Rentals' },
+              ].map((logo, i) => (
+                <Image
+                  key={i}
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={200}
+                  height={78}
+                  className="h-[60px] w-auto object-contain opacity-60 brightness-0 invert transition-opacity hover:opacity-100"
+                />
+              ))}
+            </div>
+
+            {/* Integrations */}
+            <div className="mt-8 border-t border-white/[0.05] pt-6">
+              <p className="mb-4 text-center text-sm text-white/40">Integrates with</p>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/images/logos/xero-quickbooks-MYOB.png"
+                  alt="Xero, QuickBooks, MYOB integrations"
+                  width={740}
+                  height={179}
+                  className="h-12 w-auto object-contain opacity-70 transition-opacity hover:opacity-100"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          PROBLEM SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden py-20">
+        <div
+          className="pointer-events-none absolute left-0 right-0 top-0 h-32"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(136,27,169,0.05) 0%, transparent 100%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              The Reality
+            </p>
+            <h2 className="text-4xl font-black leading-tight text-white md:text-5xl">
+              Running a hire business
+              <br />
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                shouldn&apos;t feel like this
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {problemCards.map((card, i) => (
+              <div
+                key={i}
+                className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at 50% 0%, rgba(136,27,169,0.15) 0%, transparent 70%)',
+                  }}
+                />
+                <div className="relative z-10">
+                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-purple-500/15">
+                    <card.icon className="h-8 w-8 text-purple-500" />
+                  </div>
+                  <h3 className="mb-1 text-lg font-extrabold uppercase text-white">{card.title}</h3>
+                  <p className="mb-2 text-sm font-bold leading-snug text-white/80">{card.subtitle}</p>
+                  <p className="text-sm leading-snug text-white/60">{card.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          SOLUTION SECTION - PLATFORM ECOSYSTEM
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden py-20">
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              The Solution
+            </p>
+            <h2 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
+              One platform.{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                Every role covered.
+              </span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-white/60">
+              From office to field to customer — everyone works from the same system, synced in
+              real-time.
+            </p>
+          </div>
+
+          {/* Platform Cards */}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: Monitor,
+                title: 'Web Dashboard',
+                desc: 'Office command centre for bookings, invoicing & reports',
+                color: 'from-purple-500 to-fuchsia-500',
+                border: 'border-purple-500/20',
+                features: platformFeatures.dashboard,
+              },
+              {
+                icon: Smartphone,
+                title: 'Mobile Admin',
+                desc: 'Full control on the go, works offline',
+                color: 'from-blue-500 to-cyan-500',
+                border: 'border-blue-500/20',
+                features: platformFeatures.mobile,
+              },
+              {
+                icon: Truck,
+                title: 'Driver App',
+                desc: 'Field crew deliveries, pickups & digital signatures',
+                color: 'from-orange-500 to-amber-500',
+                border: 'border-orange-500/20',
+                features: platformFeatures.driver,
+              },
+              {
+                icon: Globe,
+                title: 'Customer Portal',
+                desc: '24/7 self-service bookings for your customers',
+                color: 'from-emerald-500 to-teal-500',
+                border: 'border-emerald-500/20',
+                features: platformFeatures.portal,
+              },
+            ].map((platform, i) => (
+              <div
+                key={i}
+                className={`group rounded-2xl border bg-white/[0.02] p-6 transition-all hover:-translate-y-1 hover:bg-white/[0.05] ${platform.border}`}
+              >
+                <div
+                  className={`mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${platform.color}`}
+                >
+                  <platform.icon className="h-7 w-7 text-white" />
+                </div>
+                <h3 className="mb-1 text-lg font-bold text-white">{platform.title}</h3>
+                <p className="mb-4 text-sm text-white/50">{platform.desc}</p>
+                <div className="space-y-2">
+                  {platform.features.slice(0, 3).map((feature, j) => (
+                    <div key={j} className="flex items-center gap-2 text-xs text-white/60">
+                      <feature.icon className="h-3.5 w-3.5 text-purple-400" />
+                      {feature.text}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-center text-lg text-white/70">
+            All synced in <span className="font-bold text-white">real-time</span>
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          TESTIMONIALS SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2">
+              <Star className="h-4 w-4 fill-green-400 text-green-400" />
+              <span className="text-sm font-medium text-green-400">
+                Trusted by hire businesses across Australia
+              </span>
+            </div>
+            <h2 className="text-4xl font-black text-white md:text-5xl">
+              What our{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                customers say
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:bg-white/[0.05]"
+              >
+                <div className="mb-4 flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <p className="mb-6 flex-grow text-sm italic leading-relaxed text-white/70">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <div className="mt-auto flex items-center gap-4 border-t border-white/10 pt-4">
+                  {testimonial.image ? (
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.author}
+                      width={48}
+                      height={48}
+                      className="rounded-full border-2 border-purple-500/30 object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-purple-500/20">
+                      <span className="font-semibold text-purple-400">{testimonial.initials}</span>
+                    </div>
+                  )}
+                  <div>
+                    <div className="font-semibold text-white">{testimonial.author}</div>
+                    <div className="text-sm text-white/50">{testimonial.company}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          LAUNCH PARTNER CTA SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full py-20">
+        <div className="mx-auto max-w-4xl px-5">
+          <div className="overflow-hidden rounded-3xl border border-purple-500/30 bg-gradient-to-b from-purple-900/40 to-purple-900/20 p-8 text-center md:p-12">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-green-300">
+              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-green-500" />
+              Limited to first 100 launch partners
+            </div>
+
+            <h2 className="mb-2 text-4xl font-black text-white md:text-5xl">
+              Lock in{' '}
+              <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                $85
+              </span>
+              <span className="text-xl text-white/70">/user/month</span>
+            </h2>
+            <p className="mb-8 text-white/40">— locked in for life —</p>
+
+            <div className="mb-8 inline-flex flex-wrap items-center justify-center gap-4 text-sm text-white/60">
+              {['Every module included', 'Priority onboarding', 'Direct developer access'].map(
+                (item, i) => (
+                  <span key={i} className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400" />
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
+
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <a
+                href="https://app.cloudrent.me/launch"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-green-600 px-8 py-4 font-bold text-white transition-all hover:bg-green-500 hover:shadow-[0_8px_32px_rgba(34,197,94,0.3)] sm:w-auto"
+              >
+                Lock in Launch Partner Pricing
+                <ChevronRight className="h-5 w-5" />
+              </a>
+              <Link
+                href="/demo"
+                className="flex items-center gap-2 text-white/60 transition-colors hover:text-white"
+              >
+                <Phone className="h-4 w-4" />
+                Book a demo first
+              </Link>
+            </div>
+
+            {/* Countdown */}
+            {!expired && (
+              <div className="mt-8 border-t border-white/[0.08] pt-8">
+                <p className="mb-4 text-xs uppercase tracking-wider text-white/40">Offer closes in</p>
+                <div className="flex items-center justify-center gap-2">
+                  {[
+                    { value: days, label: 'Days' },
+                    { value: hours, label: 'Hrs' },
+                    { value: minutes, label: 'Min' },
+                    { value: seconds, label: 'Sec' },
+                  ].map((unit, i) => (
+                    <div key={i} className="min-w-[60px] rounded-lg bg-white/[0.05] px-3 py-2">
+                      <div className="text-2xl font-bold tabular-nums text-white">
+                        {String(unit.value).padStart(2, '0')}
+                      </div>
+                      <div className="text-[9px] uppercase text-white/30">{unit.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          FAQ SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full py-20">
+        <div className="mx-auto max-w-3xl px-5">
+          <div className="mb-10 text-center">
+            <h2 className="mb-3 text-3xl font-bold text-white md:text-4xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-white/70">Got questions? We&apos;ve got answers.</p>
+          </div>
+
+          <div className="space-y-3">
+            {faqItems.map((item, i) => (
+              <div
+                key={i}
+                className="overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02]"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="flex w-full items-center justify-between p-5 text-left transition-colors hover:bg-white/[0.02]"
+                >
+                  <span className="pr-4 font-medium text-white">{item.question}</span>
+                  <ChevronRight
+                    className={`h-5 w-5 flex-shrink-0 text-white/40 transition-transform ${
+                      openFaq === i ? 'rotate-90' : ''
+                    }`}
+                  />
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-5">
+                    <p className="text-sm leading-snug text-white/60">{item.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-center text-sm text-white/40">
+            Still have questions?{' '}
+            <Link href="/demo" className="text-purple-400 hover:text-purple-300">
+              Book a 20-minute demo with our team →
+            </Link>
+          </p>
+        </div>
+      </section>
+    </div>
+  )
+}
