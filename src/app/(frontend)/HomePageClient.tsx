@@ -40,6 +40,9 @@ import {
   Clock,
   Wifi,
   Zap,
+  Eye,
+  FileSignature,
+  RefreshCw,
 } from 'lucide-react'
 
 // ─── COUNTDOWN HOOK ───────────────────────────────────────────────────────────
@@ -311,6 +314,117 @@ const faqItems = [
     answer:
       'Most businesses are up and running within a day. We offer free data migration and our onboarding team will help you configure everything.',
   },
+]
+
+// ─── AGITATION SECTION DATA ──────────────────────────────────────────────────
+
+const agitationBullets = [
+  { text: 'Mistakes slip through the cracks and ', bold: 'cost you customers' },
+  { text: 'WHS compliance becomes ', bold: 'impossible to prove', suffix: ' after an incident' },
+  { text: 'Payments get delayed, ', bold: 'cash flow suffers', suffix: ', growth slows down' },
+  { text: 'Good staff leave because their tools ', bold: 'make the job harder' },
+  { text: "You can't scale ", bold: "what you can't control" },
+]
+
+// ─── INTEGRATED FEATURES DATA ────────────────────────────────────────────────
+
+const integratedFeatures = [
+  { icon: Eye, title: 'AI Damage', description: 'Catch Damage Before It Costs You' },
+  { icon: FileSignature, title: 'Digital Signatures', description: 'No Paperwork. No Delays.' },
+  {
+    icon: Calendar,
+    title: 'Real-Time Availability',
+    description: "Know What's Available — Instantly",
+  },
+  {
+    icon: RefreshCw,
+    title: 'Accounting Integration',
+    description: 'Your Books Stay Accurate — Automatically',
+  },
+  { icon: MessageSquare, title: 'Comms Hub', description: 'Stop Chasing Calls & Messages' },
+  { icon: Wifi, title: 'Offline Mode', description: 'Work Anywhere — No Downtime' },
+  { icon: MapPin, title: 'GPS Tracking', description: 'Know Where Your Equipment & Team Are' },
+  { icon: Clock, title: 'Time Clock', description: 'Accurate Hours — Without the Hassle' },
+  { icon: Camera, title: 'Photo Inspections', description: 'Proof, Every Time' },
+  { icon: BarChart3, title: 'Analytics', description: "See What's Actually Happening" },
+]
+
+// ─── OUTCOMES SECTION DATA ───────────────────────────────────────────────────
+
+const outcomesBenefits = [
+  {
+    title: 'No more double bookings',
+    subtitle: 'Every job is accurate — every time',
+    description:
+      'Live availability across all locations means you never promise the same equipment twice or scramble to fix mistakes.',
+  },
+  {
+    title: 'Fewer phone calls',
+    subtitle: 'Your team stops chasing — and starts executing',
+    description:
+      'Staff, drivers, and customers get what they need instantly in the app — no constant calls, no interruptions.',
+  },
+  {
+    title: 'Invoices go out the same day',
+    subtitle: 'Get paid faster — without the backlog',
+    description:
+      'Completed jobs turn into invoices instantly, so cash flow stays consistent and predictable.',
+  },
+  {
+    title: 'Always audit-ready',
+    subtitle: 'Compliance handled — without the stress',
+    description:
+      'Every signature, inspection, and incident is tracked, timestamped, and ready when you need it.',
+  },
+  {
+    title: 'Full business visibility',
+    subtitle: "Know exactly what's happening — at all times",
+    description:
+      "See where your equipment is, what's overdue, and what needs attention — without chasing information.",
+  },
+]
+
+const outcomesStats = [
+  { value: '87%', label: 'Fewer admin errors' },
+  { value: '3.2×', label: 'Faster job processing' },
+  { value: '100%', label: 'Audit-ready compliance tracking' },
+]
+
+// ─── SOCIAL PROOF SECTION DATA ───────────────────────────────────────────────
+
+const speedMetrics = [
+  {
+    icon: Clock,
+    value: '2-4 weeks',
+    label: 'New Features — In Weeks, Not Months',
+    description:
+      "You don't wait forever for improvements. We ship updates fast so your business keeps evolving.",
+  },
+  {
+    icon: Zap,
+    value: '24hr',
+    label: 'Issues Fixed Before They Slow You Down',
+    description:
+      "Bugs don't sit in a queue for weeks. We resolve problems quickly so your operations keep running smoothly.",
+  },
+  {
+    icon: Users,
+    value: 'Direct',
+    label: 'Talk Directly to the People Building It',
+    description:
+      'No layers. No ticket black holes. Get direct access to our team — and actually be heard.',
+  },
+]
+
+const trustBadges = [
+  { icon: Shield, label: '30-Day Money Back', sublabel: 'No questions asked', isAustralian: false },
+  {
+    icon: CheckCircle,
+    label: 'Australian Built',
+    sublabel: 'Gold Coast-based team',
+    isAustralian: true,
+  },
+  { icon: Zap, label: 'Free Migration', sublabel: "We'll move your data", isAustralian: false },
 ]
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
@@ -649,6 +763,98 @@ export default function HomePageClient() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════
+          AGITATION SECTION - WARNING BOX
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden py-16">
+        <div className="mx-auto max-w-6xl px-5">
+          {/* Contained warning box with hazard stripes */}
+          <div className="relative overflow-hidden rounded-2xl bg-[#0a0a0a]">
+            {/* Hazard stripes - top */}
+            <div
+              className="h-4"
+              style={{
+                background:
+                  'repeating-linear-gradient(45deg, #000 0px, #000 12px, #f59e0b 12px, #f59e0b 24px)',
+              }}
+            />
+
+            {/* Amber ambient glow */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(ellipse at 20% 50%, rgba(245,158,11,0.08) 0%, transparent 50%)',
+              }}
+            />
+
+            <div className="relative z-10 px-8 py-10">
+              <div className="grid items-center gap-10 md:grid-cols-2">
+                {/* Left - Warning beacon + Headline */}
+                <div>
+                  {/* Pulsing warning light */}
+                  <div className="mb-6 flex items-center gap-4">
+                    <div className="relative">
+                      <div
+                        className="absolute inset-0 animate-ping rounded-full bg-amber-500 opacity-75"
+                        style={{ animationDuration: '1.5s' }}
+                      />
+                      <div
+                        className="absolute inset-0 scale-150 rounded-full bg-amber-500/50 blur-xl"
+                        style={{ animation: 'pulse 1.5s ease-in-out infinite' }}
+                      />
+                      <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-amber-500 shadow-[0_0_60px_rgba(245,158,11,0.9),0_0_100px_rgba(245,158,11,0.5)]">
+                        <AlertTriangle className="h-8 w-8 text-black" />
+                      </div>
+                    </div>
+                    <span className="text-sm font-bold uppercase tracking-widest text-amber-500">
+                      Warning
+                    </span>
+                  </div>
+
+                  <h2 className="text-3xl font-black leading-tight text-white md:text-4xl">
+                    It&apos;s not just
+                    <br />
+                    inefficient —
+                    <br />
+                    <span className="text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]">
+                      it&apos;s risky.
+                    </span>
+                  </h2>
+                  <p className="mt-4 text-xl font-medium text-white/60 md:text-2xl">
+                    Every workaround you&apos;ve built is a{' '}
+                    <span className="font-bold text-white">liability</span> waiting to surface.
+                  </p>
+                </div>
+
+                {/* Right - Bullet Points */}
+                <div className="space-y-4">
+                  {agitationBullets.map((bullet, i) => (
+                    <div key={i} className="flex items-start gap-4 text-lg text-white/80">
+                      <AlertTriangle className="mt-0.5 h-8 w-8 flex-shrink-0 text-amber-500" />
+                      <span>
+                        {bullet.text}
+                        <strong className="font-semibold text-white">{bullet.bold}</strong>
+                        {bullet.suffix || ''}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Hazard stripes - bottom */}
+            <div
+              className="h-4"
+              style={{
+                background:
+                  'repeating-linear-gradient(45deg, #000 0px, #000 12px, #f59e0b 12px, #f59e0b 24px)',
+              }}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
           SOLUTION SECTION - PLATFORM ECOSYSTEM
       ═══════════════════════════════════════════════════════════════════════ */}
       <section className="relative w-full overflow-hidden py-20">
@@ -731,6 +937,201 @@ export default function HomePageClient() {
           <p className="mt-8 text-center text-lg text-white/70">
             All synced in <span className="font-bold text-white">real-time</span>
           </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          INTEGRATED FEATURES SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden py-20">
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          {/* Section Header */}
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              Integrated Features
+            </p>
+            <h2 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
+              Everything Works Together —
+              <br />
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                Automatically
+              </span>
+            </h2>
+            <p className="mx-auto max-w-3xl text-lg text-white/70">
+              Stop switching between systems, chasing updates, and fixing mistakes. CloudRent Pro
+              connects everything — so your business runs smoothly without constant input.
+            </p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+            {integratedFeatures.map((feature, i) => (
+              <div
+                key={i}
+                className="group rounded-xl border border-white/[0.08] bg-white/[0.03] p-6 text-center transition-all duration-300 hover:border-purple-500/30 hover:bg-white/[0.06]"
+              >
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-purple-500/15 transition-colors group-hover:bg-purple-500/25">
+                  <feature.icon className="h-8 w-8 text-purple-500" />
+                </div>
+                <h3 className="mb-2 text-sm font-bold uppercase leading-snug tracking-wide text-white">
+                  {feature.title}
+                </h3>
+                <p className="text-sm leading-snug text-white/70">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          OUTCOMES SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden bg-[#0a0a12] py-20">
+        {/* Subtle gradient */}
+        <div
+          className="pointer-events-none absolute left-0 right-0 top-0 h-32"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(136,27,169,0.05) 0%, transparent 100%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          {/* Section Header */}
+          <div className="mb-12">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              What Changes
+            </p>
+            <h2 className="text-4xl font-black leading-tight text-white md:text-5xl">
+              What Changes When
+              <br />
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                You Make The Switch
+              </span>
+            </h2>
+          </div>
+
+          {/* Two Column Layout */}
+          <div className="grid items-start gap-10 lg:grid-cols-2">
+            {/* Left - Benefits List */}
+            <div className="space-y-3">
+              {outcomesBenefits.map((benefit, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 border-b border-white/[0.06] pb-3 last:border-0"
+                >
+                  <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-green-500/20">
+                    <CheckCircle className="h-4 w-4 text-green-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">{benefit.title}</h3>
+                    <p className="mb-1 text-base font-semibold text-purple-500">{benefit.subtitle}</p>
+                    <p className="text-sm leading-snug text-white/60">{benefit.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right - Stats Card */}
+            <div className="rounded-2xl border border-white/[0.08] bg-[#0e0f14] p-8">
+              <div className="space-y-8">
+                {outcomesStats.map((stat, i) => (
+                  <div key={i} className="text-center">
+                    <div className="mb-3 bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-7xl font-black text-transparent md:text-8xl">
+                      {stat.value}
+                    </div>
+                    <p className="text-lg font-bold text-white/70">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA Button */}
+              <a
+                href="https://app.cloudrent.me/register"
+                className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-purple-600 px-6 py-4 font-semibold text-white transition-all hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
+              >
+                Start Your $1 Trial →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          WE SHIP FAST SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full overflow-hidden py-20">
+        {/* Background ambient glow */}
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(136,27,169,0.06) 0%, transparent 60%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          {/* Header */}
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              Built Different
+            </p>
+            <h2 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
+              We Ship Fast —{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                So You Don&apos;t Stay Stuck
+              </span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-white/70">
+              Stop waiting months for features while your business struggles. We listen, build, and
+              deliver quickly — so you can keep moving forward.
+            </p>
+          </div>
+
+          {/* Speed Metrics */}
+          <div className="mb-16 grid gap-5 md:grid-cols-3">
+            {speedMetrics.map((metric, i) => (
+              <div
+                key={i}
+                className="group rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 text-center transition-all duration-300 hover:border-purple-500/30 hover:bg-white/[0.06]"
+              >
+                <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-purple-500/15 transition-colors group-hover:bg-purple-500/25">
+                  <metric.icon className="h-7 w-7 text-purple-500" />
+                </div>
+                <div className="mb-2 text-3xl font-black text-white md:text-4xl">{metric.value}</div>
+                <p className="mb-2 font-medium text-white">{metric.label}</p>
+                <p className="text-sm leading-snug text-white/70">{metric.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust Badges */}
+          <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-3">
+            {trustBadges.map((badge, i) => (
+              <div
+                key={i}
+                className={`flex items-center gap-4 rounded-xl border bg-white/[0.03] p-4 ${
+                  badge.isAustralian
+                    ? 'border-green-500/30 bg-green-500/[0.03]'
+                    : 'border-white/[0.08]'
+                }`}
+              >
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/15">
+                  {badge.isAustralian ? (
+                    <span className="text-2xl">🇦🇺</span>
+                  ) : (
+                    <badge.icon className="h-6 w-6 text-green-400" />
+                  )}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 text-sm font-semibold text-white">
+                    {badge.label}
+                    {badge.isAustralian && <CheckCircle className="h-4 w-4 text-green-400" />}
+                  </div>
+                  <div className="text-xs text-white/40">{badge.sublabel}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
