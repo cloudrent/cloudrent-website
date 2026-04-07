@@ -2,11 +2,133 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import {
+  Shield,
+  FileText,
+  CheckCircle,
+  ChevronRight,
+  Play,
+  AlertTriangle,
+  Clock,
+  PenTool,
+  Camera,
+  Bell,
+  FolderOpen,
+  Smartphone,
+  Users,
+  Wrench,
+  HardHat,
+  Truck,
+  Clapperboard,
+  TreePine,
+} from 'lucide-react'
 import { useUTMParams } from '@/hooks/useUTMParams'
 import {
   trackLandingPageEvent,
   trackLandingPageView,
 } from '@/utilities/trackLandingPageEvent'
+
+// ============================================
+// DATA
+// ============================================
+
+const painPoints = [
+  {
+    icon: FileText,
+    title: 'No SWMS = No Cover',
+    subtitle: 'Safe Work Australia holds you responsible',
+    description:
+      'If your equipment is on a worksite without a valid Safe Work Method Statement, you\'re liable. Full stop. No SWMS, no legal protection.',
+  },
+  {
+    icon: FolderOpen,
+    title: 'Paper Forms Get Lost',
+    subtitle: 'Scrambling for paperwork is not a defence',
+    description:
+      'Clipboards go missing. PDFs sit in email chains. When an inspector arrives, scrambling for paperwork won\'t protect you.',
+  },
+  {
+    icon: PenTool,
+    title: 'Signatures Disputed',
+    subtitle: 'No proof anyone actually read and agreed',
+    description:
+      'Paper sign-offs are easily disputed. Without timestamped digital records, you have no proof anyone actually agreed to the SWMS.',
+  },
+  {
+    icon: Clock,
+    title: 'Expired Documents',
+    subtitle: 'A full-time job keeping track',
+    description:
+      'SWMS documents expire. Tracking what\'s current across multiple jobs is a nightmare. Equipment goes to site on expired documents.',
+  },
+]
+
+const features = [
+  {
+    icon: FileText,
+    title: 'SWMS Creation',
+    description:
+      'Build Safe Work Method Statements directly inside CloudRent Pro. Guided workflow for hazards, controls, and task steps.',
+    tag: 'Built In',
+  },
+  {
+    icon: PenTool,
+    title: 'Digital Sign-Off',
+    description:
+      'Multiple signatories. On-site signing via mobile. Timestamped, legally sound, stored against the booking.',
+    tag: 'Mobile Ready',
+  },
+  {
+    icon: Camera,
+    title: 'Photo Evidence',
+    description:
+      'Attach photos of site conditions to the SWMS. Documented proof of what was assessed on the day.',
+    tag: 'Site Proof',
+  },
+  {
+    icon: FileText,
+    title: 'PDF Generation',
+    description:
+      'Generate professional SWMS PDFs on demand. Share with site managers, inspectors, or clients in seconds.',
+    tag: 'Instant PDF',
+  },
+  {
+    icon: Bell,
+    title: 'Expiry Alerts',
+    description:
+      'CloudRent Pro tracks every SWMS and flags documents before they expire. Never send equipment on an expired document.',
+    tag: 'Auto-Alerts',
+  },
+  {
+    icon: FolderOpen,
+    title: 'Audit-Ready Records',
+    description:
+      'Every SWMS stored against the booking, linked to the customer. Status tracked: Draft → Pending → Active.',
+    tag: 'Fully Traceable',
+  },
+]
+
+const segments = [
+  { icon: HardHat, name: 'Construction & Plant Hire' },
+  { icon: Wrench, name: 'Scaffold & Fencing' },
+  { icon: Wrench, name: 'Tool Hire' },
+  { icon: Users, name: 'Event & Party Hire' },
+  { icon: Clapperboard, name: 'AV & Film' },
+  { icon: TreePine, name: 'Landscaping & Civil' },
+]
+
+const proofItems = [
+  'Construction & Plant Hire',
+  'Scaffold & Fencing',
+  'Tool Hire',
+  'Event & Party',
+  'AV & Film',
+  'Australian-Made. GST Ready.',
+]
+
+// ============================================
+// COMPONENT
+// ============================================
 
 export default function SafetyComplianceClient() {
   const utmString = useUTMParams()
@@ -27,1242 +149,383 @@ export default function SafetyComplianceClient() {
     trackLandingPageEvent('nav_cta_click', 'safety')
   }
 
+  const trialUrl = `https://app.cloudrent.me/register${utmString}`
+  const demoUrl = `/demo${utmString}`
+
   return (
-    <>
-      <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap');
-
-        :root {
-          --sc-black: #21152b;
-          --sc-steel: #2a1540;
-          --sc-mid: #3a1f55;
-          --sc-border: #4d2068;
-          --sc-yellow: #9731cb;
-          --sc-yellow2: #881ba9;
-          --sc-white: #f0f0f0;
-          --sc-muted: #8a93ab;
-          --sc-danger: #e84040;
-          --sc-green: #27c47a;
-          --sc-font-display: 'Barlow Condensed', sans-serif;
-          --sc-font-body: 'Barlow', sans-serif;
-        }
-
-        .safety-page {
-          background: #21152b;
-          color: var(--sc-white);
-          font-family: var(--sc-font-body);
-          font-size: 16px;
-          line-height: 1.6;
-          overflow-x: hidden;
-          min-height: 100vh;
-        }
-
-        /* NAV */
-        .sc-nav {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 100;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 18px 40px;
-          background: rgba(13, 13, 13, 0.92);
-          backdrop-filter: blur(12px);
-          border-bottom: 1px solid var(--sc-border);
-        }
-
-        .sc-nav-logo {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: 22px;
-          letter-spacing: 0.04em;
-          color: var(--sc-white);
-          text-decoration: none;
-        }
-
-        .sc-nav-logo span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-nav-cta {
-          background: var(--sc-yellow);
-          color: var(--sc-black);
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 15px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          padding: 10px 24px;
-          border: none;
-          cursor: pointer;
-          text-decoration: none;
-          transition: background 0.2s;
-        }
-
-        .sc-nav-cta:hover {
-          background: var(--sc-yellow2);
-        }
-
-        /* HERO */
-        .sc-hero {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 140px 40px 80px;
-          position: relative;
-          overflow: hidden;
-          background: repeating-linear-gradient(
-              -45deg,
-              transparent,
-              transparent 28px,
-              rgba(151, 49, 203, 0.03) 28px,
-              rgba(151, 49, 203, 0.03) 30px
-            ),
-            linear-gradient(160deg, #0d0d0d 0%, #141824 100%);
-        }
-
-        .sc-hero::before {
-          content: 'SAFETY';
-          position: absolute;
-          right: -60px;
-          top: 50%;
-          transform: translateY(-50%) rotate(90deg);
-          font-family: var(--sc-font-display);
-          font-size: 240px;
-          font-weight: 900;
-          color: rgba(151, 49, 203, 0.04);
-          letter-spacing: 0.1em;
-          white-space: nowrap;
-          pointer-events: none;
-          user-select: none;
-        }
-
-        .sc-hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          background: rgba(232, 64, 64, 0.12);
-          border: 1px solid rgba(232, 64, 64, 0.35);
-          color: #ff6b6b;
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 13px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          padding: 7px 16px;
-          margin-bottom: 32px;
-          width: fit-content;
-        }
-
-        .sc-hero-badge::before {
-          content: '';
-          width: 8px;
-          height: 8px;
-          background: #e84040;
-          border-radius: 50%;
-          animation: sc-pulse 1.6s infinite;
-        }
-
-        @keyframes sc-pulse {
-          0%,
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.4;
-            transform: scale(1.4);
-          }
-        }
-
-        .sc-hero h1 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(52px, 7vw, 96px);
-          line-height: 0.95;
-          letter-spacing: -0.01em;
-          text-transform: uppercase;
-          max-width: 820px;
-          margin-bottom: 28px;
-        }
-
-        .sc-hero h1 em {
-          font-style: normal;
-          color: var(--sc-yellow);
-          display: block;
-        }
-
-        .sc-hero-sub {
-          font-size: 20px;
-          color: var(--sc-muted);
-          max-width: 560px;
-          margin-bottom: 48px;
-          line-height: 1.55;
-        }
-
-        .sc-hero-sub strong {
-          color: var(--sc-white);
-        }
-
-        .sc-hero-actions {
-          display: flex;
-          align-items: center;
-          gap: 24px;
-          flex-wrap: wrap;
-        }
-
-        .sc-btn-primary {
-          background: var(--sc-yellow);
-          color: var(--sc-black);
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 18px;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          padding: 18px 40px;
-          border: none;
-          cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
-          transition: all 0.2s;
-          position: relative;
-        }
-
-        .sc-btn-primary::after {
-          content: '';
-          position: absolute;
-          bottom: -4px;
-          right: -4px;
-          width: 100%;
-          height: 100%;
-          border: 2px solid var(--sc-yellow);
-          transition: all 0.2s;
-        }
-
-        .sc-btn-primary:hover {
-          background: var(--sc-yellow2);
-        }
-
-        .sc-btn-primary:hover::after {
-          bottom: -6px;
-          right: -6px;
-        }
-
-        .sc-btn-ghost {
-          color: var(--sc-white);
-          font-family: var(--sc-font-display);
-          font-weight: 600;
-          font-size: 16px;
-          letter-spacing: 0.04em;
-          text-decoration: none;
-          border-bottom: 2px solid var(--sc-border);
-          padding-bottom: 2px;
-          transition: border-color 0.2s, color 0.2s;
-        }
-
-        .sc-btn-ghost:hover {
-          border-color: var(--sc-yellow);
-          color: var(--sc-yellow);
-        }
-
-        .sc-hero-trial-note {
-          margin-top: 16px;
-          font-size: 13px;
-          color: var(--sc-muted);
-          letter-spacing: 0.02em;
-        }
-
-        /* PROOF BAR */
-        .sc-proof-bar {
-          background: var(--sc-steel);
-          border-top: 1px solid var(--sc-border);
-          border-bottom: 1px solid var(--sc-border);
-          padding: 20px 40px;
-          display: flex;
-          align-items: center;
-          gap: 48px;
-          overflow-x: auto;
-          white-space: nowrap;
-        }
-
-        .sc-proof-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          font-family: var(--sc-font-display);
-          font-weight: 600;
-          font-size: 15px;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          color: var(--sc-muted);
-          flex-shrink: 0;
-        }
-
-        .sc-proof-item .icon {
-          font-size: 20px;
-        }
-
-        .sc-proof-divider {
-          color: var(--sc-border);
-          font-size: 24px;
-          flex-shrink: 0;
-        }
-
-        /* PAIN SECTION */
-        .sc-pain {
-          padding: 100px 40px;
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .sc-section-label {
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 12px;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: var(--sc-yellow);
-          margin-bottom: 20px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-
-        .sc-section-label::before {
-          content: '';
-          width: 32px;
-          height: 2px;
-          background: var(--sc-yellow);
-          display: block;
-        }
-
-        .sc-pain h2 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(36px, 4vw, 58px);
-          text-transform: uppercase;
-          line-height: 1;
-          letter-spacing: 0.02em;
-          margin-bottom: 60px;
-          max-width: 700px;
-        }
-
-        .sc-pain h2 span {
-          color: var(--sc-danger);
-        }
-
-        .sc-pain-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 2px;
-          background: var(--sc-border);
-        }
-
-        .sc-pain-card {
-          background: var(--sc-steel);
-          padding: 36px 32px;
-          position: relative;
-        }
-
-        .sc-pain-card::before {
-          content: attr(data-num);
-          position: absolute;
-          top: 20px;
-          right: 24px;
-          font-family: var(--sc-font-display);
-          font-size: 64px;
-          font-weight: 900;
-          color: rgba(232, 64, 64, 0.08);
-          line-height: 1;
-        }
-
-        .sc-pain-icon {
-          font-size: 28px;
-          margin-bottom: 16px;
-          display: block;
-        }
-
-        .sc-pain-card h3 {
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 20px;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-          margin-bottom: 10px;
-          color: var(--sc-white);
-        }
-
-        .sc-pain-card p {
-          font-size: 15px;
-          color: var(--sc-muted);
-          line-height: 1.55;
-        }
-
-        /* SOLUTION SECTION */
-        .sc-solution {
-          background: var(--sc-steel);
-          border-top: 1px solid var(--sc-border);
-          border-bottom: 1px solid var(--sc-border);
-          padding: 100px 40px;
-        }
-
-        .sc-solution-inner {
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .sc-solution-header {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 80px;
-          align-items: end;
-          margin-bottom: 80px;
-        }
-
-        .sc-solution h2 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(36px, 4vw, 58px);
-          text-transform: uppercase;
-          line-height: 1;
-          letter-spacing: 0.02em;
-        }
-
-        .sc-solution h2 span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-solution-intro {
-          font-size: 18px;
-          color: var(--sc-muted);
-          line-height: 1.6;
-          padding-top: 16px;
-          border-top: 2px solid var(--sc-yellow);
-        }
-
-        .sc-features-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 2px;
-          background: var(--sc-border);
-        }
-
-        .sc-feature-card {
-          background: var(--sc-mid);
-          padding: 40px 36px;
-          transition: background 0.2s;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .sc-feature-card::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 0;
-          bottom: 0;
-          width: 3px;
-          background: var(--sc-yellow);
-          transform: scaleY(0);
-          transform-origin: bottom;
-          transition: transform 0.3s;
-        }
-
-        .sc-feature-card:hover {
-          background: #3a2555;
-        }
-
-        .sc-feature-card:hover::after {
-          transform: scaleY(1);
-        }
-
-        .sc-feature-icon {
-          font-size: 32px;
-          margin-bottom: 20px;
-          display: block;
-        }
-
-        .sc-feature-card h3 {
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 22px;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-          margin-bottom: 12px;
-          color: var(--sc-white);
-        }
-
-        .sc-feature-card p {
-          font-size: 15px;
-          color: var(--sc-muted);
-          line-height: 1.6;
-        }
-
-        .sc-feature-tag {
-          display: inline-block;
-          margin-top: 16px;
-          font-family: var(--sc-font-display);
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: var(--sc-yellow);
-          border: 1px solid rgba(151, 49, 203, 0.3);
-          padding: 4px 10px;
-        }
-
-        /* COMPLIANCE CALLOUT */
-        .sc-callout {
-          padding: 100px 40px;
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .sc-callout-box {
-          background: var(--sc-steel);
-          border: 1px solid var(--sc-border);
-          padding: 64px;
-          display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 60px;
-          align-items: center;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .sc-callout-box::before {
-          content: '\u26A0';
-          position: absolute;
-          right: -30px;
-          bottom: -40px;
-          font-size: 260px;
-          opacity: 0.04;
-          line-height: 1;
-        }
-
-        .sc-callout-box h2 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(28px, 3.5vw, 46px);
-          text-transform: uppercase;
-          line-height: 1.05;
-          margin-bottom: 20px;
-        }
-
-        .sc-callout-box h2 span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-callout-box p {
-          font-size: 17px;
-          color: var(--sc-muted);
-          max-width: 520px;
-          line-height: 1.65;
-        }
-
-        .sc-callout-stat {
-          text-align: center;
-          flex-shrink: 0;
-          background: rgba(151, 49, 203, 0.06);
-          border: 1px solid rgba(151, 49, 203, 0.2);
-          padding: 36px 48px;
-        }
-
-        .sc-callout-stat .number {
-          font-family: var(--sc-font-display);
-          font-size: 72px;
-          font-weight: 900;
-          color: var(--sc-yellow);
-          line-height: 1;
-          display: block;
-        }
-
-        .sc-callout-stat .label {
-          font-family: var(--sc-font-display);
-          font-size: 13px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: var(--sc-muted);
-          margin-top: 8px;
-          display: block;
-        }
-
-        /* TESTIMONIAL */
-        .sc-testimonial-section {
-          background: var(--sc-yellow);
-          padding: 80px 40px;
-        }
-
-        .sc-testimonial-inner {
-          max-width: 900px;
-          margin: 0 auto;
-          text-align: center;
-        }
-
-        .sc-quote-mark {
-          font-family: var(--sc-font-display);
-          font-size: 120px;
-          font-weight: 900;
-          color: rgba(0, 0, 0, 0.12);
-          line-height: 0.7;
-          display: block;
-          margin-bottom: 24px;
-        }
-
-        .sc-testimonial-text {
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: clamp(22px, 3vw, 36px);
-          color: var(--sc-black);
-          line-height: 1.2;
-          letter-spacing: 0.01em;
-          text-transform: uppercase;
-          margin-bottom: 32px;
-        }
-
-        .sc-testimonial-author {
-          font-family: var(--sc-font-body);
-          font-size: 15px;
-          font-weight: 600;
-          color: rgba(0, 0, 0, 0.55);
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-        }
-
-        /* SEGMENTS */
-        .sc-segments {
-          padding: 100px 40px;
-          max-width: 1100px;
-          margin: 0 auto;
-        }
-
-        .sc-segments h2 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(32px, 3.5vw, 52px);
-          text-transform: uppercase;
-          line-height: 1;
-          letter-spacing: 0.02em;
-          margin-bottom: 48px;
-          max-width: 600px;
-        }
-
-        .sc-segments h2 span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-segment-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 2px;
-          background: var(--sc-border);
-        }
-
-        .sc-segment-item {
-          background: var(--sc-steel);
-          padding: 28px 24px;
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          font-family: var(--sc-font-display);
-          font-weight: 700;
-          font-size: 18px;
-          text-transform: uppercase;
-          letter-spacing: 0.04em;
-          color: var(--sc-white);
-          transition: background 0.2s;
-        }
-
-        .sc-segment-item:hover {
-          background: var(--sc-mid);
-        }
-
-        .sc-segment-item .seg-icon {
-          font-size: 24px;
-        }
-
-        .sc-segment-check {
-          margin-left: auto;
-          color: var(--sc-green);
-          font-size: 18px;
-        }
-
-        /* CTA SECTION */
-        .sc-cta-section {
-          background: linear-gradient(135deg, #141824 0%, #0d0d0d 100%);
-          border-top: 1px solid var(--sc-border);
-          padding: 120px 40px;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .sc-cta-section::before {
-          content: '';
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          width: 600px;
-          height: 600px;
-          background: radial-gradient(
-            circle,
-            rgba(151, 49, 203, 0.06) 0%,
-            transparent 70%
-          );
-          pointer-events: none;
-        }
-
-        .sc-cta-section h2 {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: clamp(42px, 6vw, 88px);
-          text-transform: uppercase;
-          line-height: 0.95;
-          letter-spacing: 0.01em;
-          margin-bottom: 24px;
-          position: relative;
-        }
-
-        .sc-cta-section h2 span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-cta-section > p {
-          font-size: 18px;
-          color: var(--sc-muted);
-          max-width: 500px;
-          margin: 0 auto 48px;
-          line-height: 1.6;
-        }
-
-        .sc-cta-pricing {
-          display: flex;
-          justify-content: center;
-          align-items: baseline;
-          gap: 8px;
-          margin-bottom: 40px;
-        }
-
-        .sc-price-big {
-          font-family: var(--sc-font-display);
-          font-size: 80px;
-          font-weight: 900;
-          color: var(--sc-yellow);
-          line-height: 1;
-        }
-
-        .sc-price-detail {
-          font-family: var(--sc-font-display);
-          font-size: 20px;
-          color: var(--sc-muted);
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          text-align: left;
-        }
-
-        .sc-cta-guarantees {
-          display: flex;
-          justify-content: center;
-          gap: 40px;
-          flex-wrap: wrap;
-          margin-top: 40px;
-        }
-
-        .sc-cta-guarantee {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-family: var(--sc-font-display);
-          font-size: 14px;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          color: var(--sc-muted);
-        }
-
-        .sc-cta-guarantee .check {
-          color: var(--sc-green);
-          font-size: 16px;
-        }
-
-        .sc-cta-demo-link {
-          display: inline-block;
-          margin-top: 32px;
-        }
-
-        /* FOOTER */
-        .sc-footer {
-          background: #21152b;
-          border-top: 1px solid var(--sc-border);
-          padding: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 24px;
-          flex-wrap: wrap;
-        }
-
-        .sc-footer .logo {
-          font-family: var(--sc-font-display);
-          font-weight: 900;
-          font-size: 20px;
-          color: var(--sc-white);
-        }
-
-        .sc-footer .logo span {
-          color: var(--sc-yellow);
-        }
-
-        .sc-footer p {
-          font-size: 13px;
-          color: var(--sc-muted);
-        }
-
-        .sc-footer a {
-          color: var(--sc-yellow);
-          text-decoration: none;
-          font-weight: 600;
-        }
-
-        /* ANIMATIONS */
-        @keyframes sc-fadeUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .sc-hero h1 {
-          animation: sc-fadeUp 0.7s ease both;
-        }
-
-        .sc-hero-badge {
-          animation: sc-fadeUp 0.5s ease both;
-        }
-
-        .sc-hero-sub {
-          animation: sc-fadeUp 0.7s 0.15s ease both;
-        }
-
-        .sc-hero-actions {
-          animation: sc-fadeUp 0.7s 0.25s ease both;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-          .sc-nav {
-            padding: 16px 20px;
-          }
-
-          .sc-hero {
-            padding: 120px 20px 60px;
-          }
-
-          .sc-pain,
-          .sc-callout,
-          .sc-segments {
-            padding: 70px 20px;
-          }
-
-          .sc-solution {
-            padding: 70px 20px;
-          }
-
-          .sc-solution-header {
-            grid-template-columns: 1fr;
-            gap: 32px;
-          }
-
-          .sc-callout-box {
-            grid-template-columns: 1fr;
-            padding: 36px 28px;
-            gap: 32px;
-          }
-
-          .sc-callout-stat {
-            width: 100%;
-          }
-
-          .sc-proof-bar {
-            gap: 28px;
-            padding: 16px 20px;
-          }
-
-          .sc-cta-section {
-            padding: 80px 20px;
-          }
-
-          .sc-footer {
-            padding: 28px 20px;
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .sc-testimonial-section {
-            padding: 60px 20px;
-          }
-        }
-      `}</style>
-
-      <div className="safety-page">
-        {/* NAV */}
-        <nav className="sc-nav">
-          <Link href="/" className="sc-nav-logo">
-            Cloud<span>Rent</span> Pro
+    <div className="min-h-screen bg-[#08080c]">
+      {/* ═══════════════════════════════════════════════════════════════════════
+          NAV
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.08] bg-[#08080c]/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <Link href="/" className="text-lg font-bold text-white">
+            CloudRent <span className="text-purple-500">Pro</span>
           </Link>
           <Link
-            href={`/demo${utmString}`}
-            className="sc-nav-cta"
+            href={demoUrl}
             onClick={handleNavCtaClick}
+            className="rounded-lg bg-purple-600 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-purple-500"
           >
             Book a Demo
           </Link>
-        </nav>
+        </div>
+      </nav>
 
-        {/* HERO */}
-        <section className="sc-hero">
-          <div className="sc-hero-badge">WHS &amp; Safe Work Compliance</div>
-          <h1>
-            Your Hire Business
-            <br />
-            <em>Needs SWMS.</em>
-            Not Paperwork.
-          </h1>
-          <p className="sc-hero-sub">
-            Safe Work Method Statements built into your hire software — not a
-            bolt-on, not an afterthought.{' '}
-            <strong>
-              CloudRent Pro is the only hire management platform with SWMS
-              compliance built in from day one.
-            </strong>
-          </p>
-          <div className="sc-hero-actions">
-            <a
-              href={`https://app.cloudrent.me/register${utmString}`}
-              className="sc-btn-primary"
-              onClick={handleTrialClick}
-            >
-              Start $1 Trial — 30 Days Full Access
-            </a>
-            <Link
-              href={`/demo${utmString}`}
-              className="sc-btn-ghost"
-              onClick={handleDemoClick}
-            >
-              Book a Live Demo &rarr;
-            </Link>
-          </div>
-          <p className="sc-hero-trial-note">
-            Credit card required for $1 charge. Cancel anytime.
-          </p>
-        </section>
+      {/* ═══════════════════════════════════════════════════════════════════════
+          HERO
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden pb-16 pt-28">
+        {/* Ambient glow */}
+        <div
+          className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[1000px] -translate-x-1/2"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 30%, rgba(136,27,169,0.15) 0%, transparent 60%)',
+          }}
+        />
 
-        {/* PROOF BAR */}
-        <div className="sc-proof-bar">
-          <div className="sc-proof-item">
-            <span className="icon">🏗️</span> Construction &amp; Plant Hire
-          </div>
-          <div className="sc-proof-divider">|</div>
-          <div className="sc-proof-item">
-            <span className="icon">🏗️</span> Scaffold &amp; Fencing
-          </div>
-          <div className="sc-proof-divider">|</div>
-          <div className="sc-proof-item">
-            <span className="icon">🔧</span> Tool Hire
-          </div>
-          <div className="sc-proof-divider">|</div>
-          <div className="sc-proof-item">
-            <span className="icon">🎪</span> Event &amp; Party
-          </div>
-          <div className="sc-proof-divider">|</div>
-          <div className="sc-proof-item">
-            <span className="icon">🎬</span> AV &amp; Film
-          </div>
-          <div className="sc-proof-divider">|</div>
-          <div className="sc-proof-item">
-            <span className="icon">🇦🇺</span> Australian-Made. GST Ready.
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+              </span>
+              WHS &amp; Safe Work Compliance
+            </div>
+
+            <h1 className="mb-6 text-4xl font-black leading-tight text-white md:text-5xl lg:text-6xl">
+              Your Hire Business{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                Needs SWMS.
+              </span>{' '}
+              Not Paperwork.
+            </h1>
+
+            <p className="mx-auto mb-8 max-w-2xl text-lg text-white/60 md:text-xl">
+              Safe Work Method Statements built into your hire software — not a bolt-on, not an
+              afterthought.{' '}
+              <strong className="text-white">
+                CloudRent Pro is the only hire management platform with SWMS compliance built in
+                from day one.
+              </strong>
+            </p>
+
+            {/* CTAs */}
+            <div className="mb-6 flex flex-col justify-center gap-4 sm:flex-row">
+              <a
+                href={trialUrl}
+                onClick={handleTrialClick}
+                className="group flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
+              >
+                Start $1 Trial — 30 Days Full Access
+                <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </a>
+              <Link
+                href={demoUrl}
+                onClick={handleDemoClick}
+                className="flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/5 px-8 py-4 text-lg font-semibold text-white transition-all hover:border-white/40 hover:bg-white/10"
+              >
+                <Play className="h-5 w-5" />
+                Book a Live Demo
+              </Link>
+            </div>
+
+            <p className="text-sm text-white/40">
+              Credit card required for $1 charge. Cancel anytime.
+            </p>
           </div>
         </div>
+      </section>
 
-        {/* PAIN SECTION */}
-        <section className="sc-pain">
-          <div className="sc-section-label">The Real Problem</div>
-          <h2>
-            When Someone Gets Hurt On Site — <span>Who&apos;s Liable?</span>
-          </h2>
-          <div className="sc-pain-grid">
-            <div className="sc-pain-card" data-num="01">
-              <span className="sc-pain-icon">📋</span>
-              <h3>No SWMS = No Cover</h3>
-              <p>
-                If your equipment is on a worksite without a valid Safe Work
-                Method Statement, Safe Work Australia holds you responsible.
-                Full stop.
-              </p>
-            </div>
-            <div className="sc-pain-card" data-num="02">
-              <span className="sc-pain-icon">📁</span>
-              <h3>Paper Forms Get Lost</h3>
-              <p>
-                Clipboards go missing. PDFs sit in email chains. When an
-                inspector arrives, scrambling for paperwork is not a defence.
-              </p>
-            </div>
-            <div className="sc-pain-card" data-num="03">
-              <span className="sc-pain-icon">✍️</span>
-              <h3>Signatures Are Impossible to Prove</h3>
-              <p>
-                Paper sign-offs are easily disputed. Without timestamped digital
-                records, you have no proof anyone actually read and agreed to
-                the SWMS.
-              </p>
-            </div>
-            <div className="sc-pain-card" data-num="04">
-              <span className="sc-pain-icon">⏰</span>
-              <h3>Expired Documents Happen</h3>
-              <p>
-                SWMS documents expire. Keeping track of what&apos;s current and what
-                needs renewal across multiple jobs is a full-time job in itself.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* SOLUTION SECTION */}
-        <section className="sc-solution">
-          <div className="sc-solution-inner">
-            <div className="sc-section-label">How CloudRent Pro Solves It</div>
-            <div className="sc-solution-header">
-              <h2>
-                Built-In Safety. <span>Zero Extra Software.</span>
-              </h2>
-              <p className="sc-solution-intro">
-                Every SWMS is created, signed, stored and tracked inside the
-                same platform you use to manage your bookings, invoices and
-                dispatch. One login. Total compliance.
-              </p>
-            </div>
-            <div className="sc-features-grid">
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">📝</span>
-                <h3>SWMS Creation</h3>
-                <p>
-                  Build Safe Work Method Statements directly inside CloudRent
-                  Pro. Identify hazards, set control measures, and document task
-                  steps — all in a guided workflow.
-                </p>
-                <span className="sc-feature-tag">Built In</span>
-              </div>
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">✍️</span>
-                <h3>Digital Sign-Off</h3>
-                <p>
-                  Multiple signatories. On-site signing via mobile. Timestamped,
-                  legally sound, and instantly stored against the booking — no
-                  printing required.
-                </p>
-                <span className="sc-feature-tag">Mobile Ready</span>
-              </div>
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">📸</span>
-                <h3>Photo Evidence</h3>
-                <p>
-                  Attach photos of site conditions directly to the SWMS.
-                  Documented proof of what was assessed on the day —
-                  unambiguous, timestamped, yours.
-                </p>
-                <span className="sc-feature-tag">Site Proof</span>
-              </div>
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">📄</span>
-                <h3>PDF Generation</h3>
-                <p>
-                  Generate professional SWMS PDFs on demand. Share with site
-                  managers, inspectors or clients in seconds — straight from the
-                  booking record.
-                </p>
-                <span className="sc-feature-tag">Instant PDF</span>
-              </div>
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">🔔</span>
-                <h3>Expiry Alerts</h3>
-                <p>
-                  CloudRent Pro tracks every SWMS and flags documents before
-                  they expire. Never send equipment to site on an out-of-date
-                  document again.
-                </p>
-                <span className="sc-feature-tag">Auto-Alerts</span>
-              </div>
-              <div className="sc-feature-card">
-                <span className="sc-feature-icon">🗂️</span>
-                <h3>Audit-Ready Records</h3>
-                <p>
-                  Every SWMS is stored against the booking, linked to the
-                  customer, and ready for inspection. Status tracked from Draft
-                  → Pending → Active.
-                </p>
-                <span className="sc-feature-tag">Fully Traceable</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* COMPLIANCE CALLOUT */}
-        <section className="sc-callout">
-          <div className="sc-callout-box">
-            <div>
-              <div className="sc-section-label">Australian WHS Law</div>
-              <h2>
-                Safe Work Australia <span>Fines Are Real.</span>
-              </h2>
-              <p>
-                Under Australian WHS legislation, hire businesses that supply
-                plant or equipment to a worksite are classified as a &quot;person
-                conducting a business or undertaking&quot; (PCBU). That means you
-                share the duty of care — and the legal exposure — if something
-                goes wrong without proper documentation in place.
-              </p>
-              <br />
-              <p style={{ color: 'var(--sc-white)' }}>
-                CloudRent Pro gives you the paper trail to prove you did
-                everything right.
-              </p>
-            </div>
-            <div className="sc-callout-stat">
-              <span className="number">$3.8M</span>
-              <span className="label">
-                Max WHS penalty
-                <br />
-                for corporations
+      {/* ═══════════════════════════════════════════════════════════════════════
+          PROOF BAR
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="border-y border-white/[0.08] bg-white/[0.02] py-5">
+        <div className="mx-auto max-w-6xl overflow-x-auto px-5">
+          <div className="flex items-center justify-center gap-8 whitespace-nowrap text-sm text-white/50">
+            {proofItems.map((item, i) => (
+              <span key={i} className="flex items-center gap-2">
+                {i === proofItems.length - 1 ? (
+                  <span className="text-lg">🇦🇺</span>
+                ) : (
+                  <span className="text-lg">🏗️</span>
+                )}
+                {item}
               </span>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* TESTIMONIAL */}
-        <section className="sc-testimonial-section">
-          <div className="sc-testimonial-inner">
-            <span className="sc-quote-mark">&quot;</span>
-            <p className="sc-testimonial-text">
-              &quot;We used to have SWMS on paper. CloudRent Pro changed everything —
-              our team signs off on site from their phone and the record is
-              there instantly. An inspector turned up last month and we had
-              everything ready in 30 seconds.&quot;
+      {/* ═══════════════════════════════════════════════════════════════════════
+          PAIN POINTS
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              The Real Problem
             </p>
-            <p className="sc-testimonial-author">
-              — CloudRent Pro Customer &nbsp;|&nbsp; Plant Hire Business, QLD
+            <h2 className="text-3xl font-black text-white md:text-4xl lg:text-5xl">
+              When someone gets hurt on site —{' '}
+              <span className="bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">
+                who&apos;s liable?
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            {painPoints.map((card, i) => (
+              <div
+                key={i}
+                className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-red-500/40"
+              >
+                <div className="absolute right-4 top-4 text-5xl font-black text-red-500/10">
+                  0{i + 1}
+                </div>
+                <div className="relative z-10">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-red-500/15">
+                    <card.icon className="h-7 w-7 text-red-400" />
+                  </div>
+                  <h3 className="mb-1 text-lg font-extrabold text-white">{card.title}</h3>
+                  <p className="mb-2 text-sm font-semibold text-white/70">{card.subtitle}</p>
+                  <p className="text-sm leading-relaxed text-white/50">{card.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          SOLUTION / FEATURES
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative border-y border-white/[0.08] bg-white/[0.02] py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-12 grid items-end gap-8 md:grid-cols-2">
+            <div>
+              <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+                How CloudRent Pro Solves It
+              </p>
+              <h2 className="text-3xl font-black text-white md:text-4xl">
+                Built-In Safety.{' '}
+                <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                  Zero Extra Software.
+                </span>
+              </h2>
+            </div>
+            <p className="border-l-2 border-purple-500 pl-4 text-white/60">
+              Every SWMS is created, signed, stored, and tracked inside the same platform you use to
+              manage bookings, invoices, and dispatch. One login. Total compliance.
             </p>
           </div>
-        </section>
 
-        {/* WHO IT'S FOR */}
-        <section className="sc-segments">
-          <div className="sc-section-label">Who It&apos;s Built For</div>
-          <h2>
-            Every Hire Segment. <span>One Platform.</span>
-          </h2>
-          <div className="sc-segment-list">
-            <div className="sc-segment-item">
-              <span className="seg-icon">🏗️</span> Construction &amp; Plant Hire{' '}
-              <span className="sc-segment-check">✓</span>
-            </div>
-            <div className="sc-segment-item">
-              <span className="seg-icon">🔩</span> Scaffold &amp; Fencing{' '}
-              <span className="sc-segment-check">✓</span>
-            </div>
-            <div className="sc-segment-item">
-              <span className="seg-icon">🔧</span> Tool Hire{' '}
-              <span className="sc-segment-check">✓</span>
-            </div>
-            <div className="sc-segment-item">
-              <span className="seg-icon">🎪</span> Event &amp; Party Hire{' '}
-              <span className="sc-segment-check">✓</span>
-            </div>
-            <div className="sc-segment-item">
-              <span className="seg-icon">🎬</span> AV &amp; Film{' '}
-              <span className="sc-segment-check">✓</span>
-            </div>
-            <div className="sc-segment-item">
-              <span className="seg-icon">🌿</span> Landscaping &amp; Civil{' '}
-              <span className="sc-segment-check">✓</span>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, i) => (
+              <div
+                key={i}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+              >
+                <div className="absolute bottom-0 left-0 top-0 w-1 scale-y-0 bg-purple-500 transition-transform duration-300 group-hover:scale-y-100" />
+                <div className="relative z-10">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/15">
+                    <feature.icon className="h-6 w-6 text-purple-400" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-bold text-white">{feature.title}</h3>
+                  <p className="mb-3 text-sm leading-relaxed text-white/50">{feature.description}</p>
+                  <span className="inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-300">
+                    {feature.tag}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          COMPLIANCE CALLOUT
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-900/20 to-transparent p-8 md:p-12">
+            <div className="absolute -bottom-20 -right-20 text-[200px] opacity-[0.03]">⚠</div>
+            <div className="relative z-10 grid items-center gap-8 md:grid-cols-[1fr,auto]">
+              <div>
+                <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-amber-500">
+                  Australian WHS Law
+                </p>
+                <h3 className="mb-4 text-2xl font-black text-white md:text-3xl">
+                  Safe Work Australia{' '}
+                  <span className="text-amber-400">Fines Are Real.</span>
+                </h3>
+                <p className="mb-4 text-white/60">
+                  Under Australian WHS legislation, hire businesses that supply plant or equipment
+                  to a worksite are classified as a &quot;person conducting a business or
+                  undertaking&quot; (PCBU). That means you share the duty of care — and the legal
+                  exposure — if something goes wrong without proper documentation.
+                </p>
+                <p className="font-semibold text-white">
+                  CloudRent Pro gives you the paper trail to prove you did everything right.
+                </p>
+              </div>
+              <div className="flex-shrink-0 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-8 py-6 text-center">
+                <div className="text-5xl font-black text-amber-400 md:text-6xl">$3.8M</div>
+                <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-amber-300/70">
+                  Max WHS penalty
+                  <br />
+                  for corporations
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* CTA */}
-        <section className="sc-cta-section">
-          <h2>
-            Start Safe.
-            <br />
-            <span>Start Today.</span>
-          </h2>
-          <p>
-            Full access to every feature — including SWMS, digital sign-off, and
-            dispatch. One price. No lock-in.
+      {/* ═══════════════════════════════════════════════════════════════════════
+          TESTIMONIAL
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative border-y border-purple-500/30 bg-gradient-to-r from-purple-900/30 via-purple-800/20 to-purple-900/30 py-20">
+        <div className="mx-auto max-w-4xl px-5 text-center">
+          <div className="mb-6 text-6xl font-black text-purple-500/30">&quot;</div>
+          <blockquote className="mb-6 text-xl font-semibold leading-relaxed text-white md:text-2xl">
+            We used to have SWMS on paper. CloudRent Pro changed everything — our team signs off on
+            site from their phone and the record is there instantly. An inspector turned up last
+            month and we had everything ready in 30 seconds.
+          </blockquote>
+          <p className="text-sm text-white/50">
+            — CloudRent Pro Customer | Plant Hire Business, QLD
           </p>
-          <div className="sc-cta-pricing">
-            <span className="sc-price-big">$1</span>
-            <span className="sc-price-detail">
-              / 30-day full
-              <br />
-              access trial
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          SEGMENTS
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-12">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              Who It&apos;s Built For
+            </p>
+            <h2 className="text-3xl font-black text-white md:text-4xl">
+              Every Hire Segment.{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                One Platform.
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {segments.map((segment, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] px-5 py-4 transition-all hover:border-purple-500/40"
+              >
+                <div className="flex items-center gap-3">
+                  <segment.icon className="h-6 w-6 text-purple-400" />
+                  <span className="font-semibold text-white">{segment.name}</span>
+                </div>
+                <CheckCircle className="h-5 w-5 text-green-500" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          FINAL CTA
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative py-24">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(ellipse at 50% 50%, rgba(136,27,169,0.1) 0%, transparent 60%)',
+          }}
+        />
+
+        <div className="relative z-10 mx-auto max-w-4xl px-5 text-center">
+          <h2 className="mb-4 text-4xl font-black text-white md:text-5xl lg:text-6xl">
+            Start Safe.{' '}
+            <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+              Start Today.
             </span>
-          </div>
-          <a
-            href={`https://app.cloudrent.me/register${utmString}`}
-            className="sc-btn-primary"
-            style={{ fontSize: '20px', padding: '22px 56px' }}
-            onClick={handleTrialClick}
-          >
-            Start Your $1 Trial Now
-          </a>
-          <div className="sc-cta-guarantees">
-            <div className="sc-cta-guarantee">
-              <span className="check">✓</span> Credit card required for $1
-            </div>
-            <div className="sc-cta-guarantee">
-              <span className="check">✓</span> Full feature access from day one
-            </div>
-            <div className="sc-cta-guarantee">
-              <span className="check">✓</span> Cancel anytime
-            </div>
-            <div className="sc-cta-guarantee">
-              <span className="check">✓</span> Australian-made &amp; supported
+          </h2>
+
+          <p className="mx-auto mb-8 max-w-xl text-lg text-white/60">
+            Full access to every feature — including SWMS, digital sign-off, and dispatch. One
+            price. No lock-in.
+          </p>
+
+          <div className="mb-8 flex justify-center">
+            <div className="flex items-baseline gap-2">
+              <span className="text-6xl font-black text-purple-500">$1</span>
+              <span className="text-lg text-white/50">/ 30-day full access trial</span>
             </div>
           </div>
-          <div className="sc-cta-demo-link">
-            <Link
-              href={`/demo${utmString}`}
-              className="sc-btn-ghost"
-              onClick={handleDemoClick}
+
+          <div className="mb-8 flex flex-col justify-center gap-4 sm:flex-row">
+            <a
+              href={trialUrl}
+              onClick={handleTrialClick}
+              className="group flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-10 py-5 text-xl font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
             >
-              Prefer a live walkthrough? Book a demo with Ron &rarr;
+              Start Your $1 Trial Now
+              <ChevronRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-6 text-sm text-white/40">
+            {[
+              'Credit card required for $1',
+              'Full feature access from day one',
+              'Cancel anytime',
+              'Australian-made & supported',
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-green-500" />
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <Link
+              href={demoUrl}
+              onClick={handleDemoClick}
+              className="text-purple-400 underline underline-offset-4 transition-colors hover:text-purple-300"
+            >
+              Prefer a live walkthrough? Book a demo with Ron →
             </Link>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FOOTER */}
-        <footer className="sc-footer">
-          <div className="logo">
-            Cloud<span>Rent</span> Pro
+      {/* ═══════════════════════════════════════════════════════════════════════
+          FOOTER
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <footer className="border-t border-white/[0.08] py-8">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-center sm:flex-row sm:text-left">
+          <div className="text-lg font-bold text-white">
+            CloudRent <span className="text-purple-500">Pro</span>
           </div>
-          <p>
-            Built for Australian hire businesses. GST compliant. &copy; 2026
-            CloudRent Pro.
+          <p className="text-sm text-white/40">
+            Built for Australian hire businesses. GST compliant. © 2026 CloudRent Pro.
           </p>
-          <p>
+          <p className="text-sm text-white/40">
             Questions?{' '}
-            <a href="mailto:support@cloudrent.me">support@cloudrent.me</a>
+            <a
+              href="mailto:support@cloudrent.me"
+              className="text-purple-400 hover:text-purple-300"
+            >
+              support@cloudrent.me
+            </a>
           </p>
-        </footer>
-      </div>
-    </>
+        </div>
+      </footer>
+    </div>
   )
 }
