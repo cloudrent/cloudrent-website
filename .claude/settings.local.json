@@ -68,7 +68,17 @@
       "Bash(pip3 install:*)",
       "Bash(unzip:*)",
       "Bash(for:*)",
-      "Bash(do echo \"=== Sheet $i ===\")"
+      "Bash(do echo \"=== Sheet $i ===\")",
+      "Bash(gh release view:*)",
+      "Bash(gh repo view:*)",
+      "Bash(uipro init:*)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(echo:*)",
+      "Bash(pkill:*)",
+      "Bash(npx sharp-cli:*)",
+      "Bash(git rm:*)",
+      "Bash(git revert:*)"
     ]
   }
 }

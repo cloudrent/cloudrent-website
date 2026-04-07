@@ -995,7 +995,7 @@ export default function SafetyComplianceClient() {
         <section className="sc-pain">
           <div className="sc-section-label">The Real Problem</div>
           <h2>
-            When Someone Gets Hurt On Site — <span>Who's Liable?</span>
+            When Someone Gets Hurt On Site — <span>Who&apos;s Liable?</span>
           </h2>
           <div className="sc-pain-grid">
             <div className="sc-pain-card" data-num="01">
@@ -1028,7 +1028,7 @@ export default function SafetyComplianceClient() {
               <span className="sc-pain-icon">⏰</span>
               <h3>Expired Documents Happen</h3>
               <p>
-                SWMS documents expire. Keeping track of what's current and what
+                SWMS documents expire. Keeping track of what&apos;s current and what
                 needs renewal across multiple jobs is a full-time job in itself.
               </p>
             </div>
@@ -1124,8 +1124,8 @@ export default function SafetyComplianceClient() {
               </h2>
               <p>
                 Under Australian WHS legislation, hire businesses that supply
-                plant or equipment to a worksite are classified as a "person
-                conducting a business or undertaking" (PCBU). That means you
+                plant or equipment to a worksite are classified as a &quot;person
+                conducting a business or undertaking&quot; (PCBU). That means you
                 share the duty of care — and the legal exposure — if something
                 goes wrong without proper documentation in place.
               </p>
@@ -1149,12 +1149,12 @@ export default function SafetyComplianceClient() {
         {/* TESTIMONIAL */}
         <section className="sc-testimonial-section">
           <div className="sc-testimonial-inner">
-            <span className="sc-quote-mark">"</span>
+            <span className="sc-quote-mark">&quot;</span>
             <p className="sc-testimonial-text">
-              "We used to have SWMS on paper. CloudRent Pro changed everything —
+              &quot;We used to have SWMS on paper. CloudRent Pro changed everything —
               our team signs off on site from their phone and the record is
               there instantly. An inspector turned up last month and we had
-              everything ready in 30 seconds."
+              everything ready in 30 seconds.&quot;
             </p>
             <p className="sc-testimonial-author">
               — CloudRent Pro Customer &nbsp;|&nbsp; Plant Hire Business, QLD
@@ -1164,7 +1164,7 @@ export default function SafetyComplianceClient() {
 
         {/* WHO IT'S FOR */}
         <section className="sc-segments">
-          <div className="sc-section-label">Who It's Built For</div>
+          <div className="sc-section-label">Who It&apos;s Built For</div>
           <h2>
             Every Hire Segment. <span>One Platform.</span>
           </h2>

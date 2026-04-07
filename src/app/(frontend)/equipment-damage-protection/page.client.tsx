@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { Camera, PenTool, RefreshCw, FileText, CheckCircle2 } from 'lucide-react'
+import { RefreshCw, FileText, CheckCircle2 } from 'lucide-react'
 import { useUTMParams } from '@/hooks/useUTMParams'
 import { trackLandingPageEvent, trackLandingPageView } from '@/utilities/trackLandingPageEvent'
 
@@ -242,7 +242,7 @@ export default function EquipmentDamageProtectionClient() {
             style={{ animation: 'damage-fadeIn 0.6s ease forwards', animationDelay: '0.4s', opacity: 0 }}
           >
             Equipment comes back damaged and the customer says{' '}
-            <strong className="text-[var(--ink2)] font-medium">"it was like that when we got it."</strong>{' '}
+            <strong className="text-[var(--ink2)] font-medium">&quot;it was like that when we got it.&quot;</strong>{' '}
             CloudRent Pro captures photos at dispatch and return — then AI automatically compares them and
             flags the damage. Proof in seconds. Disputes resolved.
           </p>
@@ -346,8 +346,8 @@ export default function EquipmentDamageProtectionClient() {
           Situations Every Hire Business Knows
         </p>
         <h2 className="font-['Playfair_Display',Georgia,serif] font-black text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight mb-16 max-w-2xl">
-          You've Heard Every Excuse.{' '}
-          <em className="italic text-[var(--brand)]">Without Proof, You're Stuck.</em>
+          You&apos;ve Heard Every Excuse.{' '}
+          <em className="italic text-[var(--brand)]">Without Proof, You&apos;re Stuck.</em>
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[var(--rule)]">
@@ -415,7 +415,7 @@ export default function EquipmentDamageProtectionClient() {
                 AI Damage Detection — <em className="italic text-[var(--brand)]">Live & Built In</em>
               </h3>
               <p className="text-base text-white/55 leading-relaxed max-w-xl">
-                CloudRent Pro's AI automatically compares dispatch and return photos — flagging visual
+                CloudRent Pro&apos;s AI automatically compares dispatch and return photos — flagging visual
                 differences, scoring damage likelihood, and surfacing only the issues that need your
                 attention. No manual side-by-side. No missed damage. No other hire software does this.
               </p>
@@ -474,7 +474,7 @@ export default function EquipmentDamageProtectionClient() {
             </h2>
             <p className="text-lg text-white/70 leading-relaxed mb-9">
               CloudRent Pro pays for itself the first time you win a damage dispute you would have
-              previously had to write off. At $85/user/month — that's a single recovered repair job, once.
+              previously had to write off. At $85/user/month — that&apos;s a single recovered repair job, once.
               Everything after that is pure margin recovered.
             </p>
             <Link
@@ -513,9 +513,9 @@ export default function EquipmentDamageProtectionClient() {
             From a CloudRent Pro Customer
           </p>
           <blockquote className="font-['Playfair_Display',Georgia,serif] font-bold text-xl md:text-2xl lg:text-3xl text-white leading-snug mb-9">
-            "Before CloudRent Pro, we had no way to prove condition at pickup. We absorbed damage costs
+            &quot;Before CloudRent Pro, we had no way to prove condition at pickup. We absorbed damage costs
             constantly and it was just accepted as part of the business. Now every hire goes out with photos
-            and a digital sign-off — the disputes have basically stopped."
+            and a digital sign-off — the disputes have basically stopped.&quot;
           </blockquote>
           <p className="text-xs text-white/35 tracking-[0.08em] uppercase pt-7 border-t border-white/10">
             — CloudRent Pro Customer | Construction Plant Hire, QLD
