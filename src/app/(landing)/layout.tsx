@@ -10,6 +10,7 @@ const inter = Inter({
   display: 'swap',
 })
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
+import { MicrosoftClarity } from '@/components/MicrosoftClarity'
 import { OrganizationSchema } from '@/components/StructuredData'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -39,6 +40,7 @@ export default async function LandingLayout({ children }: { children: React.Reac
       <body className="relative">
         <GoogleTagManager />
         <GoogleTagManagerNoscript />
+        <MicrosoftClarity />
         {/* Global Background */}
         <div className="fixed inset-0 -z-10 bg-[#0a0a1a]">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-purple/20 via-[#0a0a1a] to-[#0a0a1a]" />

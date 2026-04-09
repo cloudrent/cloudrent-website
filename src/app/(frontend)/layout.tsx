@@ -11,6 +11,7 @@ const inter = Inter({
 })
 import { AdminBar } from '@/components/AdminBar'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
+import { MicrosoftClarity } from '@/components/MicrosoftClarity'
 import { TrialPopup } from '@/components/TrialPopup'
 import { PublicChatWidget } from '@/components/PublicChatWidget'
 import { OrganizationSchema } from '@/components/StructuredData'
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="relative">
         <GoogleTagManager />
         <GoogleTagManagerNoscript />
+        <MicrosoftClarity />
         {/* Global Background */}
         <div className="fixed inset-0 -z-10 bg-[#0a0a1a]">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-purple/20 via-[#0a0a1a] to-[#0a0a1a]" />
