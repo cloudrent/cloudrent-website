@@ -151,29 +151,13 @@ export default function LaunchPageClient() {
             <div className="flex justify-center">
               <div className="relative">
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-purple-500/20 to-amber-500/20 blur-2xl" />
-                <div className="relative rounded-2xl border border-purple-500/30 bg-gradient-to-br from-purple-900 to-purple-950 p-8 shadow-2xl">
-                  <div className="mb-4 flex justify-center">
-                    <div className="rounded-xl bg-gradient-to-br from-purple-500 to-fuchsia-600 p-4">
-                      <Image
-                        src="/images/logo-icon.svg"
-                        alt="CloudRent"
-                        width={48}
-                        height={48}
-                        className="h-12 w-12"
-                      />
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-xs font-medium uppercase tracking-wider text-purple-400">
-                      Launch Partner
-                    </p>
-                    <p className="mt-2 text-lg font-bold text-white">Your Name Here</p>
-                    <p className="mt-1 text-sm text-gray-400">No. 001 / 100</p>
-                    <div className="mt-4 rounded-lg bg-amber-500/20 px-4 py-2">
-                      <p className="text-xs text-amber-300">Price Locked — Forever</p>
-                    </div>
-                  </div>
-                </div>
+                <Image
+                  src="/images/cloudrent-founders-club.webp"
+                  alt="CloudRent Launch Partner Card"
+                  width={300}
+                  height={400}
+                  className="relative rounded-2xl shadow-2xl"
+                />
               </div>
             </div>
 
