@@ -1,71 +1,37 @@
-# CloudRent Pro - Rental Management Software
+# CloudRent Pro
 
-> CloudRent Pro is a complete rental management software built in Australia for equipment hire businesses. It provides cloud-based tools for managing bookings, invoicing, customers, digital signatures, and accounting integrations.
+> CloudRent Pro is Australian-built rental management software for equipment hire businesses. It replaces multiple disconnected tools (booking spreadsheets, paper safety records, separate invoicing apps) with one platform covering bookings, dispatch, AI damage detection, digital signatures, customer self-service and accounting integration.
 
-## About CloudRent Pro
+CloudRent Pty Ltd has been building software for the hire and rental industry since 2017. The company is based on the Gold Coast, Queensland, Australia.
 
-CloudRent Pro is rental management software designed specifically for Australian equipment hire businesses. From a single excavator to a fleet of thousands, CloudRent Pro helps hire companies manage their entire operation.
+## Product suite
 
-## Key Features
+- [CloudRent Pro](https://www.cloudrent.me/): Web app for business owners and staff. The core platform.
+- [CloudRent Command](https://www.cloudrent.me/mobile-app/): Mobile app for managers and admins.
+- [CloudRent Crew](https://www.cloudrent.me/mobile-app/): Mobile app for drivers and warehouse technicians.
+- [CloudRent Connect](https://www.cloudrent.me/web-portal/): 24/7 customer self-service portal for bookings and payments.
 
-- Real-time equipment availability and booking calendar
-- One-click invoicing with Stripe payment processing
-- Digital signatures for rental agreements, delivery dockets, and SWMS
-- Two-way Xero, QuickBooks, and MYOB integration
-- SWMS and safety documentation
-- Stocktakes and asset management
-- Inspection forms and checklists
-- Tiered pricing engine
-- Marketing system and bulk email
-- GPS and telematics tracking
-- AI-powered support agent
-- Customer portal for 24/7 self-service bookings
-- Mobile app for field staff with offline sync
-- Driver app (free) for delivery teams
+## Key pages
 
-## Pricing
+- [Features overview](https://www.cloudrent.me/features/): Full feature list including equipment management, dispatch, safety compliance, invoicing.
+- [Pricing](https://www.cloudrent.me/pricing/): Launch partner pricing at $85/user/month AUD, locked for life. Standard pricing $129/user/month.
+- [AI damage detection](https://www.cloudrent.me/ai-damage-detection/): AI-powered photo analysis for equipment damage assessment.
+- [Web portal](https://www.cloudrent.me/web-portal/): Office command centre for bookings, invoicing and reports.
+- [Mobile app](https://www.cloudrent.me/mobile-app/): iOS and Android apps with offline support.
+- [About](https://www.cloudrent.me/about/): Company background and team.
+- [Blog](https://www.cloudrent.me/posts/): Industry articles on rental operations, WHS compliance and software selection.
 
-- Starter: $49/user/month - Basic features for small operators
-- Professional: $85/user/month - Full toolkit including Xero integration
-- Business: $129/user/month - Enterprise features with dedicated support
+## Common questions
 
-### CloudRent Pro Launch Offer
+- **Who is CloudRent for?** Equipment hire businesses of any size, from single-operator to multi-location. Industries served include construction equipment, scaffolding, event hire, fence hire, transportable buildings, film equipment.
+- **Where is CloudRent based?** Gold Coast, Queensland, Australia. 100% Australian built and owned.
+- **What does it integrate with?** Xero, QuickBooks, MYOB, Stripe, Twilio (SMS and click-to-call), Google Calendar.
+- **Does it work offline?** Yes, the mobile apps support offline use. The web portal requires internet.
+- **Is there a free trial?** Yes. A $1 trial with full access. No setup fees. 30-day money-back guarantee.
 
-Limited offer for first 100 customers: Get the full Business plan (every feature) locked in at $85/user/month forever. This rate never increases as long as you remain subscribed.
+## Optional
 
-Sign up: https://app.cloudrent.me/founder
-
-## Platform Coverage
-
-1. **Web App** - Full-featured cloud platform accessible from any browser
-2. **Mobile App** - iOS and Android apps with offline sync, barcode scanning, push notifications ($10/user/month)
-3. **Customer Portal** - 24/7 self-service for customers to make bookings, view history, download invoices ($49/month)
-4. **Driver App** - Free app for delivery staff to view jobs, accept/decline, GPS clock-in
-
-## Add-Ons
-
-- Mobile App Access: $10/user/month
-- Customer Portal: $49/month + $200 setup
-- Additional Xero Entities: $10/entity/month
-- SMS Notifications: Usage-based (Twilio)
-- Professional Onboarding: $499 one-off
-
-## Contact
-
-- Website: https://www.cloudrent.me
-- Email: sales@cloudrent.me
-- Phone: +61 7 3171 2948
-- Location: Gold Coast, Australia
-- Business Hours: Mon-Fri 8am-6pm AEST
-
-## Links
-
-- Features: https://www.cloudrent.me/features
-- Pricing: https://www.cloudrent.me/pricing
-- Mobile App: https://www.cloudrent.me/mobile-app
-- Customer Portal: https://www.cloudrent.me/web-portal
-- Contact: https://www.cloudrent.me/contact
-- Book Demo: https://www.cloudrent.me/demo
-- Help Center: https://help.cloudrent.me
-- Start Free Trial: https://app.cloudrent.me/register
-- Launch Offer Signup: https://app.cloudrent.me/founder
+- [Contact](https://www.cloudrent.me/contact/)
+- [Demo booking](https://www.cloudrent.me/demo/)
+- [Terms of Service](https://www.cloudrent.me/terms/)
+- [Privacy Policy](https://www.cloudrent.me/privacy/)

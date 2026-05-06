@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { BreadcrumbSchema } from '@/components/StructuredData'
 import MobileAppPageClient from './page.client'
 
 export const metadata: Metadata = {
@@ -18,5 +19,15 @@ export const metadata: Metadata = {
 }
 
 export default function MobileAppPage() {
-  return <MobileAppPageClient />
+  return (
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://www.cloudrent.me/' },
+          { name: 'Mobile App', url: 'https://www.cloudrent.me/mobile-app/' },
+        ]}
+      />
+      <MobileAppPageClient />
+    </>
+  )
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { SoftwareSchema } from '@/components/StructuredData'
+import { SoftwareSchema, HomepageFaqSchema } from '@/components/StructuredData'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import HomePageClient from './HomePageClient'
 
@@ -34,6 +34,7 @@ export default function HomePage() {
   return (
     <>
       <SoftwareSchema />
+      <HomepageFaqSchema />
       <HomePageClient />
     </>
   )

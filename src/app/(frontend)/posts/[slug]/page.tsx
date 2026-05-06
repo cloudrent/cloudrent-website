@@ -2,13 +2,14 @@ import type { Metadata } from 'next'
 
 import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { ArticleSchema, BreadcrumbSchema } from '@/components/StructuredData'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
-import type { Post } from '@/payload-types'
+import type { Post, Media } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { PostCTA } from '@/components/PostCTA'
@@ -54,8 +55,39 @@ export default async function Post({ params: paramsPromise }: Args) {
 
   if (!post) return <PayloadRedirects url={url} />
 
+  // Extract image URL for schema
+  const heroMedia = post.heroImage
+  const imageUrl =
+    typeof heroMedia === 'object' && heroMedia !== null
+      ? `https://www.cloudrent.me${(heroMedia as Media).url}`
+      : undefined
+
+  // Extract author name
+  const authorName =
+    post.populatedAuthors && post.populatedAuthors.length > 0
+      ? (post.populatedAuthors[0]?.name || undefined)
+      : undefined
+
   return (
     <article className="pb-16">
+      <ArticleSchema
+        post={{
+          title: post.title,
+          description: post.meta?.description || '',
+          slug: post.slug || '',
+          datePublished: post.publishedAt || post.createdAt,
+          dateModified: post.updatedAt,
+          author: authorName,
+          image: imageUrl,
+        }}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://www.cloudrent.me/' },
+          { name: 'Blog', url: 'https://www.cloudrent.me/posts/' },
+          { name: post.title, url: `https://www.cloudrent.me/posts/${post.slug}/` },
+        ]}
+      />
       <PageClient />
 
       {/* Allows redirects for valid pages too */}

@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Users, Zap, Shield, Heart, Target, Award, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { LightboxImage } from '@/components/Lightbox'
+import { BreadcrumbSchema } from '@/components/StructuredData'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 export const metadata: Metadata = {
@@ -77,8 +78,15 @@ const stats = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen text-white">
-      {/* Background Effects */}
+    <>
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://www.cloudrent.me/' },
+          { name: 'About', url: 'https://www.cloudrent.me/about/' },
+        ]}
+      />
+      <div className="min-h-screen text-white">
+        {/* Background Effects */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden">
         <div className="absolute left-1/4 top-0 h-96 w-96 rounded-full bg-purple-600/20 blur-[120px]" />
         <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-fuchsia-600/15 blur-[100px]" />
@@ -286,5 +294,6 @@ export default function AboutPage() {
         </section>
       </div>
     </div>
+    </>
   )
 }

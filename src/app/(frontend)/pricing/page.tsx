@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { SoftwareSchema, BreadcrumbSchema } from '@/components/StructuredData'
 import PricingPageClient from './page.client'
 
 export const metadata: Metadata = {
@@ -18,5 +19,16 @@ export const metadata: Metadata = {
 }
 
 export default function PricingPage() {
-  return <PricingPageClient />
+  return (
+    <>
+      <SoftwareSchema />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://www.cloudrent.me/' },
+          { name: 'Pricing', url: 'https://www.cloudrent.me/pricing/' },
+        ]}
+      />
+      <PricingPageClient />
+    </>
+  )
 }
