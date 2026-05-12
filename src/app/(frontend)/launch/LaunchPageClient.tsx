@@ -15,8 +15,8 @@ import {
 } from 'lucide-react'
 import { FAQSchema } from '@/components/StructuredData'
 
-const LAUNCH_DATE = new Date('2026-05-01T00:00:00+10:00')
-const SPOTS_CLAIMED = 42
+const LAUNCH_DATE = new Date('2026-05-31T23:59:59+10:00')
+const SPOTS_CLAIMED = 48
 const TOTAL_SPOTS = 100
 
 interface TimeLeft {
