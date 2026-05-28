@@ -17,6 +17,14 @@ interface DateSummary {
 
 interface BookingWidgetProps {
   className?: string
+  eventTypeSlug?: string
+  theme?: 'light' | 'dark'
+  prefill?: {
+    name?: string
+    email?: string
+    company?: string
+    phone?: string
+  }
 }
 
 // Common timezones grouped by region
@@ -44,10 +52,18 @@ const TIMEZONES = [
   { value: 'America/Vancouver', label: 'Vancouver (PST)' },
 ]
 
-export function BookingWidget({ className }: BookingWidgetProps) {
+export function BookingWidget({
+  className,
+  eventTypeSlug = 'demo',
+  theme = 'dark',
+  prefill,
+}: BookingWidgetProps) {
   const [step, setStep] = useState<'date' | 'time' | 'details' | 'confirm'>('date')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  // Theme-aware style helpers
+  const isLight = theme === 'light'
 
   // Settings from API
   const [settings, setSettings] = useState<{
@@ -72,12 +88,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
     }
   })
 
-  // Form data
+  // Form data - initialize with prefill values if provided
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
+    name: prefill?.name || '',
+    email: prefill?.email || '',
+    phone: prefill?.phone || '',
+    company: prefill?.company || '',
     message: '',
   })
 
@@ -104,7 +120,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
     async function loadSettings() {
       try {
         setLoading(true)
-        const res = await fetch('/api/booking/settings')
+        const res = await fetch(`/api/booking/settings?type=${encodeURIComponent(eventTypeSlug)}`)
         if (!res.ok) throw new Error('Failed to load booking settings')
         const data = await res.json()
         setSettings({
@@ -121,7 +137,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
       }
     }
     loadSettings()
-  }, [])
+  }, [eventTypeSlug])
 
   // Load availability when month or timezone changes
   useEffect(() => {
@@ -135,7 +151,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
       try {
         const res = await fetch(
-          `/api/booking/slots?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(selectedTimezone)}`,
+          `/api/booking/slots?type=${encodeURIComponent(eventTypeSlug)}&startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(selectedTimezone)}`,
         )
         if (!res.ok) throw new Error('Failed to load availability')
         const data = await res.json()
@@ -146,7 +162,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
       }
     }
     loadAvailability()
-  }, [settings, viewMonth, selectedTimezone])
+  }, [settings, viewMonth, selectedTimezone, eventTypeSlug])
 
   // Reset selections when timezone changes
   const handleTimezoneChange = (newTimezone: string) => {
@@ -230,9 +246,9 @@ export function BookingWidget({ className }: BookingWidgetProps) {
           disabled={!hasAvailability || isPast}
           className={cn(
             'h-10 w-10 rounded-full text-sm font-medium transition-all',
-            isPast && 'text-gray-600 cursor-not-allowed',
-            !isPast && !hasAvailability && 'text-gray-500 cursor-not-allowed',
-            !isPast && hasAvailability && 'text-white hover:bg-brand-purple/20 cursor-pointer',
+            isPast && (isLight ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 cursor-not-allowed'),
+            !isPast && !hasAvailability && (isLight ? 'text-gray-400 cursor-not-allowed' : 'text-gray-500 cursor-not-allowed'),
+            !isPast && hasAvailability && (isLight ? 'text-gray-900 hover:bg-brand-purple/10 cursor-pointer' : 'text-white hover:bg-brand-purple/20 cursor-pointer'),
             isSelected && 'bg-brand-purple text-white hover:bg-brand-purple',
           )}
         >
@@ -278,6 +294,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          type: eventTypeSlug,
           date: selectedDate,
           startTime,
           name: formData.name,
@@ -319,7 +336,11 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
   if (loading) {
     return (
-      <div className={cn('rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 p-8', className)}>
+      <div className={cn(
+        'rounded-2xl border p-8',
+        isLight ? 'bg-transparent border-gray-200' : 'bg-[#0a0a1a] border-brand-purple/20',
+        className
+      )}>
         <div className="flex items-center justify-center py-12">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-purple border-t-transparent" />
         </div>
@@ -329,8 +350,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
 
   if (error && !settings) {
     return (
-      <div className={cn('rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 p-8', className)}>
-        <p className="text-center text-red-400">{error}</p>
+      <div className={cn(
+        'rounded-2xl border p-8',
+        isLight ? 'bg-transparent border-gray-200' : 'bg-[#0a0a1a] border-brand-purple/20',
+        className
+      )}>
+        <p className="text-center text-red-500">{error}</p>
       </div>
     )
   }
@@ -338,16 +363,22 @@ export function BookingWidget({ className }: BookingWidgetProps) {
   return (
     <div
       className={cn(
-        'rounded-2xl bg-[#0a0a1a] border border-brand-purple/20 overflow-hidden',
+        'rounded-2xl border overflow-hidden',
+        isLight ? 'bg-transparent border-gray-200' : 'bg-[#0a0a1a] border-brand-purple/20',
         className,
       )}
     >
       {/* Header */}
-      <div className="border-b border-brand-purple/20 bg-brand-purple/10 px-6 py-4">
+      <div className={cn(
+        'border-b px-6 py-4',
+        isLight ? 'border-gray-200 bg-gray-50' : 'border-brand-purple/20 bg-brand-purple/10'
+      )}>
         <div className="flex items-center gap-4">
           <div>
-            <h3 className="font-semibold text-white">{settings?.eventName || 'Book a Demo'}</h3>
-            <p className="text-sm text-gray-400">
+            <h3 className={cn('font-semibold', isLight ? 'text-gray-900' : 'text-white')}>
+              {settings?.eventName || 'Book a Demo'}
+            </h3>
+            <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
               {settings?.slotDuration || 30} min
               {settings?.hostName && ` with ${settings.hostName}`}
             </p>
@@ -361,7 +392,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
           <div>
             {/* Timezone selector */}
             <div className="mb-4">
-              <label className="mb-1.5 flex items-center gap-1.5 text-xs text-gray-400">
+              <label className={cn('mb-1.5 flex items-center gap-1.5 text-xs', isLight ? 'text-gray-500' : 'text-gray-400')}>
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -370,7 +401,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               <select
                 value={selectedTimezone}
                 onChange={(e) => handleTimezoneChange(e.target.value)}
-                className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-3 py-2 text-sm text-white focus:border-brand-purple focus:outline-none"
+                className={cn(
+                  'w-full rounded-lg border px-3 py-2 text-sm focus:border-brand-purple focus:outline-none',
+                  isLight
+                    ? 'border-gray-300 bg-white text-gray-900'
+                    : 'border-brand-purple/30 bg-[#1a1a2e] text-white'
+                )}
               >
                 {TIMEZONES.map((tz) => (
                   <option key={tz.value} value={tz.value}>
@@ -389,7 +425,10 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                 onClick={() =>
                   setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() - 1, 1))
                 }
-                className="rounded-lg p-2 text-gray-400 hover:bg-white/10 hover:text-white"
+                className={cn(
+                  'rounded-lg p-2',
+                  isLight ? 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' : 'text-gray-400 hover:bg-white/10 hover:text-white'
+                )}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -400,14 +439,17 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   />
                 </svg>
               </button>
-              <h4 className="font-medium text-white">
+              <h4 className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>
                 {viewMonth.toLocaleDateString('en-AU', { month: 'long', year: 'numeric' })}
               </h4>
               <button
                 onClick={() =>
                   setViewMonth(new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 1))
                 }
-                className="rounded-lg p-2 text-gray-400 hover:bg-white/10 hover:text-white"
+                className={cn(
+                  'rounded-lg p-2',
+                  isLight ? 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' : 'text-gray-400 hover:bg-white/10 hover:text-white'
+                )}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
@@ -420,7 +462,7 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               </button>
             </div>
 
-            <div className="mb-2 grid grid-cols-7 gap-1 text-center text-xs text-gray-500">
+            <div className={cn('mb-2 grid grid-cols-7 gap-1 text-center text-xs', isLight ? 'text-gray-500' : 'text-gray-500')}>
               <div>Sun</div>
               <div>Mon</div>
               <div>Tue</div>
@@ -454,14 +496,14 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               Back to calendar
             </button>
 
-            <h4 className="mb-1 font-medium text-white">{formatDate(selectedDate)}</h4>
-            <p className="mb-4 text-xs text-gray-400">
+            <h4 className={cn('mb-1 font-medium', isLight ? 'text-gray-900' : 'text-white')}>{formatDate(selectedDate)}</h4>
+            <p className={cn('mb-4 text-xs', isLight ? 'text-gray-500' : 'text-gray-400')}>
               Times shown in {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
             </p>
 
             <div className="grid gap-2 max-h-64 overflow-y-auto">
               {slotsForDate.length === 0 ? (
-                <p className="text-center text-gray-400 py-4">No available times</p>
+                <p className={cn('text-center py-4', isLight ? 'text-gray-500' : 'text-gray-400')}>No available times</p>
               ) : (
                 slotsForDate.map((slot) => (
                   <button
@@ -470,7 +512,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                       setSelectedSlot(slot)
                       setStep('details')
                     }}
-                    className="rounded-lg border border-brand-purple/30 px-4 py-3 text-center text-white transition-all hover:border-brand-purple hover:bg-brand-purple/20"
+                    className={cn(
+                      'rounded-lg border px-4 py-3 text-center transition-all hover:border-brand-purple hover:bg-brand-purple/20',
+                      isLight
+                        ? 'border-gray-300 text-gray-900'
+                        : 'border-brand-purple/30 text-white'
+                    )}
                   >
                     {formatTime(slot.startTime)}
                   </button>
@@ -497,47 +544,57 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               Back to times
             </button>
 
-            <div className="mb-6 rounded-lg bg-brand-purple/10 p-4">
-              <p className="font-medium text-white">{formatDate(selectedDate!)}</p>
-              <p className="text-sm text-gray-400">
+            <div className={cn('mb-6 rounded-lg p-4', isLight ? 'bg-gray-100' : 'bg-brand-purple/10')}>
+              <p className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>{formatDate(selectedDate!)}</p>
+              <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
                 {formatTime(selectedSlot.startTime)} - {formatTime(selectedSlot.endTime)}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={cn('text-xs mt-1', isLight ? 'text-gray-500' : 'text-gray-500')}>
                 {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
               </p>
             </div>
 
             {error && (
-              <div className="mb-4 rounded-lg bg-red-500/10 border border-red-500/30 p-3 text-sm text-red-400">
+              <div className="mb-4 rounded-lg bg-red-500/10 border border-red-500/30 p-3 text-sm text-red-500">
                 {error}
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="mb-1 block text-sm text-gray-400">Name *</label>
+                <label className={cn('mb-1 block text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>Name *</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border px-4 py-2 focus:border-brand-purple focus:outline-none',
+                    isLight
+                      ? 'border-gray-300 bg-white text-gray-900 placeholder:text-gray-400'
+                      : 'border-brand-purple/30 bg-[#1a1a2e] text-white placeholder:text-gray-500'
+                  )}
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm text-gray-400">Email *</label>
+                <label className={cn('mb-1 block text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>Email *</label>
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border px-4 py-2 focus:border-brand-purple focus:outline-none',
+                    isLight
+                      ? 'border-gray-300 bg-white text-gray-900 placeholder:text-gray-400'
+                      : 'border-brand-purple/30 bg-[#1a1a2e] text-white placeholder:text-gray-500'
+                  )}
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm text-gray-400">Phone *</label>
+                <label className={cn('mb-1 block text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>Phone *</label>
                 <div className="relative">
                   <input
                     type="tel"
@@ -545,10 +602,13 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className={cn(
-                      "w-full rounded-lg border bg-[#1a1a2e] px-4 py-2 pr-10 text-white placeholder:text-gray-500 focus:outline-none",
-                      phoneValidation.status === 'valid' && "border-green-500",
-                      phoneValidation.status === 'invalid' && "border-red-500",
-                      phoneValidation.status !== 'valid' && phoneValidation.status !== 'invalid' && "border-brand-purple/30 focus:border-brand-purple"
+                      'w-full rounded-lg border px-4 py-2 pr-10 focus:outline-none',
+                      isLight
+                        ? 'bg-white text-gray-900 placeholder:text-gray-400'
+                        : 'bg-[#1a1a2e] text-white placeholder:text-gray-500',
+                      phoneValidation.status === 'valid' && 'border-green-500',
+                      phoneValidation.status === 'invalid' && 'border-red-500',
+                      phoneValidation.status !== 'valid' && phoneValidation.status !== 'invalid' && (isLight ? 'border-gray-300 focus:border-brand-purple' : 'border-brand-purple/30 focus:border-brand-purple')
                     )}
                   />
                   {/* Validation indicator */}
@@ -569,29 +629,39 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   </div>
                 </div>
                 {phoneValidation.status === 'invalid' && phoneValidation.error && (
-                  <p className="mt-1 text-xs text-red-400">{phoneValidation.error}</p>
+                  <p className="mt-1 text-xs text-red-500">{phoneValidation.error}</p>
                 )}
               </div>
 
               <div>
-                <label className="mb-1 block text-sm text-gray-400">Company</label>
+                <label className={cn('mb-1 block text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>Company</label>
                 <input
                   type="text"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none"
+                  className={cn(
+                    'w-full rounded-lg border px-4 py-2 focus:border-brand-purple focus:outline-none',
+                    isLight
+                      ? 'border-gray-300 bg-white text-gray-900 placeholder:text-gray-400'
+                      : 'border-brand-purple/30 bg-[#1a1a2e] text-white placeholder:text-gray-500'
+                  )}
                 />
               </div>
 
               <div>
-                <label className="mb-1 block text-sm text-gray-400">
+                <label className={cn('mb-1 block text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
                   Any specific areas of interest?
                 </label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   rows={3}
-                  className="w-full rounded-lg border border-brand-purple/30 bg-[#1a1a2e] px-4 py-2 text-white placeholder:text-gray-500 focus:border-brand-purple focus:outline-none resize-none"
+                  className={cn(
+                    'w-full rounded-lg border px-4 py-2 focus:border-brand-purple focus:outline-none resize-none',
+                    isLight
+                      ? 'border-gray-300 bg-white text-gray-900 placeholder:text-gray-400'
+                      : 'border-brand-purple/30 bg-[#1a1a2e] text-white placeholder:text-gray-500'
+                  )}
                 />
               </div>
 
@@ -624,18 +694,18 @@ export function BookingWidget({ className }: BookingWidgetProps) {
               </svg>
             </div>
 
-            <h3 className="mb-2 text-xl font-semibold text-white">Booking Confirmed!</h3>
-            <p className="mb-6 text-gray-400">
+            <h3 className={cn('mb-2 text-xl font-semibold', isLight ? 'text-gray-900' : 'text-white')}>Booking Confirmed!</h3>
+            <p className={cn('mb-6', isLight ? 'text-gray-600' : 'text-gray-400')}>
               You&apos;ll receive a confirmation email with meeting details shortly.
             </p>
 
-            <div className="rounded-lg bg-brand-purple/10 p-4 text-left">
-              <p className="font-medium text-white">{settings?.eventName}</p>
-              <p className="text-sm text-gray-400">{formatDate(selectedDate!)}</p>
-              <p className="text-sm text-gray-400">
+            <div className={cn('rounded-lg p-4 text-left', isLight ? 'bg-gray-100' : 'bg-brand-purple/10')}>
+              <p className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>{settings?.eventName}</p>
+              <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>{formatDate(selectedDate!)}</p>
+              <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
                 {formatTime(selectedSlot!.startTime)} - {formatTime(selectedSlot!.endTime)}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className={cn('text-xs mt-1', isLight ? 'text-gray-500' : 'text-gray-500')}>
                 {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
               </p>
               {appointment.booking?.meetingUrl && (
@@ -656,7 +726,12 @@ export function BookingWidget({ className }: BookingWidgetProps) {
                   href={appointment.calendarLinks.google}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-brand-purple/30 px-4 py-2 text-sm text-white hover:bg-brand-purple/20"
+                  className={cn(
+                    'rounded-lg border px-4 py-2 text-sm hover:bg-brand-purple/20',
+                    isLight
+                      ? 'border-gray-300 text-gray-900'
+                      : 'border-brand-purple/30 text-white'
+                  )}
                 >
                   Add to Google Calendar
                 </a>

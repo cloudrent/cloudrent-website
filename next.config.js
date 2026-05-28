@@ -64,6 +64,20 @@ const nextConfig = {
         },
       ],
     },
+    // Allow embedding of /embed/* routes from *.cloudrent.me
+    {
+      source: '/embed/:path*',
+      headers: [
+        {
+          key: 'Content-Security-Policy',
+          value: "frame-ancestors 'self' https://*.cloudrent.me",
+        },
+        {
+          key: 'X-Frame-Options',
+          value: 'ALLOW-FROM https://app.cloudrent.me',
+        },
+      ],
+    },
   ],
 }
 

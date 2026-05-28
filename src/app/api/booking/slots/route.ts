@@ -8,6 +8,7 @@ import {
   type ExistingBooking,
   type ScheduleDay,
 } from '@/lib/booking/calculate-slots'
+import { getEventType, isValidEventType } from '@/lib/booking/event-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,6 +30,14 @@ export async function GET(request: NextRequest) {
     const startDate = searchParams.get('startDate') // YYYY-MM-DD
     const endDate = searchParams.get('endDate') // YYYY-MM-DD
     const timezone = searchParams.get('timezone') || 'Australia/Sydney'
+    const type = searchParams.get('type') || 'demo'
+
+    // Validate event type
+    if (!isValidEventType(type)) {
+      return NextResponse.json({ error: `Invalid event type: ${type}` }, { status: 400 })
+    }
+
+    const eventType = getEventType(type)!
 
     if (!startDate || !endDate) {
       return NextResponse.json({ error: 'Missing startDate or endDate parameters' }, { status: 400 })
@@ -70,11 +79,11 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    // Transform settings to expected format
+    // Transform settings to expected format, using event-type-specific duration
     const bookingSettings: BookingSettings = {
       availability: {
         timezone: settings.availability?.timezone || 'Australia/Sydney',
-        slotDuration: settings.availability?.slotDuration || 30,
+        slotDuration: eventType.duration, // Use event-type-specific duration
         bufferBefore: settings.availability?.bufferBefore || 0,
         bufferAfter: settings.availability?.bufferAfter || 15,
         maxBookingsPerDay: settings.availability?.maxBookingsPerDay || 8,

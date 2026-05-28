@@ -1,20 +1,32 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { getEventType, isValidEventType } from '@/lib/booking/event-types'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const searchParams = request.nextUrl.searchParams
+    const type = searchParams.get('type') || 'demo'
+
+    // Validate event type
+    if (!isValidEventType(type)) {
+      return NextResponse.json({ error: `Invalid event type: ${type}` }, { status: 400 })
+    }
+
+    const eventType = getEventType(type)!
+
     const payload = await getPayload({ config: configPromise })
     const settings = await payload.findGlobal({ slug: 'booking-settings' })
 
-    // Return only public-safe fields
+    // Return only public-safe fields, with event-type-specific overrides
     return NextResponse.json({
-      eventName: settings.eventName || 'Product Demo',
-      eventDescription: settings.eventDescription || '',
+      eventType: eventType.slug,
+      eventName: eventType.name,
+      eventDescription: eventType.description,
       hostName: settings.hostName || 'CloudRent Team',
-      slotDuration: settings.availability?.slotDuration || 30,
+      slotDuration: eventType.duration, // Use event-type-specific duration
       timezone: settings.availability?.timezone || 'Australia/Sydney',
       schedule: settings.schedule || {
         monday: { enabled: true, startTime: '09:00', endTime: '17:00' },

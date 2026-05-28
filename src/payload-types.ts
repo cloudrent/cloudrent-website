@@ -936,6 +936,10 @@ export interface Booking {
    */
   duration?: number | null;
   timezone?: string | null;
+  /**
+   * Type of booking event
+   */
+  eventType?: ('demo' | 'training') | null;
   guestName: string;
   guestEmail: string;
   guestPhone?: string | null;
@@ -1665,6 +1669,7 @@ export interface BookingsSelect<T extends boolean = true> {
   endTime?: T;
   duration?: T;
   timezone?: T;
+  eventType?: T;
   guestName?: T;
   guestEmail?: T;
   guestPhone?: T;

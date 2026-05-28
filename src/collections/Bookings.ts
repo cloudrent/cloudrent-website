@@ -67,6 +67,19 @@ export const Bookings: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'eventType',
+      type: 'select',
+      defaultValue: 'demo',
+      options: [
+        { label: 'Product Demo', value: 'demo' },
+        { label: 'Training Session', value: 'training' },
+      ],
+      admin: {
+        description: 'Type of booking event',
+        position: 'sidebar',
+      },
+    },
 
     // Guest Information
     {

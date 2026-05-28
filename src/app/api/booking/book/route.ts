@@ -5,6 +5,7 @@ import { createCalendarEvent } from '@/lib/google-calendar'
 import { Resend } from 'resend'
 import { formatDate, formatTime } from '@/lib/booking/calculate-slots'
 import { validatePhoneNumber } from '@/lib/phone-validation'
+import { getEventType, isValidEventType } from '@/lib/booking/event-types'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,7 +23,14 @@ const BLOCKED_DOMAINS = [
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { date, startTime, name, email, phone, company, message, timezone } = body
+    const { date, startTime, name, email, phone, company, message, timezone, type } = body
+
+    // Validate event type (defaults to 'demo' if not provided)
+    const eventTypeSlug = type || 'demo'
+    if (!isValidEventType(eventTypeSlug)) {
+      return NextResponse.json({ error: `Invalid event type: ${eventTypeSlug}` }, { status: 400 })
+    }
+    const eventType = getEventType(eventTypeSlug)!
 
     // Validation
     if (!date || !startTime || !name || !email) {
@@ -61,8 +69,8 @@ export async function POST(request: NextRequest) {
     const payload = await getPayload({ config: configPromise })
     const settings = await payload.findGlobal({ slug: 'booking-settings' })
 
-    // Calculate end time
-    const duration = settings.availability?.slotDuration || 30
+    // Calculate end time using event-type-specific duration
+    const duration = eventType.duration
     const [hours, minutes] = startTime.split(':').map(Number)
     const endMinutes = hours * 60 + minutes + duration
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`
@@ -97,7 +105,7 @@ export async function POST(request: NextRequest) {
       const endDateTime = new Date(`${date}T${endTime}:00`)
 
       const calendarResult = await createCalendarEvent({
-        summary: `${settings.eventName || 'Demo'} with ${name}`,
+        summary: `${eventType.name} with ${name}`,
         description: `Company: ${company || 'N/A'}\nPhone: ${phone || 'N/A'}\nMessage: ${message || 'N/A'}\nMeeting: ${meetingUrl || 'Google Meet (see calendar invite)'}`,
         startTime: startDateTime,
         endTime: endDateTime,
@@ -125,6 +133,7 @@ export async function POST(request: NextRequest) {
         startTime,
         endTime,
         duration,
+        eventType: eventType.slug,
         timezone: timezone || settings.availability?.timezone || 'Australia/Sydney',
         guestName: name,
         guestEmail: email,
@@ -154,10 +163,10 @@ export async function POST(request: NextRequest) {
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: email,
             replyTo: settings.hostEmail || undefined,
-            subject: `Booking Confirmed: ${settings.eventName || 'Demo'} on ${formattedDate}`,
+            subject: `Booking Confirmed: ${eventType.name} on ${formattedDate}`,
             html: getGuestConfirmationEmail({
               guestName: name,
-              eventName: settings.eventName || 'Product Demo',
+              eventName: eventType.name,
               hostName: settings.hostName || 'CloudRent Team',
               date: formattedDate,
               time: formattedTime,
@@ -178,14 +187,14 @@ export async function POST(request: NextRequest) {
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: settings.hostEmail,
             replyTo: email,
-            subject: `New Booking: ${settings.eventName || 'Demo'} with ${name}`,
+            subject: `New Booking: ${eventType.name} with ${name}`,
             html: getHostNotificationEmail({
               guestName: name,
               guestEmail: email,
               guestPhone: phone,
               guestCompany: company,
               message,
-              eventName: settings.eventName || 'Product Demo',
+              eventName: eventType.name,
               date: formattedDate,
               time: formattedTime,
               duration,
@@ -206,10 +215,11 @@ export async function POST(request: NextRequest) {
         startTime,
         endTime,
         meetingUrl,
+        eventType: eventType.slug,
       },
       calendarLinks: {
         google: generateGoogleCalendarLink({
-          title: `${settings.eventName || 'Demo'} with ${settings.hostName || 'CloudRent'}`,
+          title: `${eventType.name} with ${settings.hostName || 'CloudRent'}`,
           date,
           startTime,
           endTime,
