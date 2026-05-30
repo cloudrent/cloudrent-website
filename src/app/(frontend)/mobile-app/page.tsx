@@ -3,17 +3,25 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import MobileAppPageClient from './page.client'
 
+// SEO metadata - ranking #10.5, optimize for CTR
 export const metadata: Metadata = {
-  title: 'Mobile App | CloudRent Pro Rental Software',
+  title: 'Rental Equipment Mobile App | iOS & Android – CloudRent Pro',
   description:
-    'CloudRent Pro mobile app for iOS and Android. Manage equipment, dispatch jobs, capture signatures, and track deliveries from anywhere.',
+    'Free mobile app for equipment rental management. Dispatch jobs, capture signatures, track GPS locations & manage rentals offline. Download for iOS & Android.',
+  keywords: [
+    'rental equipment mobile app',
+    'equipment rental app',
+    'rental management app',
+    'dispatch app',
+    'field service app',
+  ],
   alternates: {
     canonical: 'https://www.cloudrent.me/mobile-app/',
   },
   openGraph: mergeOpenGraph({
-    title: 'Mobile App | CloudRent Pro Rental Software',
+    title: 'Rental Equipment Mobile App | iOS & Android – CloudRent Pro',
     description:
-      'CloudRent Pro mobile app for iOS and Android. Manage equipment, dispatch jobs, capture signatures, and track deliveries from anywhere.',
+      'Free mobile app for equipment rental management. Dispatch jobs, capture signatures, track GPS locations & manage rentals offline. Download for iOS & Android.',
     url: '/mobile-app/',
   }),
 }

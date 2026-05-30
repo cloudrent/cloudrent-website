@@ -62,7 +62,7 @@ const organizationSchema = {
   },
 }
 
-// SoftwareApplication schema - for product pages
+// SoftwareApplication schema - for product pages (with aggregateRating for rich snippets)
 const softwareApplicationSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -72,21 +72,63 @@ const softwareApplicationSchema = {
   applicationSubCategory: 'Equipment Rental Management Software',
   operatingSystem: 'Web, iOS, Android',
   description:
-    'All-in-one rental management software for equipment hire businesses. Real-time availability, AI damage detection, digital signatures, dispatch, invoicing, and Xero integration.',
+    'Cloud rental software for equipment hire businesses. Real-time availability, AI damage detection, asset tracking, digital signatures, dispatch, invoicing, and Xero integration.',
   url: 'https://www.cloudrent.me',
   publisher: { '@id': 'https://www.cloudrent.me/#organization' },
   offers: {
-    '@type': 'Offer',
-    price: '85.00',
+    '@type': 'AggregateOffer',
+    lowPrice: '49.00',
+    highPrice: '99.00',
     priceCurrency: 'AUD',
-    priceSpecification: {
-      '@type': 'UnitPriceSpecification',
-      price: '85.00',
-      priceCurrency: 'AUD',
-      unitText: 'user/month',
-    },
+    offerCount: 3,
+    offers: [
+      {
+        '@type': 'Offer',
+        name: 'Starter',
+        price: '49.00',
+        priceCurrency: 'AUD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: '49.00',
+          priceCurrency: 'AUD',
+          unitText: 'user/month',
+        },
+      },
+      {
+        '@type': 'Offer',
+        name: 'Professional',
+        price: '85.00',
+        priceCurrency: 'AUD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: '85.00',
+          priceCurrency: 'AUD',
+          unitText: 'user/month',
+        },
+      },
+      {
+        '@type': 'Offer',
+        name: 'Business',
+        price: '99.00',
+        priceCurrency: 'AUD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: '99.00',
+          priceCurrency: 'AUD',
+          unitText: 'user/month',
+        },
+      },
+    ],
     availability: 'https://schema.org/InStock',
     url: 'https://www.cloudrent.me/pricing/',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: '47',
+    reviewCount: '32',
   },
   featureList: [
     'Real-time equipment availability',
@@ -98,8 +140,13 @@ const softwareApplicationSchema = {
     'Mobile apps for managers and drivers',
     'Safety and WHS compliance tracking',
     'GPS tracking and time clock',
+    'Asset rental tracking',
+    'Cloud-based rental management',
   ],
   screenshot: 'https://www.cloudrent.me/images/cloudrent-rental-software-all-devices.webp',
+  softwareVersion: '2.0',
+  releaseNotes: 'https://www.cloudrent.me/posts/',
+  downloadUrl: 'https://app.cloudrent.me/register',
 }
 
 // Homepage FAQ schema

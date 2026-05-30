@@ -6,17 +6,24 @@ import { LightboxImage } from '@/components/Lightbox'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
+// SEO metadata - ranking #2.7, improve CTR
 export const metadata: Metadata = {
-  title: 'About CloudRent Pro – Australian Rental Software',
+  title: 'About Us | Australian Equipment Rental Software Company – CloudRent',
   description:
-    'Built in Australia for hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management.',
+    '100% Australian-owned rental software company. 18+ years in hire industry, 300+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
+  keywords: [
+    'Australian rental software',
+    'equipment rental software company',
+    'CloudRent team',
+    'hire business software Australia',
+  ],
   alternates: {
     canonical: 'https://www.cloudrent.me/about/',
   },
   openGraph: mergeOpenGraph({
-    title: 'About CloudRent Pro – Australian Rental Software',
+    title: 'About Us | Australian Equipment Rental Software Company – CloudRent',
     description:
-      'Built in Australia for hire businesses. Meet the team behind CloudRent Pro and our mission to simplify equipment rental management.',
+      '100% Australian-owned rental software company. 18+ years in hire industry, 300+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
     url: '/about/',
   }),
 }

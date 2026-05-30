@@ -3,17 +3,24 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import WebPortalPageClient from './page.client'
 
+// SEO metadata - optimized for online booking keywords
 export const metadata: Metadata = {
-  title: 'Customer Portal | CloudRent Pro - Online Equipment Booking',
+  title: 'Online Equipment Rental Booking Portal | 24/7 Self-Service – CloudRent Pro',
   description:
-    'Self-service customer portal for equipment hire. Let customers browse availability, make bookings, sign contracts, and pay invoices online.',
+    'Give customers 24/7 self-service equipment booking. Browse availability, reserve equipment, sign contracts & pay invoices online. Reduce admin calls by 50%.',
+  keywords: [
+    'equipment rental booking portal',
+    'online equipment booking',
+    'rental self-service portal',
+    'customer booking system',
+  ],
   alternates: {
     canonical: 'https://www.cloudrent.me/web-portal/',
   },
   openGraph: mergeOpenGraph({
-    title: 'Customer Portal | CloudRent Pro - Online Equipment Booking',
+    title: 'Online Equipment Rental Booking Portal | 24/7 Self-Service – CloudRent Pro',
     description:
-      'Self-service customer portal for equipment hire. Let customers browse availability, make bookings, sign contracts, and pay invoices online.',
+      'Give customers 24/7 self-service equipment booking. Browse availability, reserve equipment, sign contracts & pay invoices online. Reduce admin calls by 50%.',
     url: '/web-portal/',
   }),
 }

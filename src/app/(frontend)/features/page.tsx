@@ -3,17 +3,25 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import FeaturesPageClient from './page.client'
 
+// SEO metadata - targeting "asset rental software", "rental equipment management software with tracking"
 export const metadata: Metadata = {
-  title: 'Features | CloudRent Pro Equipment Rental Software',
+  title: 'Asset Rental Software Features | Equipment Tracking & Management – CloudRent Pro',
   description:
-    'Explore CloudRent Pro features: equipment management, dispatch, AI damage detection, safety compliance, digital signatures, invoicing, and more.',
+    'Best rental equipment management software with tracking. AI damage detection, real-time availability, dispatch, safety compliance, digital signatures & Xero integration.',
+  keywords: [
+    'asset rental software',
+    'rental equipment management software',
+    'equipment tracking software',
+    'rental inventory management',
+    'equipment rental features',
+  ],
   alternates: {
     canonical: 'https://www.cloudrent.me/features/',
   },
   openGraph: mergeOpenGraph({
-    title: 'Features | CloudRent Pro Equipment Rental Software',
+    title: 'Asset Rental Software Features | Equipment Tracking & Management – CloudRent Pro',
     description:
-      'Explore CloudRent Pro features: equipment management, dispatch, AI damage detection, safety compliance, digital signatures, invoicing, and more.',
+      'Best rental equipment management software with tracking. AI damage detection, real-time availability, dispatch, safety compliance, digital signatures & Xero integration.',
     url: '/features/',
   }),
 }
