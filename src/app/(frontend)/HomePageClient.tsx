@@ -540,13 +540,22 @@ export default function HomePageClient() {
                 </span>
               </h1>
 
-              <p className="mb-4 text-xl font-medium text-white/70 md:text-2xl">
-                No more missed jobs. No more double handling. No more chaos.
+              <p className="mb-6 max-w-lg text-lg leading-relaxed text-white/70">
+                Bookings, dispatch, invoicing and safety — all in one system built for hire & rental
+                businesses. No more missed jobs. No more double handling. No more chaos.
               </p>
 
-              <p className="mb-8 max-w-lg text-lg leading-snug text-white/55">
-                Manage bookings, dispatch, invoicing, and safety — all in one system built for hire
-                businesses.
+              {/* Bridge line */}
+              <p className="mb-7 text-base text-white/70">
+                <span className="font-medium text-white">
+                  Curious how much multiple systems are costing you?
+                </span>{' '}
+                <button
+                  onClick={() => setShowScorecard(true)}
+                  className="text-purple-300 underline decoration-purple-300/35 underline-offset-[3px] transition-colors hover:text-purple-200 hover:decoration-purple-200/70"
+                >
+                  Find out in 2 minutes →
+                </button>
               </p>
 
               {/* CTAs */}
@@ -1625,7 +1634,7 @@ export default function HomePageClient() {
                 {/* Right - Story & Value Statement */}
                 <div className="text-center lg:text-left">
                   <p className="mb-6 text-lg leading-snug text-white/60">
-                    We&apos;ve been helping hire businesses since 2017.
+                    We&apos;ve been helping hire & rental businesses since 2017.
                     <br />
                     CloudRent Pro is our next evolution — rebuilt from the ground up based on
                     real-world operations.
