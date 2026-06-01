@@ -46,6 +46,7 @@ import {
   Gauge,
 } from 'lucide-react'
 import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
+import { GoogleReviews } from '@/components/GoogleReviews'
 
 // Dynamically import the carousel to reduce initial bundle size
 const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
@@ -1527,6 +1528,9 @@ export default function HomePageClient() {
               </div>
             ))}
           </div>
+
+          {/* Google Reviews Carousel */}
+          <GoogleReviews />
 
           {/* Trust Badges */}
           <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-3">

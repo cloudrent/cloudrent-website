@@ -78,3 +78,13 @@
 }
 
 /* Theme is applied via inline script in layout - no opacity blocking needed */
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
