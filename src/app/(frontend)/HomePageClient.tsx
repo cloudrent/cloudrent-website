@@ -43,7 +43,9 @@ import {
   Eye,
   FileSignature,
   RefreshCw,
+  Gauge,
 } from 'lucide-react'
+import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
 
 // Dynamically import the carousel to reduce initial bundle size
 const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
@@ -469,6 +471,7 @@ export default function HomePageClient() {
   const { days, hours, minutes, seconds, expired } = useCountdown()
   const [showFlyouts, setShowFlyouts] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [showScorecard, setShowScorecard] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setShowFlyouts(true), 3000)
@@ -562,13 +565,13 @@ export default function HomePageClient() {
                   <ChevronRight className="relative z-10 h-4 w-4 flex-shrink-0 transition-transform group-hover:translate-x-0.5" />
                 </a>
 
-                <Link
-                  href="/videos"
-                  className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/[0.06] px-5 py-4 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:bg-white/[0.10] hover:text-white"
+                <button
+                  onClick={() => setShowScorecard(true)}
+                  className="flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-5 py-4 text-sm font-medium text-purple-300 transition-all hover:border-purple-500/50 hover:bg-purple-500/20 hover:text-purple-200"
                 >
-                  <Play className="h-4 w-4" />
-                  Watch 2-min demo
-                </Link>
+                  <Gauge className="h-4 w-4" />
+                  Take the Scorecard
+                </button>
               </div>
 
               {/* Trust chips */}
@@ -580,6 +583,15 @@ export default function HomePageClient() {
                   </div>
                 ))}
               </div>
+
+              {/* Tertiary demo link */}
+              <Link
+                href="/videos"
+                className="mt-4 inline-flex items-center gap-1.5 text-xs text-white/40 transition-colors hover:text-white/60"
+              >
+                <Play className="h-3 w-3" />
+                Or watch the 2-minute demo
+              </Link>
             </div>
 
             {/* Right Column - Dashboard + Flyouts */}
@@ -1859,6 +1871,9 @@ export default function HomePageClient() {
           </p>
         </div>
       </section>
+
+      {/* Scorecard Modal */}
+      <ScorecardModal isOpen={showScorecard} onClose={() => setShowScorecard(false)} />
     </div>
   )
 }

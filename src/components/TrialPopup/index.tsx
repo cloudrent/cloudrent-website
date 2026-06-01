@@ -8,7 +8,7 @@ import { X } from 'lucide-react'
 const STORAGE_KEY = 'trial-popup-dismissed'
 
 // Don't show popup on these pages
-const EXCLUDED_PATHS = ['/launch', '/pricing', '/contact', '/register']
+const EXCLUDED_PATHS = ['/launch', '/pricing', '/contact', '/register', '/scorecard']
 
 export function TrialPopup() {
   const [isVisible, setIsVisible] = useState(false)
