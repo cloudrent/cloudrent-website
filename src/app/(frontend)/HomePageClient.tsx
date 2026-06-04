@@ -47,6 +47,7 @@ import {
 } from 'lucide-react'
 import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
 import { GoogleReviews } from '@/components/GoogleReviews'
+import { LogoMarquee } from '@/components/LogoMarquee'
 
 // Dynamically import the carousel to reduce initial bundle size
 const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
@@ -728,32 +729,11 @@ export default function HomePageClient() {
 
         {/* Logo Strip */}
         <div className="relative z-10 mt-12 border-t border-white/[0.05] bg-black/20 py-8">
-          <div className="mx-auto max-w-7xl px-5">
-            <p className="mb-6 text-center text-sm text-white/40">
-              Trusted by hire & rental businesses across Australia
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-5">
-              {[
-                { src: '/images/logos/Sydney-metro-scafs.png', alt: 'Sydney Metro Scaffolds' },
-                { src: '/images/logos/Safe-hire.png', alt: 'Safe Hire' },
-                { src: '/images/logos/Excel-events.png', alt: 'Excel Event Equipment Hire' },
-                { src: '/images/logos/Red-star-fence.png', alt: 'Red Star Fence' },
-                { src: '/images/logos/Micro-rentals.png', alt: 'Micro Rentals' },
-              ].map((logo, i) => (
-                <Image
-                  key={i}
-                  src={logo.src}
-                  alt={logo.alt}
-                  width={200}
-                  height={78}
-                  loading="lazy"
-                  className="h-[60px] w-auto object-contain opacity-60 brightness-0 invert transition-opacity hover:opacity-100"
-                />
-              ))}
-            </div>
+          <div className="mx-auto max-w-7xl">
+            <LogoMarquee />
 
             {/* Integrations */}
-            <div className="mt-8 border-t border-white/[0.05] pt-6">
+            <div className="mx-auto mt-8 max-w-7xl border-t border-white/[0.05] px-5 pt-6">
               <p className="mb-4 text-center text-sm text-white/40">Integrates with</p>
               <div className="flex items-center justify-center">
                 <Image
