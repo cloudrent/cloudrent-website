@@ -322,7 +322,10 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<Record<string, QuestionOption>>({})
   const [email, setEmail] = useState('')
+  const [businessName, setBusinessName] = useState('')
   const [emailSubmitted, setEmailSubmitted] = useState(false)
+  const [emailSending, setEmailSending] = useState(false)
+  const [emailError, setEmailError] = useState<string | null>(null)
 
   // Track open
   useEffect(() => {
@@ -377,15 +380,49 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
     trackEvent('scorecard_start', { source: variant === 'modal' ? 'homepage_modal' : 'direct_url' })
   }
 
-  function submitEmail() {
-    if (email.includes('@')) {
+  async function submitEmail() {
+    if (!email.includes('@') || !result) return
+
+    setEmailSending(true)
+    setEmailError(null)
+
+    try {
+      const response = await fetch('/api/scorecard-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          businessName,
+          score: result.score,
+          level: result.level,
+          leakMonthly: result.leakMonthly,
+          leakAnnual: result.leakAnnual,
+          pillarScores: result.pillarScores,
+          weakest: result.weakest,
+          strongest: result.strongest,
+          industry: result.industry,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send report')
+      }
+
       setEmailSubmitted(true)
       trackEvent('scorecard_email_submitted', {
         email,
-        score: result?.score,
-        leak_monthly: result?.leakMonthly,
+        businessName,
+        score: result.score,
+        leak_monthly: result.leakMonthly,
         source: variant === 'modal' ? 'homepage_modal' : 'direct_url',
       })
+    } catch (error) {
+      console.error('Email submission error:', error)
+      setEmailError(error instanceof Error ? error.message : 'Failed to send report')
+    } finally {
+      setEmailSending(false)
     }
   }
 
@@ -614,27 +651,40 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
                 Industry benchmark, top 3 fixes for your weakest pillar, and a one-pager you can
                 share with your team.
               </p>
-              <div className="flex flex-col gap-2 sm:flex-row">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@yourbusiness.com.au"
-                  className="flex-1 rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-brand-purple focus:outline-none"
-                />
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <input
+                    type="text"
+                    value={businessName}
+                    onChange={(e) => setBusinessName(e.target.value)}
+                    placeholder="Business name"
+                    className="flex-1 rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-brand-purple focus:outline-none"
+                  />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@yourbusiness.com.au"
+                    className="flex-1 rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-brand-purple focus:outline-none"
+                  />
+                </div>
                 <button
                   onClick={submitEmail}
-                  className="whitespace-nowrap rounded-lg bg-brand-purple px-5 py-3 font-semibold text-white transition-colors hover:bg-purple-600"
+                  disabled={emailSending || !email.includes('@')}
+                  className="whitespace-nowrap rounded-lg bg-brand-purple px-5 py-3 font-semibold text-white transition-colors hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Email me the report
+                  {emailSending ? 'Sending...' : 'Email me the report'}
                 </button>
+                {emailError && (
+                  <p className="text-sm text-red-400">{emailError}</p>
+                )}
               </div>
             </div>
           ) : (
             <div className="flex items-center gap-3 rounded-2xl border border-brand-green/40 bg-brand-green/10 p-5">
               <Check className="h-5 w-5 text-brand-green" />
               <p className="text-sm text-white/80">
-                Sent. Check your inbox in the next minute or two.
+                Sent! Check your inbox in the next minute or two.
               </p>
             </div>
           )}
