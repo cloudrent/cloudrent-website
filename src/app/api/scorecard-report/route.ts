@@ -1,5 +1,7 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
 // Types
 interface PillarScores {
@@ -22,6 +24,33 @@ interface ScorecardData {
   strongest: string | null
   industry: string
   objection?: string
+  turnstileToken?: string
+}
+
+// Turnstile verification
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY
+  if (!secretKey) {
+    console.warn('TURNSTILE_SECRET_KEY not configured, skipping verification')
+    return true // Allow submission if Turnstile not configured
+  }
+
+  try {
+    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        secret: secretKey,
+        response: token,
+      }),
+    })
+
+    const data = await response.json()
+    return data.success === true
+  } catch (error) {
+    console.error('Turnstile verification error:', error)
+    return false
+  }
 }
 
 // Pillar insights for the email
@@ -254,7 +283,7 @@ export async function POST(request: Request) {
 
   try {
     const body: ScorecardData = await request.json()
-    const { email, businessName, score, level, leakMonthly, leakAnnual, pillarScores, weakest, strongest, industry } = body
+    const { email, businessName, score, level, leakMonthly, leakAnnual, pillarScores, weakest, strongest, industry, turnstileToken } = body
 
     // Validate required fields
     if (!email || !email.includes('@')) {
@@ -264,6 +293,49 @@ export async function POST(request: Request) {
     if (score === undefined || !level || !pillarScores) {
       return NextResponse.json({ error: 'Missing scorecard data' }, { status: 400 })
     }
+
+    // Verify Turnstile token (if configured)
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return NextResponse.json({ error: 'Security verification required' }, { status: 400 })
+      }
+
+      const isValidToken = await verifyTurnstileToken(turnstileToken)
+      if (!isValidToken) {
+        console.log(`Blocked submission: invalid turnstile token - ${email}`)
+        return NextResponse.json({ error: 'Security verification failed. Please try again.' }, { status: 400 })
+      }
+    }
+
+    // Save lead to database
+    const payload = await getPayload({ config })
+
+    const lead = await payload.create({
+      collection: 'scorecard-leads',
+      data: {
+        email,
+        businessName: businessName || undefined,
+        industry: industry || 'other',
+        score,
+        level: level.num,
+        levelName: level.name,
+        leakMonthly,
+        leakAnnual,
+        pillarScores: {
+          bookingsQuotes: pillarScores['Bookings & Quotes'] || 0,
+          invoicingCash: pillarScores['Invoicing & Cash'] || 0,
+          dispatchLogistics: pillarScores['Dispatch & Logistics'] || 0,
+          equipmentDamage: pillarScores['Equipment & Damage'] || 0,
+          teamCompliance: pillarScores['Team & Compliance'] || 0,
+        },
+        weakestPillar: weakest || undefined,
+        strongestPillar: strongest || undefined,
+        status: 'new',
+        emailSent: false,
+      },
+    })
+
+    console.log('Lead saved to database:', lead.id)
 
     // Generate email HTML
     const emailHtml = generateEmailHtml(body)
@@ -287,6 +359,15 @@ export async function POST(request: Request) {
     }
 
     console.log('Customer email sent successfully:', data?.id)
+
+    // Update lead to mark email as sent
+    await payload.update({
+      collection: 'scorecard-leads',
+      id: lead.id,
+      data: {
+        emailSent: true,
+      },
+    })
 
     // Also send a copy to CloudRent team for lead tracking
     console.log('Sending lead notification to:', process.env.CONTACT_EMAIL || 'sales@cloudrent.me')

@@ -74,6 +74,7 @@ export interface Config {
     users: User;
     videos: Video;
     bookings: Booking;
+    'scorecard-leads': ScorecardLead;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -98,6 +99,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     videos: VideosSelect<false> | VideosSelect<true>;
     bookings: BookingsSelect<false> | BookingsSelect<true>;
+    'scorecard-leads': ScorecardLeadsSelect<false> | ScorecardLeadsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -972,6 +974,63 @@ export interface Booking {
   createdAt: string;
 }
 /**
+ * Leads captured from the Revenue Leak Scorecard
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scorecard-leads".
+ */
+export interface ScorecardLead {
+  id: number;
+  businessName?: string | null;
+  email: string;
+  industry?: ('construction' | 'event' | 'tool' | 'scaffold' | 'av' | 'other') | null;
+  /**
+   * Score out of 100
+   */
+  score: number;
+  /**
+   * Level 1-5
+   */
+  level?: number | null;
+  levelName?: string | null;
+  /**
+   * Estimated monthly revenue leak ($)
+   */
+  leakMonthly?: number | null;
+  /**
+   * Estimated annual revenue leak ($)
+   */
+  leakAnnual?: number | null;
+  /**
+   * Individual pillar scores (0-10)
+   */
+  pillarScores?: {
+    bookingsQuotes?: number | null;
+    invoicingCash?: number | null;
+    dispatchLogistics?: number | null;
+    equipmentDamage?: number | null;
+    teamCompliance?: number | null;
+  };
+  weakestPillar?: string | null;
+  strongestPillar?: string | null;
+  /**
+   * What would hold them back from switching
+   */
+  objection?: ('busy' | 'adoption' | 'complexity' | 'cost' | 'ready') | null;
+  status: 'new' | 'contacted' | 'demo_booked' | 'trial_started' | 'converted' | 'lost';
+  /**
+   * Internal notes about this lead
+   */
+  notes?: string | null;
+  source?: ('scorecard_page' | 'homepage_modal') | null;
+  /**
+   * Report email sent to lead
+   */
+  emailSent?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -1188,6 +1247,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'bookings';
         value: number | Booking;
+      } | null)
+    | ({
+        relationTo: 'scorecard-leads';
+        value: number | ScorecardLead;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1683,6 +1746,38 @@ export interface BookingsSelect<T extends boolean = true> {
   reminder1hSent?: T;
   source?: T;
   ipAddress?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "scorecard-leads_select".
+ */
+export interface ScorecardLeadsSelect<T extends boolean = true> {
+  businessName?: T;
+  email?: T;
+  industry?: T;
+  score?: T;
+  level?: T;
+  levelName?: T;
+  leakMonthly?: T;
+  leakAnnual?: T;
+  pillarScores?:
+    | T
+    | {
+        bookingsQuotes?: T;
+        invoicingCash?: T;
+        dispatchLogistics?: T;
+        equipmentDamage?: T;
+        teamCompliance?: T;
+      };
+  weakestPillar?: T;
+  strongestPillar?: T;
+  objection?: T;
+  status?: T;
+  notes?: T;
+  source?: T;
+  emailSent?: T;
   updatedAt?: T;
   createdAt?: T;
 }

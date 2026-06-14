@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, useRef } from 'react'
 import Link from 'next/link'
 import {
   ArrowRight,
@@ -11,6 +11,7 @@ import {
   Mail,
   Sparkles,
 } from 'lucide-react'
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 
 // ============================================================================
 // CLOUDRENT SCORECARD
@@ -326,6 +327,8 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
   const [emailSubmitted, setEmailSubmitted] = useState(false)
   const [emailSending, setEmailSending] = useState(false)
   const [emailError, setEmailError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const turnstileRef = useRef<TurnstileInstance>(null)
 
   // Track open
   useEffect(() => {
@@ -383,6 +386,12 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
   async function submitEmail() {
     if (!email.includes('@') || !result) return
 
+    // Check for Turnstile token if configured
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken) {
+      setEmailError('Please complete the security check')
+      return
+    }
+
     setEmailSending(true)
     setEmailError(null)
 
@@ -401,6 +410,7 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
           weakest: result.weakest,
           strongest: result.strongest,
           industry: result.industry,
+          turnstileToken,
         }),
       })
 
@@ -421,6 +431,9 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
     } catch (error) {
       console.error('Email submission error:', error)
       setEmailError(error instanceof Error ? error.message : 'Failed to send report')
+      // Reset Turnstile on error
+      turnstileRef.current?.reset()
+      setTurnstileToken(null)
     } finally {
       setEmailSending(false)
     }
@@ -668,9 +681,27 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
                     className="flex-1 rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder-white/40 focus:border-brand-purple focus:outline-none"
                   />
                 </div>
+                {/* Cloudflare Turnstile */}
+                {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+                  <div className="flex justify-center">
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                      onSuccess={setTurnstileToken}
+                      onError={() => {
+                        setTurnstileToken(null)
+                        setEmailError('Security verification failed. Please try again.')
+                      }}
+                      onExpire={() => setTurnstileToken(null)}
+                      options={{
+                        theme: 'dark',
+                      }}
+                    />
+                  </div>
+                )}
                 <button
                   onClick={submitEmail}
-                  disabled={emailSending || !email.includes('@')}
+                  disabled={emailSending || !email.includes('@') || (!!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !turnstileToken)}
                   className="whitespace-nowrap rounded-lg bg-brand-purple px-5 py-3 font-semibold text-white transition-colors hover:bg-purple-600 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {emailSending ? 'Sending...' : 'Email me the report'}
