@@ -315,7 +315,7 @@ export async function POST(request: Request) {
       data: {
         email,
         businessName: businessName || undefined,
-        industry: industry || 'other',
+        industry: (industry as 'construction' | 'event' | 'tool' | 'scaffold' | 'av' | 'other') || 'other',
         score,
         level: level.num,
         levelName: level.name,
