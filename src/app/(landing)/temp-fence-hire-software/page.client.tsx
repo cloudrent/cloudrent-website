@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   CheckCircle,
   ChevronRight,
@@ -19,6 +20,7 @@ import {
   AlertTriangle,
   Package,
   Calculator,
+  X,
 } from 'lucide-react'
 import { useUTMParams } from '@/hooks/useUTMParams'
 import {
@@ -139,6 +141,7 @@ const useCases = [
 
 export default function TempFenceHireClient() {
   const utmString = useUTMParams()
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   useEffect(() => {
     trackLandingPageView('temp-fence')
@@ -157,11 +160,42 @@ export default function TempFenceHireClient() {
 
   return (
     <div className="min-h-screen bg-[#08080c]">
+      {/* LIGHTBOX MODAL */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            onClick={() => setLightboxImage(null)}
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <Image
+            src={lightboxImage}
+            alt="Full size preview"
+            width={1920}
+            height={1080}
+            className="max-h-[90vh] max-w-[90vw] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
       {/* NAV */}
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.08] bg-[#08080c]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <Link href="/" className="text-lg font-bold text-white">
-            CloudRent <span className="text-purple-500">Pro</span>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/CloudRent Logo Hex.svg"
+              alt="CloudRent"
+              width={32}
+              height={32}
+            />
+            <span className="text-lg font-bold text-white">
+              CloudRent <span className="text-purple-500">Pro</span>
+            </span>
           </Link>
           <Link
             href={demoUrl}
@@ -226,6 +260,24 @@ export default function TempFenceHireClient() {
               Credit card required for $1 charge. Cancel anytime.
             </p>
           </div>
+
+          {/* Hero Image - Dashboard Screenshot */}
+          <div className="relative mx-auto mt-16 max-w-5xl">
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 blur-2xl" />
+            <div
+              className="relative cursor-pointer transition-transform hover:scale-[1.01]"
+              onClick={() => setLightboxImage('/images/landing/temp-fence-dashboard.webp')}
+            >
+              <Image
+                src="/images/landing/temp-fence-dashboard.webp"
+                alt="CloudRent Pro rental software displayed on desktop, laptop, tablet and mobile devices"
+                width={1400}
+                height={800}
+                className="w-full"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -278,8 +330,61 @@ export default function TempFenceHireClient() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* MID-HIRE CHANGES FEATURE */}
       <section className="relative border-y border-white/[0.08] bg-white/[0.02] py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              Mid-Hire Changes
+            </p>
+            <h2 className="text-3xl font-black text-white md:text-4xl lg:text-5xl">
+              Customers add panels mid-hire?{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                Billing adjusts automatically.
+              </span>
+            </h2>
+          </div>
+
+          <div className="grid items-center gap-12 md:grid-cols-2">
+            <div>
+              <p className="mb-6 text-lg text-white/70">
+                Your customer calls: &quot;We need another 20 panels for a new section.&quot; No problem.
+                Create a service job, your driver adds the equipment on site, and CloudRent Pro
+                tracks exactly when those panels went out.
+              </p>
+              <p className="mb-6 text-lg text-white/70">
+                When the next invoice generates, the system automatically pro-rates the additional
+                equipment from the date it was delivered. No manual checking. No missed charges.
+                No spreadsheet calculations.
+              </p>
+              <div className="rounded-xl border border-purple-500/30 bg-purple-500/10 p-5">
+                <p className="mb-2 text-sm font-bold uppercase tracking-wider text-purple-400">
+                  The Old Way
+                </p>
+                <p className="text-white/60">
+                  Check each job for changes → Find the date equipment was added → Calculate
+                  pro-rated charges → Manually add line items to invoice → Hope you didn&apos;t miss anything
+                </p>
+              </div>
+            </div>
+            <div
+              className="relative cursor-pointer transition-transform hover:scale-[1.02]"
+              onClick={() => setLightboxImage('/images/landing/temp-fence-mid-hire.webp')}
+            >
+              <Image
+                src="/images/landing/temp-fence-mid-hire.webp"
+                alt="CloudRent Pro automatically adjusts billing when equipment is added mid-hire"
+                width={1200}
+                height={800}
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="relative py-20">
         <div className="mx-auto max-w-6xl px-5">
           <div className="mb-12 text-center">
             <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
@@ -309,6 +414,41 @@ export default function TempFenceHireClient() {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* Mobile App Screenshot */}
+          <div className="mt-16 grid items-center gap-12 md:grid-cols-2">
+            <div>
+              <h3 className="mb-4 text-2xl font-bold text-white">
+                Drivers confirm on the{' '}
+                <span className="text-purple-400">mobile app</span>
+              </h3>
+              <p className="mb-6 text-white/60">
+                Your drivers see their delivery and pickup run sheet on the CloudRent Pro app.
+                They confirm each job with photos and customer signatures — syncing instantly
+                back to the office.
+              </p>
+              <ul className="space-y-3">
+                {['GPS navigation to site', 'Photo capture at delivery', 'Digital customer signature', 'Offline mode for remote sites'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-white/70">
+                    <CheckCircle className="h-5 w-5 shrink-0 text-green-500" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div
+              className="relative cursor-pointer transition-transform hover:scale-[1.02]"
+              onClick={() => setLightboxImage('/images/landing/temp-fence-mobile-app.webp')}
+            >
+              <Image
+                src="/images/landing/temp-fence-mobile-app.webp"
+                alt="CloudRent Pro mobile app screens showing dashboard, SWMS signing, GPS navigation, and calendar"
+                width={1200}
+                height={600}
+                className="w-full rounded-2xl"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -375,13 +515,14 @@ export default function TempFenceHireClient() {
       </section>
 
       {/* TESTIMONIAL */}
-      <section className="relative py-20">
+      <section className="relative border-t border-white/[0.08] py-20">
         <div className="mx-auto max-w-4xl px-5 text-center">
           <div className="mb-6 text-5xl text-purple-500">&quot;</div>
           <blockquote className="mb-6 text-xl font-semibold leading-relaxed text-white md:text-2xl">
-            We used to track panels on paper and lose dozens every year. CloudRent Pro tells us
-            exactly what&apos;s at each site, what&apos;s due back, and when to invoice. The mobile app
-            means our drivers confirm everything on the spot.
+            We add and remove panels throughout a hire all the time — customers extend areas,
+            reduce sections, whatever they need. Before CloudRent Pro, we&apos;d have to check every
+            job and manually add charges to invoices. Now the system tracks every change and
+            bills it automatically. We&apos;re not leaving money on the table anymore.
           </blockquote>
           <p className="text-sm text-white/50">
             — CloudRent Pro Customer | Temporary Fencing Hire, NSW
@@ -459,9 +600,17 @@ export default function TempFenceHireClient() {
       {/* FOOTER */}
       <footer className="border-t border-white/[0.08] py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-center sm:flex-row sm:text-left">
-          <div className="text-lg font-bold text-white">
-            CloudRent <span className="text-purple-500">Pro</span>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/CloudRent Logo Hex.svg"
+              alt="CloudRent"
+              width={28}
+              height={28}
+            />
+            <span className="text-lg font-bold text-white">
+              CloudRent <span className="text-purple-500">Pro</span>
+            </span>
+          </Link>
           <p className="text-sm text-white/40">
             Built for Australian hire businesses. GST compliant. © 2026 CloudRent Pro.
           </p>
