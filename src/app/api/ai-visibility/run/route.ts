@@ -81,9 +81,9 @@ export async function POST(request: Request) {
       })
     }
 
-    // Check for Apify API token
-    if (!process.env.APIFY_API_TOKEN) {
-      console.error('APIFY_API_TOKEN is not configured')
+    // Check for Apify API key
+    if (!process.env.APIFY_API_KEY) {
+      console.error('APIFY_API_KEY is not configured')
       return NextResponse.json({ error: 'AI visibility service not configured' }, { status: 500 })
     }
 
@@ -92,7 +92,7 @@ export async function POST(request: Request) {
 
     // Start Apify run with all AI add-ons enabled
     const apifyResponse = await fetch(
-      `https://api.apify.com/v2/acts/apify~google-search-scraper/runs?token=${process.env.APIFY_API_TOKEN}`,
+      `https://api.apify.com/v2/acts/apify~google-search-scraper/runs?token=${process.env.APIFY_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

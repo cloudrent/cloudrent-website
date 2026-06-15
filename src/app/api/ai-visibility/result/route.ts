@@ -181,13 +181,13 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: 'Missing runId' }, { status: 400 })
     }
 
-    if (!process.env.APIFY_API_TOKEN) {
+    if (!process.env.APIFY_API_KEY) {
       return NextResponse.json({ error: 'AI visibility service not configured' }, { status: 500 })
     }
 
     // Check Apify run status
     const statusResponse = await fetch(
-      `https://api.apify.com/v2/actor-runs/${runId}?token=${process.env.APIFY_API_TOKEN}`
+      `https://api.apify.com/v2/actor-runs/${runId}?token=${process.env.APIFY_API_KEY}`
     )
 
     if (!statusResponse.ok) {
@@ -220,7 +220,7 @@ export async function GET(request: Request) {
       }
 
       const resultsResponse = await fetch(
-        `https://api.apify.com/v2/datasets/${datasetId}/items?token=${process.env.APIFY_API_TOKEN}`
+        `https://api.apify.com/v2/datasets/${datasetId}/items?token=${process.env.APIFY_API_KEY}`
       )
 
       if (!resultsResponse.ok) {
