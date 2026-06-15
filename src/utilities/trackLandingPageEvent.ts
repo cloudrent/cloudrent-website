@@ -6,7 +6,7 @@
  */
 
 type LandingPageEvent = 'begin_trial' | 'book_demo' | 'nav_cta_click'
-type PageType = 'damage' | 'safety'
+type PageType = 'damage' | 'safety' | 'temp-fence' | 'toilet-hire' | 'plant-tool' | 'event-hire'
 
 export function trackLandingPageEvent(eventName: LandingPageEvent, pageType: PageType): void {
   if (typeof window === 'undefined') return
