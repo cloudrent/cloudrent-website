@@ -51,7 +51,7 @@ export default function ScanningState({ businessName }: ScanningStateProps) {
 
       {/* Business Name */}
       <h2 className="mb-2 text-2xl font-semibold text-white">
-        Scanning for "{businessName}"
+        Scanning for &quot;{businessName}&quot;
       </h2>
 
       {/* Rotating Messages */}
