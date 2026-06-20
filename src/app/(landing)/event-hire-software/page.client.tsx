@@ -29,6 +29,7 @@ import {
   trackLandingPageEvent,
   trackLandingPageView,
 } from '@/utilities/trackLandingPageEvent'
+import { LandingFooter } from '@/components/LandingFooter'
 
 const painPoints = [
   {
@@ -619,31 +620,7 @@ export default function EventHireClient() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="border-t border-white/[0.08] py-8">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-center sm:flex-row sm:text-left">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/images/CloudRent Logo Hex.svg"
-              alt="CloudRent"
-              width={28}
-              height={28}
-            />
-            <span className="text-lg font-bold text-white">
-              CloudRent <span className="text-purple-500">Pro</span>
-            </span>
-          </Link>
-          <p className="text-sm text-white/40">
-            Built for Australian hire businesses. GST compliant. © 2026 CloudRent Pro.
-          </p>
-          <p className="text-sm text-white/40">
-            Questions?{' '}
-            <a href="mailto:support@cloudrent.me" className="text-purple-400 hover:text-purple-300">
-              support@cloudrent.me
-            </a>
-          </p>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   )
 }
