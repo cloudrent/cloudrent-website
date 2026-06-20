@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   CheckCircle,
   ChevronRight,
@@ -21,6 +22,7 @@ import {
   Calculator,
   Layers,
   Quote,
+  X,
 } from 'lucide-react'
 import { useUTMParams } from '@/hooks/useUTMParams'
 import {
@@ -145,6 +147,7 @@ const eventTypes = [
 
 export default function EventHireClient() {
   const utmString = useUTMParams()
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
 
   useEffect(() => {
     trackLandingPageView('event-hire')
@@ -163,11 +166,42 @@ export default function EventHireClient() {
 
   return (
     <div className="min-h-screen bg-[#08080c]">
+      {/* LIGHTBOX MODAL */}
+      {lightboxImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxImage(null)}
+        >
+          <button
+            onClick={() => setLightboxImage(null)}
+            className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <Image
+            src={lightboxImage}
+            alt="Full size preview"
+            width={1920}
+            height={1080}
+            className="max-h-[90vh] max-w-[90vw] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
       {/* NAV */}
       <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.08] bg-[#08080c]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-          <Link href="/" className="text-lg font-bold text-white">
-            CloudRent <span className="text-purple-500">Pro</span>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/CloudRent Logo Hex.svg"
+              alt="CloudRent"
+              width={32}
+              height={32}
+            />
+            <span className="text-lg font-bold text-white">
+              CloudRent <span className="text-purple-500">Pro</span>
+            </span>
           </Link>
           <Link
             href={demoUrl}
@@ -233,6 +267,24 @@ export default function EventHireClient() {
               Credit card required for $1 charge. Cancel anytime.
             </p>
           </div>
+
+          {/* Hero Image - Dashboard Screenshot */}
+          <div className="relative mx-auto mt-16 max-w-5xl">
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-purple-500/20 to-fuchsia-500/20 blur-2xl" />
+            <div
+              className="relative cursor-pointer transition-transform hover:scale-[1.01]"
+              onClick={() => setLightboxImage('/images/landing/event-dashboard.webp')}
+            >
+              <Image
+                src="/images/landing/event-dashboard.webp"
+                alt="CloudRent Pro event hire software displayed on desktop, laptop, tablet and mobile devices"
+                width={1920}
+                height={1032}
+                className="w-full"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -281,6 +333,56 @@ export default function EventHireClient() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* QUOTE SECTIONS IMAGE */}
+      <section className="relative border-y border-white/[0.08] bg-white/[0.02] py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div>
+              <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+                Built for Events
+              </p>
+              <h2 className="mb-4 text-3xl font-black text-white md:text-4xl">
+                Organize quotes by{' '}
+                <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                  event sections
+                </span>
+              </h2>
+              <p className="mb-6 text-lg text-white/60">
+                Group items into ceremony, reception, bump-in, and bump-out sections. Each section
+                can have its own dates and subtotals — perfect for multi-day weddings and festivals.
+              </p>
+              <ul className="space-y-3 text-white/70">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  Drag-and-drop items between sections
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  Override dates per section for split deliveries
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  Show section subtotals to clients
+                </li>
+              </ul>
+            </div>
+            <div
+              className="relative cursor-pointer transition-transform hover:scale-[1.01]"
+              onClick={() => setLightboxImage('/images/landing/event-quote-sections.webp')}
+            >
+              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 blur-xl" />
+              <Image
+                src="/images/landing/event-quote-sections.webp"
+                alt="CloudRent Pro quote builder showing ceremony and reception sections for wedding hire"
+                width={1200}
+                height={900}
+                className="relative rounded-xl border border-white/10"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -381,6 +483,60 @@ export default function EventHireClient() {
         </div>
       </section>
 
+      {/* MOBILE APP IMAGE */}
+      <section className="relative py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <div
+              className="relative order-2 cursor-pointer transition-transform hover:scale-[1.01] lg:order-1"
+              onClick={() => setLightboxImage('/images/landing/event-mobile-app.webp')}
+            >
+              <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-purple-500/10 to-fuchsia-500/10 blur-xl" />
+              <Image
+                src="/images/landing/event-mobile-app.webp"
+                alt="CloudRent Pro mobile app showing delivery jobs, signature capture, and damage photos for event hire"
+                width={1200}
+                height={800}
+                className="relative rounded-xl"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+                Mobile App
+              </p>
+              <h2 className="mb-4 text-3xl font-black text-white md:text-4xl">
+                Drivers deliver, capture &{' '}
+                <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                  confirm on site
+                </span>
+              </h2>
+              <p className="mb-6 text-lg text-white/60">
+                Your crew sees their jobs for the day. They capture signatures, photograph equipment
+                condition, and confirm deliveries — all syncing instantly to the office.
+              </p>
+              <ul className="space-y-3 text-white/70">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  View delivery details with venue contact info
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  Capture customer signatures on arrival
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  Photograph equipment for damage records
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+                  One-tap navigation to venue
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* TESTIMONIAL */}
       <section className="relative py-20">
         <div className="mx-auto max-w-4xl px-5 text-center">
@@ -466,9 +622,17 @@ export default function EventHireClient() {
       {/* FOOTER */}
       <footer className="border-t border-white/[0.08] py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-center sm:flex-row sm:text-left">
-          <div className="text-lg font-bold text-white">
-            CloudRent <span className="text-purple-500">Pro</span>
-          </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/CloudRent Logo Hex.svg"
+              alt="CloudRent"
+              width={28}
+              height={28}
+            />
+            <span className="text-lg font-bold text-white">
+              CloudRent <span className="text-purple-500">Pro</span>
+            </span>
+          </Link>
           <p className="text-sm text-white/40">
             Built for Australian hire businesses. GST compliant. © 2026 CloudRent Pro.
           </p>

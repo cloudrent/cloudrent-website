@@ -75,6 +75,7 @@ export interface Config {
     videos: Video;
     bookings: Booking;
     'scorecard-leads': ScorecardLead;
+    'ai-visibility-leads': AiVisibilityLead;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -100,6 +101,7 @@ export interface Config {
     videos: VideosSelect<false> | VideosSelect<true>;
     bookings: BookingsSelect<false> | BookingsSelect<true>;
     'scorecard-leads': ScorecardLeadsSelect<false> | ScorecardLeadsSelect<true>;
+    'ai-visibility-leads': AiVisibilityLeadsSelect<false> | AiVisibilityLeadsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1031,6 +1033,63 @@ export interface ScorecardLead {
   createdAt: string;
 }
 /**
+ * Leads captured from the AI Visibility Checker
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-visibility-leads".
+ */
+export interface AiVisibilityLead {
+  id: number;
+  firstName?: string | null;
+  businessName: string;
+  email: string;
+  phone?: string | null;
+  /**
+   * Keywords used for AI visibility search
+   */
+  keywords?:
+    | {
+        keyword: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Engines where business was found
+   */
+  score?: number | null;
+  /**
+   * Total engines successfully checked
+   */
+  totalEngines?: number | null;
+  /**
+   * Detailed results per engine per keyword
+   */
+  engineResults?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Apify actor run ID
+   */
+  apifyRunId?: string | null;
+  status: 'new' | 'contacted' | 'demo_booked' | 'converted' | 'lost';
+  /**
+   * Internal notes about this lead
+   */
+  notes?: string | null;
+  /**
+   * Report email sent to lead
+   */
+  emailSent?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -1251,6 +1310,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'scorecard-leads';
         value: number | ScorecardLead;
+      } | null)
+    | ({
+        relationTo: 'ai-visibility-leads';
+        value: number | AiVisibilityLead;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1777,6 +1840,31 @@ export interface ScorecardLeadsSelect<T extends boolean = true> {
   status?: T;
   notes?: T;
   source?: T;
+  emailSent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-visibility-leads_select".
+ */
+export interface AiVisibilityLeadsSelect<T extends boolean = true> {
+  firstName?: T;
+  businessName?: T;
+  email?: T;
+  phone?: T;
+  keywords?:
+    | T
+    | {
+        keyword?: T;
+        id?: T;
+      };
+  score?: T;
+  totalEngines?: T;
+  engineResults?: T;
+  apifyRunId?: T;
+  status?: T;
+  notes?: T;
   emailSent?: T;
   updatedAt?: T;
   createdAt?: T;
