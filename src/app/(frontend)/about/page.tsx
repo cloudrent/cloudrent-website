@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Users, Zap, Shield, Heart, Target, Award, ArrowRight } from 'lucide-react'
+import { Users, Zap, Shield, Heart, Target, Award, ArrowRight, User, UserRound, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import { LightboxImage } from '@/components/Lightbox'
 import { BreadcrumbSchema } from '@/components/StructuredData'
@@ -81,6 +81,65 @@ const stats = [
   { value: '300+', label: 'Licenses sold globally' },
   { value: '100,000+', label: 'Rentals processed' },
   { value: '99.9%', label: 'Platform uptime' },
+]
+
+const advisors = [
+  {
+    name: "David Duncalfe",
+    company: "Excel Events",
+    tag: "Industry advisor — events and government technology",
+    bio: "David brings deep experience in large-scale event management and has guided CloudRent's thinking on government service integrations, including communications infrastructure and development site mapping capabilities.",
+    gender: "male" as const,
+  },
+  {
+    name: "Theo Tsorvas",
+    company: "Consolidated Group",
+    tag: "Industry advisor — civil and mining",
+    bio: "Theo leads a 100-strong civil and mining operation working with majors including BHP and Rio Tinto. His input has shaped CloudRent's asset tracking and operational workflows for high-volume industrial hire.",
+    gender: "male" as const,
+  },
+  {
+    name: "Matt Giles",
+    company: "Event Services International",
+    tag: "Industry advisor — events and traffic management",
+    bio: "Matt's expertise across events and traffic management has helped inform CloudRent's approach to logistics, scheduling, and the coordination demands of large-scale temporary deployments.",
+    gender: "male" as const,
+  },
+  {
+    name: "Aidan Corbley",
+    company: "Corbley Event Hire",
+    tag: "Industry advisor — party and events hire",
+    bio: "Aidan's hands-on experience running a party and events hire business has contributed directly to CloudRent Pro's booking, inventory, and customer management workflows.",
+    gender: "male" as const,
+  },
+  {
+    name: "Keshia Dorrington",
+    company: "All Fence U Rent",
+    tag: "Industry advisor — temporary fencing",
+    bio: "Keshia operates one of Perth's largest temporary fencing companies and has been instrumental in developing CloudRent's functionality for managing high-volume temporary fencing operations at scale.",
+    gender: "female" as const,
+  },
+  {
+    name: "Cameron Drake",
+    company: "Hire Rite Temp Fencing",
+    tag: "Industry advisor — temporary fencing",
+    bio: "Cameron's experience in the temporary fencing sector has added further depth to CloudRent's fencing-specific workflows, ensuring the platform handles the real operational demands of the industry.",
+    gender: "male" as const,
+  },
+  {
+    name: "Dave Hasson",
+    company: "Western Safety Consulting",
+    tag: "Strategic partner — North America",
+    bio: "Dave brings extensive expertise in workplace health and safety across the North American market and is a key partner in CloudRent's expansion into the EHS and safety management sector.",
+    gender: "male" as const,
+  },
+  {
+    name: "Craig McDonald",
+    company: "Earth Communications",
+    tag: "Strategic partner and shareholder",
+    bio: "Craig's background spanning oil and gas MSAs across North America gives CloudRent direct insight into the compliance, asset tracking, and operational requirements of high-risk industrial environments.",
+    gender: "male" as const,
+  },
 ]
 
 export default function AboutPage() {
@@ -186,6 +245,60 @@ export default function AboutPage() {
                 <p className="text-sm leading-relaxed text-gray-300">{person.bio}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Industry Advisors */}
+        <section className="mx-auto max-w-6xl px-4 pb-20">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold">Industry advisors</h2>
+            <p className="mx-auto max-w-3xl text-gray-400">
+              CloudRent is shaped by the people who use it. These hire and rental professionals from across the globe
+              have contributed real-world knowledge that directly influences how CloudRent Pro works.
+            </p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {advisors.map((advisor, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-purple-500/10 bg-purple-900/10 p-5 text-center transition-colors hover:border-purple-500/30"
+              >
+                <div
+                  className={`mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full ${
+                    advisor.gender === 'female' ? 'bg-pink-900/40' : 'bg-purple-900/40'
+                  }`}
+                >
+                  {advisor.gender === 'female' ? (
+                    <UserRound className="h-7 w-7 text-pink-400" />
+                  ) : (
+                    <User className="h-7 w-7 text-purple-400" />
+                  )}
+                </div>
+                <h3 className="text-base font-semibold text-white">{advisor.name}</h3>
+                <p className="text-xs font-medium text-purple-400">{advisor.company}</p>
+                <p className="mt-1 text-xs italic text-gray-500">{advisor.tag}</p>
+                <p className="mt-2 text-xs leading-relaxed text-gray-400">{advisor.bio}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Built with AI */}
+        <section className="mx-auto max-w-6xl px-4 pb-20">
+          <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 px-8 py-12 text-center">
+            <Sparkles className="mx-auto mb-4 h-8 w-8 text-purple-400" />
+            <h2 className="mb-6 text-3xl font-bold">Built with AI</h2>
+            <div className="mx-auto max-w-2xl space-y-4 text-gray-300 leading-relaxed">
+              <p>
+                CloudRent Pro is developed using an AI-assisted development model — meaning we move faster, build
+                smarter, and respond to customer needs at a pace traditional software companies simply can&apos;t match.
+                Our advisors identify the problems. Our platform solves them, often within days, not months.
+              </p>
+              <p>
+                This is why CloudRent customers across 25+ countries get a platform that genuinely reflects how their
+                industry works, not how a developer imagined it might.
+              </p>
+            </div>
           </div>
         </section>
 
