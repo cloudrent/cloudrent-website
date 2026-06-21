@@ -36,6 +36,7 @@ export function AIVisibilityPopup() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [revenuePopupActive, setRevenuePopupActive] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   const popupRef = useRef<HTMLDivElement>(null)
@@ -44,17 +45,30 @@ export function AIVisibilityPopup() {
   const { isSuppressed, suppress } = usePopupSuppression(STORAGE_KEY)
 
   const isExcluded = EXCLUDED_PATHS.some((path) => pathname.includes(path))
-  const shouldEnable = !isSuppressed && !isExcluded
 
-  // Exit intent trigger
+  // Watch for Revenue popup visibility changes
+  useEffect(() => {
+    const checkRevenuePopup = () => {
+      setRevenuePopupActive(!!document.querySelector('[data-popup="revenue-leak"]'))
+    }
+
+    // Check initially and on DOM changes
+    checkRevenuePopup()
+    const observer = new MutationObserver(checkRevenuePopup)
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => observer.disconnect()
+  }, [])
+
+  // Only enable exit intent when not suppressed, not excluded, and revenue popup is not active
+  const shouldEnable = !isSuppressed && !isExcluded && !revenuePopupActive
+
+  // Exit intent trigger - wait 65s so Revenue popup (60s) gets first chance
   useExitIntent({
     enabled: shouldEnable,
-    minTimeOnPage: 10000, // 10 seconds
-    mobileInactivityDelay: 45000, // 45 seconds
+    minTimeOnPage: 65000, // 65 seconds (after Revenue popup's 60s trigger)
+    mobileInactivityDelay: 70000, // 70 seconds on mobile (after Revenue popup)
     onTrigger: () => {
-      // Don't show if revenue popup is visible
-      if (document.querySelector('[data-popup="revenue-leak"]')) return
-
       setIsVisible(true)
       sessionStorage.setItem(SESSION_KEY, 'true')
 
