@@ -229,7 +229,7 @@ function generateReportEmail(data: CaptureRequest): string {
           <tr>
             <td style="padding-top: 40px; text-align: center;">
               <p style="color: #e5e5e5; font-size: 16px; margin: 0 0 24px 0;">CloudRent Pro helps your business get found across every AI search engine</p>
-              <a href="https://www.cloudrent.me/try?utm_source=ai_visibility&utm_medium=email&utm_campaign=report" style="display: inline-block; background: #881ba9; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 100px; font-weight: 600; font-size: 16px;">Start Your Free Trial</a>
+              <a href="https://app.cloudrent.me/try?utm_source=ai_visibility&utm_medium=email&utm_campaign=report" style="display: inline-block; background: #881ba9; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 100px; font-weight: 600; font-size: 16px;">Start Your Free Trial</a>
             </td>
           </tr>
 

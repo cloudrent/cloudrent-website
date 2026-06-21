@@ -227,13 +227,13 @@ export default function GlossaryPageClient({ terms }: GlossaryPageClientProps) {
               companies.
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href="/try"
+              <a
+                href="https://app.cloudrent.me/try"
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
                 Start Free Trial
                 <ChevronRight className="h-4 w-4" />
-              </Link>
+              </a>
               <Link
                 href="/features"
                 className="rounded-xl border border-purple-400/50 px-8 py-3 font-semibold text-purple-100 transition-all hover:bg-purple-500/20"

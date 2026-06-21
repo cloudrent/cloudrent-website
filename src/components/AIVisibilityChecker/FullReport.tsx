@@ -220,13 +220,13 @@ export default function FullReport({
           SEO-optimized equipment pages, and integration with major search platforms.
         </p>
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <Link
-            href="/try?utm_source=ai_visibility&utm_medium=web&utm_campaign=report"
+          <a
+            href="https://app.cloudrent.me/try?utm_source=ai_visibility&utm_medium=web&utm_campaign=report"
             className="inline-flex items-center gap-2 rounded-full bg-brand-purple px-8 py-4 font-semibold text-white transition-all hover:bg-purple-600 hover:shadow-lg hover:shadow-purple-500/25"
           >
             Start Free Trial
             <ExternalLink className="h-4 w-4" />
-          </Link>
+          </a>
           <Link
             href="/demo?utm_source=ai_visibility&utm_medium=web&utm_campaign=report"
             className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 font-semibold text-white transition-all hover:bg-white/5"
