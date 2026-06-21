@@ -20,6 +20,7 @@ export function useExitIntent({
   const [isMobile, setIsMobile] = useState(false)
   const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null)
   const hasCalledTrigger = useRef(false)
+  const mountTimeRef = useRef<number>(Date.now())
 
   // Detect mobile
   useEffect(() => {
@@ -31,16 +32,22 @@ export function useExitIntent({
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
-  // Wait for minimum time on page before allowing trigger
+  // Track time from page load, not from when enabled becomes true
   useEffect(() => {
-    if (!enabled) return
+    const elapsed = Date.now() - mountTimeRef.current
+    const remaining = minTimeOnPage - elapsed
+
+    if (remaining <= 0) {
+      setCanTrigger(true)
+      return
+    }
 
     const timer = setTimeout(() => {
       setCanTrigger(true)
-    }, minTimeOnPage)
+    }, remaining)
 
     return () => clearTimeout(timer)
-  }, [enabled, minTimeOnPage])
+  }, [minTimeOnPage])
 
   // Trigger the callback only once
   const trigger = useCallback(() => {
