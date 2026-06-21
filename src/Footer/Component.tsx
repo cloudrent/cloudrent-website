@@ -12,10 +12,29 @@ import { unstable_cache } from 'next/cache'
 const quickMenuLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
-  { label: 'Blog', href: '/posts' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Features', href: '/features' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'HRIA', href: 'https://www.hireandrental.com.au/', external: true },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Blog', href: '/posts' },
+]
+
+// Industry links
+const industryLinks = [
+  { label: 'Event Hire', href: '/event-hire-software' },
+  { label: 'Plant & Tool Hire', href: '/plant-tool-hire-software' },
+  { label: 'Temporary Fencing', href: '/temp-fence-hire-software' },
+  { label: 'Toilet Hire', href: '/toilet-hire-software' },
+]
+
+// Resources links
+const resourceLinks = [
+  { label: 'Glossary', href: '/glossary' },
+  { label: 'Training', href: '/training' },
+  { label: 'AI Visibility Checker', href: '/ai-check' },
+  { label: 'Revenue Scorecard', href: '/scorecard' },
+  { label: 'AI Damage Detection', href: '/equipment-damage-protection' },
+  { label: 'Safety Compliance', href: '/safety-compliance' },
+  { label: 'Compare to HirePOS', href: '/cloudrent-pro-vs-hirepos' },
 ]
 
 // Social media links
@@ -104,9 +123,9 @@ export async function Footer() {
     <footer className="mt-auto border-t border-brand-purple/20 bg-[#0a0a1a]">
       <div className="container py-16">
         {/* Main Footer Content */}
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-12">
           {/* Logo Section */}
-          <div className="lg:col-span-4">
+          <div className="sm:col-span-2 lg:col-span-3">
             <Link href="/" className="inline-block">
               <Logo className="h-[80px] w-auto" />
             </Link>
@@ -124,37 +143,64 @@ export async function Footer() {
           </div>
 
           {/* Quick Menu */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Quick Menu
             </h4>
             <ul className="space-y-1.5">
               {quickMenuLinks.map((link) => (
                 <li key={link.href}>
-                  {link.external ? (
-                    <a
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-brand-purple transition-colors hover:text-[#a855c9]"
-                    >
-                      {link.label}
-                    </a>
-                  ) : (
-                    <Link
-                      href={link.href}
-                      className="text-brand-purple transition-colors hover:text-[#a855c9]"
-                    >
-                      {link.label}
-                    </Link>
-                  )}
+                  <Link
+                    href={link.href}
+                    className="text-brand-purple transition-colors hover:text-[#a855c9]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Industries */}
+          <div className="lg:col-span-2">
+            <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
+              Industries
+            </h4>
+            <ul className="space-y-1.5">
+              {industryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-brand-purple transition-colors hover:text-[#a855c9]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div className="lg:col-span-2">
+            <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
+              Resources
+            </h4>
+            <ul className="space-y-1.5">
+              {resourceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-brand-purple transition-colors hover:text-[#a855c9]"
+                  >
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Latest News */}
-          <div className="lg:col-span-5">
+          <div className="sm:col-span-2 lg:col-span-3">
             <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Latest News
             </h4>
