@@ -44,6 +44,10 @@ import {
   FileSignature,
   RefreshCw,
   Gauge,
+  PartyPopper,
+  Wrench,
+  Droplet,
+  Grid3x3,
 } from 'lucide-react'
 import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
 import { GoogleReviews } from '@/components/GoogleReviews'
@@ -1814,6 +1818,87 @@ export default function HomePageClient() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════
+          INDUSTRIES SECTION
+      ═══════════════════════════════════════════════════════════════════════ */}
+      <section className="relative w-full py-20">
+        <div
+          className="pointer-events-none absolute left-0 right-0 top-0 h-32"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(136,27,169,0.03) 0%, transparent 100%)',
+          }}
+        />
+        <div className="relative z-10 mx-auto max-w-6xl px-5">
+          <div className="mb-12 text-center">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
+              Industries
+            </p>
+            <h2 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
+              Built for{' '}
+              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
+                your industry
+              </span>
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-white/60">
+              CloudRent Pro is purpose-built for hire and rental businesses across multiple sectors.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: PartyPopper,
+                title: 'Event hire',
+                description: 'Marquees, furniture, AV equipment and party supplies',
+                href: '/event-hire-software',
+              },
+              {
+                icon: Wrench,
+                title: 'Plant & tool hire',
+                description: 'Earthmoving, construction equipment and power tools',
+                href: '/plant-tool-hire-software',
+              },
+              {
+                icon: Droplet,
+                title: 'Toilet hire',
+                description: 'Portable toilets, showers and sanitation equipment',
+                href: '/toilet-hire-software',
+              },
+              {
+                icon: Grid3x3,
+                title: 'Temporary fencing',
+                description: 'Temp fencing, crowd control barriers and site security',
+                href: '/temp-fence-hire-software',
+              },
+            ].map((industry, i) => (
+              <Link
+                key={i}
+                href={industry.href}
+                className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
+              >
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at 50% 0%, rgba(136,27,169,0.15) 0%, transparent 70%)',
+                  }}
+                />
+                <div className="relative z-10">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-purple-500/15">
+                    <industry.icon className="h-7 w-7 text-purple-500" />
+                  </div>
+                  <h3 className="mb-2 text-lg font-bold text-white">{industry.title}</h3>
+                  <p className="mb-4 text-sm text-white/60">{industry.description}</p>
+                  <span className="flex items-center gap-1 text-sm font-medium text-purple-400 transition-colors group-hover:text-purple-300">
+                    Learn more <ChevronRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
