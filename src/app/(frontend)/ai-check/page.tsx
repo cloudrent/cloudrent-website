@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { BreadcrumbSchema } from '@/components/StructuredData'
 import AICheckPageClient from './page.client'
@@ -43,7 +44,19 @@ export default function AICheckPage() {
           { name: 'AI Visibility Checker', url: 'https://www.cloudrent.me/ai-check/' },
         ]}
       />
-      <AICheckPageClient />
+      <Suspense fallback={<AICheckLoading />}>
+        <AICheckPageClient />
+      </Suspense>
     </>
+  )
+}
+
+function AICheckLoading() {
+  return (
+    <div className="relative min-h-screen bg-[#0e0b14]">
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-purple-500" />
+      </div>
+    </div>
   )
 }

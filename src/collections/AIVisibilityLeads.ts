@@ -30,7 +30,6 @@ export const AIVisibilityLeads: CollectionConfig = {
         {
           name: 'businessName',
           type: 'text',
-          required: true,
           admin: { width: '50%' },
         },
       ],
@@ -118,6 +117,7 @@ export const AIVisibilityLeads: CollectionConfig = {
       type: 'select',
       defaultValue: 'new',
       options: [
+        { label: 'Partial', value: 'partial' },
         { label: 'New', value: 'new' },
         { label: 'Contacted', value: 'contacted' },
         { label: 'Demo Booked', value: 'demo_booked' },

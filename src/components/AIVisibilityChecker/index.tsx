@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState, useMemo, useCallback, useRef } from 'react'
+import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import InputForm from './InputForm'
 import ScanningState from './ScanningState'
 import TeaserResult from './TeaserResult'
@@ -41,6 +42,7 @@ function trackEvent(eventName: string, data: Record<string, unknown> = {}) {
 }
 
 export default function AIVisibilityChecker() {
+  const searchParams = useSearchParams()
   const [stage, setStage] = useState<Stage>('input')
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
@@ -52,6 +54,14 @@ export default function AIVisibilityChecker() {
     ],
   })
   const [contactData, setContactData] = useState<ContactData>({ email: '', phone: '' })
+
+  // Pre-fill email from URL parameter (from popup redirect)
+  useEffect(() => {
+    const emailParam = searchParams.get('email')
+    if (emailParam) {
+      setContactData((prev) => ({ ...prev, email: decodeURIComponent(emailParam) }))
+    }
+  }, [searchParams])
   const [results, setResults] = useState<EngineResult[] | null>(null)
   const [runId, setRunId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)

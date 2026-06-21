@@ -1041,7 +1041,7 @@ export interface ScorecardLead {
 export interface AiVisibilityLead {
   id: number;
   firstName?: string | null;
-  businessName: string;
+  businessName?: string | null;
   email: string;
   phone?: string | null;
   /**
@@ -1077,7 +1077,7 @@ export interface AiVisibilityLead {
    * Apify actor run ID
    */
   apifyRunId?: string | null;
-  status: 'new' | 'contacted' | 'demo_booked' | 'converted' | 'lost';
+  status: 'partial' | 'new' | 'contacted' | 'demo_booked' | 'converted' | 'lost';
   /**
    * Internal notes about this lead
    */
