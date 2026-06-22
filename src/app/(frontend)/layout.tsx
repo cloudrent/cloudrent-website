@@ -12,7 +12,6 @@ const inter = Inter({
 import { AdminBar } from '@/components/AdminBar'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
 import { MicrosoftClarity } from '@/components/MicrosoftClarity'
-import { TrialPopup } from '@/components/TrialPopup'
 import { RevenueLeakPopup, AIVisibilityPopup } from '@/components/popups'
 import { PublicChatWidget } from '@/components/PublicChatWidget'
 import { OrganizationSchema } from '@/components/StructuredData'
@@ -60,7 +59,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               }}
             />
           )}
-          <TrialPopup />
           <RevenueLeakPopup />
           <AIVisibilityPopup />
           <Header />
