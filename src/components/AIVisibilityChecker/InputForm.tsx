@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import { Search, Sparkles } from 'lucide-react'
 
 interface FormData {
@@ -39,15 +40,26 @@ export default function InputForm({ formData, setFormData, onSubmit, error }: In
           <span className="text-sm text-white/80">Free AI Visibility Report</span>
         </div>
         <h1 className="mb-4 text-4xl font-bold text-white md:text-5xl">
-          Is Your Business Found by{' '}
+          Is AI Recommending{' '}
           <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-            AI Search?
+            Your Competitors?
           </span>
         </h1>
         <p className="mx-auto max-w-2xl text-lg text-white/60">
-          When customers ask ChatGPT, Perplexity, or Google AI for hire equipment recommendations,
-          does your business appear? Find out in 30 seconds.
+          See whether ChatGPT, Gemini, Perplexity and Google AI recommend your business.
         </p>
+
+        {/* AI Visibility Graphic */}
+        <div className="mx-auto mt-8 max-w-3xl">
+          <Image
+            src="/images/Cloudrent-AI-Visibilty-Check-trans.webp"
+            alt="AI Visibility Score showing Google, ChatGPT, Gemini, Perplexity and Copilot"
+            width={1546}
+            height={908}
+            className="w-full"
+            priority
+          />
+        </div>
       </div>
 
       {/* Engine Logos */}

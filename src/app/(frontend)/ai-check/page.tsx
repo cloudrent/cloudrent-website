@@ -9,9 +9,9 @@ export const revalidate = 3600
 
 // SEO metadata
 export const metadata: Metadata = {
-  title: 'AI Visibility Checker | Is Your Business Found by AI? – CloudRent',
+  title: 'AI Visibility Checker | Is AI Recommending Your Competitors? – CloudRent',
   description:
-    'Check if your hire business appears in ChatGPT, Perplexity, Copilot, Gemini and Google AI Overviews. Free AI visibility report with actionable recommendations.',
+    'See whether ChatGPT, Gemini, Perplexity and Google AI recommend your business. Free AI visibility report with actionable recommendations.',
   keywords: [
     'AI visibility checker',
     'ChatGPT business search',
