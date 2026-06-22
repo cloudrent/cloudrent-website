@@ -35,6 +35,7 @@ const resourceLinks = [
   { label: 'AI Damage Detection', href: '/equipment-damage-protection' },
   { label: 'Safety Compliance', href: '/safety-compliance' },
   { label: 'Compare to HirePOS', href: '/cloudrent-pro-vs-hirepos' },
+  { label: 'Compare to Point of Rental', href: '/cloudrent-pro-vs-point-of-rental' },
 ]
 
 // Social media links
