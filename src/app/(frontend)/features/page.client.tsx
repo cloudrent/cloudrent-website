@@ -475,7 +475,11 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
         </h2>
         <p className="mb-10 text-xl text-gray-300">
           Stop juggling multiple systems. CloudRent Pro brings equipment management, safety, dispatch, invoicing, and
-          more into one powerful platform.
+          more into one powerful platform. See how we compare to{' '}
+          <Link href="/cloudrent-pro-vs-hirepos/" className="text-purple-400 hover:text-purple-300 underline">HirePOS</Link>,{' '}
+          <Link href="/cloudrent-pro-vs-point-of-rental/" className="text-purple-400 hover:text-purple-300 underline">Point of Rental</Link>,{' '}
+          <Link href="/cloudrent-pro-vs-texada/" className="text-purple-400 hover:text-purple-300 underline">Texada</Link> and{' '}
+          <Link href="/cloudrent-pro-vs-booqable/" className="text-purple-400 hover:text-purple-300 underline">Booqable</Link>.
         </p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <a

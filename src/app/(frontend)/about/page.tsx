@@ -382,6 +382,13 @@ export default function AboutPage() {
                       <span>Native Xero integration</span>
                     </li>
                   </ul>
+                  <p className="mt-4">
+                    See how CloudRent Pro stacks up against other rental software platforms including{' '}
+                    <Link href="/cloudrent-pro-vs-hirepos/" className="text-purple-400 hover:text-purple-300 underline">HirePOS</Link>,{' '}
+                    <Link href="/cloudrent-pro-vs-point-of-rental/" className="text-purple-400 hover:text-purple-300 underline">Point of Rental</Link>,{' '}
+                    <Link href="/cloudrent-pro-vs-texada/" className="text-purple-400 hover:text-purple-300 underline">Texada</Link> and{' '}
+                    <Link href="/cloudrent-pro-vs-booqable/" className="text-purple-400 hover:text-purple-300 underline">Booqable</Link>.
+                  </p>
                 </div>
               </div>
             </div>

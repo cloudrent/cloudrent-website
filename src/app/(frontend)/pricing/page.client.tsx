@@ -648,7 +648,11 @@ export default function PricingPageClient() {
             Ready to run your hire business smarter?
           </h2>
           <p className="mb-8 leading-relaxed text-gray-300">
-            Start your $1 trial today and experience the full platform.
+            Start your $1 trial today and experience the full platform. Not sure how our pricing compares? See our detailed comparisons with{' '}
+            <Link href="/cloudrent-pro-vs-hirepos/" className="text-purple-400 hover:text-purple-300 underline">HirePOS</Link>,{' '}
+            <Link href="/cloudrent-pro-vs-point-of-rental/" className="text-purple-400 hover:text-purple-300 underline">Point of Rental</Link>,{' '}
+            <Link href="/cloudrent-pro-vs-texada/" className="text-purple-400 hover:text-purple-300 underline">Texada</Link> and{' '}
+            <Link href="/cloudrent-pro-vs-booqable/" className="text-purple-400 hover:text-purple-300 underline">Booqable</Link>.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a
