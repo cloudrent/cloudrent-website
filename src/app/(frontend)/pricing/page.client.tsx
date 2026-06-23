@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/utilities/ui'
+import { EngageCTA } from '@/components/EngageCTA'
 
 // Checkmark icon
 function Check({ className }: { className?: string }) {
@@ -588,6 +589,11 @@ export default function PricingPageClient() {
             </table>
           </div>
         </div>
+      </div>
+
+      {/* ═══════════════ ENGAGE CTA ═══════════════ */}
+      <div className="relative mx-auto max-w-5xl px-5 py-14">
+        <EngageCTA />
       </div>
 
       {/* ═══════════════ FAQ SECTION ═══════════════ */}

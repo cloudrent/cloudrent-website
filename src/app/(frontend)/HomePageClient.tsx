@@ -1731,12 +1731,12 @@ export default function HomePageClient() {
               {/* Scarcity + Progress */}
               <div className="mb-8 text-center">
                 <p className="mb-3 font-medium text-amber-400">
-                  ⏳ 42 of 100 launch partner spots claimed
+                  ⏳ 63 of 100 launch partner spots claimed
                 </p>
                 <div className="mx-auto h-3 max-w-md overflow-hidden rounded-full bg-white/10">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400"
-                    style={{ width: '42%' }}
+                    style={{ width: '63%' }}
                   />
                 </div>
                 <p className="mt-3 text-sm text-white/40">

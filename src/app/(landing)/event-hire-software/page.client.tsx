@@ -30,6 +30,7 @@ import {
   trackLandingPageView,
 } from '@/utilities/trackLandingPageEvent'
 import { LandingFooter } from '@/components/LandingFooter'
+import { EngageCTA } from '@/components/EngageCTA'
 
 const painPoints = [
   {
@@ -617,6 +618,13 @@ export default function EventHireClient() {
               Prefer a live walkthrough? Book a demo with Ron →
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════════ ENGAGE CTA ═══════════════ */}
+      <section className="relative py-14">
+        <div className="mx-auto max-w-5xl px-5">
+          <EngageCTA />
         </div>
       </section>
 

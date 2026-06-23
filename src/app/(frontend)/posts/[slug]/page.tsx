@@ -13,6 +13,7 @@ import type { Post, Media } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { PostCTA } from '@/components/PostCTA'
+import { EngageCTA } from '@/components/EngageCTA'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -101,6 +102,10 @@ export default async function Post({ params: paramsPromise }: Args) {
         <RichText data={post.content} enableGutter={false} />
 
         <PostCTA />
+
+        <div className="mt-12">
+          <EngageCTA />
+        </div>
 
         {post.relatedPosts && post.relatedPosts.length > 0 && (
           <RelatedPosts

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/utilities/ui'
+import { EngageCTA } from '@/components/EngageCTA'
 
 // Checkmark icon
 function Check({ className }: { className?: string }) {
@@ -486,6 +487,11 @@ export default function PageClient() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* ═══════════════ ENGAGE CTA ═══════════════ */}
+      <div className="relative mx-auto max-w-5xl px-5 pb-14">
+        <EngageCTA />
       </div>
 
       {/* ═══════════════ FAQ SECTION ═══════════════ */}
