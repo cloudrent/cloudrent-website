@@ -30,116 +30,126 @@ function Check({ className }: { className?: string }) {
 interface ComparisonRow {
   category: string
   cloudrent: string
-  hirepos: string
+  competitor: string
 }
 
 const comparisonData: ComparisonRow[] = [
   {
     category: 'Australian company',
     cloudrent: 'Yes',
-    hirepos: 'Yes',
+    competitor: 'No (Dutch-headquartered, founded Amsterdam 2014)',
   },
   {
     category: 'Years in market',
     cloudrent: 'Since 2004, originally HireEzy; CloudRent name adopted in 2017',
-    hirepos: 'Established in 2005',
+    competitor: 'Founded 2014',
   },
   {
     category: 'Pricing visibility',
-    cloudrent: 'Public pricing',
-    hirepos: 'Public pricing; HirePOS lists a 30-day free trial and modular add-ons',
+    cloudrent: 'Public per-user pricing',
+    competitor: 'Public per-plan pricing; $29–$149/month USD',
   },
   {
-    category: 'Mobile access',
-    cloudrent: 'Mobile-first workflows and dedicated app experience',
-    hirepos:
-      'Mobile web app with essential mobile features such as availability, delivery/pickup schedule and inspection checklists',
+    category: 'Free trial',
+    cloudrent: 'Yes — $1 trial available',
+    competitor: 'Yes — 14-day free trial, no credit card required',
   },
   {
-    category: 'Customer portal / online bookings',
+    category: 'User limits',
+    cloudrent: 'Per user per month',
+    competitor: 'Capped per plan (1, 6 or 11 active users)',
+  },
+  {
+    category: 'Deployment',
+    cloudrent: 'Cloud',
+    competitor: 'Cloud',
+  },
+  {
+    category: 'Mobile apps',
+    cloudrent: 'Native mobile workflows for managers and field crews',
+    competitor: 'iOS and Android app; reviewers note limited mobile functionality vs desktop',
+  },
+  {
+    category: 'Contracts and e-signatures',
+    cloudrent: 'Full contract management with e-signatures',
+    competitor: 'Limited; users report inability to upload documents or collect e-signatures',
+  },
+  {
+    category: 'Customer portal',
     cloudrent: 'CloudRent Connect customer self-service',
-    hirepos: 'Online Store module available',
+    competitor: 'Online booking store; customers can browse, reserve and pay',
   },
   {
     category: 'Accounting integrations',
     cloudrent: 'Xero, MYOB and QuickBooks',
-    hirepos: 'Xero, MYOB, QuickBooks and Reckon',
+    competitor: 'Xero, Stripe, PayPal and Zapier',
   },
   {
-    category: 'API / automation',
-    cloudrent: 'API and integration options',
-    hirepos: 'API/Zapier module available',
-  },
-  {
-    category: 'AI-assisted tools',
-    cloudrent: 'AI damage detection, support automation and inventory assistance in rollout/development',
-    hirepos: 'No dedicated AI product suite clearly promoted on the public HirePOS pages reviewed',
+    category: 'AI features',
+    cloudrent: 'AI damage detection, support automation and inventory assistance in rollout',
+    competitor: 'None publicly announced',
   },
   {
     category: 'Best suited to',
-    cloudrent:
-      'Australian hire businesses wanting a modern, mobile-first platform with direct product team access',
-    hirepos: 'Hire businesses wanting modular rental management with broad accounting integrations',
+    cloudrent: 'Growing Australian hire businesses needing professional workflows, mobile teams and contract management',
+    competitor: 'Early-stage or very small rental businesses primarily needing online bookings and basic inventory',
   },
 ]
 
 const cloudrentFits = [
-  'You want transparent pricing with minimal add-ons.',
-  'You operate heavily from mobile devices.',
-  'You want customer self-service included in the core experience.',
-  'You prefer direct access to the people building the software.',
-  'You want AI-assisted rental workflows.',
-  'You value rapid feature development based on customer feedback.',
-  'You want a platform built on more than 20 years of Australian hire industry experience.',
+  'You operate a growing hire business across tool hire, event hire, scaffolding, plant hire or AV equipment.',
+  'You need full contract management and e-signatures built into your rental workflow.',
+  'You want dedicated mobile apps for managers, dispatchers and field crews.',
+  'You want transparent per-user pricing that scales with your team.',
+  'You operate in Australia and want local support.',
+  'You want AI-assisted rental workflows as part of your platform.',
+  'You want customer self-service that integrates with your core hire operations.',
+  'You want software built on more than 20 years of hire industry experience.',
 ]
 
-const hireposFits = [
-  'You require Reckon integration today.',
-  'You prefer modular pricing and optional add-on modules.',
-  'You want a platform established in 2005 with ANZ market history.',
-  'You are already trained on HirePOS and the migration cost outweighs the benefit of switching.',
-  'You want a mobile web app for essential on-the-go workflows.',
+const competitorFits = [
+  'You are an early-stage or very small rental business primarily needing an online booking page.',
+  'You primarily rent event items, party equipment, bikes or camera gear to consumers.',
+  'You have a very small team of one to six people.',
+  'You do not yet require full contract management, e-signatures or field crew mobile workflows.',
+  'You want the lowest possible entry price to get started quickly.',
+  'You already use Shopify, WordPress or Squarespace and want a direct integration.',
 ]
 
 const faqs = [
   {
-    q: 'What is the biggest difference between CloudRent Pro and HirePOS?',
-    a: 'CloudRent Pro focuses on modern mobile workflows, integrated customer self-service and AI-assisted tools. HirePOS focuses on broad rental management functionality, modular pricing and accounting integrations.',
+    q: 'What is the biggest difference between CloudRent Pro and Booqable?',
+    a: 'CloudRent Pro is built for growing hire businesses that need professional contract management, mobile field crew workflows, AI-assisted tools and enterprise-grade operations. Booqable is better suited to early-stage or very small rental businesses that primarily need an online booking page and basic inventory management.',
   },
   {
-    q: 'Is CloudRent Pro new compared with HirePOS?',
-    a: "No. CloudRent's origins trace back to HireEzy in 2004. The CloudRent name was adopted in 2017. HirePOS states that it was established in 2005.",
+    q: 'Is Booqable suitable for commercial hire businesses in Australia?',
+    a: 'Booqable can work for very small or early-stage hire businesses. However, reviewers consistently note limitations around contract management, e-signatures and mobile functionality that may not meet the requirements of commercial hire operations.',
   },
   {
-    q: 'Does HirePOS integrate with Xero?',
-    a: 'Yes. HirePOS states that it supports exports to Xero, MYOB, QuickBooks and Reckon.',
+    q: 'Does Booqable have a free trial?',
+    a: 'Yes. Booqable offers a 14-day free trial with no credit card required. CloudRent Pro offers a $1 trial.',
   },
   {
-    q: 'Does HirePOS offer a free trial?',
-    a: 'Yes. HirePOS publicly promotes a 30-day free trial.',
+    q: 'Is Booqable available in Australia?',
+    a: 'Yes. Booqable is available globally and is used by some Australian rental businesses. It is headquartered in Amsterdam.',
   },
   {
     q: 'Does CloudRent Pro have AI features?',
     a: 'CloudRent Pro is developing and rolling out AI-assisted functionality including damage detection, support automation and inventory assistance.',
   },
   {
-    q: 'Which platform is better for mobile teams?',
-    a: 'CloudRent Pro may be a better fit for businesses wanting mobile-first workflows. HirePOS provides a mobile web app for essential on-the-go features.',
+    q: 'Can I migrate from Booqable to CloudRent Pro?',
+    a: 'Yes. CloudRent Pro provides migration assistance for eligible customers. Migration scope depends on data availability and export options from your current platform. Our team will assess what is transferable during your migration discussion.',
   },
 ]
 
 const sources = [
-  { name: 'HirePOS official website', url: 'https://www.hirepos.com.au/' },
-  { name: 'HirePOS pricing page', url: 'https://www.hirepos.com.au/pricing.html' },
-  { name: 'HirePOS accounting features', url: 'https://www.hirepos.com.au/features/accounting.html' },
-  { name: 'HirePOS mobile app documentation', url: 'https://docs.hirepos.com/en/articles/5642049' },
-  { name: 'HirePOS Online Store documentation', url: 'https://docs.hirepos.com/en/articles/2325313' },
-  { name: 'HirePOS Zapier documentation', url: 'https://docs.hirepos.com/en/articles/2315137' },
-  { name: 'Capterra Australia HirePOS listing', url: 'https://www.capterra.com.au/software/156799/hirepos' },
-  {
-    name: 'ACCC guidance on false or misleading claims',
-    url: 'https://www.accc.gov.au/consumers/advertising-and-promotions/false-or-misleading-claims',
-  },
+  { label: 'Booqable website', url: 'https://booqable.com/' },
+  { label: 'Booqable pricing page', url: 'https://booqable.com/pricing/' },
+  { label: 'Capterra Australia — Booqable listing', url: 'https://www.capterra.com.au/software/138689/booqable' },
+  { label: 'G2 — Booqable reviews', url: 'https://www.g2.com/products/booqable-rental-software/reviews' },
+  { label: 'GetApp Australia — Booqable listing', url: 'https://www.getapp.com.au/software/138689/booqable' },
+  { label: 'ACCC guidance on false or misleading claims', url: 'https://www.accc.gov.au/consumers/advertising-and-promotions/false-or-misleading-claims' },
 ]
 
 export default function PageClient() {
@@ -163,24 +173,24 @@ export default function PageClient() {
           <h1 className="mb-4 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">
             CloudRent Pro vs{' '}
             <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-              HirePOS
+              Booqable
             </span>
           </h1>
 
           <p className="mx-auto mb-6 max-w-2xl text-lg leading-relaxed text-gray-400">
-            A 2026 comparison for Australian equipment hire businesses evaluating rental software,
-            mobile workflows, accounting integrations, customer self-service and AI-assisted tools.
+            A 2026 comparison for equipment hire businesses evaluating rental software,
+            online bookings, mobile workflows and customer self-service.
           </p>
 
-          <p className="text-sm text-gray-500">Last updated: 11 June 2026 · Author: Ron Neville</p>
+          <p className="text-sm text-gray-500">Last updated: June 2026 · Author: Ron Neville</p>
         </div>
       </div>
 
       {/* ═══════════════ HERO IMAGE ═══════════════ */}
       <div className="relative mx-auto max-w-5xl px-5 pb-10">
         <Image
-          src="/images/comparison-cloudrent-vs-hirepos-hero.webp"
-          alt="CloudRent Pro vs HirePOS software comparison"
+          src="/images/comparison-cloudrent-vs-booqable-hero.webp"
+          alt="CloudRent Pro vs Booqable software comparison"
           width={1400}
           height={788}
           className="my-8 w-full rounded-xl"
@@ -204,18 +214,13 @@ export default function PageClient() {
 
             <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
               <strong className="text-white">
-                CloudRent Pro and HirePOS are both long-established Australian rental software platforms.
+                CloudRent Pro and Booqable are both cloud-native rental software platforms, but they are designed for different stages of business and different operational needs.
               </strong>{' '}
-              CloudRent&apos;s origins trace back to HireEzy in 2004 before the CloudRent name change in
-              2017. HirePOS states that it was established in 2005 and serves hire businesses across
-              Australia, New Zealand and beyond.
+              Booqable was founded in 2014 and is headquartered in Amsterdam, serving more than 8,000 small rental businesses globally across event hire, party, bike, camera and AV equipment sectors. CloudRent&apos;s origins trace back to HireEzy in 2004, with more than 20 years of rental software experience behind the platform.
             </p>
 
             <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-              CloudRent Pro is generally a strong fit for hire businesses seeking modern mobile workflows,
-              transparent pricing, customer self-service and emerging AI-assisted tools. HirePOS may suit
-              businesses seeking modular pricing, broad accounting integrations and a long-established rental
-              management platform.
+              CloudRent Pro is built for growing hire businesses that need professional workflows, mobile-first operations, enterprise-grade contracts and direct support. Booqable may be a better fit for very small or early-stage rental businesses that primarily need an online booking page and basic inventory management.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -255,7 +260,7 @@ export default function PageClient() {
                   CloudRent Pro
                 </th>
                 <th className="w-[37.5%] border-b-2 border-purple-500/30 p-4 text-left font-semibold text-gray-400">
-                  HirePOS
+                  Booqable
                 </th>
               </tr>
             </thead>
@@ -264,7 +269,7 @@ export default function PageClient() {
                 <tr key={i} className={i % 2 === 0 ? 'bg-purple-900/20' : 'bg-transparent'}>
                   <td className="p-4 font-semibold text-purple-300">{row.category}</td>
                   <td className="p-4 text-gray-200">{row.cloudrent}</td>
-                  <td className="p-4 text-gray-400">{row.hirepos}</td>
+                  <td className="p-4 text-gray-400">{row.competitor}</td>
                 </tr>
               ))}
             </tbody>
@@ -290,14 +295,14 @@ export default function PageClient() {
           </ul>
         </div>
 
-        {/* HirePOS Fit */}
+        {/* Booqable Fit */}
         <div className="relative overflow-hidden rounded-2xl border border-purple-500/20 bg-purple-900/30 p-7">
           <div className="mb-4 inline-block rounded-full border border-purple-500/20 bg-purple-900/50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-400">
-            HirePOS fit
+            Booqable fit
           </div>
-          <h3 className="mb-5 text-xl font-bold text-white">When HirePOS may be the better fit</h3>
+          <h3 className="mb-5 text-xl font-bold text-white">When Booqable may be the better fit</h3>
           <ul className="flex flex-col gap-2.5">
-            {hireposFits.map((item, i) => (
+            {competitorFits.map((item, i) => (
               <li key={i} className="flex items-start gap-2.5">
                 <Check className="mt-0.5 text-gray-500" />
                 <span className="text-[15px] leading-snug text-gray-400">{item}</span>
@@ -310,51 +315,29 @@ export default function PageClient() {
       {/* ═══════════════ FEATURES IMAGE ═══════════════ */}
       <div className="relative mx-auto max-w-5xl px-5 pb-14">
         <Image
-          src="/images/comparison-cloudrent-vs-hirepos-features.webp"
-          alt="CloudRent Pro vs HirePOS feature comparison"
+          src="/images/comparison-cloudrent-vs-booqable-features.webp"
+          alt="CloudRent Pro vs Booqable feature comparison"
           width={1200}
           height={500}
           className="my-6 w-full rounded-xl"
         />
       </div>
 
-      {/* ═══════════════ HISTORY SECTION ═══════════════ */}
-      <div className="relative mx-auto max-w-4xl px-5 pb-14">
-        <h2 className="mb-4 text-3xl font-bold text-white">
-          Built on two decades of rental software experience
-        </h2>
-        <div className="rounded-2xl border border-purple-500/20 bg-purple-900/30 p-7">
-          <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-            CloudRent Pro is not a new entrant to the rental software market. Its origins trace back to
-            HireEzy, launched in 2004, before the platform evolved into CloudRent in 2017.
-          </p>
-          <p className="m-0 text-[15px] leading-relaxed text-gray-300">
-            That history matters. Businesses evaluating CloudRent Pro are choosing software shaped by more
-            than 20 years of hire industry experience, while still benefiting from modern cloud architecture,
-            mobile-first workflows and AI-assisted product development.
-          </p>
-        </div>
-      </div>
-
       {/* ═══════════════ PRICING SECTION ═══════════════ */}
       <div className="relative mx-auto max-w-4xl px-5 pb-14">
-        <h2 className="mb-4 text-3xl font-bold text-white">Pricing and value</h2>
+        <h2 className="mb-4 text-3xl font-bold text-white">Pricing and transparency</h2>
         <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          Both platforms publish pricing information publicly, but the models are different.
+          Both platforms publish pricing publicly.
         </p>
         <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          HirePOS states that plans include support and updates, accounting exporter and address search. Its
-          pricing page lists a monthly starting price and optional modules including API/Zapier, Branches,
-          Maintenance and Online Store.
+          Booqable&apos;s plans are priced per plan rather than per user, with active user caps at each tier — 1 user on Start ($29/month USD), up to 6 on Grow ($69/month USD), and up to 11 on Scale ($149/month USD). Some reviewers note additional costs for bundles, delivery tools and reporting features on lower tiers.
         </p>
         <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-          CloudRent Pro uses a per-user pricing structure designed to simplify budgeting and forecasting.
+          CloudRent Pro is priced per user per month, making it straightforward to calculate costs as your team grows without hitting plan-level user caps.
         </p>
         <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
           <p className="m-0 text-[15px] text-gray-200">
-            <strong className="text-purple-300">Verdict:</strong> Businesses seeking modularity may prefer
-            HirePOS. Businesses seeking predictable pricing and fewer separate modules may prefer CloudRent
-            Pro.
+            <strong className="text-purple-300">Verdict:</strong> Booqable&apos;s entry price is lower, making it accessible for very small or early-stage businesses. CloudRent Pro&apos;s per-user model scales more predictably for growing hire businesses with larger teams.
           </p>
         </div>
       </div>
@@ -363,55 +346,46 @@ export default function PageClient() {
       <div className="relative mx-auto max-w-4xl px-5 pb-14">
         <h2 className="mb-4 text-3xl font-bold text-white">Mobile experience</h2>
         <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          HirePOS documentation describes its mobile app as a cut-down version of the main HirePOS app for
-          essential features while on the move, including availability, items/prices, customers/hire/sales,
-          delivery/pickup schedule and inspection checklists.
+          Booqable offers iOS and Android apps for managing rentals on the go. However, reviewers consistently note that the mobile version is less functional than the desktop platform, with missing features and occasional usability issues on smartphones.
         </p>
         <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-          CloudRent Pro is designed around mobile-first workflows for managers, dispatchers and field teams.
+          CloudRent Pro is designed around mobile-first workflows, with dedicated apps for different roles across the business including managers, dispatchers and field crews.
         </p>
         <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
           <p className="m-0 text-[15px] text-gray-200">
-            <strong className="text-purple-300">Verdict:</strong> Businesses wanting a dedicated mobile-first
-            operating model may prefer CloudRent Pro. Businesses comfortable with essential mobile access may
-            find HirePOS suitable.
+            <strong className="text-purple-300">Verdict:</strong> CloudRent Pro offers a more complete mobile experience for hire businesses with field teams. Booqable&apos;s mobile app is functional for basic tasks but is not designed around field crew or multi-role operations.
+          </p>
+        </div>
+      </div>
+
+      {/* ═══════════════ CONTRACT SECTION ═══════════════ */}
+      <div className="relative mx-auto max-w-4xl px-5 pb-14">
+        <h2 className="mb-4 text-3xl font-bold text-white">Contract management</h2>
+        <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
+          Contract management is a critical part of professional hire operations. Reviewers of Booqable consistently report limitations around contracts, including the inability to upload documents, collect electronic signatures, or include legal terms directly in the platform.
+        </p>
+        <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
+          CloudRent Pro includes full contract management with e-signatures as part of the core platform, designed for the compliance and documentation requirements of professional hire businesses.
+        </p>
+        <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
+          <p className="m-0 text-[15px] text-gray-200">
+            <strong className="text-purple-300">Verdict:</strong> For hire businesses that require professional contract management and e-signatures, CloudRent Pro is the stronger fit. Booqable&apos;s contract capabilities are limited and may not meet the requirements of commercial hire operations.
           </p>
         </div>
       </div>
 
       {/* ═══════════════ CUSTOMER PORTAL SECTION ═══════════════ */}
       <div className="relative mx-auto max-w-4xl px-5 pb-14">
-        <h2 className="mb-4 text-3xl font-bold text-white">Customer self-service and online bookings</h2>
+        <h2 className="mb-4 text-3xl font-bold text-white">Customer self-service</h2>
         <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          CloudRent Pro includes CloudRent Connect as part of its customer self-service experience.
+          Booqable includes a hosted online booking store where customers can browse equipment, check availability, make reservations and pay. It also integrates with Shopify, WordPress and Squarespace for businesses that want to embed booking into an existing website.
         </p>
         <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-          HirePOS offers an Online Store module that enables quote requests or bookings, with optional
-          deposit/payment requirements and availability checking.
+          CloudRent Pro includes CloudRent Connect as its customer self-service experience, enabling customers to access bookings, contracts and account information online as part of a managed hire relationship rather than a transactional storefront.
         </p>
         <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
           <p className="m-0 text-[15px] text-gray-200">
-            <strong className="text-purple-300">Verdict:</strong> Both platforms support customer-facing
-            digital workflows. The key difference is how each platform packages and implements those
-            workflows.
-          </p>
-        </div>
-      </div>
-
-      {/* ═══════════════ ACCOUNTING SECTION ═══════════════ */}
-      <div className="relative mx-auto max-w-4xl px-5 pb-14">
-        <h2 className="mb-4 text-3xl font-bold text-white">Accounting integrations</h2>
-        <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          HirePOS publicly promotes exports to Xero, MYOB, QuickBooks and Reckon.
-        </p>
-        <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-          CloudRent Pro focuses on accounting integrations commonly used by Australian hire businesses,
-          including Xero, MYOB and QuickBooks.
-        </p>
-        <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
-          <p className="m-0 text-[15px] text-gray-200">
-            <strong className="text-purple-300">Verdict:</strong> Businesses requiring Reckon integration
-            today may prefer HirePOS.
+            <strong className="text-purple-300">Verdict:</strong> Booqable&apos;s online store is well suited to consumer-facing transactional rentals. CloudRent Connect is designed for ongoing customer relationships typical of commercial and business-to-business hire operations.
           </p>
         </div>
       </div>
@@ -420,52 +394,51 @@ export default function PageClient() {
       <div className="relative mx-auto max-w-4xl px-5 pb-14">
         <h2 className="mb-4 text-3xl font-bold text-white">AI-assisted rental workflows</h2>
         <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
-          CloudRent Pro is developing and rolling out AI-assisted features designed to support practical
-          rental workflows, including:
+          CloudRent Pro is developing and rolling out AI-assisted features including damage detection, support automation and inventory assistance, designed for practical day-to-day hire workflows.
         </p>
-        <ul className="mb-4 flex flex-col gap-2 pl-5">
-          <li className="text-[15px] text-gray-300">
-            AI damage detection for comparing equipment condition photos.
-          </li>
-          <li className="text-[15px] text-gray-300">
-            AI support automation for common customer and staff questions.
-          </li>
-          <li className="text-[15px] text-gray-300">
-            Inventory assistance for equipment information and specifications.
-          </li>
-          <li className="text-[15px] text-gray-300">
-            Marketing content assistance for equipment descriptions and brochures.
-          </li>
-        </ul>
         <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-          HirePOS publicly promotes automation, integrations and workflow tools, but the reviewed public pages
-          do not appear to promote a dedicated AI product suite.
+          Booqable has no publicly announced AI features as at June 2026.
         </p>
         <div className="rounded-xl border border-purple-500/30 bg-purple-900/40 p-5">
           <p className="m-0 text-[15px] text-gray-200">
-            <strong className="text-purple-300">Verdict:</strong> CloudRent Pro currently has the stronger
-            publicly promoted AI direction. Claims about AI performance should be supported by internal data
-            before publishing specific percentages or savings figures.
+            <strong className="text-purple-300">Verdict:</strong> CloudRent Pro is ahead on AI investment for rental operations. Businesses looking for AI-assisted workflows will find more on the CloudRent Pro roadmap.
+          </p>
+        </div>
+      </div>
+
+      {/* ═══════════════ HISTORY SECTION ═══════════════ */}
+      <div className="relative mx-auto max-w-4xl px-5 pb-14">
+        <h2 className="mb-4 text-3xl font-bold text-white">
+          Two platforms, different stages of maturity
+        </h2>
+        <div className="rounded-2xl border border-purple-500/20 bg-purple-900/30 p-7">
+          <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
+            CloudRent Pro draws on more than 20 years of rental software experience through its origins as HireEzy, launched in 2004 for the Australian hire industry.
+          </p>
+          <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
+            Booqable was founded in 2014 and has grown to serve more than 8,000 small rental businesses globally, with a strong focus on event, party and consumer equipment rental.
+          </p>
+          <p className="m-0 text-[15px] leading-relaxed text-gray-300">
+            Businesses that need a platform with deep hire industry heritage and enterprise-grade workflows will find CloudRent Pro the more mature choice. Booqable is a capable entry-level product for smaller or simpler operations.
           </p>
         </div>
       </div>
 
       {/* ═══════════════ MIGRATION SECTION ═══════════════ */}
       <div className="relative mx-auto max-w-4xl px-5 pb-14">
-        <h2 className="mb-4 text-3xl font-bold text-white">Switching from HirePOS to CloudRent Pro</h2>
+        <h2 className="mb-4 text-3xl font-bold text-white">Switching from Booqable to CloudRent Pro</h2>
         <div className="rounded-2xl border border-purple-500/20 bg-purple-900/30 p-7">
           <p className="mb-4 text-[15px] leading-relaxed text-gray-300">
             CloudRent Pro supports migration for eligible customers moving from another rental platform.
           </p>
           <p className="mb-6 text-[15px] leading-relaxed text-gray-300">
-            Typical migration areas may include equipment records, customer records, rental history, pricing
-            structures, contracts and asset information. Migration timelines vary depending on data quality,
-            business complexity and the scope of historical records.
+            Migration scope depends on data availability and export options from your current platform. Typical transferable areas may include equipment records, customer records and pricing structures. Our team will assess what is available during your migration discussion.
           </p>
 
+          {/* Migration Image */}
           <Image
-            src="/images/comparison-cloudrent-vs-hirepos-migration.webp"
-            alt="Migrating from HirePOS to CloudRent Pro"
+            src="/images/comparison-cloudrent-vs-booqable-migration.webp"
+            alt="Migrating from Booqable to CloudRent Pro"
             width={1200}
             height={500}
             className="my-6 w-full rounded-xl"
@@ -536,7 +509,7 @@ export default function PageClient() {
         <div className="rounded-2xl border border-purple-500/20 bg-purple-900/30 p-7">
           <p className="mb-4 text-[15px] leading-relaxed text-gray-400">
             This comparison is based on publicly available vendor pages, product documentation, Capterra
-            Australia and CloudRent product information as at 11 June 2026.
+            Australia, G2 and CloudRent product information as at June 2026.
           </p>
           <ul className="flex flex-col gap-2">
             {sources.map((source, i) => (
@@ -547,7 +520,7 @@ export default function PageClient() {
                   target="_blank"
                   className="text-[15px] text-purple-400 transition-colors hover:text-purple-300"
                 >
-                  {source.name}
+                  {source.label}
                 </a>
               </li>
             ))}
@@ -564,8 +537,8 @@ export default function PageClient() {
             confirm current information directly with each provider before making a purchasing decision.
           </p>
           <p className="m-0 text-sm leading-relaxed text-gray-500">
-            &quot;HirePOS&quot; is a trademark of its respective owner. This page is independent and is not
-            affiliated with, sponsored by or endorsed by HirePOS.
+            &quot;Booqable&quot; is a trademark of its respective owner. This page is independent and is not
+            affiliated with, sponsored by or endorsed by Booqable.
           </p>
         </div>
       </div>
