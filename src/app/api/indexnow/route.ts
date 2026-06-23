@@ -21,6 +21,23 @@ const INDEXABLE_URLS = [
   '/launch/',
   '/privacy/',
   '/terms/',
+  // Industry pages
+  '/event-hire-software/',
+  '/plant-tool-hire-software/',
+  '/temp-fence-hire-software/',
+  '/toilet-hire-software/',
+  // Comparison pages
+  '/cloudrent-pro-vs-hirepos/',
+  '/cloudrent-pro-vs-point-of-rental/',
+  '/cloudrent-pro-vs-texada/',
+  '/cloudrent-pro-vs-booqable/',
+  // Resource pages
+  '/glossary/',
+  '/ai-check/',
+  '/scorecard/',
+  '/training/',
+  '/equipment-damage-protection/',
+  '/safety-compliance/',
 ]
 
 export async function POST(request: NextRequest) {
