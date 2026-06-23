@@ -26,6 +26,14 @@ const industryLinks = [
   { label: 'Toilet Hire', href: '/toilet-hire-software' },
 ]
 
+// Comparison links
+const comparisonLinks = [
+  { label: 'Compare to HirePOS', href: '/cloudrent-pro-vs-hirepos' },
+  { label: 'Compare to Point of Rental', href: '/cloudrent-pro-vs-point-of-rental' },
+  { label: 'Compare to Texada', href: '/cloudrent-pro-vs-texada' },
+  { label: 'Compare to Booqable', href: '/cloudrent-pro-vs-booqable' },
+]
+
 // Resources links
 const resourceLinks = [
   { label: 'Glossary', href: '/glossary' },
@@ -34,8 +42,6 @@ const resourceLinks = [
   { label: 'Revenue Scorecard', href: '/scorecard' },
   { label: 'AI Damage Detection', href: '/equipment-damage-protection' },
   { label: 'Safety Compliance', href: '/safety-compliance' },
-  { label: 'Compare to HirePOS', href: '/cloudrent-pro-vs-hirepos' },
-  { label: 'Compare to Point of Rental', href: '/cloudrent-pro-vs-point-of-rental' },
 ]
 
 // Social media links
@@ -169,6 +175,23 @@ export async function Footer() {
             </h4>
             <ul className="space-y-1.5">
               {industryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-brand-purple transition-colors hover:text-[#a855c9]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Comparisons */}
+            <h4 className="mb-4 mt-6 text-sm font-semibold uppercase tracking-wider text-white">
+              Comparisons
+            </h4>
+            <ul className="space-y-1.5">
+              {comparisonLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
