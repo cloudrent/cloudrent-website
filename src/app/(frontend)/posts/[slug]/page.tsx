@@ -12,7 +12,6 @@ import RichText from '@/components/RichText'
 import type { Post, Media } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
-import { PostCTA } from '@/components/PostCTA'
 import { EngageCTA } from '@/components/EngageCTA'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
@@ -100,8 +99,6 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <div className="container max-w-4xl mx-auto pt-8">
         <RichText data={post.content} enableGutter={false} />
-
-        <PostCTA />
 
         <div className="mt-12">
           <EngageCTA />
