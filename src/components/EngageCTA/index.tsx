@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { Calendar, Rocket, BarChart2, Eye, ArrowRight } from 'lucide-react'
 
@@ -53,13 +54,24 @@ export function EngageCTA() {
   return (
     <div className="rounded-2xl bg-[#0f0a1a] p-8 md:p-12">
       {/* Header */}
-      <div className="mb-8 text-center">
+      <div className="mb-6 text-center">
         <h2 className="mb-2 text-2xl font-bold text-white md:text-3xl">
           Not sure where to start?
         </h2>
         <p className="text-white/55">
           Four ways to explore CloudRent Pro - pick what suits you.
         </p>
+      </div>
+
+      {/* Ecosystem Graphic */}
+      <div className="mb-8 flex justify-center">
+        <Image
+          src="/images/CloudRent-Rental-Ecosystem.webp"
+          alt="CloudRent ecosystem - Pro, Connect, Crew, Command, and Reach products"
+          width={900}
+          height={500}
+          className="w-full max-w-3xl"
+        />
       </div>
 
       {/* Cards Grid */}
