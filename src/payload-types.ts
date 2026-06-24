@@ -2511,6 +2511,19 @@ export interface CodeBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HTMLBlock".
+ */
+export interface HTMLBlock {
+  /**
+   * Enter raw HTML. This will be rendered without escaping.
+   */
+  html: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'html';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {
