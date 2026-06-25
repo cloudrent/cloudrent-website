@@ -63,7 +63,7 @@ export function EyebrowBanner({ excludedPaths = [] }: EyebrowBannerProps) {
   return (
     <Link
       href={currentMessage.link}
-      className="block w-full transition-colors duration-300"
+      className="relative block w-full transition-colors duration-300"
       style={{ backgroundColor: currentMessage.background }}
     >
       <div className="flex items-center justify-center gap-3 px-6 py-[11px] sm:gap-4">
@@ -88,23 +88,20 @@ export function EyebrowBanner({ excludedPaths = [] }: EyebrowBannerProps) {
             {currentMessage.cta}
           </span>
         </div>
+      </div>
 
-        {/* Spacer for indicator dots alignment */}
-        <div className="hidden flex-1 sm:block" />
-
-        {/* Indicator dots */}
-        <div className="hidden items-center gap-[6px] sm:flex">
-          {messages.map((_, index) => (
-            <div
-              key={index}
-              className="h-[6px] w-[6px] rounded-full transition-colors duration-300"
-              style={{
-                backgroundColor:
-                  index === currentIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)',
-              }}
-            />
-          ))}
-        </div>
+      {/* Indicator dots - positioned absolutely to not affect centering */}
+      <div className="absolute right-4 top-1/2 hidden -translate-y-1/2 items-center gap-[6px] sm:flex">
+        {messages.map((_, index) => (
+          <div
+            key={index}
+            className="h-[6px] w-[6px] rounded-full transition-colors duration-300"
+            style={{
+              backgroundColor:
+                index === currentIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)',
+            }}
+          />
+        ))}
       </div>
     </Link>
   )
