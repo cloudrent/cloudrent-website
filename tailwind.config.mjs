@@ -61,6 +61,9 @@ const config = {
         'count-up': 'countUp 1.5s ease-out forwards',
         'shimmer': 'shimmer 2s linear infinite',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'pulse-amber': 'pulseAmber 1.6s ease-in-out infinite',
+        'pulse-purple': 'pulsePurple 1.6s ease-in-out infinite',
+        'banner-fadein': 'bannerFadein 0.4s ease-out forwards',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -166,6 +169,18 @@ const config = {
         'glowPulse': {
           '0%, 100%': { boxShadow: '0 0 20px rgba(136, 27, 169, 0.3)' },
           '50%': { boxShadow: '0 0 40px rgba(136, 27, 169, 0.6)' },
+        },
+        'pulseAmber': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(251,191,36,0.8)', transform: 'scale(1)' },
+          '50%': { boxShadow: '0 0 0 10px rgba(251,191,36,0)', transform: 'scale(1.15)' },
+        },
+        'pulsePurple': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(192,132,252,0.8)', transform: 'scale(1)' },
+          '50%': { boxShadow: '0 0 0 10px rgba(192,132,252,0)', transform: 'scale(1.15)' },
+        },
+        'bannerFadein': {
+          '0%': { opacity: '0', transform: 'translateY(-3px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       typography: () => ({

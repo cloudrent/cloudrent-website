@@ -1,15 +1,10 @@
 import type { Metadata } from 'next'
-import { cn } from '@/utilities/ui'
 import { Inter } from 'next/font/google'
+import { draftMode } from 'next/headers'
 import React from 'react'
 
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 import { AdminBar } from '@/components/AdminBar'
+import { EyebrowBanner } from '@/components/EyebrowBanner'
 import { GoogleTagManager, GoogleTagManagerNoscript } from '@/components/GoogleTagManager'
 import { MicrosoftClarity } from '@/components/MicrosoftClarity'
 import { RevenueLeakPopup, AIVisibilityPopup } from '@/components/popups'
@@ -19,9 +14,16 @@ import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
-import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
+
+import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-inter',
+  display: 'swap',
+})
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -61,6 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           )}
           <RevenueLeakPopup />
           <AIVisibilityPopup />
+          <EyebrowBanner excludedPaths={['/ai-check', '/scorecard', '/try', '/try-us']} />
           <Header />
           {children}
           <Footer />
