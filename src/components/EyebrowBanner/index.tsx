@@ -51,7 +51,7 @@ export function EyebrowBanner({ excludedPaths = [] }: EyebrowBannerProps) {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % messages.length)
       setAnimationKey((prev) => prev + 1)
-    }, 3500)
+    }, 4500)
 
     return () => clearInterval(interval)
   }, [isExcluded])

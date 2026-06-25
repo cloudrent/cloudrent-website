@@ -172,11 +172,11 @@ const config = {
         },
         'pulseAmber': {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(251,191,36,0.8)', transform: 'scale(1)' },
-          '50%': { boxShadow: '0 0 0 10px rgba(251,191,36,0)', transform: 'scale(1.15)' },
+          '50%': { boxShadow: '0 0 0 20px rgba(251,191,36,0)', transform: 'scale(1.15)' },
         },
         'pulsePurple': {
           '0%, 100%': { boxShadow: '0 0 0 0 rgba(192,132,252,0.8)', transform: 'scale(1)' },
-          '50%': { boxShadow: '0 0 0 10px rgba(192,132,252,0)', transform: 'scale(1.15)' },
+          '50%': { boxShadow: '0 0 0 20px rgba(192,132,252,0)', transform: 'scale(1.15)' },
         },
         'bannerFadein': {
           '0%': { opacity: '0', transform: 'translateY(-3px)' },
