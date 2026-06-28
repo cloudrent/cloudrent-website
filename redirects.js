@@ -178,9 +178,11 @@ const redirects = async () => {
     { source: '/rentcheck-forms', destination: '/features/', permanent: true },
     { source: '/rentcheck-forms/', destination: '/features/', permanent: true },
 
-    // Old product/feature pages
+    // Old product/feature pages (regular hyphen and en-dash variants)
     { source: '/driveguard360-rugged-dual-hd-connected-camera-system', destination: '/features#safety/', permanent: true },
     { source: '/driveguard360-rugged-dual-hd-connected-camera-system/', destination: '/features#safety/', permanent: true },
+    { source: '/driveguard360-rugged-dual\u2011hd-connected-camera-system', destination: '/features#safety/', permanent: true },
+    { source: '/driveguard360-rugged-dual\u2011hd-connected-camera-system/', destination: '/features#safety/', permanent: true },
     { source: '/tempfencepanels', destination: '/', permanent: true },
     { source: '/tempfencepanels/', destination: '/', permanent: true },
 

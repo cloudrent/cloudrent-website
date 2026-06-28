@@ -26,7 +26,17 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        disallow: ['/admin/*', '/api/*', '/search', '/_next/*'],
+        disallow: [
+          '/admin/*',
+          '/api/*',
+          '/search',
+          '/_next/*',
+          // Block tracking parameter URLs to prevent duplicate content
+          '/*?kuid=',
+          '/*?kref=',
+          '/*&kuid=',
+          '/*&kref=',
+        ],
         allow: '/',
       },
       // AI search and answer engines (explicit allow)
