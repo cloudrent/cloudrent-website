@@ -54,8 +54,16 @@ export default function AICheckPage() {
 function AICheckLoading() {
   return (
     <div className="relative min-h-screen bg-[#0e0b14]">
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-purple-500" />
+      <div className="mx-auto max-w-3xl px-6 py-12 text-center">
+        <h1 className="mb-4 text-4xl font-bold text-white md:text-5xl">
+          Is AI Recommending Your Competitors?
+        </h1>
+        <p className="mx-auto max-w-2xl text-lg text-white/60">
+          See whether ChatGPT, Gemini, Perplexity and Google AI recommend your business.
+        </p>
+        <div className="mt-12 flex justify-center">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white/20 border-t-purple-500" />
+        </div>
       </div>
     </div>
   )
