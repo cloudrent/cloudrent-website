@@ -80,6 +80,21 @@ module.exports = {
       { loc: '/launch', priority: 0.9, changefreq: 'daily' },
       { loc: '/privacy', priority: 0.3, changefreq: 'yearly' },
       { loc: '/terms', priority: 0.3, changefreq: 'yearly' },
+      // Landing pages
+      { loc: '/event-hire-software/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/plant-tool-hire-software/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/temp-fence-hire-software/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/toilet-hire-software/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/equipment-damage-protection/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/safety-compliance/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/equipment-rental-software/', priority: 0.9, changefreq: 'monthly' },
+      { loc: '/equipment-rental-software-australia/', priority: 0.9, changefreq: 'monthly' },
+      { loc: '/construction-equipment-rental-software/', priority: 0.9, changefreq: 'monthly' },
+      { loc: '/rental-inventory-management-software/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/hire-business-software/', priority: 0.8, changefreq: 'monthly' },
+      // Comparison pages
+      { loc: '/compare/cloudrent-vs-spreadsheets/', priority: 0.8, changefreq: 'monthly' },
+      { loc: '/compare/cloudrent-vs-erp/', priority: 0.8, changefreq: 'monthly' },
     ]
     return staticPages
   },

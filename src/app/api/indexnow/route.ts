@@ -21,16 +21,24 @@ const INDEXABLE_URLS = [
   '/launch/',
   '/privacy/',
   '/terms/',
-  // Industry pages
+  // Industry landing pages
   '/event-hire-software/',
   '/plant-tool-hire-software/',
   '/temp-fence-hire-software/',
   '/toilet-hire-software/',
-  // Comparison pages
+  '/equipment-rental-software/',
+  '/equipment-rental-software-australia/',
+  '/construction-equipment-rental-software/',
+  '/rental-inventory-management-software/',
+  '/hire-business-software/',
+  // Competitor comparison pages
   '/cloudrent-pro-vs-hirepos/',
   '/cloudrent-pro-vs-point-of-rental/',
   '/cloudrent-pro-vs-texada/',
   '/cloudrent-pro-vs-booqable/',
+  // Concept comparison pages
+  '/compare/cloudrent-vs-spreadsheets/',
+  '/compare/cloudrent-vs-erp/',
   // Resource pages
   '/glossary/',
   '/ai-check/',
