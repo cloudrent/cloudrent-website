@@ -8,6 +8,18 @@ const quickLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
+const industryLinks = [
+  { label: 'Equipment Rental', href: '/equipment-rental-software' },
+  { label: 'Construction Rental', href: '/construction-equipment-rental-software' },
+  { label: 'Inventory Management', href: '/rental-inventory-management-software' },
+  { label: 'Hire Business', href: '/hire-business-software' },
+]
+
+const comparisonLinks = [
+  { label: 'vs Spreadsheets', href: '/compare/cloudrent-vs-spreadsheets' },
+  { label: 'vs ERP Systems', href: '/compare/cloudrent-vs-erp' },
+]
+
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Service', href: '/terms' },
@@ -47,9 +59,9 @@ export function LandingFooter() {
   return (
     <footer className="border-t border-white/[0.08] bg-[#050510]">
       <div className="mx-auto max-w-6xl px-5 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-6">
           {/* Logo */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-2">
               <Image
                 src="/images/CloudRent Logo Hex.svg"
@@ -64,6 +76,20 @@ export function LandingFooter() {
             <p className="mt-4 text-sm text-white/50">
               Equipment rental software built for Australian hire businesses.
             </p>
+            <div className="mt-6 flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/40 transition-colors hover:text-purple-400"
+                  aria-label={social.label}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -85,9 +111,43 @@ export function LandingFooter() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Industries */}
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Industries
+            </h4>
+            <ul className="space-y-2">
+              {industryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/60 transition-colors hover:text-purple-400"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Comparisons */}
+          <div>
+            <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+              Compare
+            </h4>
+            <ul className="space-y-2">
+              {comparisonLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/60 transition-colors hover:text-purple-400"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <h4 className="mb-4 mt-6 text-sm font-semibold uppercase tracking-wider text-white">
               Legal
             </h4>
             <ul className="space-y-2">
@@ -104,7 +164,7 @@ export function LandingFooter() {
             </ul>
           </div>
 
-          {/* Contact & Social */}
+          {/* Contact */}
           <div>
             <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
               Contact
@@ -115,20 +175,6 @@ export function LandingFooter() {
             >
               support@cloudrent.me
             </a>
-            <div className="mt-6 flex items-center gap-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/40 transition-colors hover:text-purple-400"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </a>
-              ))}
-            </div>
           </div>
         </div>
 

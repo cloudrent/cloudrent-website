@@ -20,6 +20,11 @@ const quickMenuLinks = [
 
 // Industry links
 const industryLinks = [
+  { label: 'Equipment Rental', href: '/equipment-rental-software' },
+  { label: 'Equipment Rental (AU)', href: '/equipment-rental-software-australia' },
+  { label: 'Construction Rental', href: '/construction-equipment-rental-software' },
+  { label: 'Inventory Management', href: '/rental-inventory-management-software' },
+  { label: 'Hire Business', href: '/hire-business-software' },
   { label: 'Event Hire', href: '/event-hire-software' },
   { label: 'Plant & Tool Hire', href: '/plant-tool-hire-software' },
   { label: 'Temporary Fencing', href: '/temp-fence-hire-software' },
@@ -28,10 +33,12 @@ const industryLinks = [
 
 // Comparison links
 const comparisonLinks = [
-  { label: 'Compare to HirePOS', href: '/cloudrent-pro-vs-hirepos' },
-  { label: 'Compare to Point of Rental', href: '/cloudrent-pro-vs-point-of-rental' },
-  { label: 'Compare to Texada', href: '/cloudrent-pro-vs-texada' },
-  { label: 'Compare to Booqable', href: '/cloudrent-pro-vs-booqable' },
+  { label: 'vs Spreadsheets', href: '/compare/cloudrent-vs-spreadsheets' },
+  { label: 'vs ERP Systems', href: '/compare/cloudrent-vs-erp' },
+  { label: 'vs HirePOS', href: '/cloudrent-pro-vs-hirepos' },
+  { label: 'vs Point of Rental', href: '/cloudrent-pro-vs-point-of-rental' },
+  { label: 'vs Texada', href: '/cloudrent-pro-vs-texada' },
+  { label: 'vs Booqable', href: '/cloudrent-pro-vs-booqable' },
 ]
 
 // Resources links
