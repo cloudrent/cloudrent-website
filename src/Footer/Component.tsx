@@ -100,12 +100,12 @@ const socialLinks = [
   },
 ]
 
-const getLatestPost = unstable_cache(
+const getLatestPosts = unstable_cache(
   async () => {
     const payload = await getPayload({ config: configPromise })
     const posts = await payload.find({
       collection: 'posts',
-      limit: 1,
+      limit: 2,
       sort: '-publishedAt',
       depth: 1,
       select: {
@@ -115,15 +115,15 @@ const getLatestPost = unstable_cache(
         publishedAt: true,
       },
     })
-    return posts.docs[0] || null
+    return posts.docs
   },
-  ['latest-post'],
+  ['latest-posts'],
   { revalidate: 3600, tags: ['posts'] }
 )
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
-  const latestPost = await getLatestPost()
+  const latestPosts = await getLatestPosts()
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString('en-AU', {
@@ -235,36 +235,38 @@ export async function Footer() {
             <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Latest News
             </h4>
-            {latestPost && (
-              <Link href={`/posts/${latestPost.slug}`} className="group block">
-                <div className="flex gap-4">
-                  {/* Thumbnail */}
-                  <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden rounded-lg bg-brand-purple/20">
-                    {latestPost.heroImage && typeof latestPost.heroImage !== 'string' && (
-                      <Media
-                        fill
-                        imgClassName="object-cover transition-transform group-hover:scale-105"
-                        resource={latestPost.heroImage}
-                      />
-                    )}
+            <div className="space-y-4">
+              {latestPosts.map((post) => (
+                <Link key={post.slug} href={`/posts/${post.slug}`} className="group block">
+                  <div className="flex gap-4">
+                    {/* Thumbnail */}
+                    <div className="relative h-20 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-brand-purple/20">
+                      {post.heroImage && typeof post.heroImage !== 'string' && (
+                        <Media
+                          fill
+                          imgClassName="object-cover transition-transform group-hover:scale-105"
+                          resource={post.heroImage}
+                        />
+                      )}
+                    </div>
+                    {/* Content */}
+                    <div className="flex-1">
+                      <h5 className="text-sm font-semibold leading-tight text-white transition-colors group-hover:text-brand-purple">
+                        {post.title}
+                      </h5>
+                      {post.publishedAt && (
+                        <p className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-400">
+                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          {formatDate(post.publishedAt)}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h5 className="font-semibold leading-tight text-white transition-colors group-hover:text-brand-purple">
-                      {latestPost.title}
-                    </h5>
-                    {latestPost.publishedAt && (
-                      <p className="mt-2 flex items-center gap-1.5 text-sm text-gray-400">
-                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        {formatDate(latestPost.publishedAt)}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            )}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
