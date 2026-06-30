@@ -53,8 +53,8 @@ function generateSchema() {
     ],
     aggregateRating: {
       '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      ratingCount: '47',
+      ratingValue: '4.4',
+      ratingCount: '29',
     },
   }
 }
