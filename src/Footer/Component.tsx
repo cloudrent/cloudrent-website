@@ -235,12 +235,12 @@ export async function Footer() {
             <h4 className="mb-6 border-b border-brand-purple/30 pb-2 text-sm font-semibold uppercase tracking-wider text-white">
               Latest News
             </h4>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {latestPosts.map((post) => (
                 <Link key={post.slug} href={`/posts/${post.slug}`} className="group block">
                   <div className="flex gap-4">
                     {/* Thumbnail */}
-                    <div className="relative h-20 w-28 flex-shrink-0 overflow-hidden rounded-lg bg-brand-purple/20">
+                    <div className="relative h-24 w-32 flex-shrink-0 overflow-hidden rounded-lg bg-brand-purple/20">
                       {post.heroImage && typeof post.heroImage !== 'string' && (
                         <Media
                           fill
@@ -251,12 +251,12 @@ export async function Footer() {
                     </div>
                     {/* Content */}
                     <div className="flex-1">
-                      <h5 className="text-sm font-semibold leading-tight text-white transition-colors group-hover:text-brand-purple">
+                      <h5 className="font-semibold leading-tight text-white transition-colors group-hover:text-brand-purple">
                         {post.title}
                       </h5>
                       {post.publishedAt && (
-                        <p className="mt-1.5 flex items-center gap-1.5 text-xs text-gray-400">
-                          <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <p className="mt-2 flex items-center gap-1.5 text-sm text-gray-400">
+                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
                           {formatDate(post.publishedAt)}
