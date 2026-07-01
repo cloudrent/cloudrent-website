@@ -5,6 +5,9 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import RoadmapPageClient from './page.client'
 
+// Revalidate every 60 seconds to pick up CMS changes
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'CloudRent Product Roadmap | Hire Software Features',
   description:
