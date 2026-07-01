@@ -1,5 +1,5 @@
 import * as migration_20260319_035712_video_thumbnail from './20260319_035712_video_thumbnail';
-import * as migration_20260612_215231_scorecard_leads from './20260612_215231_scorecard_leads';
+import * as migration_20260630_235735_roadmap_items from './20260630_235735_roadmap_items';
 
 export const migrations = [
   {
@@ -8,8 +8,8 @@ export const migrations = [
     name: '20260319_035712_video_thumbnail',
   },
   {
-    up: migration_20260612_215231_scorecard_leads.up,
-    down: migration_20260612_215231_scorecard_leads.down,
-    name: '20260612_215231_scorecard_leads'
+    up: migration_20260630_235735_roadmap_items.up,
+    down: migration_20260630_235735_roadmap_items.down,
+    name: '20260630_235735_roadmap_items'
   },
 ];

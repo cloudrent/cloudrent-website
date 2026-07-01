@@ -76,6 +76,7 @@ export interface Config {
     bookings: Booking;
     'scorecard-leads': ScorecardLead;
     'ai-visibility-leads': AiVisibilityLead;
+    'roadmap-items': RoadmapItem;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -102,6 +103,7 @@ export interface Config {
     bookings: BookingsSelect<false> | BookingsSelect<true>;
     'scorecard-leads': ScorecardLeadsSelect<false> | ScorecardLeadsSelect<true>;
     'ai-visibility-leads': AiVisibilityLeadsSelect<false> | AiVisibilityLeadsSelect<true>;
+    'roadmap-items': RoadmapItemsSelect<false> | RoadmapItemsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1091,6 +1093,43 @@ export interface AiVisibilityLead {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "roadmap-items".
+ */
+export interface RoadmapItem {
+  id: number;
+  title: string;
+  description: string;
+  status: 'shipped' | 'in-progress' | 'planned';
+  category:
+    | 'Dispatch'
+    | 'Invoicing'
+    | 'Mobile'
+    | 'Integrations'
+    | 'Inventory'
+    | 'Customer Portal'
+    | 'Reporting'
+    | 'Staff'
+    | 'AI'
+    | 'Safety'
+    | 'Platform';
+  product: 'CloudRent Pro' | 'CloudRent Crew' | 'CloudRent Command' | 'CloudRent Connect' | 'All Products';
+  /**
+   * e.g. Q3 2026 — shown on in-progress and planned items only
+   */
+  quarter?: string | null;
+  /**
+   * Optional deep link to a feature page or anchor. e.g. /features/#dispatch or /mobile-app/
+   */
+  learnMoreUrl?: string | null;
+  /**
+   * Controls display order within each status column. Lower numbers appear first.
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1314,6 +1353,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'ai-visibility-leads';
         value: number | AiVisibilityLead;
+      } | null)
+    | ({
+        relationTo: 'roadmap-items';
+        value: number | RoadmapItem;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1866,6 +1909,22 @@ export interface AiVisibilityLeadsSelect<T extends boolean = true> {
   status?: T;
   notes?: T;
   emailSent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "roadmap-items_select".
+ */
+export interface RoadmapItemsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  status?: T;
+  category?: T;
+  product?: T;
+  quarter?: T;
+  learnMoreUrl?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -95,6 +95,8 @@ module.exports = {
       // Comparison pages
       { loc: '/compare/cloudrent-vs-spreadsheets/', priority: 0.8, changefreq: 'monthly' },
       { loc: '/compare/cloudrent-vs-erp/', priority: 0.8, changefreq: 'monthly' },
+      // Roadmap
+      { loc: '/roadmap/', priority: 0.8, changefreq: 'monthly' },
     ]
     return staticPages
   },
