@@ -11,7 +11,7 @@
 const INDEXNOW_KEY = 'a4614d998743d0cc080805619523acd2'
 const SITE_URL = 'https://www.cloudrent.me'
 
-// New URLs to submit (Phase 1, 2, and 3)
+// New URLs to submit (Phase 1, 2, 3, and Roadmap)
 const NEW_URLS = [
   // Phase 1 - Core SEO pages
   '/equipment-rental-software/',
@@ -23,6 +23,8 @@ const NEW_URLS = [
   // Phase 3 - Comparison pages
   '/compare/cloudrent-vs-spreadsheets/',
   '/compare/cloudrent-vs-erp/',
+  // Roadmap
+  '/roadmap/',
 ]
 
 async function submitToIndexNow() {

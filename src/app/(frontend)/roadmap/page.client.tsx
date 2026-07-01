@@ -182,81 +182,66 @@ export default function RoadmapPageClient({ items }: RoadmapPageClientProps) {
         </div>
       </div>
 
-      {/* ═══════════════ ROADMAP BOARD — DESKTOP ═══════════════ */}
-      <div className="relative mx-auto hidden max-w-6xl gap-4 px-5 py-10 md:grid md:grid-cols-3">
-        {/* Column: Shipped */}
-        <div className="rounded-2xl border border-green-500/20 bg-green-950/20 p-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Check className="h-5 w-5 text-green-400" />
-            <span className="font-semibold text-white">Shipped</span>
-            <span className="rounded-full bg-green-500/20 px-2 py-0.5 text-xs font-medium text-green-400">
-              {shipped.length}
-            </span>
+      {/* ═══════════════ ROADMAP BOARD ═══════════════ */}
+      <div className="relative mx-auto max-w-6xl space-y-10 px-5 py-10">
+        {/* Section: Shipped */}
+        {(activeStatus === 'all' || activeStatus === 'shipped') && shipped.length > 0 && (
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <Check className="h-5 w-5 text-green-400" />
+              <span className="font-semibold text-white">Shipped</span>
+              <span className="rounded-full bg-green-500/20 px-2 py-0.5 text-xs font-medium text-green-400">
+                {shipped.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {shipped.map((item) => (
+                <RoadmapCard key={item.id} item={item} />
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col gap-3">
-            {shipped.map((item) => (
-              <RoadmapCard key={item.id} item={item} />
-            ))}
-            {shipped.length === 0 && (
-              <p className="py-4 text-center text-sm text-white/40">No items match filters</p>
-            )}
-          </div>
-        </div>
+        )}
 
-        {/* Column: In Progress */}
-        <div className="rounded-2xl border border-purple-500/20 bg-purple-950/20 p-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Activity className="h-5 w-5 text-purple-400" />
-            <span className="font-semibold text-white">In Progress</span>
-            <span className="rounded-full bg-purple-500/20 px-2 py-0.5 text-xs font-medium text-purple-400">
-              {inProgress.length}
-            </span>
+        {/* Section: In Progress */}
+        {(activeStatus === 'all' || activeStatus === 'in-progress') && inProgress.length > 0 && (
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <Activity className="h-5 w-5 text-[#F97312]" />
+              <span className="font-semibold text-white">In Progress</span>
+              <span className="rounded-full bg-[#F97312]/20 px-2 py-0.5 text-xs font-medium text-[#F97312]">
+                {inProgress.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {inProgress.map((item) => (
+                <RoadmapCard key={item.id} item={item} />
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col gap-3">
-            {inProgress.map((item) => (
-              <RoadmapCard key={item.id} item={item} />
-            ))}
-            {inProgress.length === 0 && (
-              <p className="py-4 text-center text-sm text-white/40">No items match filters</p>
-            )}
-          </div>
-        </div>
+        )}
 
-        {/* Column: Planned */}
-        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Clock className="h-5 w-5 text-gray-400" />
-            <span className="font-semibold text-white">Planned</span>
-            <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs font-medium text-gray-400">
-              {planned.length}
-            </span>
+        {/* Section: Planned */}
+        {(activeStatus === 'all' || activeStatus === 'planned') && planned.length > 0 && (
+          <div>
+            <div className="mb-4 flex items-center gap-2">
+              <Clock className="h-5 w-5 text-[#3A81F6]" />
+              <span className="font-semibold text-white">Planned</span>
+              <span className="rounded-full bg-[#3A81F6]/20 px-2 py-0.5 text-xs font-medium text-[#3A81F6]">
+                {planned.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {planned.map((item) => (
+                <RoadmapCard key={item.id} item={item} />
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col gap-3">
-            {planned.map((item) => (
-              <RoadmapCard key={item.id} item={item} />
-            ))}
-            {planned.length === 0 && (
-              <p className="py-4 text-center text-sm text-white/40">No items match filters</p>
-            )}
-          </div>
-        </div>
-      </div>
+        )}
 
-      {/* ═══════════════ ROADMAP BOARD — MOBILE ═══════════════ */}
-      <div className="relative mx-auto max-w-lg px-5 py-10 md:hidden">
-        <div className="flex flex-col gap-3">
-          {activeStatus === 'all' &&
-            filtered.map((item) => <RoadmapCard key={item.id} item={item} showStatus />)}
-          {activeStatus === 'shipped' &&
-            shipped.map((item) => <RoadmapCard key={item.id} item={item} />)}
-          {activeStatus === 'in-progress' &&
-            inProgress.map((item) => <RoadmapCard key={item.id} item={item} />)}
-          {activeStatus === 'planned' &&
-            planned.map((item) => <RoadmapCard key={item.id} item={item} />)}
-          {filtered.length === 0 && (
-            <p className="py-8 text-center text-sm text-white/40">No items match filters</p>
-          )}
-        </div>
+        {/* Empty state */}
+        {filtered.length === 0 && (
+          <p className="py-8 text-center text-sm text-white/40">No items match filters</p>
+        )}
       </div>
 
       {/* ═══════════════ SUGGEST A FEATURE ═══════════════ */}
