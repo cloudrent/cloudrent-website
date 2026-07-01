@@ -286,9 +286,20 @@ export default function RoadmapPageClient({ items }: RoadmapPageClientProps) {
   )
 }
 
+function cardBorderClass(status: 'shipped' | 'in-progress' | 'planned') {
+  if (status === 'shipped') return 'border-l-[3px] border-l-[#41ab01]'
+  if (status === 'in-progress') return 'border-l-[3px] border-l-[#F97312]'
+  return 'border-l-[3px] border-l-[#3A81F6]'
+}
+
 function RoadmapCard({ item, showStatus }: { item: RoadmapItem; showStatus?: boolean }) {
   return (
-    <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]">
+    <div
+      className={cn(
+        'rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 transition hover:border-white/20 hover:bg-white/[0.05]',
+        cardBorderClass(item.status),
+      )}
+    >
       <div className="mb-2 flex flex-wrap items-center gap-2">
         <span className="rounded-full border border-white/20 px-2 py-0.5 text-xs text-white/60">
           {item.category}

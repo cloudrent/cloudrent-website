@@ -19,6 +19,7 @@ const INDEXABLE_URLS = [
   '/posts/',
   '/videos/',
   '/launch/',
+  '/roadmap/',
   '/privacy/',
   '/terms/',
   // Industry landing pages

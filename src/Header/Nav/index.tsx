@@ -9,6 +9,7 @@ const navLinks = [
   { label: 'Web Portal', href: '/web-portal' },
   { label: 'Mobile App', href: '/mobile-app' },
   { label: 'AI Damage Detection', href: '/ai-damage-detection' },
+  { label: 'Roadmap', href: '/roadmap' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Videos', href: '/videos' },
   { label: 'About', href: '/about' },
