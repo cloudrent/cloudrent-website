@@ -13,6 +13,7 @@ const quickMenuLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
   { label: 'Features', href: '/features' },
+  { label: 'Roadmap', href: '/roadmap' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Contact', href: '/contact' },
   { label: 'Blog', href: '/posts' },
