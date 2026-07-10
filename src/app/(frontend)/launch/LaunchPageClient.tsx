@@ -230,6 +230,9 @@ export default function LaunchPageClient() {
               → Total value: <span className="font-semibold text-green-400">$178+/mo</span> — you
               pay just <span className="font-semibold text-amber-400">$85</span>
             </p>
+            <p className="mt-3 text-xs text-gray-500">
+              * CloudRent Connect (Customer Portal) is not included
+            </p>
           </div>
         </div>
       </section>

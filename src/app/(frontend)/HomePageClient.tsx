@@ -1702,6 +1702,9 @@ export default function HomePageClient() {
                   <span className="font-semibold text-yellow-400">$178+/mo</span> — you pay just{' '}
                   <span className="font-bold text-green-400">$85</span>
                 </p>
+                <p className="mt-3 text-xs text-white/50">
+                  * CloudRent Connect (Customer Portal) is not included
+                </p>
               </div>
 
               {/* Launch Partner Benefits */}
