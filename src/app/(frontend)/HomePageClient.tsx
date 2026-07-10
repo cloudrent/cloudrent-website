@@ -1688,9 +1688,6 @@ export default function HomePageClient() {
                 </p>
                 <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
                   <span className="rounded-full border border-purple-500/30 bg-purple-500/20 px-3 py-1.5 text-xs font-medium text-purple-300">
-                    Customer Portal
-                  </span>
-                  <span className="rounded-full border border-white/[0.15] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/70">
                     Xero/QuickBooks Integration
                   </span>
                   <span className="rounded-full border border-white/[0.15] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/70">
