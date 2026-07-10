@@ -68,7 +68,6 @@ const benefits = [
 ]
 
 const includedFeatures = [
-  'Customer Portal',
   'Xero/QuickBooks Integration',
   'Marketing Tools',
   'AI Features',
