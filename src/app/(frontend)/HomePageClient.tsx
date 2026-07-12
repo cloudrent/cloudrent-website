@@ -45,6 +45,8 @@ import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
 import { GoogleReviews } from '@/components/GoogleReviews'
 import { HeroSection } from '@/components/HeroSection'
 import { ProblemCardsSection } from '@/components/ProblemCardsSection'
+import { WhatChangesSection } from '@/components/WhatChangesSection'
+import { TestimonialsSection } from '@/components/TestimonialsSection'
 
 // Dynamically import the carousel to reduce initial bundle size
 const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
@@ -186,38 +188,6 @@ const platformFeatures = {
   ],
 }
 
-// ─── TESTIMONIALS DATA ────────────────────────────────────────────────────────
-
-const testimonials = [
-  {
-    headline: 'We can now run our entire rental business from anywhere.',
-    quote: 'CloudRent replaced multiple systems with one platform for bookings, logistics, and invoicing.',
-    closing: 'Finally — a system that fits how we operate.',
-    author: 'Cameron Drake-Brockman',
-    company: 'HireRite Temporary Fence',
-    image: '/images/testimonials/Cam.png',
-    initials: 'CD',
-  },
-  {
-    headline: 'We finally consolidated everything into one system.',
-    quote: 'Before CloudRent, we were juggling tools across operations, safety, and maintenance.',
-    closing: 'Now we have full visibility and control.',
-    author: 'Theo Tsorvas',
-    company: 'Consolidated Group',
-    image: '/images/testimonials/Theo.png',
-    initials: 'TT',
-  },
-  {
-    headline: "The best rental software we've used — by far.",
-    quote: 'Sub-rentals and inventory used to be a constant headache. CloudRent solved it.',
-    closing: 'The platform keeps improving — and the support is outstanding.',
-    author: 'David Duncalfe',
-    company: 'Excel Events',
-    image: '/images/testimonials/David.png',
-    initials: 'DD',
-  },
-]
-
 // ─── LAUNCH PARTNER BENEFITS DATA ────────────────────────────────────────────
 
 const launchPartnerBenefits = [
@@ -296,47 +266,6 @@ const integratedFeatures = [
   { icon: BarChart3, title: 'Analytics', description: "See What's Actually Happening" },
 ]
 
-// ─── OUTCOMES SECTION DATA ───────────────────────────────────────────────────
-
-const outcomesBenefits = [
-  {
-    title: 'No more double bookings',
-    subtitle: 'Every job is accurate — every time',
-    description:
-      'Live availability across all locations means you never promise the same equipment twice or scramble to fix mistakes.',
-  },
-  {
-    title: 'Fewer phone calls',
-    subtitle: 'Your team stops chasing — and starts executing',
-    description:
-      'Staff, drivers, and customers get what they need instantly in the app — no constant calls, no interruptions.',
-  },
-  {
-    title: 'Invoices go out the same day',
-    subtitle: 'Get paid faster — without the backlog',
-    description:
-      'Completed jobs turn into invoices instantly, so cash flow stays consistent and predictable.',
-  },
-  {
-    title: 'Always audit-ready',
-    subtitle: 'Compliance handled — without the stress',
-    description:
-      'Every signature, inspection, and incident is tracked, timestamped, and ready when you need it.',
-  },
-  {
-    title: 'Full business visibility',
-    subtitle: "Know exactly what's happening — at all times",
-    description:
-      "See where your equipment is, what's overdue, and what needs attention — without chasing information.",
-  },
-]
-
-const outcomesStats = [
-  { value: '87%', label: 'Fewer admin errors' },
-  { value: '3.2×', label: 'Faster job processing' },
-  { value: '100%', label: 'Audit-ready compliance tracking' },
-]
-
 // ─── SOCIAL PROOF SECTION DATA ───────────────────────────────────────────────
 
 const speedMetrics = [
@@ -361,17 +290,6 @@ const speedMetrics = [
     description:
       'No layers. No ticket black holes. Get direct access to our team — and actually be heard.',
   },
-]
-
-const trustBadges = [
-  { icon: Shield, label: '30-Day Money Back', sublabel: 'No questions asked', isAustralian: false },
-  {
-    icon: CheckCircle,
-    label: 'Australian Built',
-    sublabel: 'Gold Coast-based team',
-    isAustralian: true,
-  },
-  { icon: Zap, label: 'Free Migration', sublabel: "We'll move your data", isAustralian: false },
 ]
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
@@ -929,77 +847,9 @@ export default function HomePageClient() {
       <FeatureCarousel />
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          OUTCOMES SECTION
+          WHAT CHANGES SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden bg-[#0a0a12] py-20">
-        {/* Subtle gradient */}
-        <div
-          className="pointer-events-none absolute left-0 right-0 top-0 h-32"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(136,27,169,0.05) 0%, transparent 100%)',
-          }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-5">
-          {/* Section Header */}
-          <div className="mb-12">
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
-              What Changes
-            </p>
-            <h2 className="text-4xl font-black leading-tight text-white md:text-5xl">
-              What Changes When
-              <br />
-              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
-                You Make The Switch
-              </span>
-            </h2>
-          </div>
-
-          {/* Two Column Layout */}
-          <div className="grid items-start gap-10 lg:grid-cols-2">
-            {/* Left - Benefits List */}
-            <div className="space-y-3">
-              {outcomesBenefits.map((benefit, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 border-b border-white/[0.06] pb-3 last:border-0"
-                >
-                  <div className="mt-0.5 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-green-500/20">
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">{benefit.title}</h3>
-                    <p className="mb-1 text-base font-semibold text-purple-500">{benefit.subtitle}</p>
-                    <p className="text-sm leading-snug text-white/60">{benefit.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Right - Stats Card */}
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0e0f14] p-8">
-              <div className="space-y-8">
-                {outcomesStats.map((stat, i) => (
-                  <div key={i} className="text-center">
-                    <div className="mb-3 bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-7xl font-black text-transparent md:text-8xl">
-                      {stat.value}
-                    </div>
-                    <p className="text-lg font-bold text-white/70">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA Button */}
-              <a
-                href="https://app.cloudrent.me/register"
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-purple-600 px-6 py-4 font-semibold text-white transition-all hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
-              >
-                Start Your $1 Trial →
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <WhatChangesSection variant="homepage" />
 
       {/* ═══════════════════════════════════════════════════════════════════════
           WE SHIP FAST SECTION
@@ -1052,115 +902,9 @@ export default function HomePageClient() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          TESTIMONIALS SECTION
+          TESTIMONIALS SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full py-20">
-        <div className="mx-auto max-w-6xl px-5">
-          {/* Header */}
-          <div className="mb-10 text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-sm font-medium text-green-400">
-                Real Results From Real Operators
-              </span>
-            </div>
-            <h2 className="mb-4 text-4xl font-black leading-tight text-white md:text-5xl">
-              Trusted by Hire Businesses{' '}
-              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
-                That Run Smarter
-              </span>
-            </h2>
-            <p className="mx-auto max-w-2xl text-lg text-white/70">
-              See how companies like yours are simplifying operations, reducing errors, and gaining
-              full control with CloudRent Pro.
-            </p>
-          </div>
-
-          {/* Testimonial Cards */}
-          <div className="mb-16 grid gap-5 md:grid-cols-3">
-            {testimonials.map((t, i) => (
-              <div
-                key={i}
-                className="group flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 transition-all duration-300 hover:border-purple-500/30 hover:bg-white/[0.06]"
-              >
-                {/* Stars */}
-                <div className="mb-4 flex gap-1">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-
-                {/* Headline */}
-                <h3 className="mb-3 text-lg font-bold text-white">
-                  &ldquo;{t.headline}&rdquo;
-                </h3>
-
-                {/* Quote */}
-                <p className="mb-3 text-sm leading-snug text-white/60">{t.quote}</p>
-
-                {/* Closing */}
-                <p className="mb-4 flex-grow text-sm font-medium text-purple-500">
-                  👉 {t.closing}
-                </p>
-
-                {/* Author */}
-                <div className="mt-auto flex items-center gap-4 border-t border-white/[0.08] pt-4">
-                  {t.image ? (
-                    <Image
-                      src={t.image}
-                      alt={t.author}
-                      width={56}
-                      height={56}
-                      loading="lazy"
-                      className="h-14 w-14 rounded-full border-2 border-purple-500/30 object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-purple-500/20">
-                      <span className="text-lg font-semibold text-purple-500">{t.initials}</span>
-                    </div>
-                  )}
-                  <div>
-                    <div className="text-sm font-semibold text-white">{t.author}</div>
-                    <div className="text-xs text-white/40">{t.company}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Google Reviews Carousel */}
-          <GoogleReviews />
-
-          {/* Trust Badges */}
-          <div className="mx-auto grid max-w-4xl gap-4 md:grid-cols-3">
-            {trustBadges.map((badge, i) => (
-              <div
-                key={i}
-                className={`flex items-center gap-4 rounded-xl border bg-white/[0.03] p-4 ${
-                  badge.isAustralian
-                    ? 'border-green-500/30 bg-green-500/[0.03]'
-                    : 'border-white/[0.08]'
-                }`}
-              >
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-500/15">
-                  {badge.isAustralian ? (
-                    <span className="text-2xl">🇦🇺</span>
-                  ) : (
-                    <badge.icon className="h-6 w-6 text-green-400" />
-                  )}
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                    {badge.label}
-                    {badge.isAustralian && <CheckCircle className="h-4 w-4 text-green-400" />}
-                  </div>
-                  <div className="text-xs text-white/40">{badge.sublabel}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection variant="homepage" />
 
       {/* ═══════════════════════════════════════════════════════════════════════
           LAUNCH PARTNER SECTION

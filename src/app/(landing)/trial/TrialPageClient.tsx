@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { Check, ChevronDown, ChevronRight } from 'lucide-react'
 import { HeroSection } from '@/components/HeroSection'
 import { ProblemCardsSection } from '@/components/ProblemCardsSection'
+import { WhatChangesSection } from '@/components/WhatChangesSection'
+import { TestimonialsSection } from '@/components/TestimonialsSection'
 import { PublicChatWidget } from '@/components/PublicChatWidget'
 import { FAQSchema } from '@/components/StructuredData'
 import { appendUTMParams } from '@/utilities/appendUTMParams'
@@ -166,6 +168,12 @@ export default function TrialPageClient() {
 
       {/* Problem Cards (shared component) */}
       <ProblemCardsSection />
+
+      {/* What Changes Section (shared component, trial variant) */}
+      <WhatChangesSection variant="trial" />
+
+      {/* Testimonials Section (shared component, trial variant) */}
+      <TestimonialsSection variant="trial" />
 
       {/* ═══════════════════════════════════════════════════════════════════════
           WHY $1 SECTION
