@@ -2,16 +2,16 @@ import type { Metadata } from 'next'
 import TrialPageClient from './TrialPageClient'
 
 export const metadata: Metadata = {
-  title: 'Start Your $1 Trial | CloudRent Pro — Equipment Hire Software',
+  title: 'Start your $1 trial — CloudRent Pro',
   description:
-    'Get full access to CloudRent Pro for 30 days for just $1. Bookings, dispatch, invoicing, customer portal — everything included. Cancel anytime.',
+    'Run your entire hire business from one platform. Bookings, availability, dispatch, invoicing, digital contracts and a 24/7 customer portal. Full access for 30 days.',
   alternates: {
     canonical: 'https://www.cloudrent.me/trial/',
   },
   openGraph: {
-    title: 'Start Your $1 Trial | CloudRent Pro',
+    title: 'Start your $1 trial — CloudRent Pro',
     description:
-      'Run your entire hire business from one platform. Full access for 30 days, just $1. No setup fees, cancel anytime.',
+      'Run your entire hire business from one platform. Full access for 30 days, just $1. Cancel anytime.',
     url: 'https://www.cloudrent.me/trial/',
     type: 'website',
   },

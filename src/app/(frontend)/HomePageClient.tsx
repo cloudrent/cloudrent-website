@@ -5,16 +5,8 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  Play,
-  CheckCircle,
   ChevronRight,
   X,
-  CalendarX2,
-  PhoneCall,
-  Flame,
-  Receipt,
-  ClipboardList,
-  EyeOff,
   AlertTriangle,
   Monitor,
   Smartphone,
@@ -43,7 +35,7 @@ import {
   Eye,
   FileSignature,
   RefreshCw,
-  Gauge,
+  CheckCircle,
   PartyPopper,
   Wrench,
   Droplet,
@@ -51,7 +43,8 @@ import {
 } from 'lucide-react'
 import { ScorecardModal } from '@/components/Scorecard/ScorecardModal'
 import { GoogleReviews } from '@/components/GoogleReviews'
-import { LogoMarquee } from '@/components/LogoMarquee'
+import { HeroSection } from '@/components/HeroSection'
+import { ProblemCardsSection } from '@/components/ProblemCardsSection'
 
 // Dynamically import the carousel to reduce initial bundle size
 const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
@@ -159,96 +152,6 @@ function VideoModal({
     </div>
   )
 }
-
-// ─── FLOATING FLYOUT CARDS ────────────────────────────────────────────────────
-
-function FlyoutCard({
-  className,
-  children,
-  animationDelay = 0,
-  visible = true,
-  fadeInDelay = 0,
-}: {
-  className?: string
-  children: React.ReactNode
-  animationDelay?: number
-  visible?: boolean
-  fadeInDelay?: number
-}) {
-  return (
-    <div
-      className={`
-        absolute z-50 min-w-[200px] max-w-[220px] rounded-2xl
-        border border-purple-500/40 bg-[#0e0f14]/95
-        p-4 backdrop-blur-xl
-        shadow-[0_0_30px_rgba(136,27,169,0.2),0_20px_50px_rgba(0,0,0,0.5)]
-        transition-opacity duration-1000 ease-out
-        ${visible ? 'opacity-100' : 'pointer-events-none opacity-0'}
-        ${className}
-      `}
-      style={{
-        animation: visible ? `float 4s ease-in-out infinite` : 'none',
-        animationDelay: `${animationDelay}s`,
-        transitionDelay: `${fadeInDelay}s`,
-      }}
-    >
-      <div
-        className="pointer-events-none absolute inset-0 rounded-2xl opacity-50"
-        style={{
-          background: 'linear-gradient(135deg, rgba(136,27,169,0.1) 0%, transparent 50%)',
-        }}
-      />
-      <div className="relative z-10">{children}</div>
-    </div>
-  )
-}
-
-// ─── PROBLEM CARDS DATA ───────────────────────────────────────────────────────
-
-const problemCards = [
-  {
-    icon: CalendarX2,
-    title: 'Double Bookings',
-    subtitle: 'Double bookings that cost you revenue — and credibility',
-    description:
-      "The same piece of equipment gets promised twice. Now you're scrambling, calling customers back, refunding jobs, and damaging trust.",
-  },
-  {
-    icon: PhoneCall,
-    title: 'Constant Phone Calls',
-    subtitle: "Your phone never stops — and nothing gets done",
-    description:
-      "Staff call for updates. Customers chase availability. You're stuck answering questions all day instead of actually running the business.",
-  },
-  {
-    icon: Flame,
-    title: 'Dispatch Chaos',
-    subtitle: 'Every day starts in chaos — and only gets worse',
-    description:
-      'Whiteboards, last-minute changes, missing details. Drivers leave without the right info — and jobs go wrong before they even begin.',
-  },
-  {
-    icon: Receipt,
-    title: 'Delayed Invoices',
-    subtitle: "You've done the work — but you're still not getting paid",
-    description:
-      'Jobs are complete, but invoices sit in a pile. Days pass. Cash flow slows. Revenue delayed is growth delayed.',
-  },
-  {
-    icon: ClipboardList,
-    title: 'Scattered Safety Records',
-    subtitle: 'When something goes wrong — you have nothing to prove',
-    description:
-      "Safety docs are everywhere: emails, paper, notebooks. When an incident happens, you're scrambling to piece it together.",
-  },
-  {
-    icon: EyeOff,
-    title: 'No Business Visibility',
-    subtitle: "You're running your business blind",
-    description:
-      "You don't know where equipment is, which jobs are late, or who hasn't paid. Problems surface too late.",
-  },
-]
 
 // ─── PLATFORM FEATURES DATA ───────────────────────────────────────────────────
 
@@ -475,26 +378,11 @@ const trustBadges = [
 
 export default function HomePageClient() {
   const { days, hours, minutes, seconds, expired } = useCountdown()
-  const [showFlyouts, setShowFlyouts] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showScorecard, setShowScorecard] = useState(false)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowFlyouts(true), 3000)
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
     <div className="min-h-screen">
-      {/* CSS for animations */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-8px); }
-        }
-      `}</style>
-
-
       {/* ═══════════════════════════════════════════════════════════════════════
           COUNTDOWN BANNER
       ═══════════════════════════════════════════════════════════════════════ */}
@@ -524,287 +412,14 @@ export default function HomePageClient() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          HERO SECTION
+          HERO SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden pb-8 pt-12">
-        {/* Ambient glow */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 h-[700px] w-[1200px] -translate-x-1/2"
-          style={{
-            background: 'radial-gradient(ellipse at 50% 20%, rgba(136,27,169,0.15) 0%, transparent 60%)',
-          }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-7xl px-5">
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* Left Column - Headlines */}
-            <div className="text-left">
-              <h1 className="mb-6 text-4xl font-black leading-[0.95] tracking-tight text-white md:text-5xl lg:text-6xl">
-                Still Juggling Multiple Systems?{' '}
-                <span className="block bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
-                  Run Your Entire Hire Business in One Platform — Not Five.
-                </span>
-              </h1>
-
-              <p className="mb-6 max-w-lg text-lg leading-relaxed text-white/70">
-                Bookings, dispatch, invoicing and safety — all in one system built for hire & rental
-                businesses. No more missed jobs. No more double handling. No more chaos.
-              </p>
-
-              {/* Bridge line */}
-              <p className="mb-7 text-base text-white/70">
-                <span className="font-medium text-white">
-                  Curious how much multiple systems are costing you?
-                </span>{' '}
-                <button
-                  onClick={() => setShowScorecard(true)}
-                  className="text-purple-300 underline decoration-purple-300/35 underline-offset-[3px] transition-colors hover:text-purple-200 hover:decoration-purple-200/70"
-                >
-                  Find out in 2 minutes →
-                </button>
-              </p>
-
-              {/* CTAs */}
-              <div className="mb-8 flex flex-wrap gap-3">
-                <a
-                  href="https://app.cloudrent.me/register"
-                  className="group relative flex items-center gap-3 overflow-hidden rounded-xl bg-purple-600 px-7 py-4 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(136,27,169,0.45)]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                  <div className="relative z-10 flex flex-col items-start">
-                    <span className="text-[15px] font-bold">Start Your $1 Trial</span>
-                    <span className="text-[11px] font-normal text-white/55">
-                      Full access · No setup · Cancel anytime
-                    </span>
-                  </div>
-                  <ChevronRight className="relative z-10 h-4 w-4 flex-shrink-0 transition-transform group-hover:translate-x-0.5" />
-                </a>
-
-                <button
-                  onClick={() => setShowScorecard(true)}
-                  className="flex items-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 px-5 py-4 text-sm font-medium text-purple-300 transition-all hover:border-purple-500/50 hover:bg-purple-500/20 hover:text-purple-200"
-                >
-                  <Gauge className="h-4 w-4" />
-                  Take the Scorecard
-                </button>
-              </div>
-
-              {/* Trust chips */}
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/35">
-                {['Full access', 'No setup', 'Cancel anytime'].map((chip, i) => (
-                  <div key={i} className="flex items-center gap-1.5">
-                    <CheckCircle className="h-3 w-3 text-green-500/70" />
-                    {chip}
-                  </div>
-                ))}
-              </div>
-
-              {/* Tertiary demo link */}
-              <Link
-                href="/videos"
-                className="mt-4 inline-flex items-center gap-1.5 text-xs text-white/40 transition-colors hover:text-white/60"
-              >
-                <Play className="h-3 w-3" />
-                Or watch the 2-minute demo
-              </Link>
-            </div>
-
-            {/* Right Column - Dashboard + Flyouts */}
-            <div className="relative overflow-visible lg:pl-4">
-              <div className="relative lg:my-10 lg:origin-center lg:scale-[1.15]">
-                {/* Dashboard glow */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-60"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at center, rgba(136,27,169,0.2) 0%, transparent 70%)',
-                    transform: 'scale(1.1)',
-                    filter: 'blur(40px)',
-                  }}
-                />
-
-                {/* Dashboard Image */}
-                <Image
-                  src="/images/cloudrent-pro-dashboard-imacs-dark.webp"
-                  alt="CloudRent Pro Dashboard"
-                  width={2503}
-                  height={1906}
-                  priority
-                  className="relative z-10 w-full rounded-xl shadow-2xl shadow-black/50"
-                />
-
-                {/* Flyout: Today's Revenue */}
-                <FlyoutCard
-                  className="left-[0%] -top-[5%] hidden lg:-left-[8%] lg:block"
-                  animationDelay={0}
-                  visible={showFlyouts}
-                  fadeInDelay={0}
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-500/20">
-                      <span className="text-sm">💰</span>
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      Today&apos;s Revenue
-                    </span>
-                  </div>
-                  <div className="text-3xl font-black text-white">$1,550</div>
-                  <div className="mb-2 text-xs text-white/40">Across 7 active rentals</div>
-                  <div className="inline-flex items-center gap-1 rounded-full bg-green-500/15 px-2 py-1 text-[10px] font-bold text-green-400">
-                    ↑ 18% vs last week
-                  </div>
-                </FlyoutCard>
-
-                {/* Flyout: Maintenance Alert */}
-                <FlyoutCard
-                  className="-bottom-[6%] left-[6%] hidden lg:left-[0%] lg:block"
-                  animationDelay={0.8}
-                  visible={showFlyouts}
-                  fadeInDelay={0.3}
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/20">
-                      <span className="text-sm">🔧</span>
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      Maintenance Alert
-                    </span>
-                  </div>
-                  <div className="mb-0.5 text-sm font-bold text-white">Service Due in 3 Days</div>
-                  <div className="mb-2 text-xs text-white/40">20T Excavator · 250 hrs</div>
-                  <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-1 text-[10px] font-bold text-amber-400">
-                    ⚠ Schedule now
-                  </div>
-                </FlyoutCard>
-
-                {/* Flyout: AI Damage Detection */}
-                <FlyoutCard
-                  className="-right-[5%] -top-[16%] hidden lg:-right-[12%] lg:block"
-                  animationDelay={0.4}
-                  visible={showFlyouts}
-                  fadeInDelay={0.6}
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/20">
-                      <span className="text-sm">🔍</span>
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      AI Damage Detection
-                    </span>
-                  </div>
-                  <div className="mb-1 text-sm font-bold text-white">Scratch · Right Side Panel</div>
-                  <div className="mb-1 text-xs text-white/40">
-                    Est. repair: <span className="text-white/70">$50</span>
-                  </div>
-                  <div className="mb-2 flex items-center justify-between text-xs">
-                    <span className="text-white/40">AI Confidence</span>
-                    <span className="font-bold text-purple-400">92%</span>
-                  </div>
-                  <div className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 px-2 py-1 text-[10px] font-bold text-amber-400">
-                    MODERATE severity
-                  </div>
-                </FlyoutCard>
-
-                {/* Flyout: Safety Compliance */}
-                <FlyoutCard
-                  className="-bottom-[2%] -right-[3%] hidden lg:-right-[10%] lg:block"
-                  animationDelay={1.2}
-                  visible={showFlyouts}
-                  fadeInDelay={0.9}
-                >
-                  <div className="mb-2 flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500/20">
-                      <span className="text-sm">🛡️</span>
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-white/70">
-                      Safety Compliance
-                    </span>
-                  </div>
-                  <div className="text-3xl font-black text-white">100%</div>
-                  <div className="mb-2 text-xs text-white/40">SWMS signed · 5 active jobs</div>
-                  <div className="inline-flex items-center gap-1 rounded-full bg-green-500/15 px-2 py-1 text-[10px] font-bold text-green-400">
-                    ✓ Audit ready
-                  </div>
-                </FlyoutCard>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Logo Strip */}
-        <div className="relative z-10 mt-12 border-t border-white/[0.05] bg-black/20 py-8">
-          <div className="mx-auto max-w-7xl">
-            <LogoMarquee />
-
-            {/* Integrations */}
-            <div className="mx-auto mt-8 max-w-7xl border-t border-white/[0.05] px-5 pt-6">
-              <p className="mb-4 text-center text-sm text-white/40">Integrates with</p>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="/images/logos/xero-quickbooks-MYOB.png"
-                  alt="Xero, QuickBooks, MYOB integrations"
-                  width={740}
-                  height={179}
-                  loading="lazy"
-                  className="h-12 w-auto object-contain opacity-70 transition-opacity hover:opacity-100"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection variant="homepage" onScorecardClick={() => setShowScorecard(true)} />
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          PROBLEM SECTION
+          PROBLEM SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full overflow-hidden py-20">
-        <div
-          className="pointer-events-none absolute left-0 right-0 top-0 h-32"
-          style={{
-            background: 'linear-gradient(to bottom, rgba(136,27,169,0.05) 0%, transparent 100%)',
-          }}
-        />
-
-        <div className="relative z-10 mx-auto max-w-6xl px-5">
-          <div className="mb-12 text-center">
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">
-              The Reality
-            </p>
-            <h2 className="text-4xl font-black leading-tight text-white md:text-5xl">
-              Running a hire business
-              <br />
-              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
-                shouldn&apos;t feel like this
-              </span>
-            </h2>
-          </div>
-
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {problemCards.map((card, i) => (
-              <div
-                key={i}
-                className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-purple-500/40"
-              >
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at 50% 0%, rgba(136,27,169,0.15) 0%, transparent 70%)',
-                  }}
-                />
-                <div className="relative z-10">
-                  <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-purple-500/15">
-                    <card.icon className="h-8 w-8 text-purple-500" />
-                  </div>
-                  <h3 className="mb-1 text-lg font-extrabold uppercase text-white">{card.title}</h3>
-                  <p className="mb-2 text-sm font-bold leading-snug text-white/80">{card.subtitle}</p>
-                  <p className="text-sm leading-snug text-white/60">{card.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ProblemCardsSection />
 
       {/* ═══════════════════════════════════════════════════════════════════════
           AGITATION SECTION - WARNING BOX
