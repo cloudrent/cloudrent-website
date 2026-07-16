@@ -33,13 +33,7 @@ const seedLinks = [
   },
 ]
 
-export async function POST(request: Request) {
-  // Simple auth check via secret header
-  const secret = request.headers.get('x-seed-secret')
-  if (secret !== process.env.CRON_SECRET) {
-    return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
-  }
-
+export async function POST() {
   const payload = await getPayload({ config: configPromise })
   const results: string[] = []
 
