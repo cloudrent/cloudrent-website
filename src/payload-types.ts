@@ -77,6 +77,7 @@ export interface Config {
     'scorecard-leads': ScorecardLead;
     'ai-visibility-leads': AiVisibilityLead;
     'roadmap-items': RoadmapItem;
+    'quick-links': QuickLink;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -104,6 +105,7 @@ export interface Config {
     'scorecard-leads': ScorecardLeadsSelect<false> | ScorecardLeadsSelect<true>;
     'ai-visibility-leads': AiVisibilityLeadsSelect<false> | AiVisibilityLeadsSelect<true>;
     'roadmap-items': RoadmapItemsSelect<false> | RoadmapItemsSelect<true>;
+    'quick-links': QuickLinksSelect<false> | QuickLinksSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -1129,6 +1131,53 @@ export interface RoadmapItem {
   createdAt: string;
 }
 /**
+ * Links displayed on links.cloudrent.me
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quick-links".
+ */
+export interface QuickLink {
+  id: number;
+  /**
+   * Button text, sentence case
+   */
+  label: string;
+  /**
+   * Optional small supporting line under the label
+   */
+  subline?: string | null;
+  /**
+   * Destination URL (must be absolute HTTPS)
+   */
+  url: string;
+  /**
+   * URL path for /go/[slug] redirect. Auto-generated from label if blank.
+   */
+  slug: string;
+  /**
+   * Lower numbers appear first
+   */
+  sortOrder: number;
+  /**
+   * Uncheck to hide this link without deleting it
+   */
+  enabled?: boolean | null;
+  /**
+   * Optional: link becomes visible after this date
+   */
+  visibleFrom?: string | null;
+  /**
+   * Optional: link is hidden after this date
+   */
+  visibleUntil?: string | null;
+  /**
+   * Total clicks via /go/[slug] redirect
+   */
+  clicks?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -1357,6 +1406,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'roadmap-items';
         value: number | RoadmapItem;
+      } | null)
+    | ({
+        relationTo: 'quick-links';
+        value: number | QuickLink;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1925,6 +1978,23 @@ export interface RoadmapItemsSelect<T extends boolean = true> {
   quarter?: T;
   learnMoreUrl?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "quick-links_select".
+ */
+export interface QuickLinksSelect<T extends boolean = true> {
+  label?: T;
+  subline?: T;
+  url?: T;
+  slug?: T;
+  sortOrder?: T;
+  enabled?: T;
+  visibleFrom?: T;
+  visibleUntil?: T;
+  clicks?: T;
   updatedAt?: T;
   createdAt?: T;
 }

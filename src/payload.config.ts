@@ -11,6 +11,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { ScorecardLeads } from './collections/ScorecardLeads'
 import { AIVisibilityLeads } from './collections/AIVisibilityLeads'
+import { QuickLinks } from './collections/QuickLinks'
 import { RoadmapItems } from './collections/RoadmapItems'
 import { Users } from './collections/Users'
 import { Videos } from './collections/Videos'
@@ -87,7 +88,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Videos, Bookings, ScorecardLeads, AIVisibilityLeads, RoadmapItems],
+  collections: [Pages, Posts, Media, Categories, Users, Videos, Bookings, ScorecardLeads, AIVisibilityLeads, RoadmapItems, QuickLinks],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, BookingSettings],
   plugins,
