@@ -1,0 +1,21 @@
+{
+  "name": "CloudRent",
+  "short_name": "CloudRent",
+  "description": "Quick links to CloudRent Pro resources",
+  "start_url": "/links",
+  "display": "standalone",
+  "theme_color": "#881ba9",
+  "background_color": "#0a0a1a",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
