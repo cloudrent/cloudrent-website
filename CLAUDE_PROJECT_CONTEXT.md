@@ -411,6 +411,50 @@ pnpm build        # Build Next.js + Payload
 pnpm postbuild    # Generate sitemap
 pnpm start        # Production server
 pnpm lint         # ESLint check
+pnpm db:migrate   # Run Payload migrations (manual)
+```
+
+---
+
+## Vercel Deployment & Migrations
+
+**CRITICAL: Never add automatic migrations to builds.**
+
+Payload CMS migrations are run **manually** via `pnpm db:migrate`, not automatically during builds.
+
+### Why No Automatic Migrations
+
+Adding `payload migrate` to `prebuild` causes 15-17 minute build times because Payload must fully bootstrap (load all collections, plugins, compile TypeScript) even when no migrations are pending.
+
+```json
+// ❌ NEVER DO THIS - adds 15+ minutes to every deploy
+"prebuild": "payload migrate"
+
+// ✅ CORRECT - migrations run manually when needed
+"db:migrate": "payload migrate"
+```
+
+### When to Run Migrations
+
+Run `pnpm db:migrate` **only** when:
+1. You've added a new collection
+2. You've modified collection fields
+3. You've created a new migration file
+
+### Migration Workflow
+
+```bash
+# 1. Make schema changes to collections
+# 2. Generate migration
+pnpm payload migrate:create
+
+# 3. Review generated migration in src/migrations/
+# 4. Run migration locally
+pnpm db:migrate
+
+# 5. Commit and deploy - build will be fast (~1-2 min)
+git add . && git commit -m "feat: Add new collection"
+git push
 ```
 
 ---
