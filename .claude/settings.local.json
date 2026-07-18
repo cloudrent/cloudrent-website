@@ -123,7 +123,26 @@
       "Bash(do echo \"=== $page ===\" grep \"<h1\" /Users/cloudrentimac/projects/cloudrent/cloudrent-website/src/app/\\\\\\(frontend\\\\\\)/$page/*.tsx)",
       "Bash(open:*)",
       "Bash(chmod:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr view:*)",
+      "WebFetch(domain:cloudrent-website-git-feature-trial-landing-p-49ffa1-cloud-rent.vercel.app)",
+      "Bash(npx playwright:*)",
+      "Bash(xargs:*)",
+      "Bash(npx lighthouse:*)",
+      "Bash(identify:*)",
+      "Bash(gh run list:*)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website log --oneline -20)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website show c454c3a --stat)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website show b77db1d --stat)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website show beac27b --stat)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website show 8db6f7c --stat)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website diff c454c3a~1 c454c3a -- src/payload.config.ts)",
+      "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website log --oneline c454c3a..HEAD)",
+      "Bash(kill:*)",
+      "Bash(file:*)"
     ]
   }
 }

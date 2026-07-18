@@ -4,7 +4,7 @@ import React from 'react'
 
 import { getServerSideURL } from '@/utilities/getURL'
 
-import '../globals.css'
+import '@/app/(frontend)/globals.css'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],

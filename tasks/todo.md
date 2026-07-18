@@ -3,8 +3,8 @@
 ## Phase 1: QuickLinks collection
 - [x] Create QuickLinks collection with all required fields
 - [x] Add to payload.config.ts
-- [ ] Run migrations / regenerate types
-- [ ] Seed the four launch links
+- [x] Run migrations / regenerate types
+- [x] Seed the four launch links (via migration)
 - [ ] Verify collection visible in Payload admin on live deployment
 
 ## Phase 2: Public links page
