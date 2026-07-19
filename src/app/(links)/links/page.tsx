@@ -80,13 +80,13 @@ export default async function LinksPage() {
       <main className="relative z-10 min-h-screen flex justify-center">
         <div className="w-full max-w-[380px] px-6 pt-12 pb-10 flex flex-col items-center">
           {/* Logo */}
-          <div className="w-[88px] h-[88px] mb-5 flex items-center justify-center">
+          <div className="w-[100px] h-[100px] mb-5 flex items-center justify-center">
             <Image
-              src="/android-chrome-192x192.png"
+              src="/links/cloudrent-logo.png"
               alt="CloudRent"
-              width={88}
-              height={88}
-              className="w-[88px] h-[88px]"
+              width={100}
+              height={100}
+              className="w-[100px] h-[100px]"
               priority
             />
           </div>
@@ -129,11 +129,11 @@ export default async function LinksPage() {
           {/* Add to home screen hint */}
           <div className="mt-9 w-full bg-[#12122a] border border-[rgba(255,255,255,0.06)] rounded-[14px] px-[18px] py-4 flex gap-3.5 items-center">
             <Image
-              src="/android-chrome-192x192.png"
+              src="/links/cloudrent-logo.png"
               alt=""
-              width={34}
-              height={34}
-              className="w-[34px] h-[34px] flex-none"
+              width={40}
+              height={40}
+              className="w-[40px] h-[40px] flex-none"
               aria-hidden="true"
             />
             <p className="text-[13px] leading-relaxed text-[#9ca3af]">
