@@ -80,7 +80,7 @@ export default async function LinksPage() {
       <main className="relative z-10 min-h-screen flex justify-center">
         <div className="w-full max-w-[380px] px-6 pt-12 pb-10 flex flex-col items-center">
           {/* Logo */}
-          <div className="w-[100px] h-[100px] mb-5 flex items-center justify-center">
+          <div className="w-[100px] h-[100px] mb-2 flex items-center justify-center">
             <Image
               src="/links/cloudrent-logo.png"
               alt="CloudRent"
