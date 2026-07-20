@@ -36,12 +36,6 @@ const leadership = [
     bio: "With 18 years dedicated to developing software for the hire and rental industry, Ron's vision has driven CloudRent from a simple booking tool to a comprehensive cloud-based rental management platform. His hands-on development approach—personally writing code and building features—has resulted in over 300 licenses sold globally. Ron's deep understanding of the industry, forged through partnerships with leading rental companies worldwide, ensures CloudRent Pro solves real challenges that hire businesses face every day.",
   },
   {
-    name: 'Garth Kerr',
-    role: 'Chief Operations Officer',
-    image: '/images/Garth-Kerr-COO.png',
-    bio: "A lawyer and seasoned executive with over 25 years' experience as General Counsel and business leader for global publicly listed technology companies, including TechnologyOne Ltd, CSG Systems International Inc, and Intec Telecom Systems PLC. Garth brings extensive experience in customer engagement, negotiating and securing new business, leading global teams, and managing risk while supporting sustainable growth.",
-  },
-  {
     name: 'Sam Girgis',
     role: 'Global Sales Manager',
     image: '/images/Sam_Girgis-Global-Sales-Manager.png',
