@@ -220,7 +220,7 @@ export default function AboutPage() {
             <h2 className="mb-4 text-3xl font-bold">Leadership Team</h2>
             <p className="text-gray-400">The people driving CloudRent&apos;s vision forward</p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
             {leadership.map((person, i) => (
               <div
                 key={i}
