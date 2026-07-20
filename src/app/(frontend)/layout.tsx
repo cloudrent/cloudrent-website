@@ -63,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           )}
           <RevenueLeakPopup />
           <AIVisibilityPopup />
-          <EyebrowBanner excludedPaths={['/ai-check', '/scorecard', '/try', '/try-us']} />
+          {/* Removed: EyebrowBanner - per conversion audit recommendation (makes site feel campaign-led rather than product-led) */}
           <Header />
           {children}
           <Footer />
