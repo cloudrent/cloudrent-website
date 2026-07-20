@@ -120,7 +120,7 @@ export default function ContactPageClient() {
                     <div>
                       <p className="font-medium text-white">Email</p>
                       <a
-                        href="mailto:hello@cloudrent.me"
+                        href="mailto:sales@cloudrent.me"
                         className="text-purple-300 transition-colors hover:text-purple-200"
                       >
                         sales@cloudrent.me
@@ -135,7 +135,7 @@ export default function ContactPageClient() {
                     <div>
                       <p className="font-medium text-white">Phone</p>
                       <a
-                        href="tel:1300123456"
+                        href="tel:+61731712948"
                         className="text-purple-300 transition-colors hover:text-purple-200"
                       >
                         +61 7 3171 2948

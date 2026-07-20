@@ -793,7 +793,7 @@ const CTASection: React.FC<{ variant?: 'primary' | 'inline' }> = ({ variant = 'p
           </Link>
         </div>
         <p className="mt-6 text-sm text-purple-300/60">
-          Just $1 to start • Free migration from spreadsheets • Cancel anytime
+          Just $1 to start • Migration assistance included • Cancel anytime
         </p>
       </div>
     </section>

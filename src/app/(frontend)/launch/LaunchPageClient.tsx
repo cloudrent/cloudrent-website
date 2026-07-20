@@ -214,7 +214,7 @@ export default function LaunchPageClient() {
           {/* Everything Included */}
           <div className="mt-8 text-center">
             <p className="mb-4 text-sm text-gray-400">
-              Everything included* — no add-ons, no surprises
+              All Business features included — optional add-ons available
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {includedFeatures.map((feature) => (

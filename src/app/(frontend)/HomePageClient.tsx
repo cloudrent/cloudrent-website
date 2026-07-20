@@ -1043,7 +1043,7 @@ export default function HomePageClient() {
               {/* Value Reinforcement */}
               <div className="mb-10 rounded-xl border border-white/[0.1] bg-black/30 p-5 text-center">
                 <p className="mb-4 font-medium text-white">
-                  Everything included* — no add-ons, no surprises
+                  Core features included — optional add-ons available
                 </p>
                 <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
                   <span className="rounded-full border border-purple-500/30 bg-purple-500/20 px-3 py-1.5 text-xs font-medium text-purple-300">

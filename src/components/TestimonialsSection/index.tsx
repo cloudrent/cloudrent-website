@@ -48,7 +48,7 @@ const trustBadgesHomepage = [
     sublabel: 'Gold Coast-based team',
     isAustralian: true,
   },
-  { icon: Zap, label: 'Free Migration', sublabel: "We'll move your data", isAustralian: false },
+  { icon: Zap, label: 'Migration Assistance', sublabel: "We'll help move your data", isAustralian: false },
 ]
 
 // Trust badges for trial (no "30-Day Money Back", reworded migration)
