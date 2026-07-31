@@ -3,6 +3,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
 import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -10,6 +11,11 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { getBuilderContent } from '@/lib/builder'
+import { RenderBuilderContent } from '@/components/builder/RenderBuilderContent'
+
+// Slugs handled by other route groups - these should not be matched by this dynamic route
+const EXCLUDED_SLUGS = ['dollar-offer']
 
 export async function generateStaticParams() {
   try {
@@ -26,7 +32,7 @@ export async function generateStaticParams() {
     })
 
     return pages.docs
-      ?.filter((doc) => doc.slug !== 'home')
+      ?.filter((doc) => doc.slug !== 'home' && !EXCLUDED_SLUGS.includes(doc.slug))
       .map(({ slug }) => ({ slug }))
   } catch (error) {
     // Database may not be available during build - pages will be generated on-demand
@@ -45,8 +51,28 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
+
+  // Skip slugs handled by other route groups (e.g., standalone pages)
+  if (EXCLUDED_SLUGS.includes(decodedSlug)) {
+    notFound()
+  }
+
   const url = '/' + decodedSlug
 
+  // 1. Check Builder.io first for marketing/landing pages
+  const builderContent = await getBuilderContent('page', url, {
+    options: { includeUnpublished: draft },
+  })
+
+  if (builderContent) {
+    return (
+      <article className="flex-1">
+        <RenderBuilderContent content={builderContent} />
+      </article>
+    )
+  }
+
+  // 2. Fall back to Payload CMS
   let page: RequiredDataFromCollectionSlug<'pages'> | null
   page = await queryPageBySlug({
     slug: decodedSlug,
@@ -77,6 +103,28 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { slug = 'home' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
+
+  // Skip slugs handled by other route groups
+  if (EXCLUDED_SLUGS.includes(decodedSlug)) {
+    return {}
+  }
+
+  const url = '/' + decodedSlug
+
+  // Check Builder.io for SEO metadata first
+  const builderContent = await getBuilderContent('page', url)
+
+  if (builderContent?.data) {
+    const { title, description } = builderContent.data
+    if (title || description) {
+      return {
+        title: title || undefined,
+        description: description || undefined,
+      }
+    }
+  }
+
+  // Fall back to Payload
   const page = await queryPageBySlug({
     slug: decodedSlug,
   })

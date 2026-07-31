@@ -94,7 +94,7 @@ const advisors = [
   },
   {
     name: "Matt Giles",
-    company: "Event Services International",
+    company: "event services international",
     tag: "Industry advisor — events and traffic management",
     bio: "Matt's expertise across events and traffic management has helped inform CloudRent's approach to logistics, scheduling, and the coordination demands of large-scale temporary deployments.",
     gender: "male" as const,
