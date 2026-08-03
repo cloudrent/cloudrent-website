@@ -9,9 +9,10 @@ interface LightboxImageProps {
   alt: string
   className?: string
   priority?: boolean
+  fullSrc?: string // Optional different image to show in lightbox
 }
 
-export function LightboxImage({ src, alt, className, priority = false }: LightboxImageProps) {
+export function LightboxImage({ src, alt, className, priority = false, fullSrc }: LightboxImageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleClose = useCallback(() => {
@@ -63,7 +64,7 @@ export function LightboxImage({ src, alt, className, priority = false }: Lightbo
 
           {/* Image */}
           <img
-            src={src}
+            src={fullSrc || src}
             alt={alt}
             className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain shadow-2xl"
             onClick={(e) => e.stopPropagation()}

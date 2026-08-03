@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { Users, Zap, Shield, Heart, Target, Award, ArrowRight, User, UserRound, Sparkles } from 'lucide-react'
+import { Users, Zap, Shield, Heart, Target, Award, ArrowRight, User, UserRound } from 'lucide-react'
 import Link from 'next/link'
 import { LightboxImage } from '@/components/Lightbox'
 import { BreadcrumbSchema } from '@/components/StructuredData'
@@ -10,7 +10,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 export const metadata: Metadata = {
   title: 'About Us | Australian Equipment Rental Software Company – CloudRent',
   description:
-    '100% Australian-owned rental software company. 18+ years in hire industry, 300+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
+    '100% Australian-owned rental software company. 18+ years in hire industry, 1,000+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
   keywords: [
     'Australian rental software',
     'equipment rental software company',
@@ -23,25 +23,10 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph({
     title: 'About Us | Australian Equipment Rental Software Company – CloudRent',
     description:
-      '100% Australian-owned rental software company. 18+ years in hire industry, 300+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
+      '100% Australian-owned rental software company. 18+ years in hire industry, 1,000+ global licenses. Meet the Gold Coast team building CloudRent Pro.',
     url: '/about/',
   }),
 }
-
-const leadership = [
-  {
-    name: 'Ron Neville',
-    role: 'Founder & Chief Executive Officer',
-    image: '/images/Ron-Neville-CEO.png',
-    bio: "With 18 years dedicated to developing software for the hire and rental industry, Ron's vision has driven CloudRent from a simple booking tool to a comprehensive cloud-based rental management platform. His hands-on development approach—personally writing code and building features—has resulted in over 300 licenses sold globally. Ron's deep understanding of the industry, forged through partnerships with leading rental companies worldwide, ensures CloudRent Pro solves real challenges that hire businesses face every day.",
-  },
-  {
-    name: 'Sam Girgis',
-    role: 'Global Sales Manager',
-    image: '/images/Sam_Girgis-Global-Sales-Manager.png',
-    bio: "With 25+ years of senior sales and marketing experience in the Australian IT industry across multinational technology vendors and distributors, Sam is passionate about emerging technologies and how they reshape the world. His proven track record in creating markets for technology products and solutions drives CloudRent's global expansion.",
-  },
-]
 
 const values = [
   {
@@ -72,7 +57,7 @@ const values = [
 
 const stats = [
   { value: '18+', label: 'Years in hire & rental software' },
-  { value: '300+', label: 'Licenses sold globally' },
+  { value: '1,000+', label: 'Licenses sold globally' },
   { value: '100,000+', label: 'Rentals processed' },
   { value: '99.9%', label: 'Platform uptime' },
 ]
@@ -81,49 +66,49 @@ const advisors = [
   {
     name: "David Duncalfe",
     company: "Excel Events",
-    tag: "Industry advisor — events and government technology",
+    tag: "Industry advisor - events and government technology",
     bio: "David brings deep experience in large-scale event management and has guided CloudRent's thinking on government service integrations, including communications infrastructure and development site mapping capabilities.",
     gender: "male" as const,
   },
   {
     name: "Theo Tsorvas",
     company: "Consolidated Group",
-    tag: "Industry advisor — civil and mining",
+    tag: "Industry advisor - civil and mining",
     bio: "Theo leads a 100-strong civil and mining operation working with majors including BHP and Rio Tinto. His input has shaped CloudRent's asset tracking and operational workflows for high-volume industrial hire.",
     gender: "male" as const,
   },
   {
     name: "Matt Giles",
     company: "event services international",
-    tag: "Industry advisor — events and traffic management",
+    tag: "Industry advisor - events and traffic management",
     bio: "Matt's expertise across events and traffic management has helped inform CloudRent's approach to logistics, scheduling, and the coordination demands of large-scale temporary deployments.",
     gender: "male" as const,
   },
   {
     name: "Aidan Corbley",
     company: "Corbley Event Hire",
-    tag: "Industry advisor — party and events hire",
+    tag: "Industry advisor - party and events hire",
     bio: "Aidan's hands-on experience running a party and events hire business has contributed directly to CloudRent Pro's booking, inventory, and customer management workflows.",
     gender: "male" as const,
   },
   {
     name: "Keshia Dorrington",
     company: "All Fence U Rent",
-    tag: "Industry advisor — temporary fencing",
+    tag: "Industry advisor - temporary fencing",
     bio: "Keshia operates one of Perth's largest temporary fencing companies and has been instrumental in developing CloudRent's functionality for managing high-volume temporary fencing operations at scale.",
     gender: "female" as const,
   },
   {
     name: "Cameron Drake",
     company: "Hire Rite Temp Fencing",
-    tag: "Industry advisor — temporary fencing",
+    tag: "Industry advisor - temporary fencing",
     bio: "Cameron's experience in the temporary fencing sector has added further depth to CloudRent's fencing-specific workflows, ensuring the platform handles the real operational demands of the industry.",
     gender: "male" as const,
   },
   {
     name: "Dave Hasson",
     company: "Western Safety Consulting",
-    tag: "Strategic partner — North America",
+    tag: "Strategic partner - North America",
     bio: "Dave brings extensive expertise in workplace health and safety across the North American market and is a key partner in CloudRent's expansion into the EHS and safety management sector.",
     gender: "male" as const,
   },
@@ -161,10 +146,10 @@ export default function AboutPage() {
               Built in Australia, for Australia
             </div>
             <h1 className="mb-6 text-4xl font-bold md:text-5xl lg:text-6xl">
-              The rental software your
+              Built by hire,
               <br />
               <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-                business deserves
+                for hire
               </span>
             </h1>
             <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-300">
@@ -175,70 +160,72 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Our Story Section */}
-        <section className="mx-auto max-w-6xl px-4 pb-16">
+        {/* Our Story & Leadership */}
+        <section className="mx-auto max-w-6xl px-4 pb-20">
           <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-8 md:p-12">
-            <h2 className="mb-8 text-2xl font-bold">Our Story</h2>
             <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
-              {/* Image */}
-              <div className="flex justify-center lg:w-1/3">
-                <div className="relative">
-                  <LightboxImage
-                    src="/images/ron-neville-founder-ceo-cloudrent.webp"
-                    alt="Ron Neville - Founder & CEO of CloudRent, with guitar"
-                    className="w-80 rounded-2xl md:w-[22rem]"
-                  />
-                </div>
+              {/* Left: Ron's Photo + Magazine stacked */}
+              <div className="lg:w-1/2 flex flex-col items-center gap-6">
+                <LightboxImage
+                  src="/images/ron-neville-founder-ceo-cloudrent.webp"
+                  alt="Ron Neville - Founder & CEO of CloudRent"
+                  className="w-72 md:w-80 rounded-2xl"
+                />
+                <LightboxImage
+                  src="/images/hria-magazine-cover-august-2023.webp"
+                  alt="Ron Neville featured in HRIA Hire & Rental Magazine - August 2023"
+                  className="w-56 md:w-64 rounded-lg shadow-2xl cursor-pointer hover:scale-105 transition-transform"
+                  fullSrc="/images/ron-neville-hria-article-2023.webp"
+                />
+                <p className="text-xs text-gray-500 italic text-center">Click magazine to read article</p>
               </div>
-              {/* Text */}
-              <div className="space-y-4 text-gray-300 lg:w-2/3">
-                <p>
-                  CloudRent&apos;s story began in the early 2000s when founder Ron Neville, a professional musician
-                  touring Australia&apos;s East Coast, needed a better way to manage his performance bookings. Unable
-                  to find software that fit his needs, he built his own—and fellow musicians quickly wanted it too.
-                </p>
-                <p>
-                  That hands-on problem-solving approach never changed. Today, CloudRent Pro is purpose-built for
-                  Australian equipment hire businesses, packed with features that actually matter: AI-powered damage
-                  detection, digital SWMS and safety compliance, real-time equipment tracking, native mobile apps
-                  for field staff, and seamless Xero integration.
-                </p>
-                <p>
-                  We&apos;re not a faceless corporation. We&apos;re a focused team that ships fast, listens to
-                  customers, and builds what you need. No feature requests disappearing into a black hole. No waiting
-                  months for basic fixes. Just real software built by people who understand the rental industry
-                  inside and out.
-                </p>
+              {/* Right: Story & Bio */}
+              <div className="lg:w-1/2 text-center lg:text-left">
+                <h2 className="text-2xl font-bold text-white mb-2">Ron Neville</h2>
+                <p className="text-purple-400 font-medium mb-1">Founder & Chief Executive Officer</p>
+                <p className="text-sm text-gray-500 mb-6 italic">Featured in HRIA Hire & Rental Magazine, August 2023</p>
+                <div className="space-y-4 text-gray-300 leading-relaxed">
+                  <p>
+                    CloudRent&apos;s story began in the early 2000s when Ron, a professional musician touring Australia&apos;s East Coast, needed a better way to manage his performance bookings. Unable to find software that fit his needs, he built his own - and fellow musicians quickly wanted it too.
+                  </p>
+                  <p>
+                    That hands-on problem-solving approach never changed. With 18 years dedicated to developing software for the hire and rental industry, Ron&apos;s vision has driven CloudRent from a simple booking tool to a comprehensive cloud-based rental management platform - resulting in over 1,000 licenses sold globally.
+                  </p>
+                  <p>
+                    Today, CloudRent Pro is purpose-built for Australian equipment hire businesses, packed with features that actually matter: AI-powered damage detection, digital SWMS and safety compliance, real-time equipment tracking, native mobile apps for field staff, and seamless Xero integration.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Leadership Team */}
+        {/* Development Capability */}
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <div className="mb-12 text-center">
-            <h2 className="mb-4 text-3xl font-bold">Leadership Team</h2>
-            <p className="text-gray-400">The people driving CloudRent&apos;s vision forward</p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-            {leadership.map((person, i) => (
-              <div
-                key={i}
-                className="rounded-2xl border border-purple-500/20 bg-purple-900/20 p-6 text-center transition-colors hover:border-purple-500/40"
-              >
-                <Image
-                  src={person.image}
-                  alt={person.name}
-                  width={128}
-                  height={128}
-                  className="mx-auto mb-4 h-32 w-32 rounded-full object-cover border-2 border-purple-500/30"
-                  loading="lazy"
-                />
-                <h3 className="text-xl font-semibold text-white">{person.name}</h3>
-                <p className="mb-4 text-sm font-medium text-purple-400">{person.role}</p>
-                <p className="text-sm leading-relaxed text-gray-300">{person.bio}</p>
+          <div className="rounded-2xl border border-purple-500/20 bg-[#0c0c14] p-8 md:p-12">
+            {/* Image */}
+            <div className="mb-8">
+              <Image
+                src="/images/cloudrent-development-team.webp"
+                alt="CloudRent development team working on software innovation"
+                width={1200}
+                height={600}
+                className="w-full rounded-xl object-cover"
+                loading="lazy"
+              />
+            </div>
+            {/* Text */}
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="mb-6 text-2xl font-bold">Behind every successful software platform is the ability to innovate quickly.</h2>
+              <div className="space-y-4 text-gray-300 leading-relaxed">
+                <p>
+                  At CloudRent, we&apos;ve built more than software. We&apos;ve built the development capability to respond to new opportunities, customer requests and enterprise projects at speed. Our scalable engineering resources allow us to expand development when required, helping us deliver new features, integrations and custom solutions without the delays that often slow traditional software companies.
+                </p>
+                <p>
+                  Whether it&apos;s AI innovation, enterprise integrations or customer-driven enhancements, we have the technical capacity to keep building.
+                </p>
               </div>
-            ))}
+            </div>
           </div>
         </section>
 
@@ -274,25 +261,6 @@ export default function AboutPage() {
                 <p className="mt-2 text-xs leading-relaxed text-gray-400">{advisor.bio}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        {/* Built with AI */}
-        <section className="mx-auto max-w-6xl px-4 pb-20">
-          <div className="rounded-2xl border border-purple-500/20 bg-purple-900/20 px-8 py-12 text-center">
-            <Sparkles className="mx-auto mb-4 h-8 w-8 text-purple-400" />
-            <h2 className="mb-6 text-3xl font-bold">Built with AI</h2>
-            <div className="mx-auto max-w-2xl space-y-4 text-gray-300 leading-relaxed">
-              <p>
-                CloudRent Pro is developed using an AI-assisted development model — meaning we move faster, build
-                smarter, and respond to customer needs at a pace traditional software companies simply can&apos;t match.
-                Our advisors identify the problems. Our platform solves them, often within days, not months.
-              </p>
-              <p>
-                This is why CloudRent customers across 25+ countries get a platform that genuinely reflects how their
-                industry works, not how a developer imagined it might.
-              </p>
-            </div>
           </div>
         </section>
 
