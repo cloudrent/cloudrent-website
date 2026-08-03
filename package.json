@@ -27,6 +27,7 @@
     "compress:images:dry": "tsx scripts/compress-blob-images.ts --dry-run"
   },
   "dependencies": {
+    "@builder.io/sdk-react": "^5.2.4",
     "@marsidev/react-turnstile": "^1.4.2",
     "@payloadcms/admin-bar": "3.71.1",
     "@payloadcms/db-postgres": "3.71.1",
