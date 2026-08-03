@@ -6,6 +6,7 @@
  * A customer-facing CloudRent Pro sales journey: operational outcomes first,
  * clear plan terms second, with CloudRent Purple as the route-and-action signal.
  */
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import {
   ArrowRight,
@@ -212,14 +213,14 @@ export default function CloudRentProPage() {
       {/* Site Header */}
       <header className="site-header">
         <div className="header-inner">
-          <a href="/dollar-offer/" className="header-brand">
+          <Link href="/dollar-offer/" className="header-brand">
             <img src={LOGO_URL} alt="CloudRent Pro" />
             <span className="header-brand-text">
               <b>CloudRent</b>
               <em>PRO</em>
             </span>
             <span className="header-tagline">HIRE OPERATIONS OS</span>
-          </a>
+          </Link>
           <nav className="header-nav">
             <button type="button" onClick={() => scrollToSection('platform')}>
               Platform
@@ -621,13 +622,13 @@ export default function CloudRentProPage() {
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <a href="/dollar-offer/" className="footer-logo">
+          <Link href="/dollar-offer/" className="footer-logo">
             <img src={LOGO_URL} alt="CloudRent Pro" />
             <span className="footer-brand-text">
               <b>CloudRent</b>
               <em>PRO</em>
             </span>
-          </a>
+          </Link>
           <span className="footer-tagline">HIRE OPERATIONS OS</span>
         </div>
         <p className="footer-disclaimer">
