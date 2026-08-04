@@ -59,9 +59,9 @@ const faqs: FAQItem[] = [
   },
   {
     category: 'Getting Started',
-    question: 'How do I start my $1 trial?',
+    question: 'How do I start my $1 first month?',
     answer:
-      'Simply click "Start $1 Trial" on our website and create an account. For just $1, you\'ll get full access to all features for 30 days. Your data is preserved when you upgrade to a paid plan.',
+      'Simply click "Start $1 First Month" on our website and create an account. For just $1, you\'ll get full access to all features for 30 days. Your data is preserved when you upgrade to a paid plan.',
   },
   {
     category: 'Getting Started',
@@ -79,7 +79,7 @@ const faqs: FAQItem[] = [
   // Pricing & Billing
   {
     category: 'Pricing & Billing',
-    question: 'What happens after my 30-day trial?',
+    question: 'What happens after my 30-day access?',
     answer:
       'At the end of your trial, you\'ll be prompted to choose a plan. All your data is preserved - nothing is deleted. If you don\'t subscribe, your account becomes read-only until you upgrade.',
   },

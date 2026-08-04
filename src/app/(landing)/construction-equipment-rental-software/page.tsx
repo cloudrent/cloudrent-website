@@ -37,7 +37,7 @@ function generateSchema() {
       '@type': 'Offer',
       price: '1.00',
       priceCurrency: 'AUD',
-      description: '30-day full access trial',
+      description: '30 days full access',
     },
     featureList: [
       'Asset tracking by jobsite',

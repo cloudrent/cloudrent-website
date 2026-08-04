@@ -40,7 +40,7 @@ const faqs = [
   {
     question: 'Does Texada have a free trial?',
     answer:
-      'Texada promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 trial.',
+      'Texada promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 first month.',
   },
   {
     question: 'Is Texada available in Australia?',

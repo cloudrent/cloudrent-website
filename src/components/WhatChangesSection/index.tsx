@@ -150,7 +150,7 @@ export function WhatChangesSection({ variant = 'homepage' }: WhatChangesSectionP
                   : 'bg-purple-600 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]'
               }`}
             >
-              Start {isTrialVariant ? 'your' : 'Your'} $1 Trial
+              Start {isTrialVariant ? 'your' : 'Your'} $1 First Month
               <ChevronRight className="h-4 w-4" />
             </a>
           </div>

@@ -248,7 +248,7 @@ function generateEmailHtml(data: ScorecardData): string {
               <p style="color: #e5e5e5; font-size: 16px; margin: 0 0 24px 0;">Ready to plug the leaks?</p>
               <a href="https://www.cloudrent.me/demo?utm_source=scorecard&utm_medium=email&utm_campaign=report" style="display: inline-block; background: #881ba9; color: #ffffff; text-decoration: none; padding: 16px 32px; border-radius: 100px; font-weight: 600; font-size: 16px;">Book a 30-min walkthrough with Ron</a>
               <p style="margin: 16px 0 0 0;">
-                <a href="https://app.cloudrent.me/register?utm_source=scorecard&utm_medium=email&utm_campaign=report" style="color: #a3a3a3; font-size: 14px; text-decoration: underline;">Or start a $1 trial of CloudRent Pro</a>
+                <a href="https://app.cloudrent.me/register?utm_source=scorecard&utm_medium=email&utm_campaign=report" style="color: #a3a3a3; font-size: 14px; text-decoration: underline;">Or start a $1 first month of CloudRent Pro</a>
               </p>
             </td>
           </tr>

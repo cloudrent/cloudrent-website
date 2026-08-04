@@ -84,7 +84,7 @@ const tiers: Tier[] = [
       { text: 'Stocktakes & asset tracking', included: false },
       { text: 'Marketing & bulk email', included: false },
     ],
-    cta: 'Start $1 Trial',
+    cta: 'Start $1 First Month',
     popular: false,
   },
   {
@@ -104,7 +104,7 @@ const tiers: Tier[] = [
       { text: 'Priority email support', included: true },
       { text: 'Marketing & bulk email', included: false },
     ],
-    cta: 'Start $1 Trial',
+    cta: 'Start $1 First Month',
     popular: true,
   },
   {
@@ -171,7 +171,7 @@ const addons = [
 
 const faqs = [
   {
-    q: 'What happens after my 30-day trial?',
+    q: 'What happens after my 30-day access?',
     a: "You'll be prompted to choose a plan. No credit card required to start, and all your data is preserved when you upgrade.",
   },
   {
@@ -654,7 +654,7 @@ export default function PricingPageClient() {
             Ready to run your hire business smarter?
           </h2>
           <p className="mb-8 leading-relaxed text-gray-300">
-            Start your $1 trial today and experience the full platform. Not sure how our pricing compares? See our detailed comparisons with{' '}
+            Start your $1 first month today and experience the full platform. Not sure how our pricing compares? See our detailed comparisons with{' '}
             <Link href="/cloudrent-pro-vs-hirepos/" className="text-purple-400 hover:text-purple-300 underline">HirePOS</Link>,{' '}
             <Link href="/cloudrent-pro-vs-point-of-rental/" className="text-purple-400 hover:text-purple-300 underline">Point of Rental</Link>,{' '}
             <Link href="/cloudrent-pro-vs-texada/" className="text-purple-400 hover:text-purple-300 underline">Texada</Link> and{' '}
@@ -665,7 +665,7 @@ export default function PricingPageClient() {
               href="https://app.cloudrent.me/register"
               className="cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-9 py-4 text-base font-bold text-white shadow-xl shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
-              Start $1 Trial
+              Start $1 First Month
             </a>
             <Link
               href="/demo"
@@ -679,7 +679,7 @@ export default function PricingPageClient() {
 
       {/* ═══════════════ FOOTER NOTE ═══════════════ */}
       <div className="border-t border-purple-500/10 bg-[#050510] py-6 text-center text-[15px] text-gray-500">
-        All prices in AUD, ex-GST. $1 trial on all plans. Cancel anytime.
+        All prices in AUD, ex-GST. $1 first month on all plans. Cancel anytime.
       </div>
     </div>
   )

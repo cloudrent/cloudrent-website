@@ -220,7 +220,7 @@ export default function EquipmentDamageProtectionClient() {
                 onClick={handleTrialClick}
                 className="group flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
               >
-                Start $1 Trial — 30 Days Full Access
+                Start $1 First Month — 30 Days Full Access
                 <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </a>
               <Link
@@ -459,7 +459,7 @@ export default function EquipmentDamageProtectionClient() {
           <div className="mb-8 flex justify-center">
             <div className="flex items-baseline gap-2">
               <span className="text-6xl font-black text-purple-500">$1</span>
-              <span className="text-lg text-white/50">/ 30-day trial</span>
+              <span className="text-lg text-white/50">/ 30-day access</span>
             </div>
           </div>
 
@@ -469,7 +469,7 @@ export default function EquipmentDamageProtectionClient() {
               onClick={handleTrialClick}
               className="group flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-10 py-5 text-xl font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
             >
-              Start Your $1 Trial Now
+              Start Your $1 First Month Now
               <ChevronRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
             </a>
           </div>

@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { draftMode } from 'next/headers'
+import { getBuilderContent } from '@/lib/builder'
+import { RenderBuilderContent } from '@/components/builder/RenderBuilderContent'
 import { SoftwareSchema, HomepageFaqSchema } from '@/components/StructuredData'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import HomePageClient from './HomePageClient'
@@ -10,7 +13,7 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: 'Cloud Rental Software Australia | Equipment Hire Management – CloudRent Pro',
   description:
-    'Cloud rental software trusted by Australian hire businesses. Real-time availability, AI damage detection, Xero integration & mobile apps. Start your $1 trial today.',
+    'Cloud rental software trusted by Australian hire businesses. Real-time availability, AI damage detection, Xero integration & mobile apps. Start your $1 first month today.',
   keywords: [
     'cloud rental software',
     'cloud rental management software',
@@ -27,12 +30,31 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph({
     title: 'Cloud Rental Software Australia | Equipment Hire Management – CloudRent Pro',
     description:
-      'Cloud rental software trusted by Australian hire businesses. Real-time availability, AI damage detection, Xero integration & mobile apps. Start your $1 trial today.',
+      'Cloud rental software trusted by Australian hire businesses. Real-time availability, AI damage detection, Xero integration & mobile apps. Start your $1 first month today.',
     url: '/',
   }),
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { isEnabled: isDraft } = await draftMode()
+
+  // Try to fetch Builder.io content for homepage
+  const builderContent = await getBuilderContent('page', '/', {
+    options: { includeUnpublished: isDraft },
+  })
+
+  // If Builder.io has content, render it
+  if (builderContent) {
+    return (
+      <>
+        <SoftwareSchema />
+        <HomepageFaqSchema />
+        <RenderBuilderContent content={builderContent} />
+      </>
+    )
+  }
+
+  // Fallback to existing hard-coded homepage
   return (
     <>
       <SoftwareSchema />

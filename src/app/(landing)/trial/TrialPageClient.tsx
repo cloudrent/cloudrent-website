@@ -202,7 +202,7 @@ export default function TrialPageClient() {
                 href={signupUrl}
                 className="inline-flex items-center gap-2 rounded-xl bg-brand-green px-8 py-4 text-lg font-medium text-white shadow-lg shadow-green-900/30 transition-all hover:-translate-y-0.5 hover:bg-brand-green/90"
               >
-                Start your $1 trial
+                Start your $1 first month
                 <ChevronRight className="h-5 w-5" />
               </a>
             </div>
@@ -293,7 +293,7 @@ export default function TrialPageClient() {
             href={signupUrl}
             className="inline-flex items-center gap-2 rounded-xl bg-brand-green px-8 py-4 text-lg font-medium text-white shadow-lg shadow-green-900/30 transition-all hover:-translate-y-0.5 hover:bg-brand-green/90"
           >
-            Start your $1 trial
+            Start your $1 first month
             <ChevronRight className="h-5 w-5" />
           </a>
           <span className="mt-4 block text-sm text-white/50">

@@ -744,7 +744,7 @@ export function Scorecard({ variant, onClose: _onClose }: ScorecardProps) {
             }
             className="block pt-2 text-center text-sm text-white/40 underline underline-offset-4 transition-colors hover:text-white/60"
           >
-            Or start a $1 trial of CloudRent Pro
+            Or start a $1 first month of CloudRent Pro
           </a>
         </div>
       </div>

@@ -153,7 +153,7 @@ export function HeroSection({
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                   <div className="relative z-10 flex flex-col items-start">
-                    <span className="text-[15px] font-bold">Start your $1 trial</span>
+                    <span className="text-[15px] font-bold">Start your $1 first month</span>
                     <span className="text-[11px] font-normal text-white/70">
                       Full access · No setup · Cancel anytime
                     </span>
@@ -169,7 +169,7 @@ export function HeroSection({
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
                     <div className="relative z-10 flex flex-col items-start">
-                      <span className="text-[15px] font-bold">Start Your $1 Trial</span>
+                      <span className="text-[15px] font-bold">Start Your $1 First Month</span>
                       <span className="text-[11px] font-normal text-white/55">
                         Full access · No setup · Cancel anytime
                       </span>

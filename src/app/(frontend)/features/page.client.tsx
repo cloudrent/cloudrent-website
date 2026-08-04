@@ -441,14 +441,14 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div>
             <h3 className="mb-2 text-2xl font-bold text-white">Ready to streamline your operations?</h3>
-            <p className="text-purple-200">Start your $1 trial today.</p>
+            <p className="text-purple-200">Start your $1 first month today.</p>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <a
               href="https://app.cloudrent.me/register"
               className="whitespace-nowrap rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
             >
-              Start $1 Trial
+              Start $1 First Month
             </a>
             <Link
               href="/videos"
@@ -486,7 +486,7 @@ const CTASection = ({ variant = 'primary' }: { variant?: 'primary' | 'inline' })
             href="https://app.cloudrent.me/register"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
-            Start Your $1 Trial
+            Start Your $1 First Month
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
           <Link
@@ -563,7 +563,7 @@ const HeroSection = () => {
             href="https://app.cloudrent.me/register"
             className="group flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-4 text-lg font-semibold text-white shadow-xl shadow-purple-500/30 transition-all hover:from-purple-400 hover:to-fuchsia-400"
           >
-            Start Your $1 Trial
+            Start Your $1 First Month
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </a>
           <Link

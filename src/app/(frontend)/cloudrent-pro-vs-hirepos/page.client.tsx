@@ -224,7 +224,7 @@ export default function PageClient() {
                 href="/pricing"
                 className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
-                Start $1 trial
+                Start $1 first month
               </Link>
               <Link
                 href="/demo"

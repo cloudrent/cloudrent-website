@@ -27,7 +27,7 @@ const ctaCards: CTACard[] = [
   {
     icon: Rocket,
     label: 'Self-serve',
-    title: 'Start $1 trial',
+    title: 'Start $1 first month',
     description: 'Full access for 30 days. No lock-in. Cancel anytime.',
     buttonLabel: 'Start trial',
     href: 'https://app.cloudrent.me/register',
@@ -119,7 +119,7 @@ export function EngageCTA() {
 
       {/* Footer */}
       <p className="mt-6 text-center text-[13px] text-white/40">
-        No credit card required for free tools · $1 to start your trial
+        No credit card required for free tools · $1 to start your first month
       </p>
 
       {/* Ecosystem Graphic */}

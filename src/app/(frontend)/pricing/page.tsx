@@ -7,7 +7,7 @@ import PricingPageClient from './page.client'
 export const metadata: Metadata = {
   title: 'Equipment Rental Software Pricing | From $49/user – CloudRent Pro',
   description:
-    'Transparent rental software pricing. Starter $49, Professional $85, Business $99/user/month. No setup fees. $1 trial for 14 days. Cancel anytime.',
+    'Transparent rental software pricing. Starter $49, Professional $85, Business $99/user/month. No setup fees. $1 first month for 14 days. Cancel anytime.',
   keywords: [
     'rental software pricing',
     'equipment rental software cost',
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: mergeOpenGraph({
     title: 'Equipment Rental Software Pricing | From $49/user – CloudRent Pro',
     description:
-      'Transparent rental software pricing. Starter $49, Professional $85, Business $99/user/month. No setup fees. $1 trial for 14 days. Cancel anytime.',
+      'Transparent rental software pricing. Starter $49, Professional $85, Business $99/user/month. No setup fees. $1 first month for 14 days. Cancel anytime.',
     url: '/pricing/',
   }),
 }

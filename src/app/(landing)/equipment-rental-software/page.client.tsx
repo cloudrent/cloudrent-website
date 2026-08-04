@@ -592,7 +592,7 @@ export default function EquipmentRentalClient() {
           <div className="mb-8 flex justify-center">
             <div className="flex items-baseline gap-2">
               <span className="text-6xl font-black text-purple-500">$1</span>
-              <span className="text-lg text-white/50">/ 30-day trial</span>
+              <span className="text-lg text-white/50">/ 30-day access</span>
             </div>
           </div>
 
@@ -602,7 +602,7 @@ export default function EquipmentRentalClient() {
               onClick={handleTrialClick}
               className="group flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-10 py-5 text-xl font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-purple-500 hover:shadow-[0_8px_32px_rgba(136,27,169,0.4)]"
             >
-              Start free trial — $1 for 30 days
+              Start for $1 — 30 days full access
               <ChevronRight className="h-6 w-6 transition-transform group-hover:translate-x-1" />
             </a>
           </div>

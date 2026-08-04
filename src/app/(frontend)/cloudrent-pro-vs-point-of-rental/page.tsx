@@ -40,7 +40,7 @@ const faqs = [
   {
     question: 'Does Point of Rental offer a free trial?',
     answer:
-      'Point of Rental primarily promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 trial.',
+      'Point of Rental primarily promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 first month.',
   },
   {
     question: 'Does Point of Rental support on-premise deployment?',

@@ -52,7 +52,7 @@ const comparisonData: ComparisonRow[] = [
   },
   {
     category: 'Free trial',
-    cloudrent: 'Yes — $1 trial available',
+    cloudrent: 'Yes — $1 first month available',
     competitor: 'Demo required; no self-service free trial promoted publicly',
   },
   {
@@ -120,7 +120,7 @@ const faqs = [
   },
   {
     q: 'Does Point of Rental offer a free trial?',
-    a: 'Point of Rental primarily promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 trial.',
+    a: 'Point of Rental primarily promotes demonstrations rather than self-service free trials. CloudRent Pro offers a $1 first month.',
   },
   {
     q: 'Does Point of Rental support on-premise deployment?',
@@ -228,7 +228,7 @@ export default function PageClient() {
                 href="/pricing"
                 className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-purple-500 to-fuchsia-500 px-8 py-3.5 text-[15px] font-bold text-white shadow-lg shadow-purple-500/25 transition-all hover:from-purple-400 hover:to-fuchsia-400"
               >
-                Start $1 trial
+                Start $1 first month
               </Link>
               <Link
                 href="/demo"

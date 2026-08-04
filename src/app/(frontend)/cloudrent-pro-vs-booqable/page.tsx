@@ -40,7 +40,7 @@ const faqs = [
   {
     question: 'Does Booqable have a free trial?',
     answer:
-      'Yes. Booqable offers a 14-day free trial with no credit card required. CloudRent Pro offers a $1 trial.',
+      'Yes. Booqable offers a 14-day free trial with no credit card required. CloudRent Pro offers a $1 first month.',
   },
   {
     question: 'Is Booqable available in Australia?',
