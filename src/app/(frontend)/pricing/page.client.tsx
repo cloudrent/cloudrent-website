@@ -42,14 +42,6 @@ function Cross({ dark }: { dark?: boolean }) {
   )
 }
 
-function StarIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-      <path d="M7 0L8.8 4.8L14 5.2L10.1 8.6L11.3 14L7 11.2L2.7 14L3.9 8.6L0 5.2L5.2 4.8L7 0Z" />
-    </svg>
-  )
-}
-
 interface Feature {
   text: string
   included: boolean
@@ -132,16 +124,16 @@ const tiers: Tier[] = [
 
 const addons = [
   {
-    name: 'Mobile App Access',
+    name: 'CloudRent Command',
     price: '$10',
     unit: '/user/mo',
-    description: 'Full mobile app for field staff with offline sync',
+    description: 'Mobile app for managers and admins, with offline sync',
   },
   {
-    name: 'Driver App',
-    price: 'Free',
+    name: 'CloudRent Crew',
+    price: '2 logins per paid user',
     unit: '',
-    description: 'View assigned jobs, accept/decline, GPS clock-in',
+    description: 'Driver and workshop app. Assigned jobs, accept or decline, GPS clock-in. Extra logins $10/mo each.',
   },
   {
     name: 'Webstore & Customer Portal',
@@ -172,7 +164,7 @@ const addons = [
 const faqs = [
   {
     q: 'What happens after my 30-day access?',
-    a: "You'll be prompted to choose a plan. No credit card required to start, and all your data is preserved when you upgrade.",
+    a: 'After your first 30 days, your subscription continues on the Professional plan at $85 per user per month. Cancel anytime before then and you pay nothing more. All your data stays in place, and you change plans whenever you like.',
   },
   {
     q: 'Can I change plans later?',
@@ -180,15 +172,11 @@ const faqs = [
   },
   {
     q: "What does 'per user' mean?",
-    a: 'Each person who logs into the CloudRent Pro web app counts as a user. The mobile app is charged separately at $10/user/mo, and the driver app is always free.',
+    a: 'Each person who logs in to the CloudRent Pro web app counts as a user. The Command mobile app is $10 per user per month. Each paid user includes two Crew app logins for drivers and workshop staff. Extra Crew logins are $10 per month each.',
   },
   {
     q: 'Is GST included in the pricing?',
     a: 'Prices shown are ex-GST. GST (10%) is added at checkout for Australian businesses.',
-  },
-  {
-    q: 'Do Launch Customers keep their pricing forever?',
-    a: "Yes — and once the spots are filled, this deal is gone permanently. Launch customers are locked in at $85/user/mo with every feature included for as long as they remain subscribed. Cancel and rejoin? You'll be on standard pricing. We won't be running this offer again.",
   },
 ]
 
@@ -238,34 +226,6 @@ export default function PricingPageClient() {
         <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-fuchsia-600/15 blur-[100px]" />
       </div>
 
-      {/* ═══════════════ LAUNCH OFFER BANNER ═══════════════ */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-brand-purple-deep via-brand-purple to-fuchsia-500 px-5 py-3 text-center">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px)`,
-            backgroundSize: '40px 40px',
-          }}
-        />
-        <div className="relative flex flex-wrap items-center justify-center gap-2">
-          <span className="flex gap-0.5 text-amber-400">
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-          </span>
-          <span className="text-sm font-medium tracking-wide text-white">
-            CloudRent Pro Launch Offer —{' '}
-            <strong className="text-amber-400">Spots are almost gone</strong> — Lock in every
-            feature for just $85/user
-          </span>
-          <span className="flex gap-0.5 text-amber-400">
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-          </span>
-        </div>
-      </div>
-
       {/* ═══════════════ HERO SECTION ═══════════════ */}
       <div className="relative px-5 pb-14 pt-20 text-center">
         <div className="relative mx-auto max-w-3xl">
@@ -289,65 +249,6 @@ export default function PricingPageClient() {
         </div>
       </div>
 
-      {/* ═══════════════ LAUNCH OFFER CALLOUT ═══════════════ */}
-      <div className="relative mx-auto -mt-5 mb-10 max-w-4xl px-5">
-        <div className="relative overflow-hidden rounded-2xl border border-purple-500/30 bg-gradient-to-r from-purple-900/60 to-fuchsia-900/60 p-9 shadow-[0_8px_32px_rgba(136,27,169,0.3)]">
-          {/* Pattern */}
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage:
-                'repeating-linear-gradient(45deg, white 0, white 1px, transparent 1px, transparent 12px)',
-            }}
-          />
-
-          <div className="relative text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/20 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-red-300">
-              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-red-500" />
-              Closing Soon — Don&apos;t Miss Out
-            </div>
-
-            <h3 className="mb-2.5 text-3xl font-black tracking-tight text-white">
-              CloudRent Pro Launch Offer
-            </h3>
-
-            <p className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-gray-300">
-              We&apos;re only accepting a <strong className="text-amber-400">limited number</strong>{' '}
-              of launch customers who&apos;ll get the{' '}
-              <strong className="text-white">full Business plan</strong> — every feature, every
-              integration, every future update — locked in at just{' '}
-              <strong className="text-amber-400">$85/user/mo</strong> for as long as you stay
-              subscribed.
-            </p>
-
-            <div className="mb-6 flex flex-wrap justify-center gap-4">
-              {[
-                "Rate locked while you're subscribed",
-                'Every feature included',
-                'Priority onboarding',
-              ].map((item, i) => (
-                <div
-                  key={item}
-                  className="rounded-xl border border-purple-500/20 bg-purple-900/40 px-4 py-2.5 text-[15px] font-semibold text-white"
-                >
-                  {['🔒', '⚡', '🚀'][i]} {item}
-                </div>
-              ))}
-            </div>
-
-            <Link
-              href="/launch"
-              className="inline-block cursor-pointer rounded-xl border-none bg-gradient-to-r from-amber-400 to-amber-500 px-10 py-4 text-base font-extrabold text-purple-900 shadow-[0_4px_20px_rgba(251,191,36,0.35)] transition-all hover:from-amber-300 hover:to-amber-400"
-            >
-              See How Much You&apos;ll Save →
-            </Link>
-
-            <p className="mb-0 mt-3.5 text-xs text-gray-500">
-              Once spots fill up, this offer is gone. No exceptions.
-            </p>
-          </div>
-        </div>
-      </div>
       <div className="relative px-5 pb-14 pt-20 text-center">
         {/* Billing toggle */}
         <div className="inline-flex items-center gap-1 rounded-full border border-purple-500/30 bg-purple-900/30 p-1.5">
@@ -497,11 +398,10 @@ export default function PricingPageClient() {
           <span className="text-3xl">📱</span>
           <div className="text-left">
             <div className="text-[15px] font-semibold text-white">
-              Mobile App: <span className="text-purple-400">$10/user/mo</span> &nbsp;•&nbsp; Driver
-              App: <span className="text-green-400">Free</span>
+              Command mobile app: <span className="text-purple-400">$10/user/mo</span> &nbsp;•&nbsp; Crew app: <span className="text-green-400">2 logins per paid user</span>
             </div>
             <div className="mt-0.5 text-[15px] text-gray-400">
-              Available as add-ons to any plan. Offline sync, barcode scanning, push notifications.
+              Command is an add-on to any plan. Crew logins are included with every paid user. Offline sync, barcode scanning, push notifications.
             </div>
           </div>
         </div>

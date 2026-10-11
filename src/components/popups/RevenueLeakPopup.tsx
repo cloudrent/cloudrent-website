@@ -10,7 +10,7 @@ const STORAGE_KEY = 'crp_revenue_popup_suppressed'
 const SESSION_KEY = 'crp_ai_popup_shown_this_session'
 
 // Don't show on these pages
-const EXCLUDED_PATHS = ['/ai-check', '/try', '/scorecard', '/pricing', '/contact', '/register', '/launch']
+const EXCLUDED_PATHS = ['/ai-check', '/try', '/scorecard', '/pricing', '/contact', '/register']
 
 export function RevenueLeakPopup() {
   const [isVisible, setIsVisible] = useState(false)

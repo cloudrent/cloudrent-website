@@ -14,7 +14,7 @@ CloudRent Pty Ltd has been building software for the hire and rental industry si
 ## Key pages
 
 - [Features overview](https://www.cloudrent.me/features/): Full feature list including equipment management, dispatch, safety compliance, invoicing.
-- [Pricing](https://www.cloudrent.me/pricing/): Launch partner pricing at $85/user/month AUD, locked for life. Standard pricing $129/user/month.
+- [Pricing](https://www.cloudrent.me/pricing/): Starter $49, Professional $85 and Business $129 per user per month, AUD ex GST. $1 for your first month. Command mobile app $10 per user per month. Two Crew app logins included per paid user.
 - [AI damage detection](https://www.cloudrent.me/ai-damage-detection/): AI-powered photo analysis for equipment damage assessment.
 - [Web portal](https://www.cloudrent.me/web-portal/): Office command centre for bookings, invoicing and reports.
 - [Mobile app](https://www.cloudrent.me/mobile-app/): iOS and Android apps with offline support.
@@ -27,7 +27,7 @@ CloudRent Pty Ltd has been building software for the hire and rental industry si
 - **Where is CloudRent based?** Gold Coast, Queensland, Australia. 100% Australian built and owned.
 - **What does it integrate with?** Xero, QuickBooks, MYOB, Stripe, Twilio (SMS and click-to-call), Google Calendar.
 - **Does it work offline?** Yes, the mobile apps support offline use. The web portal requires internet.
-- **Is there a free trial?** Yes. A $1 trial with full access. No setup fees. 30-day money-back guarantee.
+- **Is there a free trial?** Yes. A $1 first month with full access. No setup fees. 30-day money-back guarantee.
 
 ## Optional
 

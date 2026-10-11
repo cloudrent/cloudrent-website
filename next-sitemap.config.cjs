@@ -77,7 +77,6 @@ module.exports = {
       { loc: '/faq', priority: 0.7, changefreq: 'monthly' },
       { loc: '/posts', priority: 0.7, changefreq: 'daily' },
       { loc: '/videos', priority: 0.6, changefreq: 'weekly' },
-      { loc: '/launch', priority: 0.9, changefreq: 'daily' },
       { loc: '/privacy', priority: 0.3, changefreq: 'yearly' },
       { loc: '/terms', priority: 0.3, changefreq: 'yearly' },
       // Landing pages

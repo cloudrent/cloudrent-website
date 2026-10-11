@@ -199,7 +199,7 @@ const homepageFaqSchema = {
       name: 'How quickly can we get started?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Most launch partners are running on CloudRent Pro within a week. Free data migration, direct onboarding support and a 30-day money-back guarantee are included.',
+        text: 'Most businesses are running on CloudRent Pro within a week. Direct onboarding support and a 30-day money-back guarantee are included. Migration assistance is available.',
       },
     },
   ],
