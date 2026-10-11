@@ -13,7 +13,6 @@ import {
   Truck,
   Globe,
   Shield,
-  Star,
   BarChart3,
   Users,
   FileText,
@@ -70,37 +69,6 @@ const FeatureCarousel = dynamic(() => import('@/components/FeatureCarousel'), {
   ),
   ssr: false,
 })
-
-// ─── COUNTDOWN HOOK ───────────────────────────────────────────────────────────
-const DEADLINE = new Date('2026-05-01T13:59:59Z')
-
-interface TimeLeft {
-  days: number
-  hours: number
-  minutes: number
-  seconds: number
-  expired: boolean
-}
-
-function useCountdown(): TimeLeft {
-  const calc = (): TimeLeft => {
-    const diff = DEADLINE.getTime() - Date.now()
-    if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true }
-    return {
-      days: Math.floor(diff / 86400000),
-      hours: Math.floor((diff % 86400000) / 3600000),
-      minutes: Math.floor((diff % 3600000) / 60000),
-      seconds: Math.floor((diff % 60000) / 1000),
-      expired: false,
-    }
-  }
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calc)
-  useEffect(() => {
-    const t = setInterval(() => setTimeLeft(calc()), 1000)
-    return () => clearInterval(t)
-  }, [])
-  return timeLeft
-}
 
 // ─── VIDEO MODAL ──────────────────────────────────────────────────────────────
 
@@ -187,16 +155,6 @@ const platformFeatures = {
     { icon: Clock, text: 'Available 24/7' },
   ],
 }
-
-// ─── LAUNCH PARTNER BENEFITS DATA ────────────────────────────────────────────
-
-const launchPartnerBenefits = [
-  { icon: Shield, title: 'Never Pay More', description: 'Your price is locked permanently — no future increases' },
-  { icon: Zap, title: 'Everything Included', description: 'All modules, integrations, and future updates' },
-  { icon: Star, title: 'Priority Onboarding', description: 'Get set up faster with direct support from our team' },
-  { icon: Users, title: 'Direct Access', description: 'Work directly with the people building the product' },
-  { icon: MessageSquare, title: 'Influence the Platform', description: 'Your feedback helps shape what gets built next' },
-]
 
 // ─── FAQ DATA ─────────────────────────────────────────────────────────────────
 
@@ -295,40 +253,11 @@ const speedMetrics = [
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
 
 export default function HomePageClient() {
-  const { days, hours, minutes, seconds, expired } = useCountdown()
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [showScorecard, setShowScorecard] = useState(false)
 
   return (
     <div className="min-h-screen">
-      {/* ═══════════════════════════════════════════════════════════════════════
-          COUNTDOWN BANNER
-      ═══════════════════════════════════════════════════════════════════════ */}
-      {!expired && (
-        <div className="relative z-40 border-b border-green-500/20 bg-green-500/5 py-3">
-          <div className="mx-auto flex max-w-7xl items-center justify-center px-5">
-            <div className="inline-flex items-center gap-3 rounded-full border border-green-500/25 bg-green-500/10 px-5 py-2 backdrop-blur-sm">
-              <span className="relative flex h-4 w-4 flex-shrink-0">
-                <span
-                  className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"
-                  style={{ animationDuration: '2s' }}
-                />
-                <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500 shadow-[0_0_15px_rgba(74,222,128,1)]" />
-              </span>
-              <span className="text-sm text-green-100">
-                <strong className="text-white">$85/user/month locked for life</strong>
-                <span className="text-green-300/80"> · All Modules</span>
-                <span className="text-green-300/60"> · Closes in </span>
-                <span className="font-bold tabular-nums text-white">
-                  {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m{' '}
-                  {String(seconds).padStart(2, '0')}s
-                </span>
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* ═══════════════════════════════════════════════════════════════════════
           HERO SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
@@ -905,281 +834,6 @@ export default function HomePageClient() {
           TESTIMONIALS SECTION (shared component)
       ═══════════════════════════════════════════════════════════════════════ */}
       <TestimonialsSection variant="homepage" />
-
-      {/* ═══════════════════════════════════════════════════════════════════════
-          LAUNCH PARTNER SECTION
-      ═══════════════════════════════════════════════════════════════════════ */}
-      <section className="relative w-full bg-[#0f0a1a] py-16">
-        <div className="relative z-10 mx-auto max-w-6xl px-5">
-          {/* Prominent Header Badge */}
-          <div className="mb-8 text-center">
-            <div className="mb-5 flex items-center justify-center gap-4">
-              {/* Green pulsing beacon */}
-              <div className="relative">
-                <div
-                  className="absolute inset-0 animate-ping rounded-full bg-green-500 opacity-75"
-                  style={{ animationDuration: '1.5s' }}
-                />
-                <div
-                  className="absolute inset-0 scale-150 rounded-full bg-green-500/50 blur-xl"
-                  style={{ animation: 'pulse 1.5s ease-in-out infinite' }}
-                />
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-green-500 shadow-[0_0_60px_rgba(34,197,94,0.9),0_0_100px_rgba(34,197,94,0.5)]">
-                  <Zap className="h-7 w-7 text-black" />
-                </div>
-              </div>
-              <span className="text-lg font-bold uppercase tracking-widest text-green-500">
-                Limited Launch Offer
-              </span>
-            </div>
-            <h2 className="mb-4 text-4xl font-black text-white md:text-5xl">
-              Join the First 100 Launch Partners
-              <br />
-              <span className="bg-gradient-to-r from-purple-500 to-fuchsia-400 bg-clip-text text-transparent">
-                on CloudRent Pro
-              </span>
-            </h2>
-          </div>
-
-          {/* Main Card Container */}
-          <div
-            className="relative overflow-hidden rounded-3xl"
-            style={{
-              background:
-                'linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 40%, #3d1a2a 70%, #2d1515 100%)',
-              border: '1px solid rgba(136,27,169,0.3)',
-              boxShadow:
-                '0 25px 80px rgba(136,27,169,0.2), 0 0 0 1px rgba(255,255,255,0.05) inset',
-            }}
-          >
-            {/* Ambient glow inside card */}
-            <div
-              className="pointer-events-none absolute left-1/4 top-0 h-64 w-64 opacity-40"
-              style={{ background: 'radial-gradient(circle, #9731CB 0%, transparent 70%)' }}
-            />
-            <div
-              className="pointer-events-none absolute bottom-0 right-1/4 h-48 w-48 opacity-25"
-              style={{ background: 'radial-gradient(circle, #dc2626 0%, transparent 70%)' }}
-            />
-
-            <div className="relative z-10 p-8 md:p-12">
-              {/* Main Content Grid - Card + Story */}
-              <div className="mb-10 grid items-center gap-12 lg:grid-cols-2">
-                {/* Left - Member Card Image */}
-                <div className="flex justify-center lg:justify-center">
-                  <Image
-                    src="/images/cloudrent-founders-club.webp"
-                    alt="CloudRent Pro Launch Partner Member Card"
-                    width={400}
-                    height={250}
-                    loading="lazy"
-                    className="w-full max-w-[400px] drop-shadow-2xl"
-                    style={{ filter: 'drop-shadow(0 25px 50px rgba(136,27,169,0.4))' }}
-                  />
-                </div>
-
-                {/* Right - Story & Value Statement */}
-                <div className="text-center lg:text-left">
-                  <p className="mb-6 text-lg leading-snug text-white/60">
-                    We&apos;ve been helping hire & rental businesses since 2017.
-                    <br />
-                    CloudRent Pro is our next evolution — rebuilt from the ground up based on
-                    real-world operations.
-                    <br />
-                    <span className="font-medium text-white">
-                      Now we&apos;re opening it to a small group of launch partners.
-                    </span>
-                  </p>
-                  <h3 className="mb-4 text-2xl font-bold text-white md:text-3xl">
-                    Run your entire hire business on one system — without the chaos.
-                  </h3>
-                  <p className="text-xl text-white/70">
-                    Lock in full access for{' '}
-                    <span className="font-bold text-yellow-400">$85/user/month</span>
-                    <span className="text-white/70"> — forever</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Price Comparison Cards */}
-              <div className="mb-8 grid gap-6 md:grid-cols-2">
-                {/* Standard Plan */}
-                <div className="rounded-2xl border border-white/[0.1] bg-white/[0.05] p-6 text-center">
-                  <p className="mb-3 text-xs uppercase tracking-wider text-white/40">
-                    Standard Price
-                  </p>
-                  <div className="mb-1">
-                    <span className="text-4xl font-black text-white/40 line-through">$129</span>
-                    <span className="text-sm text-white/30">/user/mo</span>
-                  </div>
-                  <p className="text-xs text-white/30">Regular pricing after launch</p>
-                </div>
-
-                {/* Launch Partner Price */}
-                <div className="relative">
-                  <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-green-500 px-3 py-1 text-xs font-bold text-white">
-                    SAVE $44/USER/MO — FOREVER
-                  </div>
-                  <div
-                    className="h-full rounded-2xl p-6 text-center"
-                    style={{
-                      background:
-                        'linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(239,68,68,0.15) 100%)',
-                      border: '2px solid rgba(234,179,8,0.4)',
-                    }}
-                  >
-                    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-yellow-400">
-                      Launch Partner Price
-                    </p>
-                    <div className="mb-1">
-                      <span className="text-5xl font-black text-white">$85</span>
-                      <span className="text-sm text-white/70">/user/mo</span>
-                    </div>
-                    <p className="text-sm font-medium text-green-400">Locked in for life</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Value Reinforcement */}
-              <div className="mb-10 rounded-xl border border-white/[0.1] bg-black/30 p-5 text-center">
-                <p className="mb-4 font-medium text-white">
-                  Core features included — optional add-ons available
-                </p>
-                <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
-                  <span className="rounded-full border border-purple-500/30 bg-purple-500/20 px-3 py-1.5 text-xs font-medium text-purple-300">
-                    Xero/QuickBooks Integration
-                  </span>
-                  <span className="rounded-full border border-white/[0.15] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/70">
-                    Marketing Tools
-                  </span>
-                  <span className="rounded-full border border-white/[0.15] bg-white/[0.08] px-3 py-1.5 text-xs font-medium text-white/70">
-                    AI Features
-                  </span>
-                </div>
-                <p className="text-sm text-white/70">
-                  → Total value:{' '}
-                  <span className="font-semibold text-yellow-400">$178+/mo</span> — you pay just{' '}
-                  <span className="font-bold text-green-400">$85</span>
-                </p>
-                <p className="mt-3 text-xs text-white/50">
-                  * CloudRent Connect (Customer Portal) is not included
-                </p>
-              </div>
-
-              {/* Launch Partner Benefits */}
-              <div className="mb-10">
-                <p className="mb-6 text-center text-sm uppercase tracking-wider text-white/60">
-                  As a Launch Partner, You Get:
-                </p>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                  {launchPartnerBenefits.map((benefit, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl border border-white/[0.1] bg-white/[0.05] p-5 text-center"
-                    >
-                      <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/30">
-                        <benefit.icon className="h-6 w-6 text-purple-400" />
-                      </div>
-                      <h4 className="mb-1 text-sm font-semibold text-white">{benefit.title}</h4>
-                      <p className="text-xs text-white/70">{benefit.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Scarcity + Progress */}
-              <div className="mb-8 text-center">
-                <p className="mb-3 font-medium text-amber-400">
-                  ⏳ 63 of 100 launch partner spots claimed
-                </p>
-                <div className="mx-auto h-3 max-w-md overflow-hidden rounded-full bg-white/10">
-                  <div
-                    className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400"
-                    style={{ width: '63%' }}
-                  />
-                </div>
-                <p className="mt-3 text-sm text-white/40">
-                  This offer won&apos;t be available once all 100 spots are filled.
-                </p>
-              </div>
-
-              {/* Countdown Timer */}
-              {!expired && (
-                <div className="mb-10 text-center">
-                  <p className="mb-4 text-sm uppercase tracking-wider text-white/40">
-                    Offer closes in
-                  </p>
-                  <div className="flex items-center justify-center gap-3">
-                    {[
-                      { value: days, label: 'DAYS' },
-                      { value: hours, label: 'HOURS' },
-                      { value: minutes, label: 'MINS' },
-                      { value: seconds, label: 'SECS' },
-                    ].map((unit, i) => (
-                      <div
-                        key={i}
-                        className="min-w-[80px] rounded-xl border border-white/[0.1] bg-black/40 px-4 py-3"
-                      >
-                        <div className="text-3xl font-bold tabular-nums text-white">
-                          {String(unit.value).padStart(2, '0')}
-                        </div>
-                        <div className="text-[10px] uppercase tracking-wider text-white/30">
-                          {unit.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Final Close */}
-              <div className="text-center">
-                <h3 className="mb-4 text-3xl font-black text-white md:text-4xl">
-                  This Is Your Chance to Run Your Business Properly
-                </h3>
-                <p className="mx-auto mb-8 max-w-xl text-white/60">
-                  Stop juggling systems. Stop fixing mistakes.
-                  <br />
-                  Start running your operations with full control, visibility, and confidence.
-                  <br />
-                  <span className="font-medium text-white">
-                    Once the first 100 launch partners are in, this offer disappears — permanently.
-                  </span>
-                </p>
-
-                {/* CTA Button */}
-                <a
-                  href="https://app.cloudrent.me/launch"
-                  className="mb-6 inline-flex items-center justify-center gap-2 rounded-xl bg-yellow-500 px-10 py-4 text-lg font-bold text-black transition-all hover:-translate-y-0.5 hover:bg-yellow-400 hover:shadow-[0_8px_32px_rgba(234,179,8,0.4)]"
-                >
-                  Lock in Launch Partner Pricing →
-                </a>
-
-                {/* Risk Reversal */}
-                <div className="mb-6 flex flex-wrap items-center justify-center gap-4 text-sm">
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="h-4 w-4" /> 30-day money-back guarantee
-                  </span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="h-4 w-4" /> Cancel anytime
-                  </span>
-                  <span className="flex items-center gap-2 text-green-400">
-                    <CheckCircle className="h-4 w-4" /> Free data migration
-                  </span>
-                </div>
-
-                {/* Support Line */}
-                <p className="text-sm text-white/40">
-                  Questions?{' '}
-                  <Link href="/demo" className="text-purple-400 hover:text-purple-300">
-                    Talk to our team →
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════
           INDUSTRIES SECTION

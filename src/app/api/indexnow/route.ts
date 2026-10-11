@@ -18,7 +18,6 @@ const INDEXABLE_URLS = [
   '/faq/',
   '/posts/',
   '/videos/',
-  '/launch/',
   '/roadmap/',
   '/privacy/',
   '/terms/',

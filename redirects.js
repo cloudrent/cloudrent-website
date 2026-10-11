@@ -17,6 +17,8 @@ const redirects = async () => {
   // ========================================
   const migrationRedirects = [
     // Main pages
+    { source: '/launch', destination: '/pricing/', permanent: true },
+    { source: '/launch/', destination: '/pricing/', permanent: true },
     { source: '/cloudrent-platform', destination: '/about', permanent: true },
     { source: '/cloudrent-platform/', destination: '/about', permanent: true },
     { source: '/create-your-quote', destination: '/contact', permanent: true },

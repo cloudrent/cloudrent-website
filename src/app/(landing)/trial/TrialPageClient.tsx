@@ -17,7 +17,7 @@ import { appendUTMParams } from '@/utilities/appendUTMParams'
 const faqs = [
   {
     q: 'What happens after the 30 days?',
-    a: "Your trial converts to the Foundation Customer rate of A$85 per user per month, locked for life for the first 100 customers. We'll remind you before the trial ends, and you can cancel in one click beforehand.",
+    a: "After your first month, your subscription continues at A$85 per user per month on the Professional plan. We'll remind you before your first month ends, and you can cancel in one click beforehand.",
   },
   {
     q: 'Is my card charged more than $1 during the trial?',
@@ -194,8 +194,7 @@ export default function TrialPageClient() {
                 portal, all of it.
               </p>
               <p className="mb-8 text-white/60">
-                After the trial it&apos;s A$85 per user per month on our Foundation Customer rate,
-                locked for life for the first 100 customers. Cancel anytime in one click and
+                $1 for your first month, then A$85 per user per month on the Professional plan. Cancel anytime in one click and
                 you&apos;ve spent a dollar.
               </p>
               <a

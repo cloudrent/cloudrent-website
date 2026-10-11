@@ -48,7 +48,7 @@ export default async function LandingLayout({ children }: { children: React.Reac
         </div>
 
         <Providers>
-          {/* No Header, Footer, TrialPopup, or ChatWidget - landing pages are isolated */}
+          {/* No Header, Footer, or ChatWidget - landing pages are isolated */}
           {children}
         </Providers>
       </body>

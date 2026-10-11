@@ -34,38 +34,6 @@ import {
   Phone,
 } from 'lucide-react'
 
-// ─── COUNTDOWN ────────────────────────────────────────────────────────────────
-// Deadline: March 31 2026 23:59:59 AEST = April 1 2026 13:59:59 UTC
-const DEADLINE = new Date('2026-04-01T13:59:59Z')
-
-function useCountdown() {
-  const [t, setT] = useState<{
-    days: number
-    hours: number
-    minutes: number
-    seconds: number
-    expired: boolean
-  } | null>(null)
-
-  useEffect(() => {
-    const calc = () => {
-      const diff = Math.max(0, DEADLINE.getTime() - Date.now())
-      return {
-        days: Math.floor(diff / 86400000),
-        hours: Math.floor((diff % 86400000) / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-        expired: diff <= 0,
-      }
-    }
-    setT(calc()) // set correct value immediately on mount
-    const id = setInterval(() => setT(calc()), 1000)
-    return () => clearInterval(id)
-  }, [])
-
-  return t
-}
-
 // ─── TYPES ────────────────────────────────────────────────────────────────────
 type Phase =
   | 'idle'
@@ -93,15 +61,6 @@ interface Particle {
 
 // ─── ABOVE FOLD ───────────────────────────────────────────────────────────────
 function AboveFold() {
-  const countdown = useCountdown()
-  const { days, hours, minutes, seconds, expired } = countdown ?? {
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    expired: false,
-  }
-
   return (
     <section className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-transparent -mt-[80px] pt-[80px] lg:-mt-[160px] lg:pt-[160px]">
       {/* SEO h1 */}
@@ -160,33 +119,6 @@ function AboveFold() {
 
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto px-5 text-center mt-0 lg:-mt-16">
-        {/* Eyebrow — live countdown */}
-        {countdown && !expired && (
-          <div className="inline-flex items-center gap-3 bg-green-500/10 border border-green-500/20 rounded-full px-4 py-1.5 mb-7">
-            <span className="relative flex w-4 h-4 flex-shrink-0">
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
-                style={{ animationDuration: '1.2s' }}
-              />
-              <span
-                className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40"
-                style={{ animationDuration: '1.2s', animationDelay: '0.4s' }}
-              />
-              <span
-                className="relative inline-flex rounded-full w-4 h-4 bg-green-500"
-                style={{ boxShadow: '0 0 8px rgba(74,222,128,0.8)' }}
-              />
-            </span>
-            <span className="text-green-400 text-xs font-medium">
-              Launch offer · $85/user/month locked for life ·{' '}
-              <strong className="text-white tabular-nums">
-                {days}d {String(hours).padStart(2, '0')}h {String(minutes).padStart(2, '0')}m{' '}
-                {String(seconds).padStart(2, '0')}s
-              </strong>
-            </span>
-          </div>
-        )}
-
         {/* Headline */}
         <p
           className="font-bold text-white leading-[1.08] mb-5"

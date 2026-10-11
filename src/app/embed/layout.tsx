@@ -24,7 +24,7 @@ export const metadata: Metadata = {
  * Excludes:
  * - Header, Footer, Nav
  * - GTM, Microsoft Clarity
- * - TrialPopup, PublicChatWidget
+ * - PublicChatWidget
  * - Dark background overlay
  * - payload-theme localStorage script
  *
