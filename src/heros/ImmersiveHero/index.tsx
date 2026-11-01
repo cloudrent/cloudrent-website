@@ -291,8 +291,8 @@ function MobileDevicesSection() {
 }
 
 // ─── ANIMATION SECTION ────────────────────────────────────────────────────────
-function AnimationSection() {
-  const [phase, setPhase] = useState<Phase>('idle')
+export function AnimationSection({ autoStart = false }: { autoStart?: boolean } = {}) {
+  const [phase, setPhase] = useState<Phase>(autoStart ? 'particles' : 'idle')
   const [featureIndex, setFeatureIndex] = useState(-1)
   const [deviceIndex, setDeviceIndex] = useState(-1)
   const [timerSeconds, setTimerSeconds] = useState(0)
@@ -300,7 +300,7 @@ function AnimationSection() {
   const [connectionProgress, setConnectionProgress] = useState(0)
   const [animationKey, setAnimationKey] = useState(0)
   const [dashboardOpacity, setDashboardOpacity] = useState(0)
-  const [hasStarted, setHasStarted] = useState(false)
+  const [hasStarted, setHasStarted] = useState(autoStart)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const particlesRef = useRef<Particle[]>([])
   const animationFrameRef = useRef<number | undefined>(undefined)
@@ -408,8 +408,15 @@ function AnimationSection() {
       animationFrameRef.current = requestAnimationFrame(animateParticles)
   }, [phase])
 
-  // ── INTERSECTION OBSERVER — trigger on scroll ─────────────────────────────
+  // ── INTERSECTION OBSERVER — trigger on scroll (or autoStart) ─────────────────────────────
   useEffect(() => {
+    // If autoStart is true, start immediately
+    if (autoStart && !hasStarted) {
+      setHasStarted(true)
+      setPhase('particles')
+      return
+    }
+
     const el = sectionRef.current
     if (!el) return
     const observer = new IntersectionObserver(
@@ -423,7 +430,7 @@ function AnimationSection() {
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [hasStarted])
+  }, [hasStarted, autoStart])
 
   // Canvas resize
   useEffect(() => {
@@ -549,7 +556,7 @@ function AnimationSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-transparent hidden lg:block"
+      className={`relative w-full overflow-hidden bg-transparent ${autoStart ? 'block' : 'hidden lg:block'}`}
       style={{ minHeight: '100vh' }}
     >
       {/* Background shapes */}

@@ -15,7 +15,7 @@ import { getBuilderContent } from '@/lib/builder'
 import { RenderBuilderContent } from '@/components/builder/RenderBuilderContent'
 
 // Slugs handled by other route groups - these should not be matched by this dynamic route
-const EXCLUDED_SLUGS = ['dollar-offer']
+const EXCLUDED_SLUGS = ['dollar-offer', 'preview-ecosystem']
 
 export async function generateStaticParams() {
   try {
