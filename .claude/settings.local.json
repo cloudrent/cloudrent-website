@@ -142,7 +142,19 @@
       "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website diff c454c3a~1 c454c3a -- src/payload.config.ts)",
       "Bash(git -C /Users/cloudrentimac/projects/cloudrent/cloudrent-website log --oneline c454c3a..HEAD)",
       "Bash(kill:*)",
-      "Bash(file:*)"
+      "Bash(file:*)",
+      "WebFetch(domain:dollarcomp-4psk8get.manus.space)",
+      "Bash(test:*)",
+      "Bash(/bin/ls:*)",
+      "Bash(./scripts/deploy.sh:*)",
+      "Bash(./deploy.sh:*)",
+      "Bash(pgrep:*)",
+      "Bash(tr:*)",
+      "Bash(do grep -l \"companies\" \"$f\")",
+      "Bash(break)",
+      "Bash(ffprobe:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(do echo \"=== Stash $i ===\")"
     ]
   }
 }
