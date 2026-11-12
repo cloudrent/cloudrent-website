@@ -63,7 +63,7 @@ const DAY_NAMES = [
  * Create a Date object for a specific time in a specific timezone
  * This properly handles the timezone offset so 09:00 Brisbane = 09:00 Brisbane, not 09:00 UTC
  */
-function createDateInTimezone(dateStr: string, timeStr: string, timezone: string): Date {
+export function createDateInTimezone(dateStr: string, timeStr: string, timezone: string): Date {
   // Create a date string that includes timezone info
   // Format: "2026-03-30T09:00:00" in the context of Brisbane
   const dateTimeStr = `${dateStr}T${timeStr}:00`
@@ -308,6 +308,27 @@ export function formatDate(date: string, timezone: string): string {
     year: 'numeric',
     timeZone: timezone,
   })
+}
+
+/**
+ * The wall-clock date (YYYY-MM-DD) and time (HH:MM) of an instant in a timezone.
+ * Bookings are stored in the host's timezone, so a slot the widget sends as a
+ * UTC instant is converted here before it is saved, emailed or conflict-checked.
+ */
+export function toZonedDateTime(instant: Date, timezone: string): { date: string; time: string } {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).formatToParts(instant)
+  const get = (type: string) => parts.find((p) => p.type === type)?.value || ''
+  // Some engines format midnight as 24
+  const hour = get('hour') === '24' ? '00' : get('hour')
+  return { date: `${get('year')}-${get('month')}-${get('day')}`, time: `${hour}:${get('minute')}` }
 }
 
 /**

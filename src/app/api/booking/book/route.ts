@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { createCalendarEvent } from '@/lib/google-calendar'
 import { Resend } from 'resend'
-import { formatDate, formatTime } from '@/lib/booking/calculate-slots'
+import { createDateInTimezone, formatDate, formatTime, toZonedDateTime } from '@/lib/booking/calculate-slots'
 import { validatePhoneNumber } from '@/lib/phone-validation'
 import { getEventType, isValidEventType } from '@/lib/booking/event-types'
 
@@ -23,7 +23,8 @@ const BLOCKED_DOMAINS = [
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { date, startTime, name, email, phone, company, message, timezone, type } = body
+    const { startAt, name, email, phone, company, message, timezone, type } = body
+    let { date, startTime } = body
 
     // Validate event type (defaults to 'demo' if not provided)
     const eventTypeSlug = type || 'demo'
@@ -68,6 +69,20 @@ export async function POST(request: NextRequest) {
 
     const payload = await getPayload({ config: configPromise })
     const settings = await payload.findGlobal({ slug: 'booking-settings' })
+    const hostTimezone = settings.availability?.timezone || 'Australia/Sydney'
+
+    // The widget sends the slot as a UTC instant (startAt). Store, check and email
+    // it in the host's timezone, which is how slots are calculated. Without
+    // startAt (older clients), date + startTime are already host-local.
+    let startDateTime: Date
+    if (typeof startAt === 'string' && !Number.isNaN(Date.parse(startAt))) {
+      startDateTime = new Date(startAt)
+      const local = toZonedDateTime(startDateTime, hostTimezone)
+      date = local.date
+      startTime = local.time
+    } else {
+      startDateTime = createDateInTimezone(date, startTime, hostTimezone)
+    }
 
     // Calculate end time using event-type-specific duration
     const duration = eventType.duration
@@ -100,9 +115,7 @@ export async function POST(request: NextRequest) {
     const useGoogleMeet = !settings.meetingLink // Only create Google Meet if no custom link
 
     if (settings.googleCalendar?.connected) {
-      const hostTimezone = settings.availability?.timezone || 'Australia/Sydney'
-      const startDateTime = new Date(`${date}T${startTime}:00`)
-      const endDateTime = new Date(`${date}T${endTime}:00`)
+      const endDateTime = new Date(startDateTime.getTime() + duration * 60 * 1000)
 
       const calendarResult = await createCalendarEvent({
         summary: `${eventType.name} with ${name}`,
@@ -152,7 +165,6 @@ export async function POST(request: NextRequest) {
     const resendApiKey = process.env.RESEND_API_KEY
     if (resendApiKey) {
       const resend = new Resend(resendApiKey)
-      const hostTimezone = settings.availability?.timezone || 'Australia/Sydney'
       const formattedDate = formatDate(date, hostTimezone)
       const formattedTime = formatTime(startTime, hostTimezone)
 
@@ -220,9 +232,8 @@ export async function POST(request: NextRequest) {
       calendarLinks: {
         google: generateGoogleCalendarLink({
           title: `${eventType.name} with ${settings.hostName || 'CloudRent'}`,
-          date,
-          startTime,
-          endTime,
+          start: startDateTime,
+          end: new Date(startDateTime.getTime() + duration * 60 * 1000),
           description: message || '',
         }),
       },
@@ -256,13 +267,14 @@ function isGibberish(text: string): boolean {
 // Generate Google Calendar add link
 function generateGoogleCalendarLink(params: {
   title: string
-  date: string
-  startTime: string
-  endTime: string
+  start: Date
+  end: Date
   description: string
 }): string {
-  const start = `${params.date.replace(/-/g, '')}T${params.startTime.replace(/:/g, '')}00`
-  const end = `${params.date.replace(/-/g, '')}T${params.endTime.replace(/:/g, '')}00`
+  // UTC (trailing Z) so the event lands at the right time in any viewer's timezone
+  const toGoogle = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
+  const start = toGoogle(params.start)
+  const end = toGoogle(params.end)
 
   const url = new URL('https://calendar.google.com/calendar/render')
   url.searchParams.set('action', 'TEMPLATE')
