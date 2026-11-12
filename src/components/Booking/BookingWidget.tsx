@@ -297,6 +297,8 @@ export function BookingWidget({
           type: eventTypeSlug,
           date: selectedDate,
           startTime,
+          // Exact instant of the slot; the server converts it to the host's timezone
+          startAt: selectedSlot.startTime,
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
