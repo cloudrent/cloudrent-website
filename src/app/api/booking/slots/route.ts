@@ -70,8 +70,9 @@ export async function GET(request: NextRequest) {
     // Get Google Calendar busy times
     let googleBusyTimes: { start: Date; end: Date }[] = []
     if (settings.googleCalendar?.connected) {
-      const start = new Date(`${startDate}T00:00:00`)
-      const end = new Date(`${endDate}T23:59:59`)
+      // Pad a day each side: these are UTC instants and the host timezone is ahead of UTC
+      const start = new Date(Date.parse(`${startDate}T00:00:00Z`) - 24 * 60 * 60 * 1000)
+      const end = new Date(Date.parse(`${endDate}T23:59:59Z`) + 24 * 60 * 60 * 1000)
       googleBusyTimes = await getBusyTimes(
         start,
         end,

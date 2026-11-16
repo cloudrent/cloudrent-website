@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/utilities/ui'
 
 interface TimeSlot {
+  date?: string // host-local calendar day
   startTime: string
   endTime: string
   available: boolean
@@ -210,8 +211,12 @@ export function BookingWidget({
   }, [formData.phone])
 
   // Get available slots for selected date
+  // Group by the host-local day the API reports. Slot times are UTC instants, so
+  // matching on the ISO string put a 9:00 am Brisbane slot under the previous day.
   const slotsForDate = selectedDate
-    ? slots.filter((s) => s.startTime.startsWith(selectedDate) && s.available)
+    ? slots
+        .filter((s) => (s.date ?? s.startTime.slice(0, 10)) === selectedDate && s.available)
+        .sort((a, b) => Date.parse(a.startTime) - Date.parse(b.startTime))
     : []
 
   // Calendar rendering

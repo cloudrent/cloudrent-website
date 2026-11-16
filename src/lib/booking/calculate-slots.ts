@@ -1,4 +1,5 @@
 export interface TimeSlot {
+  date: string // YYYY-MM-DD in the host's timezone, used to group slots by calendar day
   startTime: string // ISO datetime
   endTime: string // ISO datetime
   available: boolean
@@ -42,6 +43,28 @@ export interface ExistingBooking {
   startTime: string
   endTime: string
   status: string
+}
+
+/**
+ * True when two time ranges overlap. Touching ranges (one ends as the next starts) do not overlap.
+ */
+export function rangesOverlap(startA: Date, endA: Date, startB: Date, endB: Date): boolean {
+  return startA < endB && startB < endA
+}
+
+/**
+ * The start and end instants of a stored booking. Bookings are stored as
+ * host-local date (YYYY-MM-DD or a Payload ISO date) plus HH:MM times.
+ */
+export function bookingInstants(
+  booking: { date: string; startTime: string; endTime: string },
+  timezone: string,
+): { start: Date; end: Date } {
+  const date = String(booking.date).slice(0, 10)
+  return {
+    start: createDateInTimezone(date, booking.startTime, timezone),
+    end: createDateInTimezone(date, booking.endTime, timezone),
+  }
 }
 
 export interface BusyTime {
@@ -145,27 +168,28 @@ export function calculateAvailableSlots(params: {
   }
 
   // Iterate through each day in the range
-  const currentDate = new Date(startDate + 'T00:00:00')
-  const lastDate = new Date(endDate + 'T00:00:00')
+  // Walk calendar days in UTC so the result does not depend on the server's timezone
+  const currentDate = new Date(startDate + 'T00:00:00Z')
+  const lastDate = new Date(endDate + 'T00:00:00Z')
 
   while (currentDate <= lastDate) {
     const dateStr = currentDate.toISOString().split('T')[0]
-    const dayOfWeek = currentDate.getDay()
+    const dayOfWeek = currentDate.getUTCDay()
     const dayName = DAY_NAMES[dayOfWeek]
     const daySchedule = settings.schedule[dayName]
 
     // Check if day is enabled in schedule
     if (!daySchedule?.enabled) {
       dates.push({ date: dateStr, hasAvailability: false, slotsCount: 0 })
-      currentDate.setDate(currentDate.getDate() + 1)
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1)
       continue
     }
 
     // Check if date is within booking window
-    const dateForComparison = new Date(dateStr + 'T23:59:59')
+    const dateForComparison = createDateInTimezone(dateStr, '23:59', settings.availability.timezone)
     if (dateForComparison < earliestBookingTime || currentDate > maxBookingDate) {
       dates.push({ date: dateStr, hasAvailability: false, slotsCount: 0 })
-      currentDate.setDate(currentDate.getDate() + 1)
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1)
       continue
     }
 
@@ -173,7 +197,7 @@ export function calculateAvailableSlots(params: {
     const maxPerDay = settings.availability.maxBookingsPerDay || 0
     if (maxPerDay > 0 && (bookingsPerDay[dateStr] || 0) >= maxPerDay) {
       dates.push({ date: dateStr, hasAvailability: false, slotsCount: 0 })
-      currentDate.setDate(currentDate.getDate() + 1)
+      currentDate.setUTCDate(currentDate.getUTCDate() + 1)
       continue
     }
 
@@ -198,7 +222,7 @@ export function calculateAvailableSlots(params: {
     })
     slots.push(...availableSlots)
 
-    currentDate.setDate(currentDate.getDate() + 1)
+    currentDate.setUTCDate(currentDate.getUTCDate() + 1)
   }
 
   return { dates, slots }
@@ -261,10 +285,13 @@ function generateDaySlots(params: {
     // Check if slot is after minimum notice
     const isAfterMinNotice = startDateTime >= earliestBookingTime
 
-    // Check for conflicts with existing bookings
+    // Check for conflicts with existing bookings of any event type, including buffers
+    const bufferedStart = new Date(startDateTime.getTime() - bufferBefore * 60 * 1000)
+    const bufferedEnd = new Date(endDateTime.getTime() + bufferAfter * 60 * 1000)
     const hasBookingConflict = existingBookings.some((booking) => {
-      if (booking.status === 'cancelled') return false
-      return booking.startTime === startTimeStr
+      if (booking.status !== 'confirmed' && booking.status !== 'pending') return false
+      const existing = bookingInstants(booking, params.timezone)
+      return rangesOverlap(bufferedStart, bufferedEnd, existing.start, existing.end)
     })
 
     // Check for conflicts with Google Calendar
@@ -275,6 +302,7 @@ function generateDaySlots(params: {
     const isAvailable = isAfterMinNotice && !hasBookingConflict && !hasGoogleConflict
 
     slots.push({
+      date,
       startTime: startDateTime.toISOString(),
       endTime: endDateTime.toISOString(),
       available: isAvailable,
