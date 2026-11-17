@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { Resend } from 'resend'
-import { formatDate, formatTime } from '@/lib/booking/calculate-slots'
+import { createDateInTimezone, formatDate, formatTime } from '@/lib/booking/calculate-slots'
+import { getEventType } from '@/lib/booking/event-types'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60 // Allow up to 60 seconds for processing
@@ -51,6 +52,8 @@ export async function GET(request: NextRequest) {
       where: {
         and: [
           { status: { equals: 'confirmed' } },
+          // Upcoming only (yesterday covers host timezones ahead of UTC)
+          { date: { greater_than_equal: new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10) } },
           {
             or: [
               { reminder24hSent: { equals: false } },
@@ -60,18 +63,24 @@ export async function GET(request: NextRequest) {
         ],
       },
       limit: 100,
+      sort: 'date',
+      depth: 0,
     })
 
     results.checked = bookings.docs.length
 
     for (const booking of bookings.docs) {
-      const bookingDateTime = new Date(`${booking.date}T${booking.startTime}:00`)
+      // Payload returns date as an ISO string (2026-11-25T00:00:00.000Z) and startTime
+      // as host-local HH:MM. Joining them raw gave an Invalid Date, so no reminder ever sent.
+      const bookingDate = String(booking.date).slice(0, 10)
+      const bookingDateTime = createDateInTimezone(bookingDate, booking.startTime as string, timezone)
       const hoursUntilBooking = (bookingDateTime.getTime() - now.getTime()) / (1000 * 60 * 60)
 
-      // Skip past bookings
-      if (hoursUntilBooking < 0) continue
+      // Skip past bookings and anything unparseable
+      if (!Number.isFinite(hoursUntilBooking) || hoursUntilBooking < 0) continue
 
-      const formattedDate = formatDate(booking.date as string, timezone)
+      const eventName = getEventType(booking.eventType as string)?.name || settings.eventName || 'Product Demo'
+      const formattedDate = formatDate(bookingDate, timezone)
       const formattedTime = formatTime(booking.startTime as string, timezone)
 
       // 24-hour reminder (send between 23-25 hours before)
@@ -81,10 +90,10 @@ export async function GET(request: NextRequest) {
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: booking.guestEmail as string,
             replyTo: settings.hostEmail || undefined,
-            subject: `Reminder: ${settings.eventName || 'Demo'} Tomorrow`,
+            subject: `Reminder: ${eventName} tomorrow`,
             html: getReminderEmail({
               guestName: booking.guestName as string,
-              eventName: settings.eventName || 'Product Demo',
+              eventName,
               hostName: settings.hostName || 'CloudRent Team',
               date: formattedDate,
               time: formattedTime,
@@ -114,10 +123,10 @@ export async function GET(request: NextRequest) {
             from: process.env.RESEND_FROM_EMAIL || 'CloudRent <onboarding@resend.dev>',
             to: booking.guestEmail as string,
             replyTo: settings.hostEmail || undefined,
-            subject: `Starting Soon: ${settings.eventName || 'Demo'} in 1 Hour`,
+            subject: `Starting soon: ${eventName} in 1 hour`,
             html: getReminderEmail({
               guestName: booking.guestName as string,
-              eventName: settings.eventName || 'Product Demo',
+              eventName,
               hostName: settings.hostName || 'CloudRent Team',
               date: formattedDate,
               time: formattedTime,

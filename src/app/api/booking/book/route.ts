@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import { createCalendarEvent } from '@/lib/google-calendar'
+import { createCalendarEvent, getBusyTimes } from '@/lib/google-calendar'
 import { Resend } from 'resend'
-import { createDateInTimezone, formatDate, formatTime, toZonedDateTime } from '@/lib/booking/calculate-slots'
+import {
+  bookingInstants,
+  createDateInTimezone,
+  formatDate,
+  formatTime,
+  rangesOverlap,
+  toZonedDateTime,
+} from '@/lib/booking/calculate-slots'
 import { validatePhoneNumber } from '@/lib/phone-validation'
 import { getEventType, isValidEventType } from '@/lib/booking/event-types'
 
@@ -90,19 +97,43 @@ export async function POST(request: NextRequest) {
     const endMinutes = hours * 60 + minutes + duration
     const endTime = `${String(Math.floor(endMinutes / 60)).padStart(2, '0')}:${String(endMinutes % 60).padStart(2, '0')}`
 
-    // Verify slot is still available (prevent race conditions)
-    const conflicting = await payload.find({
+    // Verify the slot is still free (prevents double bookings). Checks every
+    // demo and training booking on the day for any overlap, including buffers,
+    // then re-checks Google Calendar, which also holds admin portal bookings.
+    const slotEnd = new Date(startDateTime.getTime() + duration * 60 * 1000)
+    const bufferBefore = settings.availability?.bufferBefore || 0
+    const bufferAfter = settings.availability?.bufferAfter ?? 15
+    const bufferedStart = new Date(startDateTime.getTime() - bufferBefore * 60 * 1000)
+    const bufferedEnd = new Date(slotEnd.getTime() + bufferAfter * 60 * 1000)
+
+    const sameDay = await payload.find({
       collection: 'bookings',
       where: {
-        and: [
-          { date: { equals: date } },
-          { startTime: { equals: startTime } },
-          { status: { in: ['pending', 'confirmed'] } },
-        ],
+        and: [{ date: { equals: date } }, { status: { in: ['pending', 'confirmed'] } }],
       },
+      limit: 200,
+      depth: 0,
     })
 
-    if (conflicting.docs.length > 0) {
+    const hasBookingConflict = sameDay.docs.some((b) => {
+      const existing = bookingInstants(
+        { date: String(b.date), startTime: b.startTime, endTime: b.endTime },
+        hostTimezone,
+      )
+      return rangesOverlap(bufferedStart, bufferedEnd, existing.start, existing.end)
+    })
+
+    let hasCalendarConflict = false
+    if (!hasBookingConflict && settings.googleCalendar?.connected) {
+      const busy = await getBusyTimes(
+        startDateTime,
+        slotEnd,
+        settings.googleCalendar.calendarId || 'primary',
+      )
+      hasCalendarConflict = busy.some((t) => rangesOverlap(startDateTime, slotEnd, t.start, t.end))
+    }
+
+    if (hasBookingConflict || hasCalendarConflict) {
       return NextResponse.json(
         { error: 'This time slot is no longer available. Please select another time.' },
         { status: 409 }

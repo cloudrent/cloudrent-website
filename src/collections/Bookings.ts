@@ -1,12 +1,11 @@
 import type { CollectionConfig } from 'payload'
 
-import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 
 export const Bookings: CollectionConfig = {
   slug: 'bookings',
   access: {
-    create: anyone, // Public can create bookings
+    create: authenticated, // Public bookings go through /api/booking/book, which uses the Local API
     delete: authenticated,
     read: authenticated, // Only admin can view all bookings
     update: authenticated,

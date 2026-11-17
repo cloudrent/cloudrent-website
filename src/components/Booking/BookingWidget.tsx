@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { cn } from '@/utilities/ui'
 
 interface TimeSlot {
+  date?: string // host-local calendar day
   startTime: string
   endTime: string
   available: boolean
@@ -27,30 +28,49 @@ interface BookingWidgetProps {
   }
 }
 
-// Common timezones grouped by region
+// Common timezones grouped by region. The abbreviation (AEST, AEDT and so on)
+// is worked out for the current date, so daylight saving shows correctly.
 const TIMEZONES = [
-  { value: 'Pacific/Auckland', label: 'Auckland (NZST)' },
-  { value: 'Australia/Sydney', label: 'Sydney (AEST)' },
-  { value: 'Australia/Melbourne', label: 'Melbourne (AEST)' },
-  { value: 'Australia/Brisbane', label: 'Brisbane (AEST)' },
-  { value: 'Australia/Perth', label: 'Perth (AWST)' },
-  { value: 'Australia/Adelaide', label: 'Adelaide (ACST)' },
-  { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
-  { value: 'Asia/Singapore', label: 'Singapore (SGT)' },
-  { value: 'Asia/Hong_Kong', label: 'Hong Kong (HKT)' },
-  { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
-  { value: 'Asia/Kolkata', label: 'Mumbai (IST)' },
-  { value: 'Asia/Dubai', label: 'Dubai (GST)' },
-  { value: 'Europe/London', label: 'London (GMT/BST)' },
-  { value: 'Europe/Paris', label: 'Paris (CET)' },
-  { value: 'Europe/Berlin', label: 'Berlin (CET)' },
-  { value: 'America/New_York', label: 'New York (EST)' },
-  { value: 'America/Chicago', label: 'Chicago (CST)' },
-  { value: 'America/Denver', label: 'Denver (MST)' },
-  { value: 'America/Los_Angeles', label: 'Los Angeles (PST)' },
-  { value: 'America/Toronto', label: 'Toronto (EST)' },
-  { value: 'America/Vancouver', label: 'Vancouver (PST)' },
+  { value: 'Pacific/Auckland', label: 'Auckland' },
+  { value: 'Australia/Sydney', label: 'Sydney' },
+  { value: 'Australia/Melbourne', label: 'Melbourne' },
+  { value: 'Australia/Brisbane', label: 'Brisbane' },
+  { value: 'Australia/Perth', label: 'Perth' },
+  { value: 'Australia/Adelaide', label: 'Adelaide' },
+  { value: 'Asia/Tokyo', label: 'Tokyo' },
+  { value: 'Asia/Singapore', label: 'Singapore' },
+  { value: 'Asia/Hong_Kong', label: 'Hong Kong' },
+  { value: 'Asia/Shanghai', label: 'Shanghai' },
+  { value: 'Asia/Kolkata', label: 'Mumbai' },
+  { value: 'Asia/Dubai', label: 'Dubai' },
+  { value: 'Europe/London', label: 'London' },
+  { value: 'Europe/Paris', label: 'Paris' },
+  { value: 'Europe/Berlin', label: 'Berlin' },
+  { value: 'America/New_York', label: 'New York' },
+  { value: 'America/Chicago', label: 'Chicago' },
+  { value: 'America/Denver', label: 'Denver' },
+  { value: 'America/Los_Angeles', label: 'Los Angeles' },
+  { value: 'America/Toronto', label: 'Toronto' },
+  { value: 'America/Vancouver', label: 'Vancouver' },
 ]
+
+function zoneAbbreviation(timezone: string, at: Date = new Date()): string {
+  try {
+    return (
+      new Intl.DateTimeFormat('en-AU', { timeZone: timezone, timeZoneName: 'short' })
+        .formatToParts(at)
+        .find((p) => p.type === 'timeZoneName')?.value || ''
+    )
+  } catch {
+    return ''
+  }
+}
+
+function timezoneLabel(timezone: string, at?: Date): string {
+  const city = TIMEZONES.find((tz) => tz.value === timezone)?.label || timezone.split('/').pop()?.replace(/_/g, ' ')
+  const abbr = zoneAbbreviation(timezone, at)
+  return abbr ? `${city} (${abbr})` : city || timezone
+}
 
 export function BookingWidget({
   className,
@@ -210,8 +230,12 @@ export function BookingWidget({
   }, [formData.phone])
 
   // Get available slots for selected date
+  // Group by the host-local day the API reports. Slot times are UTC instants, so
+  // matching on the ISO string put a 9:00 am Brisbane slot under the previous day.
   const slotsForDate = selectedDate
-    ? slots.filter((s) => s.startTime.startsWith(selectedDate) && s.available)
+    ? slots
+        .filter((s) => (s.date ?? s.startTime.slice(0, 10)) === selectedDate && s.available)
+        .sort((a, b) => Date.parse(a.startTime) - Date.parse(b.startTime))
     : []
 
   // Calendar rendering
@@ -260,11 +284,25 @@ export function BookingWidget({
     return days
   }
 
+  // Times in the timezone the guest picked, not their computer's clock
   const formatTime = (isoString: string) => {
     return new Date(isoString).toLocaleTimeString('en-AU', {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
+      timeZone: selectedTimezone,
+    })
+  }
+
+  // The day of the booked slot itself, in the guest's timezone. Never the day
+  // clicked in the calendar, so the confirmation always matches the booking.
+  const formatSlotDate = (isoString: string) => {
+    return new Date(isoString).toLocaleDateString('en-AU', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: selectedTimezone,
     })
   }
 
@@ -412,7 +450,7 @@ export function BookingWidget({
               >
                 {TIMEZONES.map((tz) => (
                   <option key={tz.value} value={tz.value}>
-                    {tz.label}
+                    {timezoneLabel(tz.value)}
                   </option>
                 ))}
                 {/* Add user's timezone if not in list */}
@@ -500,7 +538,7 @@ export function BookingWidget({
 
             <h4 className={cn('mb-1 font-medium', isLight ? 'text-gray-900' : 'text-white')}>{formatDate(selectedDate)}</h4>
             <p className={cn('mb-4 text-xs', isLight ? 'text-gray-500' : 'text-gray-400')}>
-              Times shown in {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
+              Times shown in {timezoneLabel(selectedTimezone, selectedDate ? new Date(selectedDate + 'T12:00:00Z') : undefined)}
             </p>
 
             <div className="grid gap-2 max-h-64 overflow-y-auto">
@@ -547,12 +585,12 @@ export function BookingWidget({
             </button>
 
             <div className={cn('mb-6 rounded-lg p-4', isLight ? 'bg-gray-100' : 'bg-brand-purple/10')}>
-              <p className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>{formatDate(selectedDate!)}</p>
+              <p className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>{formatSlotDate(selectedSlot!.startTime)}</p>
               <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
                 {formatTime(selectedSlot.startTime)} - {formatTime(selectedSlot.endTime)}
               </p>
               <p className={cn('text-xs mt-1', isLight ? 'text-gray-500' : 'text-gray-500')}>
-                {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
+                {timezoneLabel(selectedTimezone, selectedSlot ? new Date(selectedSlot.startTime) : undefined)}
               </p>
             </div>
 
@@ -703,12 +741,12 @@ export function BookingWidget({
 
             <div className={cn('rounded-lg p-4 text-left', isLight ? 'bg-gray-100' : 'bg-brand-purple/10')}>
               <p className={cn('font-medium', isLight ? 'text-gray-900' : 'text-white')}>{settings?.eventName}</p>
-              <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>{formatDate(selectedDate!)}</p>
+              <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>{formatSlotDate(selectedSlot!.startTime)}</p>
               <p className={cn('text-sm', isLight ? 'text-gray-600' : 'text-gray-400')}>
                 {formatTime(selectedSlot!.startTime)} - {formatTime(selectedSlot!.endTime)}
               </p>
               <p className={cn('text-xs mt-1', isLight ? 'text-gray-500' : 'text-gray-500')}>
-                {TIMEZONES.find((tz) => tz.value === selectedTimezone)?.label || selectedTimezone}
+                {timezoneLabel(selectedTimezone, selectedSlot ? new Date(selectedSlot.startTime) : undefined)}
               </p>
               {appointment.booking?.meetingUrl && (
                 <a
